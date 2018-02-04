@@ -8,6 +8,7 @@ from time import sleep
 
 WHITE = (254,254,254)
 BLACK = (0,0,0)
+ALMOST_BLACK = (5,5,5)
 YELLOW = (222, 224, 68)
 GREY = (200, 200, 200)
 
@@ -41,7 +42,7 @@ highlight_cords = tools.get_highlight_cords(raw_lines)
     
 
 backround_color_1 = WHITE
-backround_color_2 = GREY
+backround_color_2 = ALMOST_BLACK
 default_text_color = WHITE
 highlight_color = YELLOW
 
@@ -110,7 +111,9 @@ for line_num in range(len(lines)):
         x_draw += w_full
         x_paste += w
     line_num += 1
+image2.save('test_output.png', quality = 100)
 image2.show()
+
 
 print(len('Commerce on the Internet has come to rely a'))
 
