@@ -9,7 +9,7 @@ BLACK = 255  # PIL color to use for "off"
 
 
 def main():
-    image = text_image('content.txt')
+    image = text_image('yin.txt')
     image.show()
     image.save('content.png')
 

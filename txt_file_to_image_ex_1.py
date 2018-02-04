@@ -63,7 +63,7 @@ def text_image(text_path, font_path=None):
         for letter in line:
             
             draw.text((horizontal_position, vertical_position),
-                      line, fill=BLACK, font=font) #ON means the letters will be black
+                      line, fill = BLACK, font=font) #ON means the letters will be black
             
             letter_full = draw.textsize(fill + letter)[0]
 #             letter_width = letter_full - letter_fill     # the width of the character on its own
