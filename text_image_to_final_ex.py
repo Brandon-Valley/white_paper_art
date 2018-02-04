@@ -2,6 +2,8 @@ import PIL.ImageFont
 from PIL import Image, ImageDraw
 from random import randint
 import tools
+
+from time import sleep
 # make_color = lambda : (randint(50, 255), randint(50, 255), randint(50,255))
 
 WHITE = (254,254,254)
@@ -10,23 +12,19 @@ YELLOW = (222, 224, 68)
 GREY = (200, 200, 200)
 
 num_lines = 30
-line_length = 70
+line_length = 63
 
 text_image_filename = 'yin.txt'
 data_text_filename = 'ex_data.txt'
 
 
-raw_lines = tools.read_text_file(text_image_filename)
-# print(raw_lines)
-    
+raw_lines = tools.read_text_file(text_image_filename)    
 data = tools.read_text_file(data_text_filename)
-# print(data)
 formatted_data = tools.format_data(data)
-
+print('data len:', len(formatted_data))#!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 lines = tools.make_lines(num_lines, line_length, formatted_data)
 highlight_cords = tools.get_highlight_cords(raw_lines)
-# print(lines)
-# print(highlight_cords)
+
     
 
 backround_color_1 = WHITE
@@ -53,7 +51,7 @@ test_string = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
 max_height = pt2px(font.getsize(test_string)[1])
 max_width = pt2px(font.getsize(max_width_line)[0])
 height = max_height * len(lines)  # perfect or a little oversized
-width = int(round(max_width + 40))  # a little oversized
+width = int(round(max_width + 40 + 480 ))  # a little oversized
 # image = PIL.Image.new(grayscale, (width, height), color=WHITE)
 # draw = PIL.ImageDraw.Draw(image)
 
@@ -86,14 +84,21 @@ for line_num in range(len(lines)):
             color = highlight_color
         else:
             color = default_text_color
+
         draw.text((x_draw, y * line_num), fill + letter, color)
     
-        iletter = image.crop((x_draw + w_fill, 0, x_draw + w_full, y * len(lines)))
+        iletter = image.crop((x_draw + w_fill, 0, x_draw + w_full, y * len(lines) ))
+        
+   
+#         iletter.show()
+#         sleep(1)
+
         image2.paste(iletter, (x_paste, 0))
         x_draw += w_full
         x_paste += w
     line_num += 1
 image2.show()
 
+print(len('Commerce on the Internet has come to rely a'))
 
 
