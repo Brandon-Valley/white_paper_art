@@ -11,8 +11,8 @@ BLACK = (0,0,0)
 YELLOW = (222, 224, 68)
 GREY = (200, 200, 200)
 
-num_lines = 30
-line_length = 63
+num_lines = 35
+line_length = 60
 
 text_image_filename = 'yin.txt'
 data_text_filename = 'ex_data.txt'
@@ -51,7 +51,7 @@ test_string = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
 max_height = pt2px(font.getsize(test_string)[1])
 max_width = pt2px(font.getsize(max_width_line)[0])
 height = max_height * len(lines)  # perfect or a little oversized
-width = int(round(max_width + 40 + 480 ))  # a little oversized
+width = int(round(max_width + 40 + 480 ))  # a little oversized , needs to be exactly this # or cuts off text
 # image = PIL.Image.new(grayscale, (width, height), color=WHITE)
 # draw = PIL.ImageDraw.Draw(image)
 

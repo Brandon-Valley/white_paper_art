@@ -6,8 +6,8 @@ import sys
 #     print ("[python] img2asciiart.py InputImageFileName OutputTextFileName")
 #     print ("Use quotes if file paths/names contain spaces!")
 #     sys.exit()
-inputImageFileName = 'yin.png'#sys.argv[1]
-OutputTextFileName = 'yin.txt'#sys.argv[2]
+inputImageFileName = 'bitcoin.png'#sys.argv[1]
+OutputTextFileName = 'bitcoin.txt'#sys.argv[2]
 
 print ('filename:' , inputImageFileName)
 

@@ -29,6 +29,8 @@ def get_highlight_cords(lines):
 def format_data(data):
     formatted_data = ''
     for data_line in data:
+        print(data_line)#!!!!!!!!!!!
+        print(data_line[0])#!!!!!!!!!!!!!!!!!!!!!!
         if data_line[0] == ' ' or formatted_data == '':
             formatted_data += data_line
         else:
