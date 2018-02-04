@@ -32,7 +32,7 @@ def text_image(lines, colors, highlight_cords, font_path = None):
     
     fill = " o "
     x = 0
-    w_fill, y = draw.textsize(fill)
+    w_fill, y = draw.textsize(fill, font)
     
     line_num = 0
     for line_num in range(len(lines)):
@@ -42,7 +42,7 @@ def text_image(lines, colors, highlight_cords, font_path = None):
         
         for letter_num in range(len(line)):
             letter = line[letter_num]
-            w_full = draw.textsize(fill + letter)[0]
+            w_full = draw.textsize(fill + letter, font)[0]
             w = w_full - w_fill     # the width of the character on its own
             
             letter_cords = [line_num, letter_num]
@@ -51,7 +51,7 @@ def text_image(lines, colors, highlight_cords, font_path = None):
             else:
                 color = colors['default_text']
     
-            draw.text((x_draw, y * line_num), fill + letter, color)
+            draw.text((x_draw, y * line_num), fill + letter, color, font = font)
         
             iletter = image.crop((x_draw + w_fill, 0, x_draw + w_full, y * len(lines) ))
             
