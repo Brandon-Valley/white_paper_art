@@ -10,6 +10,11 @@ ALMOST_BLACK = (5,5,5)
 YELLOW = (222, 224, 68)
 GREY = (200, 200, 200)
 
+colors = {'backround_1':  WHITE,
+          'backround_2':  ALMOST_BLACK,
+          'default_text': WHITE,
+          'highlight':    YELLOW}
+
 #2/3:
 # a a a
 # a a a
@@ -34,13 +39,9 @@ lines = tools.make_lines(max_dimentions['num_lines'], max_dimentions['line_lengt
 #look at text image lines to get cords of chars to be highlighted in final image
 highlight_cords = tools.get_highlight_cords(raw_lines)
 
-    
-colors = {'backround_1':  WHITE,
-          'backround_2':  ALMOST_BLACK,
-          'default_text': WHITE,
-          'highlight':    YELLOW}
-
+#put it all together and what have you got?  Bippity Boppity BOO!
 image = text_image.text_image(lines, colors, highlight_cords)
+
 image.save('test_output.png', quality = 100)
 image.show()
 
