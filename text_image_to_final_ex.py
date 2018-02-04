@@ -14,15 +14,28 @@ GREY = (200, 200, 200)
 num_lines = 35
 line_length = 60
 
+#2/3:
+# a a a
+# a a a
+dimention_ratio = 3/4
+
 text_image_filename = 'yin.txt'
 data_text_filename = 'ex_data.txt'
 
-
+#read in image and data in txt files into lists of lines
 raw_lines = tools.read_text_file(text_image_filename)    
 data = tools.read_text_file(data_text_filename)
+
+#turn list of lines of data into one big string
 formatted_data = tools.format_data(data)
-print('data len:', len(formatted_data))#!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-lines = tools.make_lines(num_lines, line_length, formatted_data)
+
+#turn dimention_ratio into max number of lines and max chars per line
+max_dimentions = tools.calc_max_dimentions(dimention_ratio, len(formatted_data))
+
+#make list of lines to be output in final image
+lines = tools.make_lines(max_dimentions['num_lines'], max_dimentions['line_length'], formatted_data)
+
+#look at text image lines to get cords of chars to be highlighted in final image
 highlight_cords = tools.get_highlight_cords(raw_lines)
 
     

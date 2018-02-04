@@ -1,3 +1,17 @@
+import math
+
+#this func dosnt compensate for the chars that will be moved down to the next line when a full word is moved
+#and the extra bottom lines this will result in, throwing off the ratio
+#this problem will get worse as the length of text increases, might need to fix eventually
+def calc_max_dimentions(dim_ratio, num_chars):
+    num_lines = int( round( (math.sqrt( num_chars * dim_ratio) ) ) )
+    inverse_dim_ratio = 1 / dim_ratio
+    line_length = int( round( num_lines * inverse_dim_ratio ) ) 
+    max_dims = {'num_lines'  : num_lines,
+                'line_length': line_length}
+    return max_dims
+
+
 def make_lines(num_lines, line_length, data_str):
     lines = []
     data_count = 0
@@ -29,8 +43,6 @@ def get_highlight_cords(lines):
 def format_data(data):
     formatted_data = ''
     for data_line in data:
-        print(data_line)#!!!!!!!!!!!
-        print(data_line[0])#!!!!!!!!!!!!!!!!!!!!!!
         if data_line[0] == ' ' or formatted_data == '':
             formatted_data += data_line
         else:
