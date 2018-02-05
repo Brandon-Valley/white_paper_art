@@ -27,14 +27,17 @@ data_text_filename = 'ex_data.txt'
 raw_lines = tools.read_text_file(text_image_filename)    
 data = tools.read_text_file(data_text_filename)
 
-#turn list of lines of data into one big string
-formatted_data = tools.format_data(data)
+#turn list of lines of data into one big string, use that to get number of chars in data, then split it into words
+data_str = tools.format_data(data)
+num_chars = len(data_str)
+word_list = data_str.split(' ')
 
 #turn dimention_ratio into max number of lines and max chars per line
-max_dimentions = tools.calc_max_dimentions(dimention_ratio, len(formatted_data))
+ideal_dimentions = tools.calc_ideal_dimentions(dimention_ratio, num_chars)
 
 #make list of lines to be output in final image
-lines = tools.make_lines(max_dimentions['num_lines'], max_dimentions['line_length'], formatted_data)
+lines = tools.make_correct_lines(ideal_dimentions['num_lines'], ideal_dimentions['line_length'], word_list)
+print(lines)#!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 #look at text image lines to get cords of chars to be highlighted in final image
 highlight_cords = tools.get_highlight_cords(raw_lines)
