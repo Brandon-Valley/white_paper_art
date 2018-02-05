@@ -4,6 +4,8 @@ from random import randint
 import tools
 import text_image
 
+print(len('trusted third parties to process electronic payments.'))
+
 WHITE = (254,254,254)
 BLACK = (0,0,0)
 ALMOST_BLACK = (5,5,5)
@@ -18,7 +20,7 @@ colors = {'backround_1':  WHITE,
 #2/3:
 # a a a
 # a a a
-dimention_ratio = 5/4
+dimention_ratio = 3/7
 
 text_image_filename = 'yin.txt'
 data_text_filename = 'ex_data.txt'

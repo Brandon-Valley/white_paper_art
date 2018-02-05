@@ -1,11 +1,12 @@
 import PIL.ImageFont
 from PIL import Image, ImageDraw
+import tools
 
 
 def text_image(lines, colors, highlight_cords, font_path = None):
     # choose a font (you can see more detail in my library on github)
     font_path = None
-    large_font = 20  # get better resolution with larger size
+    large_font = 40  # get better resolution with larger size
     font_path = font_path or 'cour.ttf'  # Courier New. works in windows. linux may need more explicit path
     try:
         font = PIL.ImageFont.truetype(font_path, size=large_font)
@@ -13,18 +14,25 @@ def text_image(lines, colors, highlight_cords, font_path = None):
         font = PIL.ImageFont.load_default()
         print('Could not use chosen font. Using default.')
     
-    
     # make the background image based on the combination of font and lines
     pt2px = lambda pt: int(round(pt * 96.0 / 72))  # convert points to pixels
+    
+    longest_line = tools.find_longest_line(lines)
+    print('longest line:', longest_line)#!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    max_line_width = pt2px(font.getsize(longest_line)[0])
+    print('max_line_width:', max_line_width)#!@@!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    
+    
+
     max_width_line = max(lines, key=lambda s: font.getsize(s)[0])
     # max height is adjusted down because it's too large visually for spacing
     test_string = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
     max_height = pt2px(font.getsize(test_string)[1])
     max_width = pt2px(font.getsize(max_width_line)[0])
-    height = max_height * len(lines)  # perfect or a little oversized
-    width = int(round(max_width + 40 + 480 + 1090))  # a little oversized , needs to be exactly this # or cuts off text
-    # image = PIL.Image.new(grayscale, (width, height), color=WHITE)
-    # draw = PIL.ImageDraw.Draw(image)
+    height = max_height * len(lines) + 2  # perfect or a little oversized
+    
+    width = int(round(max_line_width * 3 + 0))  # a little oversized , needs to be exactly this # or cuts off text
+
 
     image = Image.new("RGB", (width, height), colors['backround_2']) # scrap image
     draw = ImageDraw.Draw(image)
