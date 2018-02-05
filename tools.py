@@ -50,7 +50,6 @@ def make_correct_lines(ideal_num_lines, ideal_line_length, word_list):
         new_ratio = len(new_lines) / new_line_length
 
         try_num +=1
-    print('winning line len:', new_line_length -1)#!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     return prev_lines
 
 def make_lines(line_length, word_list):
@@ -102,3 +101,16 @@ def read_text_file(file_path):
     with open(file_path) as text_file:  # can throw FileNotFoundError
         result = tuple(l.rstrip() for l in text_file.readlines())
         return result
+    
+#just for testing
+def write_text_file(file_path, row_dict):
+    f = open(file_path, 'w')
+    # write to file
+    for row in row_dict:
+        f.write(row + '\n')
+    # cleanup
+    f.close()
+    
+    
+    
+    

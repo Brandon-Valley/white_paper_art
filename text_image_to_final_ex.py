@@ -24,7 +24,7 @@ colors = {'backround_1':  WHITE,
 dimention_ratio = 3/7
 
 text_image_filename = 'out.txt'
-data_text_filename = 'many0s.txt'
+data_text_filename = 'full_paper.txt'
 
 #read in image and data in txt files into lists of lines
 raw_lines = tools.read_text_file(text_image_filename)    
@@ -40,17 +40,17 @@ ideal_dimentions = tools.calc_ideal_dimentions(dimention_ratio, num_chars)
 
 #make list of lines to be output in final image
 lines = tools.make_correct_lines(ideal_dimentions['num_lines'], ideal_dimentions['line_length'], word_list)
-print(lines)#!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 #look at text image lines to get cords of chars to be highlighted in final image
 highlight_cords = tools.get_highlight_cords(raw_lines)
 
 #put it all together and what have you got?  Bippity Boppity BOO!
+print('working...')
 image = text_image.text_image(lines, colors, highlight_cords)
 
 # image.save('test_output.jpg', format='JPEG', subsampling=0,quality = 100)
 image.save('test_output.png', subsampling=0, quality = 100)
-print('working...')
+
 image.show()
 
 

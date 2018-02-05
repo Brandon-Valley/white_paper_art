@@ -22,11 +22,15 @@ def text_image(lines, colors, highlight_cords, font_path = None):
     
     
 
-    max_width_line = max(lines, key=lambda s: font.getsize(s)[0])
+#     max_width_line = max(lines, key=lambda s: font.getsize(s)[0])
     # max height is adjusted down because it's too large visually for spacing
     test_string = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
     max_height = pt2px(font.getsize(test_string)[1])
-    max_width = pt2px(font.getsize(max_width_line)[0])
+    
+    print('max_height:', max_height)#!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    print('width of char:', pt2px(font.getsize('o')[0]))#!!!!!!!!!!!!!!!!!!!!!!
+    
+#     max_width = pt2px(font.getsize(max_width_line)[0])
     height = max_height * len(lines) + 2  # perfect or a little oversized
     
     width = int(round(max_line_width * 3 + 0))  # a little oversized , needs to be exactly this # or cuts off text
@@ -65,6 +69,7 @@ def text_image(lines, colors, highlight_cords, font_path = None):
     #         sleep(1)
     
             image2.paste(iletter, (x_paste, 0))
+#             print('x_paste:', x_paste)#!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
             x_draw += w_full
             x_paste += w
         line_num += 1
