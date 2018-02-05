@@ -18,7 +18,7 @@ colors = {'backround_1':  WHITE,
 #2/3:
 # a a a
 # a a a
-dimention_ratio = 3/4
+dimention_ratio = 5/4
 
 text_image_filename = 'yin.txt'
 data_text_filename = 'ex_data.txt'
@@ -45,7 +45,8 @@ highlight_cords = tools.get_highlight_cords(raw_lines)
 #put it all together and what have you got?  Bippity Boppity BOO!
 image = text_image.text_image(lines, colors, highlight_cords)
 
-image.save('test_output.png', quality = 100)
+# image.save('test_output.jpg', format='JPEG', subsampling=0,quality = 100)
+image.save('test_output.png', subsampling=0, quality = 100)
 image.show()
 
 

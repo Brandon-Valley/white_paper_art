@@ -22,7 +22,7 @@ def text_image(lines, colors, highlight_cords, font_path = None):
     max_height = pt2px(font.getsize(test_string)[1])
     max_width = pt2px(font.getsize(max_width_line)[0])
     height = max_height * len(lines)  # perfect or a little oversized
-    width = int(round(max_width + 40 + 480 ))  # a little oversized , needs to be exactly this # or cuts off text
+    width = int(round(max_width + 40 + 480 + 1090))  # a little oversized , needs to be exactly this # or cuts off text
     # image = PIL.Image.new(grayscale, (width, height), color=WHITE)
     # draw = PIL.ImageDraw.Draw(image)
 
