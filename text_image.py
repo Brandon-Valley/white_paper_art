@@ -18,9 +18,7 @@ def text_image(lines, colors, highlight_cords, font_path = None):
     pt2px = lambda pt: int(round(pt * 96.0 / 72))  # convert points to pixels
     
     longest_line = tools.find_longest_line(lines)
-    print('longest line:', longest_line)#!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     max_line_width = pt2px(font.getsize(longest_line)[0])
-    print('max_line_width:', max_line_width)#!@@!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     
     
 
@@ -45,7 +43,7 @@ def text_image(lines, colors, highlight_cords, font_path = None):
     line_num = 0
     for line_num in range(len(lines)):
         line = lines[line_num]
-        print(line)#!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+#         print(line)#!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         x_draw, x_paste = 0, 0
         
         for letter_num in range(len(line)):

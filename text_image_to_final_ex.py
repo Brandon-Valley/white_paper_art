@@ -10,20 +10,21 @@ WHITE = (254,254,254)
 BLACK = (0,0,0)
 ALMOST_BLACK = (5,5,5)
 YELLOW = (222, 224, 68)
+DARK_GRAY = (68,68,68)
 GREY = (200, 200, 200)
 
 colors = {'backround_1':  WHITE,
           'backround_2':  ALMOST_BLACK,
           'default_text': WHITE,
-          'highlight':    YELLOW}
+          'highlight':    DARK_GRAY}
 
 #2/3:
 # a a a
 # a a a
 dimention_ratio = 3/7
 
-text_image_filename = 'yin.txt'
-data_text_filename = 'ex_data.txt'
+text_image_filename = 'out.txt'
+data_text_filename = 'many0s.txt'
 
 #read in image and data in txt files into lists of lines
 raw_lines = tools.read_text_file(text_image_filename)    
@@ -49,6 +50,7 @@ image = text_image.text_image(lines, colors, highlight_cords)
 
 # image.save('test_output.jpg', format='JPEG', subsampling=0,quality = 100)
 image.save('test_output.png', subsampling=0, quality = 100)
+print('working...')
 image.show()
 
 

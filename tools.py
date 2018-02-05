@@ -83,16 +83,20 @@ def get_highlight_cords(lines):
                 h_cords.append( [line_num, letter_num])
     return h_cords
     
-            
+
 #makes broken up list of strings into one big string
 def format_data(data):
     formatted_data = ''
-    for data_line in data:
-        if data_line[0] == ' ' or formatted_data == '':
-            formatted_data += data_line
-        else:
-            formatted_data += ' ' + data_line
-    return formatted_data
+    
+    try:
+        for data_line in data:
+            if data_line[0] == ' ' or formatted_data == '':
+                formatted_data += data_line
+            else:
+                formatted_data += ' ' + data_line
+        return formatted_data
+    except:
+        raise Exception('ERROR  You probably have some extra lines of spaces in your data text file')
 
 def read_text_file(file_path):
     with open(file_path) as text_file:  # can throw FileNotFoundError

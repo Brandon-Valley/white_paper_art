@@ -130,7 +130,7 @@ def main():
 #         scale = float(args.scale)
 
     # set cols
-    cols = 80
+    cols = 200
 #     if args.cols:
 #         cols = 120#int(args.cols)
 
