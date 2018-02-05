@@ -19,9 +19,11 @@ def closer(num1, num2, ideal_num):
     print ('comparing to see if %s is closer to %s than %s' %(num1, ideal_num, num2))#!!!!!!!!!!!!!!!!!!!
     diff1 = abs( ideal_num - num1 )
     diff2 = abs( ideal_num - num2 )
-    if diff1 > diff2:
+    if diff1 < diff2:
+        print('it is!')#!!!!!!!!!!!!!!!!!!!!!!!!!!!
         return True
     else:#if <=
+        print('it is not!!')#!!!!!!!!!!!!!!!!!!!!!!!
         return False
 
 #because of the problems with calc_ideal_dimentions, this function will continue making sets of lines
