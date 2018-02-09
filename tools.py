@@ -35,8 +35,12 @@ def closer(num1, num2, ideal_num):
 #because of the problems with calc_ideal_dimentions, this function will continue making sets of lines
 #increasing the width each time until the closest situation to the 
 def make_correct_lines(ideal_num_lines, ideal_line_length, word_list):
+    try:
+        ideal_ratio = ideal_num_lines / ideal_line_length 
+    except:#if get 0x0
+        ideal_ratio = 1
+        
     try_num = 0
-    ideal_ratio = ideal_num_lines / ideal_line_length 
     prev_ratio = 0
     new_ratio = 0
     prev_lines = []
@@ -82,6 +86,15 @@ def get_highlight_cords(lines):
                 h_cords.append( [line_num, letter_num])
     return h_cords
     
+    
+def adjust_highlight_cords(h_cords, image_resize_ratio):
+    adjusted_h_cords = []
+    for h_cord in h_cords:
+        adjusted_line_num = int ( ( h_cord[0] * (1 / image_resize_ratio) ) )
+        adjusted_letter_num = int ( ( h_cord[1] * image_resize_ratio ) )
+        adjusted_h_cords.append( [adjusted_line_num, adjusted_letter_num])
+    return adjusted_h_cords
+
 
 #makes broken up list of strings into one big string
 def format_data(data):
@@ -103,11 +116,11 @@ def read_text_file(file_path):
         return result
     
 #just for testing
-def write_text_file(file_path, row_dict):
+def write_text_file(file_path, line_list):
     f = open(file_path, 'w')
     # write to file
-    for row in row_dict:
-        f.write(row + '\n')
+    for row in line_list:
+        f.write(line + '\n')
     # cleanup
     f.close()
     
