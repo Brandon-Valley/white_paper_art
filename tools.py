@@ -90,9 +90,28 @@ def get_highlight_cords(lines):
 def adjust_highlight_cords(h_cords, image_resize_ratio):
     adjusted_h_cords = []
     for h_cord in h_cords:
-        adjusted_line_num = int ( ( h_cord[0] * (1 / image_resize_ratio) ) )
-        adjusted_letter_num = int ( ( h_cord[1] * image_resize_ratio ) )
-        adjusted_h_cords.append( [adjusted_line_num, adjusted_letter_num])
+        
+        line_float = h_cord[0] * (1 / image_resize_ratio)
+        letter_float = h_cord[1] * image_resize_ratio
+           
+        line_num = int (line_float)
+        letter_num = int (letter_float)
+        
+        #if pos taken, must find another
+#         if [line_num, letter_num] in h_cords:
+#             if line_float % 1 < 0.5:
+#                 line_num = int( (h_cord[0] - 0.5) * (1 / image_resize_ratio) ) 
+#             else:
+#                 line_num = int( (h_cord[0] + 0.5) * (1 / image_resize_ratio) ) 
+
+        adjusted_h_cords.append( [line_num, letter_num])
+        
+        #compensate for skipping lines
+        if line_float % 1 == 0.75:
+            extra_line_num = round (line_float)
+            adjusted_h_cords.append( [extra_line_num, letter_num])
+        
+#     print('lost %s h_chars' %(len(h_cords) - len(list(set(adjusted_h_cords)))))#`````````````````````````````````````````````````````````
     return adjusted_h_cords
 
 

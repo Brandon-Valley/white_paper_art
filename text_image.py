@@ -27,9 +27,6 @@ def text_image(lines, colors, highlight_cords, font_path = None):
     test_string = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
     max_height = pt2px(font.getsize(test_string)[1])
     
-    print('max_height:', max_height)#!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    print('width of char:', pt2px(font.getsize('o')[0]))#!!!!!!!!!!!!!!!!!!!!!!
-    
 #     max_width = pt2px(font.getsize(max_width_line)[0])
     height = max_height * len(lines) + 2  # perfect or a little oversized
     

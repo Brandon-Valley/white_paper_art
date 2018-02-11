@@ -18,7 +18,7 @@ colors = {'backround_1':  WHITE,
           'highlight':    DARK_GRAY}
 
 const_HxW_ratio = 5150/9600 #found by making a 99x99 txt file and looking at dimensions of image
-image_resize_ratio = .75
+image_resize_ratio = .8
 
 #2/3:
 # a a a
