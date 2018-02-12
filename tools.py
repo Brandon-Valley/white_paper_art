@@ -138,7 +138,7 @@ def read_text_file(file_path):
 def write_text_file(file_path, line_list):
     f = open(file_path, 'w')
     # write to file
-    for row in line_list:
+    for line in line_list:
         f.write(line + '\n')
     # cleanup
     f.close()

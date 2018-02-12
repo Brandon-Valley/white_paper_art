@@ -2,28 +2,33 @@
 
 import tools
 
-# 0  1  2  3  4  5  6  7  8  9 10 11
-#
-#
-# 1 
-#
-#  |                    
-# 2  
-#
-#                     
-# 3   |                    
-# 4   |                     
-# 5                        
-# 6                        
-# 7                       
-# 8                            
-# 9                         
-# 10                         
-# 11                        
+
+
+
+print(len('                                    .---------------------------------------:        -------.       :---------------------------------------------------------------.                                   '))
+num1 = 1
+
+def pbr_test(num):
+    num += 5
+
+pbr_test(num1)
+print(num1)
+
+
+test_dict = {"sf": 1,
+             'sdfsf': 2,
+             'sfgssd': [4,5]}
+
+
+print( 4 in test_dict.values())
+
+    
+        
 
 size = 100
 output_filename = 'test_grid.txt'
-
+name = 'bob'
+raise NameError ('hi there %s' %(name))
 
 num = 3.75
 print( num % 1)

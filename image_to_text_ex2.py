@@ -116,10 +116,10 @@ def main():
     # parse args
     args = parser.parse_args()
   
-    imgFile = 'cat.png'#args.imgFile
+    imgFile = 'bitcoin.png'#args.imgFile
 
     # set output file
-    outFile = 'catpic.txt'
+    outFile = 'out.txt'
 #     if args.outFile:
 #         outFile = args.outFile
 
