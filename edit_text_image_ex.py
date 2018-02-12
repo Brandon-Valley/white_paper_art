@@ -76,7 +76,7 @@ def blend(old_lines, old_line_num, old_char_num, cld):
                     print('color char on one side222!!!!!!!!')#`````````````````````````````````````````````````````````````````````````````````````
                     overwrite_char = lh_char
         else:#if blend chars surrounded on lh and rh side by whitespace or the edge of the image
-            overwrite_char = None #make a func to set these if it's like the top or bottom of a circle!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            overwrite_char = find_isolated_blend_char(old_lines, old_line_num, old_char_num, cld, count) #make a func to set these if it's like the top or bottom of a circle!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
             print('should make a cap func!!!!!!!!!!!!!!')#!`````````````````````````````````````````````````````````````````````
         
         print('overwrite_char:' , overwrite_char)#`1``````````````````````````````````````````````````````````````````````````````
@@ -91,8 +91,34 @@ def blend(old_lines, old_line_num, old_char_num, cld):
 #         old_char_num += count - 1 # -1 b/c rh_char might need to be removed
         return blend_str
                   
+#returns char to use for blending when you have a line of blend chars surrounded on the lh and rh by whitespace by looking up and down,
+#will return color char most prevelent either above or below it as long as it is oly bounded by color chars on one side ie: if it has
+#color chars on the top and bottom, it will return None
+def find_isolated_blend_char(old_lines, old_line_num, old_char_num, cld, rh_char_pos):    
+    print('old_lines:', old_lines)#````````````````````````````````````````````````````````````````````````````````````````````````````
+    #get above line
+    above_line = ''
+    if old_line_num == 0 or old_lines[old_line_num - 1] == '':#if on top edge
+        above_line += ( ' ' * (rh_char_pos - 1) ) 
+    else:
+        for above_char_num in range(rh_char_pos):
+            above_line += old_lines[old_line_num - 1][old_char_num + above_char_num]
+            
+    #get below line
+    below_line = ''
+    if old_line_num == ( len(old_lines) - 1 ) or old_lines[old_line_num + 1] == '':#if on bottom edge
+        print('on bottom!!!')#`````````````````````````````````````````````````````````````````````````````````````
+        below_line += ( ' ' * (rh_char_pos - 1) ) 
+    else:
+        print('not on bottom!!')#````````````````````````````````````````````````````````````````````````````````````````
+        for below_char_num in range(rh_char_pos):
+            print('adding this to below line:', old_lines[old_line_num + 1][old_char_num + below_char_num] )#``````````````````````````````````````
+            below_line += old_lines[old_line_num + 1][old_char_num + below_char_num]
+            
+    print('above_line, below_line:', (above_line, below_line))
         
         
+    return None
         
         
 text_image_filename = 'data_dash.txt'
