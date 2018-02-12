@@ -4,6 +4,31 @@ import tools
 
 
 
+#returns true if every char in test_str is within container_list
+def all_within(test_str, container_list):
+    contained = True
+    for test_char in test_str:
+        if test_char not in container_list:
+            contained = False
+    return contained
+
+
+
+import collections
+s = "sssddd"
+print(collections.Counter(s).most_common(1)[0][0])
+
+
+
+
+
+
+t_str = '. ....     .....    '
+t_list = [1, ' ', '.']
+
+print(all_within(t_str, t_list))
+
+
 
 print(len('                                    .---------------------------------------:        -------.       :---------------------------------------------------------------.                                   '))
 num1 = 1

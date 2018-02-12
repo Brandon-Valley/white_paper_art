@@ -1,3 +1,5 @@
+import collections
+
 import tools#could very easily remove if you take out the write_text_file in edit_text_image!!!
 
 #removes and blends
@@ -107,18 +109,52 @@ def find_isolated_blend_char(old_lines, old_line_num, old_char_num, cld, rh_char
     #get below line
     below_line = ''
     if old_line_num == ( len(old_lines) - 1 ) or old_lines[old_line_num + 1] == '':#if on bottom edge
-        print('on bottom!!!')#`````````````````````````````````````````````````````````````````````````````````````
+#         print('on bottom!!!')#`````````````````````````````````````````````````````````````````````````````````````
         below_line += ( ' ' * (rh_char_pos - 1) ) 
     else:
-        print('not on bottom!!')#````````````````````````````````````````````````````````````````````````````````````````
+#         print('not on bottom!!')#````````````````````````````````````````````````````````````````````````````````````````
         for below_char_num in range(rh_char_pos):
-            print('adding this to below line:', old_lines[old_line_num + 1][old_char_num + below_char_num] )#``````````````````````````````````````
+#             print('adding this to below line:', old_lines[old_line_num + 1][old_char_num + below_char_num] )#``````````````````````````````````````
             below_line += old_lines[old_line_num + 1][old_char_num + below_char_num]
             
     print('above_line, below_line:', (above_line, below_line))
-        
-        
+    
+    #check if bounded by none-whitespace
+    bound_above = True
+    bound_below = True
+    if all_within(above_line, cld['whitespace'] + cld['remove']):
+        bound_above = False
+    if all_within(below_line, cld['whitespace'] + cld['remove']):
+        bound_below = False
+    
+#     bound_above = True
+#     for above_char in above_line:
+#         if above_char in cld['whitespace'] or above_char in cld['remove']:
+#             bound_above = False
+#             
+#     bound_below = True
+#     for below_char in below_line:
+#         if below_char in cld['whitespace'] or below_char in cld['remove']:
+#             bounded_below = False
+            
+    #decide what to return based on bounds
+    approved_char_list = cld['color'] + cld['whitespace'] + cld['remove'] + cld['blend']
+    if bound_above != bound_below:#if not completely bounded or floating
+        if bound_above == False:
+            if all_within(below_line, approved_char_list) and not all_within(below_line, cld['blend']):#make sure not only bounded by blend and nothing unexpected gets through
+                return collections.Counter(below_line).most_common(1)[0][0]
+        elif bound_below == False:
+            if all_within(above_line, approved_char_list) and not all_within(above_line, cld['blend']):#make sure not only bounded by blend and nothing unexpected gets through
+                return collections.Counter(above_line).most_common(1)[0][0]    
     return None
+     
+#returns true if every char in test_str is within container_list
+def all_within(test_str, container_list):
+    contained = True
+    for test_char in test_str:
+        if test_char not in container_list:
+            contained = False
+    return contained
         
         
 text_image_filename = 'data_dash.txt'
