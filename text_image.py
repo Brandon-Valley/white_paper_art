@@ -53,8 +53,16 @@ def text_image(lines, colors, highlight_cords, font_path = None):
             w = w_full - w_fill     # the width of the character on its own
             
             letter_cords = [line_num, letter_num]
-            if letter_cords in highlight_cords:
-                color = colors['highlight']
+            cur_char = lines[line_num][letter_num]
+            
+            for h_char, cord_list in highlight_cords.items():
+                if letter_cords in highlight_cords[h_char]:
+                    color = colors['highlight'][h_char]
+                    break
+#                     for h_char , color_tup in colors['highlight'].items():
+#                         if cur_char == h_char:
+#                             color = color_tup
+    #                 color = colors['highlight']
             else:
                 color = colors['default_text']
     

@@ -2,6 +2,23 @@
 
 import tools
 
+# lst = [1,2,3]
+# lst2 = [5,6,7]
+# print(lst+lst2)
+
+test_d = {'hi': 'vlsdf',
+          1: 23,
+          'list': [3,4,5],
+}
+
+if 'hi' in test_d.items():
+    print('yaaaaaaaaaaaaaaaaaaaaaaaaaaaaaay')
+
+print (test_d)
+
+
+
+
 
 
 #returns true if every char in test_str is within container_list

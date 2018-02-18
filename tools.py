@@ -77,39 +77,54 @@ def make_lines(line_length, word_list):
     
 
 def get_highlight_cords(lines):
-    h_cords = []
+    h_cords = {}
     for line_num in range(len(lines)):
         line = lines[line_num]
         for letter_num in range(len(line)):
             letter = line[letter_num]
             if letter != ' ':
-                h_cords.append( [line_num, letter_num])
+                #check if this letter is already a key in highlight_cords
+                char_known = False
+                for h_char, cord_list in h_cords.items():
+                    if letter == h_char:
+                        char_known = True
+                        break
+                #add letter to keys in h_cords if new
+                if char_known == False:
+                    h_cords[letter] = []
+                #add cord
+                h_cords[letter].append( [line_num, letter_num])
     return h_cords
     
     
 def adjust_highlight_cords(h_cords, image_resize_ratio):
-    adjusted_h_cords = []
-    for h_cord in h_cords:
-        
-        line_float = h_cord[0] * (1 / image_resize_ratio)
-        letter_float = h_cord[1] * image_resize_ratio
-           
-        line_num = int (line_float)
-        letter_num = int (letter_float)
-        
-        #if pos taken, must find another
-#         if [line_num, letter_num] in h_cords:
-#             if line_float % 1 < 0.5:
-#                 line_num = int( (h_cord[0] - 0.5) * (1 / image_resize_ratio) ) 
-#             else:
-#                 line_num = int( (h_cord[0] + 0.5) * (1 / image_resize_ratio) ) 
+    adjusted_h_cords = {}
+    #add h_chars from original h_cords 
+    for h_char, cords in h_cords.items():
+        adjusted_h_cords[h_char] = []
+    
+    for h_char, h_cords in h_cords.items():
+        for h_cord in h_cords:
+            
+            line_float = h_cord[0] * (1 / image_resize_ratio)
+            letter_float = h_cord[1] * image_resize_ratio
+               
+            line_num = int (line_float)
+            letter_num = int (letter_float)
+            
+            #if pos taken, must find another
+    #         if [line_num, letter_num] in h_cords:
+    #             if line_float % 1 < 0.5:
+    #                 line_num = int( (h_cord[0] - 0.5) * (1 / image_resize_ratio) ) 
+    #             else:
+    #                 line_num = int( (h_cord[0] + 0.5) * (1 / image_resize_ratio) ) 
+    
+            adjusted_h_cords[h_char].append( [line_num, letter_num])
 
-        adjusted_h_cords.append( [line_num, letter_num])
-        
-        #compensate for skipping lines
-        if line_float % 1 == 0.75:
-            extra_line_num = round (line_float)
-            adjusted_h_cords.append( [extra_line_num, letter_num])
+            #compensate for skipping lines
+            if line_float % 1 == 0.75:
+                extra_line_num = round (line_float)
+                adjusted_h_cords[h_char].append( [extra_line_num, letter_num])
         
 #     print('lost %s h_chars' %(len(h_cords) - len(list(set(adjusted_h_cords)))))#`````````````````````````````````````````````````````````
     return adjusted_h_cords

@@ -5,17 +5,22 @@ import tools
 import text_image
 
 
+color_test = PIL.ImageColor.getrgb('green')
+
 WHITE = (254,254,254)
 BLACK = (0,0,0)
 ALMOST_BLACK = (5,5,5)
-YELLOW = (222, 224, 68)
-DARK_GRAY = (68,68,68)
+YELLOW = PIL.ImageColor.getrgb('yellow')
+ORANGE = PIL.ImageColor.getrgb('orange')
+DARK_GRAY = (68,68,68) #test
 GREY = (200, 200, 200)
 
 colors = {'backround_1':  WHITE,
           'backround_2':  ALMOST_BLACK,
           'default_text': WHITE,
-          'highlight':    DARK_GRAY}
+          'highlight':    { '=':  ORANGE,
+                            '-':  YELLOW }
+                                                                        }
 
 const_HxW_ratio = 5150/9600 #found by making a 99x99 txt file and looking at dimensions of image
 image_resize_ratio = .8
@@ -26,7 +31,7 @@ image_resize_ratio = .8
 desired_dimension_ratio = 1/1#why dosnt 1/1 make square??????????????????????????????????????????????????
 #ratios seem messed up, fix/why????????????????????????????????????????????????????????????????
 
-text_image_filename = 'data_dash.txt'      #picture of bitcoin icon
+text_image_filename = 'EDITED_data_dash.txt'      #picture of bitcoin icon
 data_text_filename = 'full_paper.txt'#satoshi whitepaper in a txt file
 
 #read in image and data in txt files into lists of lines
@@ -52,6 +57,9 @@ print("number of lines:", len(lines))
 
 #look at text image lines to get cords of chars to be highlighted in final image
 highlight_cords = tools.get_highlight_cords(raw_lines)
+print(highlight_cords)#``````````````````````````````````````````````````````````````````````````````````````````````````````````````
+for h_char, cords in highlight_cords.items():#`````````````````````````````````````````````````````````````````````````````````````
+    print(h_char)#````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````
 
 #adjust the highlight cords to compensate for the difference between the width of a char and the height of a line
 adjusted_highlight_cords = tools.adjust_highlight_cords(highlight_cords, image_resize_ratio)

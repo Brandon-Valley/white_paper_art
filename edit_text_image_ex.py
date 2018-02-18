@@ -157,7 +157,7 @@ def all_within(test_str, container_list):
     return contained
         
         
-text_image_filename = 'data_dash.txt'
+text_image_filename = 'ether.txt'
 output_filename = 'EDITED_' + text_image_filename
 
 
