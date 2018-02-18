@@ -48,12 +48,12 @@ def covertImageToAsciiAndGetColors(fileName, cols, scale, moreLevels):
     global gscale1, gscale2
 
     # open image and convert to grayscale
-    image = Image.open(fileName).convert('L')
-    image2 = Image.open(fileName).convert('RGB')
+    greyscale_image = Image.open(fileName).convert('L')
+    color_image = Image.open(fileName).convert('RGB')
 #     image.show()#```````````````````````````````````````````````````````````````````````````
 
     # store dimensions
-    W, H = image.size[0], image.size[1]
+    W, H = greyscale_image.size[0], greyscale_image.size[1]
     print("input image dims: %d x %d" % (W, H))
 
     # compute width of tile
@@ -98,10 +98,10 @@ def covertImageToAsciiAndGetColors(fileName, cols, scale, moreLevels):
                 x2 = W
 
             # crop image to extract tile
-            img = image.crop((x1, y1, x2, y2))
+            grey_img = greyscale_image.crop((x1, y1, x2, y2))
 
             # get average luminance
-            avg = int(getAverageL(img))
+            avg = int(getAverageL(grey_img))
 
             # look up ascii char
             if moreLevels:
@@ -114,7 +114,7 @@ def covertImageToAsciiAndGetColors(fileName, cols, scale, moreLevels):
             if gsval not in color_chars:
                 count_ +=1#!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                 print('new color char found:', gsval)#````````````````````````````````````````````````````````
-                color_tile_img_BMP = image2.crop((x1, y1, x2, y2))
+                color_tile_img_BMP = color_image.crop((x1, y1, x2, y2))
                 
                 #.crop wants to make color_tile into .BMP which I dont feel like dealing with so save as jpg to work with it
                 temp_filename = 'color_tile' + str(count_) + '.jpg'
@@ -140,7 +140,7 @@ def covertImageToAsciiAndGetColors(fileName, cols, scale, moreLevels):
                 
                 
 #             if gsval == '-':#?|!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-#                 img2 = image2.crop((x1, y1, x2, y2))
+#                 img2 = color_image.crop((x1, y1, x2, y2))
 #                 img2.show()
             
             # append ascii char to string

@@ -17,19 +17,18 @@ def high_key(d):
 
 #returns single most common color in image
 def most_common_color(rgb_image, height, width):
-    colors = {}
+    image_colors = {}
     for x in range(width):
         for y in range(height):
             r, g, b = rgb_image.getpixel((x, y))
             #check if this color has been seen before, if not, add to list, if so, increase count
-            if (r, g, b) in colors:
-                colors[(r, g, b)] += 1
+            if (r, g, b) in image_colors:
+                image_colors[(r, g, b)] += 1
             else:
-                colors[(r, g, b)] = 1
-        
-        print('colors:', colors)
+                image_colors[(r, g, b)] = 1
+
         #return the color with the highest count
-        return high_key(colors)
+        return high_key(image_colors)
                 
 
 
