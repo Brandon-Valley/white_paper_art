@@ -6,12 +6,27 @@ import tools
 # lst2 = [5,6,7]
 # print(lst+lst2)
 
-test_d = {'hi': 'vlsdf',
-          1: 23,
-          'list': [3,4,5],
-}
+#return key whose value is highest
+def high_key(d):
+    high_val = 0
+    high_key = 0
+    for key, val in d.items():
+        if val > high_val:
+            high_key = key
+            high_val = val
+    return high_key
 
-if 'hi' in test_d.items():
+
+
+
+test_d = {'hi': 5,
+          1: 23,
+          'list': 3,
+          (2,4,5): 166
+}
+print(high_key(test_d))
+
+if (2,4,5) in test_d:
     print('yaaaaaaaaaaaaaaaaaaaaaaaaaaaaaay')
 
 print (test_d)

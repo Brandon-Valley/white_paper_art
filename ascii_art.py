@@ -2,8 +2,11 @@
 import sys, random, argparse
 import numpy as np
 import math
+import os
 
 from PIL import Image
+
+import color_reader
 
 # gray scale level values from: 
 # http://paulbourke.net/dataformats/asciiart/
@@ -32,10 +35,15 @@ def getAverageL(image):
     # get average
     return np.average(im.reshape(w*h))
 
-def covertImageToAscii(fileName, cols, scale, moreLevels):
+#horible func name, should be broken up, but this way is just too easy
+def covertImageToAsciiAndGetColors(fileName, cols, scale, moreLevels):
+    count_ = 0#!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     """
     Given Image and dims (rows, cols) returns an m*n list of Images 
     """
+    
+    color_chars = {}
+    
     # declare globals
     global gscale1, gscale2
 
@@ -101,18 +109,48 @@ def covertImageToAscii(fileName, cols, scale, moreLevels):
             else:
                 gsval = gscale2[int((avg*9)/255)]
 
+               
+            #if haven't seen this char before, add it to color_chars
+            if gsval not in color_chars:
+                count_ +=1#!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                print('new color char found:', gsval)#````````````````````````````````````````````````````````
+                color_tile_img_BMP = image2.crop((x1, y1, x2, y2))
+                
+                #.crop wants to make color_tile into .BMP which I dont feel like dealing with so save as jpg to work with it
+                temp_filename = 'color_tile' + str(count_) + '.jpg'
+                color_tile_img_BMP.save(temp_filename)
+                color_tile_img = Image.open(temp_filename)
+                rgb_color_tile_img = color_tile_img.convert('RGB')#not sure if needed
+#                 rgb_color_tile_img.show()#`````````````````````````````````````````````````````````````
+    
+                tile_W, tile_H = rgb_color_tile_img.size[0], rgb_color_tile_img.size[1]
+                color_equiv = color_reader.most_common_color(rgb_color_tile_img, tile_H, tile_W)
+                print ('equiv color:', color_equiv)#```````````````````````````````````````````````````````````````
+                
+                #done with jpg
+                rgb_color_tile_img.close()
+                color_tile_img.close()
+                os.remove(temp_filename)
+                
+                color_chars[gsval] = color_equiv
+                print('color_chars:', color_chars)#`````````````````````````````````````````````````````````````
+                print('')#`````````````````````````````````````````````````````````````````````````````````````
+#                 rgb_color_tile_img.show()#`````````````````````````````````````````````````````````````````
+#                 rgb_color_tile_img.save('color_tile_' + gsval + '_.jpg')#!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                
+                
 #             if gsval == '-':#?|!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 #                 img2 = image2.crop((x1, y1, x2, y2))
 #                 img2.show()
             
             # append ascii char to string
             aimg[j] += gsval
-    
+    print('count_:' , count_)#````````````````````````````````````````````````````````````````````````
     # return txt image
-    return aimg
+    return aimg, color_chars
 
 # main() function
-def main():
+def convert_image_to_color_equiv_ascii_art(imgFile, outFile, cols, scale):
     # create parser
     descStr = "This program converts an image into ASCII art."
     parser = argparse.ArgumentParser(description=descStr)
@@ -124,30 +162,30 @@ def main():
     parser.add_argument('--morelevels',dest='moreLevels',action='store_true')
 # 
     # parse args
-    args = parser.parse_args()
+    args = parser.parse_args()#are these used?????????????????????????????????????????
   
-    imgFile = 'bitcoin.png'#args.imgFile
-
-    # set output file
-    outFile = 'out.txt'
-#     if args.outFile:
-#         outFile = args.outFile
-
-    # set scale default as 0.43 which suits
-    # a Courier font
-    scale = 0.43
-#     if args.scale:
-#         scale = float(args.scale)
-
-    # set cols
-    cols = 100
+#     imgFile = 'bitcoin.png'#args.imgFile
+# 
+#     # set output file
+#     outFile = 'out.txt'
+# #     if args.outFile:
+# #         outFile = args.outFile
+# 
+#     # set scale default as 0.43 which suits
+#     # a Courier font
+#     scale = 0.43
+# #     if args.scale:
+# #         scale = float(args.scale)
+# 
+#     # set cols
+#     cols = 100
 #     if args.cols:
 #         cols = 120#int(args.cols)
 
     print('generating ASCII art...')
     # convert image to ascii txt
-    aimg = covertImageToAscii(imgFile, cols, scale, args.moreLevels)
-    print(aimg)#```````````````````````````````````````````````````````````````````````````
+    aimg, color_chars = covertImageToAsciiAndGetColors(imgFile, cols, scale, args.moreLevels)
+#     print(aimg)#```````````````````````````````````````````````````````````````````````````
 
     # open file
     f = open(outFile, 'w')
@@ -159,7 +197,9 @@ def main():
     # cleanup
     f.close()
     print("ASCII art written to %s" % outFile)
+    
+    return color_chars
 
-# call main
-if __name__ == '__main__':
-    main()
+# # call main
+# if __name__ == '__main__':
+#     main()
