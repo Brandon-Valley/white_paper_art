@@ -29,8 +29,25 @@ def most_common_color(rgb_image, height, width):
 
         #return the color with the highest count
         return high_key(image_colors)
-                
 
+# def most_common_color_odd_file(color_tile_img_BMP):
+#     #.crop wants to make color_tile into .BMP which I dont feel like dealing with so save as jpg to work with it
+#     temp_filename = 'color_tile.jpg'
+#     color_tile_img_BMP.save(temp_filename)
+#     color_tile_img = Image.open(temp_filename)
+#     rgb_color_tile_img = color_tile_img.convert('RGB')#not sure if needed
+# #                 rgb_color_tile_img.show()#`````````````````````````````````````````````````````````````
+#     
+#     tile_W, tile_H = rgb_color_tile_img.size[0], rgb_color_tile_img.size[1]
+#     color_equiv = color_reader.most_common_color(rgb_color_tile_img, tile_H, tile_W)
+# #                 print ('equiv color:', color_equiv)#```````````````````````````````````````````````````````````````
+#     
+#     #done with jpg
+#     rgb_color_tile_img.close()
+#     color_tile_img.close()
+#     os.remove(temp_filename)
+#     
+#     return color_equiv
 
 
 

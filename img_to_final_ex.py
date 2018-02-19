@@ -41,9 +41,9 @@ colors = {'backround_1':  (255,255,255),#white
           'default_text': (255,255,255),#white
           'highlight':    {}
                                                                         }
-char_types = {'remove'      : ['.'],
-              'blend'       : [':'],
-              'color'       : ['-', '=','+','*','#','%', '@'],
+char_types = {'remove'      : [':>{"'],
+              'blend'       : [''],
+              'color'       : "$@B%8&WM#*oahkbdpqwmZO0QLCJUYXzcvunxrjft/\|()1{}[]?-_+~<>i!lI;:,\"^`'.",#['-', '=','+','*','#','%', '@'],
               'whitespace'  : [' ']}
 
 tinker = False
@@ -63,6 +63,7 @@ for c_char, color in color_chars.items():
     if c_char in char_types['color']:
         colors['highlight'][c_char] = color
 print('colors:', colors)#````````````````````````````````````````````````````````````````````````
+print('num_highlight_cords:', len(colors['highlight']))#```````````````````````````````````````````````````````````
 
 
 if tinker == False:    

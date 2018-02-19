@@ -2,6 +2,51 @@
 
 import tools
 
+
+def within_range( tup1, tup2, r):
+    in_range = True
+    if len(tup1) == len(tup2):
+        for i in range(len(tup1)):
+            if tup1[i] < tup2[i] - r or tup1[i] > tup2[i] + r:
+                in_range = False
+    return in_range
+    
+    
+    
+    
+#     if  t1a >= t2a - r and t1a <= t2a + r and
+#         t1b >= t2b - r and t1b <= t2b + r and
+#         t1c >= t2c - r and t1c <= t2c + r:
+#         return True
+#     else:
+#         return False
+    
+t1 = (1,1,1)
+t2 = (6,6,10)
+t3 = (100, 200, 100)
+
+d1 = {'a': t2,
+      'b': t3}
+for d in d1.values():
+    print(d)
+
+
+
+d1_val_list = d1.values()
+print(d1_val_list[0])
+print(within_range(t1,d1.values(),5))
+
+
+
+
+
+
+
+
+
+
+
+
 # lst = [1,2,3]
 # lst2 = [5,6,7]
 # print(lst+lst2)
@@ -24,7 +69,7 @@ test_d = {'hi': 5,
           'list': 3,
           (2,4,5): 166
 }
-print(high_key(test_d))
+print('teeeeeeeest:', 23 in test_d.values())
 
 if (2,4,5) in test_d:
     print('yaaaaaaaaaaaaaaaaaaaaaaaaaaaaaay')
