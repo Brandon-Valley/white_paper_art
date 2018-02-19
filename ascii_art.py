@@ -54,7 +54,7 @@ def covertImageToAsciiAndGetColors(fileName, cols, scale, moreLevels):
 
     # store dimensions
     W, H = greyscale_image.size[0], greyscale_image.size[1]
-    print("input image dims: %d x %d" % (W, H))
+#     print("input image dims: %d x %d" % (W, H))
 
     # compute width of tile
     w = W/cols
@@ -65,8 +65,8 @@ def covertImageToAsciiAndGetColors(fileName, cols, scale, moreLevels):
     # compute number of rows
     rows = int(H/h)
     
-    print("cols: %d, rows: %d" % (cols, rows))
-    print("tile dims: %d x %d" % (w, h))
+#     print("cols: %d, rows: %d" % (cols, rows))
+#     print("tile dims: %d x %d" % (w, h))
 
     # check if image size is too small
     if cols > W or rows > H:
@@ -113,7 +113,7 @@ def covertImageToAsciiAndGetColors(fileName, cols, scale, moreLevels):
             #if haven't seen this char before, add it to color_chars
             if gsval not in color_chars:
                 count_ +=1#!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-                print('new color char found:', gsval)#````````````````````````````````````````````````````````
+#                 print('new color char found:', gsval)#````````````````````````````````````````````````````````
                 color_tile_img_BMP = color_image.crop((x1, y1, x2, y2))
                 
                 #.crop wants to make color_tile into .BMP which I dont feel like dealing with so save as jpg to work with it
@@ -125,7 +125,7 @@ def covertImageToAsciiAndGetColors(fileName, cols, scale, moreLevels):
     
                 tile_W, tile_H = rgb_color_tile_img.size[0], rgb_color_tile_img.size[1]
                 color_equiv = color_reader.most_common_color(rgb_color_tile_img, tile_H, tile_W)
-                print ('equiv color:', color_equiv)#```````````````````````````````````````````````````````````````
+#                 print ('equiv color:', color_equiv)#```````````````````````````````````````````````````````````````
                 
                 #done with jpg
                 rgb_color_tile_img.close()
@@ -133,8 +133,8 @@ def covertImageToAsciiAndGetColors(fileName, cols, scale, moreLevels):
                 os.remove(temp_filename)
                 
                 color_chars[gsval] = color_equiv
-                print('color_chars:', color_chars)#`````````````````````````````````````````````````````````````
-                print('')#`````````````````````````````````````````````````````````````````````````````````````
+#                 print('color_chars:', color_chars)#`````````````````````````````````````````````````````````````
+#                 print('')#`````````````````````````````````````````````````````````````````````````````````````
 #                 rgb_color_tile_img.show()#`````````````````````````````````````````````````````````````````
 #                 rgb_color_tile_img.save('color_tile_' + gsval + '_.jpg')#!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                 
@@ -145,12 +145,12 @@ def covertImageToAsciiAndGetColors(fileName, cols, scale, moreLevels):
             
             # append ascii char to string
             aimg[j] += gsval
-    print('count_:' , count_)#````````````````````````````````````````````````````````````````````````
+#     print('count_:' , count_)#````````````````````````````````````````````````````````````````````````
     # return txt image
     return aimg, color_chars
 
 # main() function
-def convert_image_to_color_equiv_ascii_art(imgFile, outFile, cols, scale):
+def convert_image_to_color_equiv_ascii_art(imgFile, cols, scale):
     # create parser
     descStr = "This program converts an image into ASCII art."
     parser = argparse.ArgumentParser(description=descStr)
@@ -182,23 +182,24 @@ def convert_image_to_color_equiv_ascii_art(imgFile, outFile, cols, scale):
 #     if args.cols:
 #         cols = 120#int(args.cols)
 
-    print('generating ASCII art...')
+#     print('generating ASCII art...')
     # convert image to ascii txt
     aimg, color_chars = covertImageToAsciiAndGetColors(imgFile, cols, scale, args.moreLevels)
 #     print(aimg)#```````````````````````````````````````````````````````````````````````````
 
-    # open file
-    f = open(outFile, 'w')
-
-    # write to file
-    for row in aimg:
-        f.write(row + '\n')
-
-    # cleanup
-    f.close()
-    print("ASCII art written to %s" % outFile)
+#     # open file
+#     f = open(outFile, 'w')
+# 
+#     # write to file
+#     for row in aimg:
+#         f.write(row + '\n')
+# 
+#     # cleanup
+#     f.close()
+#     print("ASCII art written to %s" % outFile)
     
-    return color_chars
+    return aimg, color_chars
+
 
 # # call main
 # if __name__ == '__main__':

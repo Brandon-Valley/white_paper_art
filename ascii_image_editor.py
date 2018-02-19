@@ -3,7 +3,7 @@ import collections
 import tools#could very easily remove if you take out the write_text_file in edit_text_image!!!
 
 #removes and blends
-def edit_text_image_lines(old_lines, cld):
+def edit_ascii_lines(old_lines, cld):
     new_lines = []
     for old_line_num in range( len(old_lines) ):
         old_line = old_lines[old_line_num]
@@ -15,24 +15,25 @@ def edit_text_image_lines(old_lines, cld):
             if old_char in cld['remove']:
                 new_line += ' '
                 old_char_num += 1
-                print('removed (kinda):', old_char)#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#                 print('removed (kinda):', old_char)#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
                 
             elif old_char in cld['blend']:
-                print('blended from  old_line_num: %s  old_char_num: %s  old_char: %s  ...' %(old_line_num, old_char_num, old_char))#```````````````````````````````````````
+#                 print('blended from  old_line_num: %s  old_char_num: %s  old_char: %s  ...' %(old_line_num, old_char_num, old_char))#```````````````````````````````````````
                 blended_str = blend(old_lines, old_line_num, old_char_num, cld) #blend also increase old_char_num (pass-by-ref) still true????????
                 new_line += blended_str
                 old_char_num += len (blended_str) 
-                print(blended_str)#````````````````````````````````````````````````````````````````````````````````````````````````````````
+#                 print(blended_str)#````````````````````````````````````````````````````````````````````````````````````````````````````````
 #                 print('old_char_num:', old_char_num)#    ``````````````````````````````````````````````````````````````````````````````````````````
-                print('to  old_char_num - 1: %s  old_char: %s  ...' %(old_char_num - 1, old_line[old_char_num - 1]))#```````````````````````````````````` 
+#                 print('to  old_char_num - 1: %s  old_char: %s  ...' %(old_char_num - 1, old_line[old_char_num - 1]))#```````````````````````````````````` 
             else:
                 new_line += old_char
                 old_char_num += 1
         new_lines.append(new_line)
         
-    tools.write_text_file(output_filename, new_lines)
+#     tools.write_text_file('edit_test.txt', new_lines)
+    return new_lines
     
-    print('done!')
+#     print('done!')#````````````````````````````````````````````````````````````````````````````
 
 #returns blended string to be added to new_line and increases old_char_num (pass-by-ref) still????????????????????
 def blend(old_lines, old_line_num, old_char_num, cld):
@@ -65,23 +66,22 @@ def blend(old_lines, old_line_num, old_char_num, cld):
         raise NameError('Encountered char that was not in possable_char_list:  lh_char = %s  rh_char = %s' %(lh_char, rh_char))
     else:
         if lh_char in cld['color'] or rh_char in cld['color']:
-            print('one of the chars is in color', (lh_char, rh_char))#``````````````````````````````````````````````````````````````````````````
+#             print('one of the chars is in color', (lh_char, rh_char))#``````````````````````````````````````````````````````````````````````````
             if lh_char == rh_char:#if surrounded by 2 of the same color chars
                 overwrite_char = lh_char
             elif lh_char in cld['color'] and rh_char in cld['color']:#if surrounded by 2 different color chars
                 overwrite_char = None
             else:#if color char on one side and whitespace or the end of the image on the other side
                 if lh_char in cld['remove'] or lh_char in cld['whitespace'] or lh_char == None:
-                    print('color char on one side!!!!!!!!')#`````````````````````````````````````````````````````````````````````````````````````
+#                     print('color char on one side!!!!!!!!')#`````````````````````````````````````````````````````````````````````````````````````
                     overwrite_char = rh_char
                 else:
-                    print('color char on one side222!!!!!!!!')#`````````````````````````````````````````````````````````````````````````````````````
+#                     print('color char on one side222!!!!!!!!')#`````````````````````````````````````````````````````````````````````````````````````
                     overwrite_char = lh_char
         else:#if blend chars surrounded on lh and rh side by whitespace or the edge of the image
             overwrite_char = find_isolated_blend_char(old_lines, old_line_num, old_char_num, cld, count) #make a func to set these if it's like the top or bottom of a circle!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-            print('should make a cap func!!!!!!!!!!!!!!')#!`````````````````````````````````````````````````````````````````````
         
-        print('overwrite_char:' , overwrite_char)#`1``````````````````````````````````````````````````````````````````````````````
+#         print('overwrite_char:' , overwrite_char)#`1``````````````````````````````````````````````````````````````````````````````
         blend_str = ''
         if overwrite_char != None:
             for c in range(count):
@@ -97,7 +97,7 @@ def blend(old_lines, old_line_num, old_char_num, cld):
 #will return color char most prevelent either above or below it as long as it is oly bounded by color chars on one side ie: if it has
 #color chars on the top and bottom, it will return None
 def find_isolated_blend_char(old_lines, old_line_num, old_char_num, cld, rh_char_pos):    
-    print('old_lines:', old_lines)#````````````````````````````````````````````````````````````````````````````````````````````````````
+#     print('old_lines:', old_lines)#````````````````````````````````````````````````````````````````````````````````````````````````````
     #get above line
     above_line = ''
     if old_line_num == 0 or old_lines[old_line_num - 1] == '':#if on top edge
@@ -117,7 +117,7 @@ def find_isolated_blend_char(old_lines, old_line_num, old_char_num, cld, rh_char
 #             print('adding this to below line:', old_lines[old_line_num + 1][old_char_num + below_char_num] )#``````````````````````````````````````
             below_line += old_lines[old_line_num + 1][old_char_num + below_char_num]
             
-    print('above_line, below_line:', (above_line, below_line))
+#     print('above_line, below_line:', (above_line, below_line))#````````````````````````````````````````````````````````````````````````
     
     #check if bounded by none-whitespace
     bound_above = True
@@ -156,30 +156,30 @@ def all_within(test_str, container_list):
             contained = False
     return contained
         
-        
-text_image_filename = 'ether.txt'
-output_filename = 'EDITED_' + text_image_filename
-
-
-char_lists_dict = {'remove'      : ['.'],
-                   'blend'       : [':'],
-                   'color'       : ['-', '='],
-                   'whitespace'  : [' ']}
-
-# cld['remove'] = ['.']
-# cld['blend'] = [':']
-# cld['color'] = ['-', '=']
-# cld['whitespace'] = [' ']
-
-#get lines from original text image
-original_text_image_lines = tools.read_text_file(text_image_filename)       
-
-edit_text_image_lines(original_text_image_lines, char_lists_dict)    
-            
-        
-        
-        
-        
+def main():       
+    text_image_filename = 'ether.txt'
+    output_filename = 'EDITED_' + text_image_filename
+    
+    
+    char_lists_dict = {'remove'      : ['.'],
+                       'blend'       : [':'],
+                       'color'       : ['-', '='],
+                       'whitespace'  : [' ']}
+    
+    # cld['remove'] = ['.']
+    # cld['blend'] = [':']
+    # cld['color'] = ['-', '=']
+    # cld['whitespace'] = [' ']
+    
+    #get lines from original text image
+    original_text_image_lines = tools.read_text_file(text_image_filename)       
+    
+    edit_ascii_lines(original_text_image_lines, char_lists_dict)    
+                
+          
+# # call main
+if __name__ == '__main__':
+    main() 
         
         
     

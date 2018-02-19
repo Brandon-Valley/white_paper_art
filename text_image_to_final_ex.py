@@ -18,8 +18,8 @@ GREY = (200, 200, 200)
 colors = {'backround_1':  WHITE,
           'backround_2':  ALMOST_BLACK,
           'default_text': WHITE,
-          'highlight':    { '=':  ORANGE,
-                            '-':  YELLOW }
+          'highlight':    { '=':  (243, 153, 39),
+                            '-':   (238, 170, 85)}
                                                                         }
 
 const_HxW_ratio = 5150/9600 #found by making a 99x99 txt file and looking at dimensions of image
