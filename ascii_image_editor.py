@@ -157,13 +157,13 @@ def all_within(test_str, container_list):
     return contained
         
 def main():       
-    text_image_filename = 'ether.txt'
+    text_image_filename = 'ascii_ripple.txt'
     output_filename = 'EDITED_' + text_image_filename
     
     
     char_lists_dict = {'remove'      : ['.'],
                        'blend'       : [':'],
-                       'color'       : ['-', '='],
+                       'color'       : ['-', '=','+','*','#'],
                        'whitespace'  : [' ']}
     
     # cld['remove'] = ['.']
@@ -174,7 +174,10 @@ def main():
     #get lines from original text image
     original_text_image_lines = tools.read_text_file(text_image_filename)       
     
-    edit_ascii_lines(original_text_image_lines, char_lists_dict)    
+    edited_lines = edit_ascii_lines(original_text_image_lines, char_lists_dict)    
+    
+    tools.write_text_file('edit_test.txt', edited_lines)
+    print('done!')
                 
           
 # # call main

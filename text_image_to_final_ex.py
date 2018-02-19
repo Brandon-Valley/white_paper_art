@@ -18,8 +18,8 @@ GREY = (200, 200, 200)
 colors = {'backround_1':  WHITE,
           'backround_2':  ALMOST_BLACK,
           'default_text': WHITE,
-          'highlight':    { '=':  (243, 153, 39),
-                            '-':   (238, 170, 85)}
+          'highlight':    { '=':  (229, 242, 251),
+                            '-':   (247, 255, 255)}
                                                                         }
 
 const_HxW_ratio = 5150/9600 #found by making a 99x99 txt file and looking at dimensions of image
@@ -69,7 +69,7 @@ print('Creating Image...')
 image = text_image.text_image(lines, colors, adjusted_highlight_cords)
 
 # image.save('test_output.jpg', format='JPEG', subsampling=0,quality = 100)
-image.save('test_output.png', subsampling=0, quality = 100)
+image.save('TEST_OUTPUT___.png', subsampling=0, quality = 100)
 
 image.show()
 

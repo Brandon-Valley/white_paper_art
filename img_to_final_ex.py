@@ -15,7 +15,7 @@ original_ascii_art_filename = 'ascii_' + input_image_filename.split('.')[0] + '.
 edited_ascii_art_filename = 'EDITED_' + original_ascii_art_filename
 # text_image_filename = 'EDITED_data_dash.txt'      #picture of bitcoin icon
 
-final_image_filename = 'test_output.png'
+final_image_filename = 'TEST_OUTPUT.png'
 
 # set scale default as 0.43 which suits
 # a Courier font
@@ -35,17 +35,6 @@ desired_dimension_ratio = 1/1
 #find correct image dimensions by adjusting desired ratio for the difference between the length of a char and the height of a line
 true_dimension_ratio = desired_dimension_ratio * const_HxW_ratio
 
-# WHITE = (255,255,255#!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-# BLACK = (0,0,0)
-# ALMOST_BLACK = (5,5,5)
-# YELLOW = PIL.ImageColor.getrgb('yellow')
-# ORANGE = PIL.ImageColor.getrgb('orange')
-# DARK_GRAY = (68,68,68) #test
-# GREY = (200, 200, 200)
-
-# DEFAULT_BACKROUND_1_COLOR = (255,255,255)#white
-# DEFAULT_BACKROUND_2_COLOR = (0,0,0) #black
-# DEFAULT_TEXT_COLOR = (255,255,255)#white
 
 colors = {'backround_1':  (255,255,255),#white
           'backround_2':  (0,0,0),#black
@@ -54,9 +43,10 @@ colors = {'backround_1':  (255,255,255),#white
                                                                         }
 char_types = {'remove'      : ['.'],
               'blend'       : [':'],
-              'color'       : ['-', '='],
+              'color'       : ['-', '=','+','*','#','%', '@'],
               'whitespace'  : [' ']}
 
+tinker = False
 
 #returns lines to make an ascii art txt file of image AND returns dict matching chars to colors (awful func, should be split up)
 print('Converting image to ascii art lines and getting color equivalents...')
@@ -72,22 +62,28 @@ tools.write_text_file(original_ascii_art_filename, original_ascii_lines)
 for c_char, color in color_chars.items():
     if c_char in char_types['color']:
         colors['highlight'][c_char] = color
-# print('colors:', colors)#````````````````````````````````````````````````````````````````````````
+print('colors:', colors)#````````````````````````````````````````````````````````````````````````
+
+
+if tinker == False:    
+    #creates new txt file by editing the original ascii txt image, removes to slim sharpen image, blends to set up for multi-color final image
+    print('Creating edited ascii art lines...')
+    edited_ascii_lines = ascii_image_editor.edit_ascii_lines(original_ascii_lines, char_types)  
+
+    #also need something to check for and correct incomplete editing - blend chars left behind, ect..., probably just UI
+
+    #writes ascii lines to a txt file, not needed for function but helpful for tinkering
+    print('Writing edited ascii lines to txt file...')
+    tools.write_text_file(edited_ascii_art_filename, edited_ascii_lines ) 
+    
+else:
+    #read in tinkered with edited txt file
+    print('Reading in data text file...') 
+    edited_ascii_lines = tools.read_text_file(edited_ascii_art_filename)
 
 #read in the text that will be colored to show a picture
 print('Reading in data text file...') 
 data = tools.read_text_file(data_text_filename)
-
-#creates new txt file by editing the original ascii txt image, removes to slim sharpen image, blends to set up for multi-color final image
-print('Creating edited ascii art lines...')
-edited_ascii_lines = ascii_image_editor.edit_ascii_lines(original_ascii_lines, char_types)  
-
-#also need something to check for and correct incomplete editing - blend chars left behind, ect..., probably just UI
-
-#writes ascii lines to a txt file, not needed for function but helpful for tinkering
-print('Writing edited ascii lines to txt file...')
-tools.write_text_file(edited_ascii_art_filename, edited_ascii_lines ) 
-
 
 #turn list of lines of data into one big string, use that to get number of chars in data, then split it into words
 data_str = tools.format_data(data)
