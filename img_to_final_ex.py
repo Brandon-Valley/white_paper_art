@@ -6,8 +6,8 @@ import tools
 import text_image
 import ascii_art
 import ascii_image_editor
-from IPython.testing.iptest import have
-from scipy.sparse.linalg.eigen.arpack.tests.test_arpack import CheckingLinearOperator
+# from IPython.testing.iptest import have
+# from scipy.sparse.linalg.eigen.arpack.tests.test_arpack import CheckingLinearOperator
 
 
 # might be able to get more colors if you stop making all the information passed by making new ascii pics, num colors currently limited
@@ -26,12 +26,12 @@ from scipy.sparse.linalg.eigen.arpack.tests.test_arpack import CheckingLinearOpe
 # 
 # time saver:  if croping takes a long time, maybe I can check for the most common color in a tile sized region of 
 # the oringinal image instead of chroping out a tile, then checking that for it's most common color
+# 
+# why is there a space in front of every line?
 
 
-
-
-input_image_filename = 'colors2.jpg'
-data_text_filename = 'full_paper.txt'#satoshi whitepaper in a txt file
+input_image_filename = 'bitcoin.png'
+data_text_filename = 'half_paper.txt'#satoshi whitepaper in a txt file
 
 original_ascii_art_filename = 'ascii_' + input_image_filename.split('.')[0] + '.txt'
 edited_ascii_art_filename = 'EDITED_' + original_ascii_art_filename

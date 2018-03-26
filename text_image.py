@@ -4,6 +4,7 @@ import tools
 
 
 def text_image(lines, colors, highlight_cords, font_path = None):
+    print (lines)#!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     # choose a font (you can see more detail in my library on github)
     font_path = None
     large_font = 40  # get better resolution with larger size
