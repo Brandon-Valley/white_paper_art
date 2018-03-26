@@ -4,16 +4,16 @@ import itertools
 # +28bKwv7W4tbCltKLxo7S3tKOjtLXs7Ozs7Ozs7Ozs7Ozs7Ozs
 # 7Ozs7A
 
-def xor(key, buf):
-    for a,b in zip(itertools.cycle(key), buf):
-        print (a , b)
-        print (type(a) , type(b))
-        
-    return bytes(a**b for a,b in zip(itertools.cycle(key), buf))
+s = " .'`^,:;Il!i><~+_-?][}{1)(|\/tfjrxnuvczXYUJCLQ0OZmwqpdbkhao*#MW&8%B@"
 
-# p1 = int('7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Oy8tLW4sri')
-p2 = '7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Oy8tLW4sri'
-buff = '7O'
+# s.pop_back
+print(s)
+s = s[1:]
+print(s)
+s = s[1:]
+print(s)
+s = s[1:]
+print(s)
+s = s[1:]
 
-
-print (xor(p2, buff))
+print(s)
