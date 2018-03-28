@@ -31,7 +31,7 @@ import color_matrix
 # why is there a space in front of every line?
 
 
-input_image_filename = 'colors2.jpg'
+input_image_filename = 'test_pics/blue_circle.png'
 data_text_filename = 'full_paper.txt'#satoshi whitepaper in a txt file
 
 # original_ascii_art_filename = 'ascii_' + input_image_filename.split('.')[0] + '.txt'#need???????????????????????????????????????
@@ -146,7 +146,7 @@ print('adjusting color cords to fit the image_risize_ratio...')
 adjusted_color_cords = tools.adjust_color_cords(color_cords, image_resize_ratio)
 
 #put it all together and what have you got?  Bippity Boppity BOO!
-print('creating image...')
+print('creating final image...')
 image = text_image.text_image(lines, adjusted_color_cords, default_colors)
 
 # image.save('test_output.jpg', format='JPEG', subsampling=0,quality = 100)
