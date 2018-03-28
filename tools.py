@@ -98,37 +98,37 @@ def get_color_cords(color_matrix):
     return c_cords
     
     
-def adjust_highlight_cords(h_cords, image_resize_ratio):
-    adjusted_h_cords = {}
-    #add h_chars from original h_cords 
-    for h_char, cords in h_cords.items():
-        adjusted_h_cords[h_char] = []
+def adjust_color_cords(c_cords, image_resize_ratio):
+    adjusted_c_cords = {}
+    #add colors from original c_cords 
+    for color, cords in c_cords.items():
+        adjusted_c_cords[color] = []
     
-    for h_char, h_cords in h_cords.items():
-        for h_cord in h_cords:
+    for color, c_cords in c_cords.items():
+        for c_cord in c_cords:
             
-            line_float = h_cord[0] * (1 / image_resize_ratio)
-            letter_float = h_cord[1] * image_resize_ratio
+            line_float = c_cord[0] * (1 / image_resize_ratio)
+            letter_float = c_cord[1] * image_resize_ratio
                
             line_num = int (line_float)
             letter_num = int (letter_float)
             
             #if pos taken, must find another
-    #         if [line_num, letter_num] in h_cords:
+    #         if [line_num, letter_num] in c_cords:
     #             if line_float % 1 < 0.5:
     #                 line_num = int( (h_cord[0] - 0.5) * (1 / image_resize_ratio) ) 
     #             else:
     #                 line_num = int( (h_cord[0] + 0.5) * (1 / image_resize_ratio) ) 
     
-            adjusted_h_cords[h_char].append( [line_num, letter_num])
+            adjusted_c_cords[color].append( [line_num, letter_num] )
 
             #compensate for skipping lines
             if line_float % 1 == 0.75:
                 extra_line_num = round (line_float)
-                adjusted_h_cords[h_char].append( [extra_line_num, letter_num])
+                adjusted_c_cords[color].append( [extra_line_num, letter_num] )
         
-#     print('lost %s h_chars' %(len(h_cords) - len(list(set(adjusted_h_cords)))))#`````````````````````````````````````````````````````````
-    return adjusted_h_cords
+#     print('lost %s colors' %(len(c_cords) - len(list(set(adjusted_c_cords)))))#`````````````````````````````````````````````````````````
+    return adjusted_c_cords
 
 
 #makes broken up list of strings into one big string

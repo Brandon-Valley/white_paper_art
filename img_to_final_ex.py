@@ -31,8 +31,8 @@ import color_matrix
 # why is there a space in front of every line?
 
 
-input_image_filename = 'bitcoin.png'
-data_text_filename = 'half_paper.txt'#satoshi whitepaper in a txt file
+input_image_filename = 'colors2.jpg'
+data_text_filename = 'full_paper.txt'#satoshi whitepaper in a txt file
 
 # original_ascii_art_filename = 'ascii_' + input_image_filename.split('.')[0] + '.txt'#need???????????????????????????????????????
 # edited_ascii_art_filename = 'EDITED_' + original_ascii_art_filename#need?????????????????????????????????????????????
@@ -62,8 +62,8 @@ true_dimension_ratio = desired_dimension_ratio * const_HxW_ratio
 
 #replace this bull shit with something to  deal with whitespace
 default_colors = {'backround_1':  (255,255,255),#white
-          'backround_2':  (0,0,0),#black
-          'default_text': (255,255,255)}#white
+                  'backround_2':  (0,0,0),#black
+                  'default_text': (255,255,255)}#white
 
 #                                                                         }
 # char_types = {'remove'      : [':>{"'],
@@ -136,12 +136,12 @@ print(color_cords)#`````````````````````````````````````````````````````````````
 # for h_char, cords in highlight_cords.items():#`````````````````````````````````````````````````````````````````````````````````````
 #     print(h_char)#````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````
 
-# #adjust the highlight cords to compensate for the difference between the width of a char and the height of a line
-# adjusted_highlight_cords = tools.adjust_highlight_cords(highlight_cords, image_resize_ratio)
+#adjust the highlight cords to compensate for the difference between the width of a char and the height of a line
+adjusted_color_cords = tools.adjust_color_cords(color_cords, image_resize_ratio)
 
 #put it all together and what have you got?  Bippity Boppity BOO!
 print('Creating Image...')
-image = text_image.text_image(lines, color_cords, default_colors)
+image = text_image.text_image(lines, adjusted_color_cords, default_colors)
 
 # image.save('test_output.jpg', format='JPEG', subsampling=0,quality = 100)
 image.save(final_image_filename, subsampling=0, quality = 100)
