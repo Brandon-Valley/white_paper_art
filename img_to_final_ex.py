@@ -31,7 +31,7 @@ import color_matrix
 # why is there a space in front of every line?
 
 
-input_image_filename = 'test_pics/blue_circle.png'
+input_image_filename = 'test_pics/zzz_change_png_background_output.png'
 data_text_filename = 'full_paper.txt'#satoshi whitepaper in a txt file
 
 # original_ascii_art_filename = 'ascii_' + input_image_filename.split('.')[0] + '.txt'#need???????????????????????????????????????

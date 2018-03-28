@@ -37,12 +37,14 @@ def colors_to_ascii(tile_color_matrix):
 
 
 def main():
-    input_image_filename = 'bitcoin.png'
+    input_image_filename = 'test_pics/black_circle_t_background.png'
     output_filename = 'zzz_img_to_color_test_OUTPUT.txt'
     scale = 0.43
     cols = 200
     
+    print('working...')
     tile_color_matrix = color_matrix.get_color_tile_matrix(input_image_filename, cols, scale, True)
+    print('tile_color_matrix:  ', tile_color_matrix)
     
 #     count = 0
 #     for row_list in color_tile_matrix:
