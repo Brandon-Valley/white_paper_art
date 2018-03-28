@@ -110,42 +110,50 @@ default_colors = {'backround_1':  (255,255,255),#white
 
 
 #read in the text that will be colored to show a picture
-print('Reading in data text file...') 
+print('reading in data text file...') 
 data = tools.read_text_file(data_text_filename)
 
 #turn list of lines of data into one big string, use that to get number of chars in data, then split it into words
+print('formatting data into word list...')
 data_str = tools.format_data(data)
 num_chars = len(data_str)
 word_list = data_str.split(' ')
 
 
 #turn true_dimension_ratio into max number of lines and max chars per line
+print('calculating ideal text image dimensions...')
 ideal_dimentions = tools.calc_ideal_dimentions(true_dimension_ratio, num_chars)
 
 #make list of lines to be output in final image
+print('creating text lines...')
 lines = tools.make_correct_lines(ideal_dimentions['num_lines'], ideal_dimentions['line_length'], word_list)
 # print("number of lines:", len(lines))
 
 #gets matrix of colors from image
+print('building color_matrix from original image...')
 img_color_matrix = color_matrix.get_color_tile_matrix(input_image_filename, cols, scale, True)
-print(img_color_matrix)#````````````````````````````````````````````````````````````````````````````````````````````````````````````````````
+# print(img_color_matrix)#````````````````````````````````````````````````````````````````````````````````````````````````````````````````````
 
 #look at text image lines to get cords of chars to be highlighted in final image
+print('making first round of color cords...')
 color_cords = tools.get_color_cords(img_color_matrix)
-print(color_cords)#``````````````````````````````````````````````````````````````````````````````````````````````````````````````
+# print(color_cords)#``````````````````````````````````````````````````````````````````````````````````````````````````````````````
 # for h_char, cords in highlight_cords.items():#`````````````````````````````````````````````````````````````````````````````````````
 #     print(h_char)#````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````
 
 #adjust the highlight cords to compensate for the difference between the width of a char and the height of a line
+print('adjusting color cords to fit the image_risize_ratio...')
 adjusted_color_cords = tools.adjust_color_cords(color_cords, image_resize_ratio)
 
 #put it all together and what have you got?  Bippity Boppity BOO!
-print('Creating Image...')
+print('creating image...')
 image = text_image.text_image(lines, adjusted_color_cords, default_colors)
 
 # image.save('test_output.jpg', format='JPEG', subsampling=0,quality = 100)
+print('saving high-resolution image...')
 image.save(final_image_filename, subsampling=0, quality = 100)
 
+print('showing low-resolution image...')
 image.show()
 
 

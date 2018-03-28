@@ -32,7 +32,6 @@ def get_color_tile_matrix(fileName, cols, scale, moreLevels):
 
     # generate list of dimensions
     for j in range(rows):
-        print("j:  " , j)#```````````````````````````````````````````````````````````````````````````````````````````
         tile_color_matrix.append([])
         
         y1 = int(j*h)
