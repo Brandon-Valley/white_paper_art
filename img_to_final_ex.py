@@ -45,7 +45,7 @@ final_image_filename = 'TEST_OUTPUT.png'
 scale = 0.43
 
 # set cols
-cols = 200
+cols = 200 #made smaller for testing, was 200
 
 const_HxW_ratio = 5150/9600 #found by making a 99x99 txt file and looking at dimensions of image
 image_resize_ratio = .8
@@ -58,11 +58,13 @@ desired_dimension_ratio = 1/1
 #find correct image dimensions by adjusting desired ratio for the difference between the length of a char and the height of a line
 true_dimension_ratio = desired_dimension_ratio * const_HxW_ratio
 
-#need????????????????????????????????????????????????????????????????????????????????????????????????
-# colors = {'backround_1':  (255,255,255),#white
-#           'backround_2':  (0,0,0),#black
-#           'default_text': (255,255,255),#white
-#           'highlight':    {}
+
+
+#replace this bull shit with something to  deal with whitespace
+default_colors = {'backround_1':  (255,255,255),#white
+          'backround_2':  (0,0,0),#black
+          'default_text': (255,255,255)}#white
+
 #                                                                         }
 # char_types = {'remove'      : [':>{"'],
 #               'blend'       : [''],
@@ -105,8 +107,7 @@ true_dimension_ratio = desired_dimension_ratio * const_HxW_ratio
 # print('Reading in data text file...') 
 # edited_ascii_lines = tools.read_text_file(edited_ascii_art_filename)
 
-#gets matrix of colors from image
-img_color_matrix = color_matrix.get_color_tile_matrix(input_image_fileName, cols, scale, true)
+
 
 #read in the text that will be colored to show a picture
 print('Reading in data text file...') 
@@ -125,18 +126,22 @@ ideal_dimentions = tools.calc_ideal_dimentions(true_dimension_ratio, num_chars)
 lines = tools.make_correct_lines(ideal_dimentions['num_lines'], ideal_dimentions['line_length'], word_list)
 # print("number of lines:", len(lines))
 
-# #look at text image lines to get cords of chars to be highlighted in final image
-# highlight_cords = tools.get_highlight_cords(edited_ascii_lines)
-# # print(highlight_cords)#``````````````````````````````````````````````````````````````````````````````````````````````````````````````
-# # for h_char, cords in highlight_cords.items():#`````````````````````````````````````````````````````````````````````````````````````
-# #     print(h_char)#````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````
+#gets matrix of colors from image
+img_color_matrix = color_matrix.get_color_tile_matrix(input_image_filename, cols, scale, True)
+print(img_color_matrix)#````````````````````````````````````````````````````````````````````````````````````````````````````````````````````
 
-#adjust the highlight cords to compensate for the difference between the width of a char and the height of a line
-adjusted_highlight_cords = tools.adjust_highlight_cords(highlight_cords, image_resize_ratio)
+#look at text image lines to get cords of chars to be highlighted in final image
+color_cords = tools.get_color_cords(img_color_matrix)
+print(color_cords)#``````````````````````````````````````````````````````````````````````````````````````````````````````````````
+# for h_char, cords in highlight_cords.items():#`````````````````````````````````````````````````````````````````````````````````````
+#     print(h_char)#````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````
+
+# #adjust the highlight cords to compensate for the difference between the width of a char and the height of a line
+# adjusted_highlight_cords = tools.adjust_highlight_cords(highlight_cords, image_resize_ratio)
 
 #put it all together and what have you got?  Bippity Boppity BOO!
 print('Creating Image...')
-image = text_image.text_image(lines, colors, adjusted_highlight_cords)
+image = text_image.text_image(lines, color_cords, default_colors)
 
 # image.save('test_output.jpg', format='JPEG', subsampling=0,quality = 100)
 image.save(final_image_filename, subsampling=0, quality = 100)

@@ -3,7 +3,7 @@ from PIL import Image, ImageDraw
 import tools
 
 
-def text_image(lines, colors, highlight_cords, font_path = None):
+def text_image(lines, color_cords, default_colors, font_path = None):
     print (lines)#!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     # choose a font (you can see more detail in my library on github)
     font_path = None
@@ -34,9 +34,9 @@ def text_image(lines, colors, highlight_cords, font_path = None):
     width = int(round(max_line_width * 3 + 0))  # a little oversized , needs to be exactly this # or cuts off text
 
 
-    image = Image.new("RGB", (width, height), colors['backround_2']) # scrap image
+    image = Image.new("RGB", (width, height), default_colors['backround_2']) # scrap image
     draw = ImageDraw.Draw(image)
-    image2 = Image.new("RGB", (width, height), colors['backround_1']) # final image
+    image2 = Image.new("RGB", (width, height), default_colors['backround_1']) # final image
     
     fill = " o "
     x = 0
@@ -56,18 +56,15 @@ def text_image(lines, colors, highlight_cords, font_path = None):
             letter_cords = [line_num, letter_num]
             cur_char = lines[line_num][letter_num]
             
-            for h_char, cord_list in highlight_cords.items():
-                if letter_cords in highlight_cords[h_char]:
-                    color = colors['highlight'][h_char]
+            for color, cord_list in color_cords.items():
+                if letter_cords in color_cords[color]:
+                    char_color = color
                     break
-#                     for h_char , color_tup in colors['highlight'].items():
-#                         if cur_char == h_char:
-#                             color = color_tup
-    #                 color = colors['highlight']
+
             else:
-                color = colors['default_text']
+                char_color = default_colors['default_text']
     
-            draw.text((x_draw, y * line_num), fill + letter, color, font = font)
+            draw.text((x_draw, y * line_num), fill + letter, char_color, font = font)
         
             iletter = image.crop((x_draw + w_fill, 0, x_draw + w_full, y * len(lines) ))
             

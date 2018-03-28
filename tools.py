@@ -75,26 +75,27 @@ def make_lines(line_length, word_list):
         lines.append(line)        
     return lines               
     
-
-def get_highlight_cords(lines):
-    h_cords = {}
-    for line_num in range(len(lines)):
-        line = lines[line_num]
-        for letter_num in range(len(line)):
-            letter = line[letter_num]
-            if letter != ' ':
-                #check if this letter is already a key in highlight_cords
-                char_known = False
-                for h_char, cord_list in h_cords.items():
-                    if letter == h_char:
-                        char_known = True
-                        break
-                #add letter to keys in h_cords if new
-                if char_known == False:
-                    h_cords[letter] = []
-                #add cord
-                h_cords[letter].append( [line_num, letter_num])
-    return h_cords
+#to speed things up maybe do something to not need to record whitespace
+def get_color_cords(color_matrix):
+    c_cords = {}
+    for line_num in range(len(color_matrix)):
+        line = color_matrix[line_num]
+        for color_num in range(len(line)):
+            color = line[color_num]
+            #to add something for whitespace put something like if not whitespace here!!!!!!!
+            
+            #check if this color is already a key in highlight_cords
+            color_known = False
+            for known_color, cord_list in c_cords.items():
+                if color == known_color:
+                    color_known = True
+                    break
+            #add color to keys in c_cords if new
+            if color_known == False:
+                c_cords[color] = []
+            #add cord
+            c_cords[color].append( [line_num, color_num] )
+    return c_cords
     
     
 def adjust_highlight_cords(h_cords, image_resize_ratio):
