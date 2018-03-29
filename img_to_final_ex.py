@@ -50,7 +50,7 @@ from test.datetimetester import OTHERSTUFF
 #     
 
 
-input_image_filename = 'test_pics/zzz_change_png_background_output.png'
+input_image_filename = 'test_pics/bitcoin2046.png'
 data_text_filename = 'full_paper.txt'#satoshi whitepaper in a txt file
 
 background_change_needed = True
@@ -68,8 +68,15 @@ scale = 0.43
 # set cols
 cols = 150 #made smaller for testing, was 200
 
-const_HxW_ratio = 5150/9600 #found by making a 99x99 txt file and looking at dimensions of image
-image_resize_ratio = .8
+const_HxW_ratio = 5150/9600 #found by making a 99x99 txt file and looking at dimensions of image,
+                            #used to get the best dimentions for laying out text, nothing to do with the image
+                            
+font_w = 156
+font_h = 11
+
+image_resize_ratio = ( font_h / font_w ) * 12.8     
+                            
+# image_resize_ratio = .9 #courier works with .8
 
 #2/3:
 # a a a
@@ -172,7 +179,7 @@ offset_adjusted_color_cords = offset.offset_color_cords(adjusted_color_cords, of
 
 #put it all together and what have you got?  Bippity Boppity BOO!
 print('creating final image...')
-image = text_image.text_image(lines, offset_adjusted_color_cords, default_colors)
+image = text_image.text_image(lines, offset_adjusted_color_cords, default_colors, 'HelveticaBold.ttf')
 
 # image.save('test_output.jpg', format='JPEG', subsampling=0,quality = 100)
 print('saving high-resolution image...')

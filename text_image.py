@@ -6,8 +6,9 @@ import tools
 def text_image(lines, color_cords, default_colors, font_path = None):
     # choose a font (you can see more detail in my library on github)
     font_path = None
-    large_font = 40  # get better resolution with larger size
-    font_path = font_path or 'cour.ttf'  # Courier New. works in windows. linux may need more explicit path
+    large_font = 40#works with 40  # get better resolution with larger size
+#     font_path = font_path or 'HelveticaBold.ttf'#'cour.ttf' ## # Courier New. works in windows. linux may need more explicit path
+#     font_path = font_path or 'cour.ttf'# ## # Courier New. works in windows. linux may need more explicit path
     try:
         font = PIL.ImageFont.truetype(font_path, size=large_font)
     except IOError:
@@ -26,6 +27,8 @@ def text_image(lines, color_cords, default_colors, font_path = None):
     # max height is adjusted down because it's too large visually for spacing
     test_string = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
     max_height = pt2px(font.getsize(test_string)[1])
+    
+    print ('in test_image, font size: ' , font.getsize(test_string))#`````````````````````````````````````````````````````````````
     
 #     max_width = pt2px(font.getsize(max_width_line)[0])
     height = max_height * len(lines) + 2  # perfect or a little oversized
