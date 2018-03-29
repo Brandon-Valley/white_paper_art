@@ -1,0 +1,11 @@
+x=[0 0 -1 2 3 -2 0 1 0 0]; %input discrete-time signal x
+dtx= -2:7;                  %discrete-time of x
+y=[1 -1 2 4];               %input discrete-time signal y
+dty=8:11;                   %discrete-time of y
+z=conv(x,y);                %convolution of x and y = z
+dtz=6:18;                   %discrete-time of z
+
+subplot(1,3,3), stem(dtz,z)
+xlabel('n')
+ylabel('y[n]')
+title('Signal y')

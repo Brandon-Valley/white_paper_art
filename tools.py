@@ -1,5 +1,6 @@
 import math
 from _regex_core import WORD
+
 #from twisted.conch.scripts.conch import old
 
 #return the length of the longest element in lines
@@ -144,6 +145,9 @@ def format_data(data):
         return formatted_data
     except:
         raise Exception('ERROR  You probably have some extra lines of spaces in your data text file')
+
+
+
 
 
 def read_text_file(file_path):

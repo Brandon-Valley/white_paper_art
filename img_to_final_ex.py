@@ -9,6 +9,7 @@ import ascii_image_editor
 import color_matrix
 import offset
 from test.datetimetester import OTHERSTUFF
+import font_size
 # from IPython.testing.iptest import have
 # from scipy.sparse.linalg.eigen.arpack.tests.test_arpack import CheckingLinearOperator
 
@@ -51,7 +52,7 @@ from test.datetimetester import OTHERSTUFF
 
 
 input_image_filename = 'test_pics/bitcoin2046.png'
-data_text_filename = 'full_paper.txt'#satoshi whitepaper in a txt file
+data_text_filename = 'part_paper.txt'#satoshi whitepaper in a txt file
 
 background_change_needed = True
 
@@ -66,22 +67,43 @@ final_image_filename = 'TEST_OUTPUT.png'
 scale = 0.43
 
 # set cols
-cols = 150 #made smaller for testing, was 200
+cols = 50 #made smaller for testing, was 200
 
-const_HxW_ratio = 5150/9600 #found by making a 99x99 txt file and looking at dimensions of image,
-                            #used to get the best dimentions for laying out text, nothing to do with the image
-                            
-font_w = 156
-font_h = 11
+#found by making a 99x99 txt file and looking at dimensions of image,
+#used to get the best dimentions for laying out text, nothing to do with the image
+const_HxW_ratio = 5150/9600 
+                    
+#'cour.ttf'
+#'Verdana.ttf'
+#'Calibri.ttf'
+font_path = 'fonts/' + 'Calibri.ttf' 
+# font_path = 'fonts/' + 'cour.ttf'
 
-image_resize_ratio = ( font_h / font_w ) * 12.8     
+               
+# test_string = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+# font_h = font.getsize(test_string)[1]
+# font_h = pt2px(font.getsize(test_string)[0])
+                                
+# font_w = 156
+# font_h = 11
+
+font_dims = font_size.get_font_size(font_path)
+
+font_h = font_dims[1]
+font_w = font_dims[0]
+
+image_resize_ratio = ( font_h / font_w ) * 12.8   
+
+
+
+font_size = 40#works with 40  # get better resolution with larger size  
                             
 # image_resize_ratio = .9 #courier works with .8
 
 #2/3:
 # a a a
 # a a a
-desired_dimension_ratio = 1/1
+desired_dimension_ratio = 3/1
 
 #find correct image dimensions by adjusting desired ratio for the difference between the length of a char and the height of a line
 true_dimension_ratio = desired_dimension_ratio * const_HxW_ratio
@@ -179,15 +201,15 @@ offset_adjusted_color_cords = offset.offset_color_cords(adjusted_color_cords, of
 
 #put it all together and what have you got?  Bippity Boppity BOO!
 print('creating final image...')
-image = text_image.text_image(lines, offset_adjusted_color_cords, default_colors, 'HelveticaBold.ttf')
+image = text_image.text_image(lines, offset_adjusted_color_cords, default_colors, font_size, font_path)
 
 # image.save('test_output.jpg', format='JPEG', subsampling=0,quality = 100)
 print('saving high-resolution image...')
-image.save(final_image_filename, subsampling=0, quality = 100)
+image.save(final_image_filename, subsampling = 0, quality = 100)
 
 print('showing low-resolution image...')
 image.show()
 
-
+print('dont forget you are saving test pics!!!!')
 
 
