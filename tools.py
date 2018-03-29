@@ -145,6 +145,7 @@ def format_data(data):
     except:
         raise Exception('ERROR  You probably have some extra lines of spaces in your data text file')
 
+
 def read_text_file(file_path):
     with open(file_path) as text_file:  # can throw FileNotFoundError
         result = tuple(l.rstrip() for l in text_file.readlines())

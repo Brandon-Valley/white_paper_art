@@ -7,6 +7,7 @@ import text_image
 import ascii_art
 import ascii_image_editor
 import color_matrix
+import offset
 # from IPython.testing.iptest import have
 # from scipy.sparse.linalg.eigen.arpack.tests.test_arpack import CheckingLinearOperator
 
@@ -59,6 +60,7 @@ desired_dimension_ratio = 1/1
 true_dimension_ratio = desired_dimension_ratio * const_HxW_ratio
 
 
+offset_type = 'centered'
 
 #replace this bull shit with something to  deal with whitespace
 default_colors = {'backround_1':  (255,255,255),#white
@@ -145,9 +147,12 @@ color_cords = tools.get_color_cords(img_color_matrix)
 print('adjusting color cords to fit the image_risize_ratio...')
 adjusted_color_cords = tools.adjust_color_cords(color_cords, image_resize_ratio)
 
+print('adding offset to adjusted_color_cords THIS FUNCTION IS INCOMPLETE!!!!!!!!!!!!')
+offset_adjusted_color_cords = offset.offset_color_cords(adjusted_color_cords, offset_type)
+
 #put it all together and what have you got?  Bippity Boppity BOO!
 print('creating final image...')
-image = text_image.text_image(lines, adjusted_color_cords, default_colors)
+image = text_image.text_image(lines, offset_adjusted_color_cords, default_colors)
 
 # image.save('test_output.jpg', format='JPEG', subsampling=0,quality = 100)
 print('saving high-resolution image...')
