@@ -8,6 +8,7 @@ import ascii_art
 import ascii_image_editor
 import color_matrix
 import offset
+from test.datetimetester import OTHERSTUFF
 # from IPython.testing.iptest import have
 # from scipy.sparse.linalg.eigen.arpack.tests.test_arpack import CheckingLinearOperator
 
@@ -32,8 +33,27 @@ import offset
 # why is there a space in front of every line?
 
 
+# todo:
+# 
+# figure out font stuff
+# 
+# finish offset
+#     -need to make trimming
+#         -need to add whitespace stuff
+#         
+# make tinker tool
+# 
+# figure out UI / final file structure stuff
+# 
+# not needed for whitepapers:
+#     figure out how to use larger text file inputs like full_paper10x
+#     
+
+
 input_image_filename = 'test_pics/zzz_change_png_background_output.png'
 data_text_filename = 'full_paper.txt'#satoshi whitepaper in a txt file
+
+background_change_needed = True
 
 # original_ascii_art_filename = 'ascii_' + input_image_filename.split('.')[0] + '.txt'#need???????????????????????????????????????
 # edited_ascii_art_filename = 'EDITED_' + original_ascii_art_filename#need?????????????????????????????????????????????
@@ -46,7 +66,7 @@ final_image_filename = 'TEST_OUTPUT.png'
 scale = 0.43
 
 # set cols
-cols = 200 #made smaller for testing, was 200
+cols = 150 #made smaller for testing, was 200
 
 const_HxW_ratio = 5150/9600 #found by making a 99x99 txt file and looking at dimensions of image
 image_resize_ratio = .8

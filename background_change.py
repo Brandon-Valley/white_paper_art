@@ -5,8 +5,8 @@ import PIL
 from PIL import Image
 
 
-basewidth = 500
-img = Image.open("test_pics/ripple500.png")
+basewidth = 200
+img = Image.open("test_pics/data_dash.jpg")
 wpercent = (basewidth/float(img.size[0]))
 hsize = int((float(img.size[1]) * float(wpercent)))
 data = np.array(img)
