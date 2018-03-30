@@ -4,7 +4,6 @@ import tools
 
 
 def text_image(lines, color_cords, default_colors, font_size, font_path = None):
-    count = 0; #for testing!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     # choose a font (you can see more detail in my library on github)
 #     font_path = None #removed for testing !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 #     large_font = 40#works with 40  # get better resolution with larger size
@@ -46,7 +45,6 @@ def text_image(lines, color_cords, default_colors, font_size, font_path = None):
     fill = " o "
     x = 0
     w_fill, y = draw.textsize(fill, font)
-    print('IN TEXT_IMAGE,    w_fill, y = ', w_fill)#`````````````````````````````````````````````````````````````
     
     line_num = 0
     for line_num in range(len(lines)):
@@ -58,7 +56,6 @@ def text_image(lines, color_cords, default_colors, font_size, font_path = None):
             letter = line[letter_num]
             w_full = draw.textsize(fill + letter, font)[0]
             w = w_full - w_fill     # the width of the character on its own
-            print('  in text_image, width of %s = %s' %(letter, w))#```````````````````````````````````````````````
             
             letter_cords = [line_num, letter_num]
             cur_char = lines[line_num][letter_num]
@@ -74,7 +71,6 @@ def text_image(lines, color_cords, default_colors, font_size, font_path = None):
             draw.text((x_draw, y * line_num), fill + letter, char_color, font)#font = font
         
             iletter = image.crop((x_draw + w_fill, 0, x_draw + w_full, y * len(lines) ))
-            print('in text_image, iletter width: ', iletter.width)#`````````````````````````````````````````````
             
 #             iletter.show()#`````````````````````````````````````````````````````````````````````````````````````````````````
             
@@ -83,13 +79,6 @@ def text_image(lines, color_cords, default_colors, font_size, font_path = None):
     
             image2.paste(iletter, (x_paste, 0))
             
-            count += 1
-#             print('in text_image, count = ' , count)#```````````````````````````````````````````````````````````````````````````````
-            if count < 32 and count >24:
-                filename = 'ti_test_pics/pic' + str(count) + '.png'
-                filename2 = 'ti_test_pics/image1pic' + str(count) + '.png'
-                image2.save(filename, subsampling = 0, quality = 100)
-                image.save(filename2, subsampling = 0, quality = 100)
 #                 image2.show()#````````````````````````````````````````````````````````````````````````````````````````````
 #             sleep(2)
 #             print('x_paste:', x_paste)#!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!

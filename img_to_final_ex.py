@@ -52,7 +52,7 @@ import font_size
 
 
 input_image_filename = 'test_pics/bitcoin2046.png'
-data_text_filename = 'part_paper.txt'#satoshi whitepaper in a txt file
+data_text_filename = 'full_paper.txt'#satoshi whitepaper in a txt file
 
 background_change_needed = True
 
@@ -67,17 +67,27 @@ final_image_filename = 'TEST_OUTPUT.png'
 scale = 0.43
 
 # set cols
-cols = 50 #made smaller for testing, was 200
+cols = 200 #made smaller for testing, was 200
 
 #found by making a 99x99 txt file and looking at dimensions of image,
 #used to get the best dimentions for laying out text, nothing to do with the image
 const_HxW_ratio = 5150/9600 
                     
+                    
+#THE REASON COUR AND DEFAULT WERE WORKING IS BECAUSE THEY ARE BOTH MONOSPACE FONTS,
+#THIS MEANS THAT ALL THE CHARS ALWAYS HAVE THE SAME WIDTH, FOR SOME DUMB REASON,
+#THE CODE YOU COPIED DOESNT COMPENSATE FOR NON-MONOSPACE FONTS, YOU CAN PROBABLY
+#GOOGLE HOW TO CORRECTLY SPACE OUT A NON-MONOSPACE FONT, IT MIGHT BE MORE COMPLICATEDED
+#THAN JUST FINDING THE WIDEST CHAR AND ADDING EAQUAL SPACES TO THE FRONT AND BACK TO MAKE
+#EACH CHAR THE SAME WIDTH, IDK JUST THOUGHT OF THAT OFF THE TOP OF MY HEAD, DO SOME GOOGLING
+#WIKI LINK:                     https://en.wikipedia.org/wiki/Monospaced_font
+#MIGHT BE EASIER JUST TO ONLY USE MONOSPACE FONTS IDK
 #'cour.ttf'
 #'Verdana.ttf'
 #'Calibri.ttf'
-font_path = 'fonts/' + 'Calibri.ttf' 
+font_path = 'fonts/' + 'cour.ttf'
 # font_path = 'fonts/' + 'cour.ttf'
+
 
                
 # test_string = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
@@ -92,7 +102,7 @@ font_dims = font_size.get_font_size(font_path)
 font_h = font_dims[1]
 font_w = font_dims[0]
 
-image_resize_ratio = ( font_h / font_w ) * 12.8   
+image_resize_ratio = ( font_h / font_w ) * 12.8   #HAVE NOT FULLY TESTED YET, JUST A GUESS!!!!!!!!!!!!!!!!!!!
 
 
 
@@ -103,7 +113,7 @@ font_size = 40#works with 40  # get better resolution with larger size
 #2/3:
 # a a a
 # a a a
-desired_dimension_ratio = 3/1
+desired_dimension_ratio = 1/1
 
 #find correct image dimensions by adjusting desired ratio for the difference between the length of a char and the height of a line
 true_dimension_ratio = desired_dimension_ratio * const_HxW_ratio
