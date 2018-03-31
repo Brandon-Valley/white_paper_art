@@ -29,9 +29,7 @@ def text_image(lines, color_cords, default_colors, font_size, font_path = None):
     # max height is adjusted down because it's too large visually for spacing
     test_string = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
     max_height = pt2px(font.getsize(test_string)[1])
-    
-    print ('in test_image, font size: ' , font.getsize(test_string))#`````````````````````````````````````````````````````````````
-    
+        
 #     max_width = pt2px(font.getsize(max_width_line)[0])#just uncommented!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     height = max_height * len(lines) + 2  # perfect or a little oversized
     

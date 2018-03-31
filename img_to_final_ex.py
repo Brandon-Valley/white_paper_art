@@ -45,8 +45,8 @@ import font_size
 #     
 
 
-input_image_filename = 'test_pics/circle_test.png'
-data_text_filename = 'circle_test.txt'#satoshi whitepaper in a txt file
+input_image_filename = 'test_pics/bitcoin2046.png'
+data_text_filename = 'full_paper.txt'#satoshi whitepaper in a txt file
 
 background_change_needed = True
 
@@ -61,7 +61,7 @@ final_image_filename = 'TEST_OUTPUT.png'
 scale = 0.43
 
 # set cols
-cols = 200 #made smaller for testing, was 200
+cols = 150#made smaller for testing, was 200
 
 #found by making a 99x99 txt file and looking at dimensions of image,
 #used to get the best dimentions for laying out text, nothing to do with the image

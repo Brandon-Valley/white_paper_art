@@ -27,8 +27,8 @@ def most_common_color(rgb_image, height, width):
             else:
                 image_colors[(r, g, b)] = 1
 
-        #return the color with the highest count
-        return high_key(image_colors)
+    #return the color with the highest count
+    return high_key(image_colors)
 
 # def most_common_color_odd_file(color_tile_img_BMP):
 #     #.crop wants to make color_tile into .BMP which I dont feel like dealing with so save as jpg to work with it
