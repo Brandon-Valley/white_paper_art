@@ -14,15 +14,9 @@ import font_size
 # from scipy.sparse.linalg.eigen.arpack.tests.test_arpack import CheckingLinearOperator
 
 
-# might be able to get more colors if you stop making all the information passed by making new ascii pics, num colors currently limited
-# by num ascii chars, should pass list of colors insted
-# 
-# need to find out why it reads whitespace as non-whitepace before doing ^^^^^^^^
-# 
-# will still need to be able to make color based and greyscale based ascii art for testing purposes
-# 
-# maybe not having to find a free ascii char for each color will save some time?
-# 
+
+
+
 # time saver: when finding the most common color in a tile, check every once and a shile if you need to be gathering colors still, if you have
 # already read 51% of all the pixles and they are all the same, should just return that color and quit CheckingLinearOperator
 # 
@@ -51,8 +45,8 @@ import font_size
 #     
 
 
-input_image_filename = 'test_pics/bitcoin2046.png'
-data_text_filename = 'full_paper.txt'#satoshi whitepaper in a txt file
+input_image_filename = 'test_pics/circle_test.png'
+data_text_filename = 'circle_test.txt'#satoshi whitepaper in a txt file
 
 background_change_needed = True
 
