@@ -6,7 +6,7 @@ import os
 
 from PIL import Image
 
-import color_reader
+
 from sympy.logic.boolalg import false
 
 # gray scale level values from: 

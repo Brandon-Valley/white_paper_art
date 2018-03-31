@@ -10,6 +10,12 @@ import color_matrix
 import offset
 from test.datetimetester import OTHERSTUFF
 import font_size
+
+#MUST USE MONO-SPACED FONTS
+#high resolution images will give better results
+
+
+
 # from IPython.testing.iptest import have
 # from scipy.sparse.linalg.eigen.arpack.tests.test_arpack import CheckingLinearOperator
 
@@ -214,6 +220,7 @@ image.save(final_image_filename, subsampling = 0, quality = 100)
 print('showing low-resolution image...')
 image.show()
 
-print('dont forget you are saving test pics!!!!')
+print('done!')
+
 
 
