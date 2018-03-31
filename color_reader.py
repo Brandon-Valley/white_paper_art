@@ -17,6 +17,7 @@ def high_key(d):
 
 #returns single most common color in image
 def most_common_color(rgb_image, height, width):
+#     print('in color_reader, height: %s  width: %s' %(height, width))#`````````````````````````````````````````````````````````````````````
     image_colors = {}
     for x in range(width):
         for y in range(height):

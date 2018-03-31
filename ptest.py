@@ -4,16 +4,5 @@ import itertools
 # +28bKwv7W4tbCltKLxo7S3tKOjtLXs7Ozs7Ozs7Ozs7Ozs7Ozs
 # 7Ozs7A
 
-s = " .'`^,:;Il!i><~+_-?][}{1)(|\/tfjrxnuvczXYUJCLQ0OZmwqpdbkhao*#MW&8%B@"
-
-# s.pop_back
-print(s)
-s = s[1:]
-print(s)
-s = s[1:]
-print(s)
-s = s[1:]
-print(s)
-s = s[1:]
-
-print(s)
+for x in range(5):
+    print(x)
