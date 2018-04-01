@@ -10,6 +10,10 @@ import color_cords
 import offset
 import font_size
 
+
+#IF IMAGE STARTS LOOKING WEIRD, LOOK INTO WHY SOMETIMES IN COLOR_CORDS, 
+#THERE ARE 2 OF THE SAME CORD IN ONE COLOR'S LIST, COULD HAVE TO DO WITH ROUNDING? NOT SURE IF IT EFFECTS OTHER THINGS
+
 #MUST USE MONO-SPACED FONTS
 #high resolution images will give better results
 
@@ -24,7 +28,7 @@ import font_size
 # need way to test funcs for time to see if i am even speeding things up at all
 # 
 # time saver:  if croping takes a long time, maybe I can check for the most common color in a tile sized region of 
-# the oringinal image instead of chroping out a tile, then checking that for it's most common color
+# the oringinal image instead of croping out a tile, then checking that for it's most common color
 # 
 # why is there a space in front of every line?
 
@@ -46,7 +50,7 @@ import font_size
 #     
 
 
-input_image_filename = 'test_pics/bitcoin2046.png'
+input_image_filename = 'test_pics/bitcoin.png'
 data_text_filename = 'full_paper.txt'#satoshi whitepaper in a txt file
 
 background_change_needed = True
@@ -66,7 +70,7 @@ cols = 150#made smaller for testing, was 200
 
 #found by making a 99x99 txt file and looking at dimensions of image,
 #used to get the best dimentions for laying out text, nothing to do with the image
-const_HxW_ratio = 5150/9600 
+const_HxW_ratio = 5150 / 9600 
                     
                     
 #THE REASON COUR AND DEFAULT WERE WORKING IS BECAUSE THEY ARE BOTH MONOSPACE FONTS,
@@ -114,7 +118,12 @@ desired_dimension_ratio = 1/1
 true_dimension_ratio = desired_dimension_ratio * const_HxW_ratio
 
 
-offset_type = 'centered'
+#0, 0 = centered
+image_position = {'x': 0,
+                  'y': 0}
+
+
+offset_type = 'centered'#need??????????????????????????????????????????????????????????????
 
 #set this to None for no background color seperation
 input_image_background_color = (255, 255, 255)
@@ -157,7 +166,8 @@ print('adjusting color cords to fit the image_resize_ratio...')
 adjusted_color_cords = tools.adjust_color_cords(color_cords, image_resize_ratio)
 
 print('adding offset to adjusted_color_cords THIS FUNCTION IS INCOMPLETE!!!!!!!!!!!!')
-offset_adjusted_color_cords = offset.offset_color_cords(adjusted_color_cords, offset_type)
+offset_adjusted_color_cords = offset.offset_color_cords(adjusted_color_cords, image_position)
+
 
 #put it all together and what have you got?  Bippity Boppity BOO!
 print('creating final image...')

@@ -1,12 +1,13 @@
 
 
-def offset_color_cords(original_color_cords, offset_type):
-    offset_dict = calc_offset(original_color_cords, offset_type)
-    new_color_cords = apply_offset(original_color_cords, offset_dict)
+def offset_color_cords(original_color_cords, img_pos):
+    offset_dict = calc_offset(original_color_cords, img_pos)
+    new_color_cords = tools.apply_offset(original_color_cords, offset_dict)
     return new_color_cords
     
 #inclomlete, will probably need line dimentions to do this right!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!    
-def calc_offset(color_cords, offset_type_str):
+def calc_offset(color_cords, img_pos_dict):
+    dim_dict = get_dimentions(color_cords)
     if offset_type_str == 'centered':
         bad_default_offset_dict = {'x_offset': 10,
                                    'y_offset': 10}
@@ -14,10 +15,9 @@ def calc_offset(color_cords, offset_type_str):
     else:
         raise Exception('ERROR  Unknown offset type: ', offset_type_str)
     
-def apply_offset(og_color_cords, offset_d):
-    new_c_cords = og_color_cords
-    for color, new_c_cord_list in new_c_cords.items():
-        for new_c_cord in new_c_cord_list:
-            new_c_cord[0] += offset_d['y_offset']
-            new_c_cord[1] += offset_d['x_offset']
-    return new_c_cords
+
+def get_dimentions(c_cords):
+    print('in offset, c_cords: ', c_cords)#`````````````````````````````````````````````````````````````````````````
+    print('in offset, fancy print c_cords: VVVVV')
+    for color, cord_list in c_cords.items():
+        print("%s : %s" %(cord_list, color))

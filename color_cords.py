@@ -1,5 +1,6 @@
 from PIL import Image
 
+import tools
 
 
 
@@ -70,9 +71,35 @@ def get_color_cords(fileName, cols, scale, background_color):
                 else:
                     color_cords[tile_color] = [tile_cord]
 
-    return color_cords
+    return trim(color_cords)
 
 
+#trims back color_cords so that the minimum x and y positions 
+def trim(c_cords):
+    #find x and y min
+    x_min = None
+    y_min = None
+    
+    for color, cord_list in c_cords.items():
+        for cord in cord_list:
+            x = cord[1]
+            y = cord[0]
+            if x_min == None and y_min == None:
+                x_min = x
+                y_min = y
+            else:
+                if x_min > x:
+                    x_min = x
+                if y_min > y:
+                    y_min = y
+                    
+    offset_dict = {'x_offset': -1 * x_min,
+                   'y_offset': -1 * y_min}
+    
+    print('in color_cords, un-trimmed color_cords: ', c_cords)#```````````````````````````````````````````````````````````````````````````
+    print("in color_cords, offset_dict = " , offset_dict)#`````````````````````````````````````````````````````````````````````````````````
+    return tools.apply_offset(c_cords, offset_dict)
+    
 
 #return key whose value is highest
 def high_key(d):

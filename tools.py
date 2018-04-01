@@ -125,7 +125,13 @@ def format_data(data):
         raise Exception('ERROR  You probably have some extra lines of spaces in your data text file')
 
 
-
+def apply_offset(og_color_cords, offset_d):
+    new_c_cords = og_color_cords
+    for color, new_c_cord_list in new_c_cords.items():
+        for new_c_cord in new_c_cord_list:
+            new_c_cord[0] += offset_d['y_offset']
+            new_c_cord[1] += offset_d['x_offset']
+    return new_c_cords
 
 
 def read_text_file(file_path):
