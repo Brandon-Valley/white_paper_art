@@ -192,15 +192,16 @@ lines = tools.make_correct_lines(ideal_dimentions['num_lines'], ideal_dimentions
 
 #gets matrix of colors from image
 print('building color_matrix from original image...')
-img_color_matrix = color_matrix.get_color_tile_matrix(input_image_filename, cols, scale, True)
+# img_color_matrix = color_matrix.get_color_tile_matrix(input_image_filename, cols, scale, True)
+color_cords = color_matrix.get_color_tile_matrix(input_image_filename, cols, scale, True)
 # print(img_color_matrix)#````````````````````````````````````````````````````````````````````````````````````````````````````````````````````
 
-#look at text image lines to get cords of chars to be highlighted in final image
-print('making first round of color cords...')
-color_cords = tools.get_color_cords(img_color_matrix)
+# #look at text image lines to get cords of chars to be highlighted in final image
+# print('making first round of color cords...')
+# color_cords = tools.get_color_cords(img_color_matrix)
 # print(color_cords)#``````````````````````````````````````````````````````````````````````````````````````````````````````````````
-# for h_char, cords in highlight_cords.items():#`````````````````````````````````````````````````````````````````````````````````````
-#     print(h_char)#````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````
+# # for h_char, cords in highlight_cords.items():#`````````````````````````````````````````````````````````````````````````````````````
+# #     print(h_char)#````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````
 
 #adjust the highlight cords to compensate for the difference between the width of a char and the height of a line
 print('adjusting color cords to fit the image_risize_ratio...')
