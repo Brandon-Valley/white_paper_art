@@ -125,15 +125,7 @@ def format_data(data):
         raise Exception('ERROR  You probably have some extra lines of spaces in your data text file')
 
 
-#return key whose value is highest
-def high_key(d):
-    high_val = 0
-    high_key = 0
-    for key, val in d.items():
-        if val > high_val:
-            high_key = key
-            high_val = val
-    return high_key
+
 
 
 def read_text_file(file_path):

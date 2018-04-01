@@ -1,6 +1,6 @@
 from PIL import Image
 
-import tools
+
 
 
 def get_color_cords(fileName, cols, scale, background_color):   
@@ -21,6 +21,8 @@ def get_color_cords(fileName, cols, scale, background_color):
 
     # compute tile height based on aspect ratio and scale #used to be h
     tile_h = tile_w / scale
+    
+    half_pixles_per_tile = ( tile_w * tile_h ) / 2
     
     # compute number of rows
     rows = int(H / tile_h)
@@ -47,7 +49,7 @@ def get_color_cords(fileName, cols, scale, background_color):
             while(x < int( tile_w ) and x_pos + x <= x_max):
                 
                 y = 0
-                while(y < int( tile_h ) and y_pos + y <= y_max):
+                while(y < int( tile_h ) and y_pos + y <= y_max and majority_color_found(potential_tile_colors, half_pixles_per_tile) == False):
                     r, g, b = color_image.getpixel(( x_pos + x , y_pos + y ))
                     #check if this color has been seen before, if not, add to list, if so, increase count
                     if (r, g, b) in potential_tile_colors:
@@ -59,7 +61,7 @@ def get_color_cords(fileName, cols, scale, background_color):
                 x += 1
                          
             #add most common color in tile to color_cords
-            tile_color = tools.high_key(potential_tile_colors)
+            tile_color = high_key(potential_tile_colors)
             tile_cord = [j, i] 
             
             if tile_color != background_color:
@@ -69,3 +71,29 @@ def get_color_cords(fileName, cols, scale, background_color):
                     color_cords[tile_color] = [tile_cord]
 
     return color_cords
+
+
+
+#return key whose value is highest
+def high_key(d):
+    high_val = 0
+    high_key = 0
+    for key, val in d.items():
+        if val > high_val:
+            high_key = key
+            high_val = val
+    return high_key
+
+def majority_color_found(t_colors, half):
+    result = False
+    
+    for t_color, c_count in t_colors.items():
+        if c_count > half:
+            result = True
+            
+    return result
+    
+    
+    
+    
+    
