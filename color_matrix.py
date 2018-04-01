@@ -6,7 +6,6 @@ import tools
 
 def get_color_tile_matrix(fileName, cols, scale, moreLevels):   
     color_cords = {} 
-    tile_color_matrix = []#need??????????????????????????????????????????????????????????
 
     color_image = Image.open(fileName).convert('RGB')
     
@@ -33,15 +32,14 @@ def get_color_tile_matrix(fileName, cols, scale, moreLevels):
 
     # check if image size is too small
     if cols > W or rows > H:
-        print("Image too small for specified cols!")
-        exit(0)
+        raise Exception("ERROR:    Image too small for specified cols!")
+#         print("Image too small for specified cols!")
+#         exit(0)
 
     # generate list of dimensions
     for j in range(rows):
         y_pos = j * tile_h
-        
-        tcm_row = []
- 
+         
         for i in range(cols):
             x_pos = i * tile_w
              
@@ -71,8 +69,4 @@ def get_color_tile_matrix(fileName, cols, scale, moreLevels):
             else:
                 color_cords[tile_color] = [tile_cord]
 
-#             tcm_row.append(tools.high_key(potential_tile_colors))
-#         tile_color_matrix.append( tcm_row )
-
-#     return tile_color_matrix    
     return color_cords
