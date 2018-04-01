@@ -4,7 +4,7 @@ from PIL import Image
 import tools
 
 
-def get_color_tile_matrix(fileName, cols, scale, moreLevels):   
+def get_color_tile_matrix(fileName, cols, scale, background_color):   
     color_cords = {} 
 
     color_image = Image.open(fileName).convert('RGB')
@@ -64,9 +64,10 @@ def get_color_tile_matrix(fileName, cols, scale, moreLevels):
             tile_color = tools.high_key(potential_tile_colors)
             tile_cord = [j, i] 
             
-            if tile_color in color_cords:
-                color_cords[tile_color].append(tile_cord)
-            else:
-                color_cords[tile_color] = [tile_cord]
+            if tile_color != background_color:
+                if tile_color in color_cords:
+                    color_cords[tile_color].append(tile_cord)
+                else:
+                    color_cords[tile_color] = [tile_cord]
 
     return color_cords

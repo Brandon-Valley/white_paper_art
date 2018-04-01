@@ -121,9 +121,13 @@ true_dimension_ratio = desired_dimension_ratio * const_HxW_ratio
 
 offset_type = 'centered'
 
+#set this to None for no background color seperation
+input_image_background_color = (255, 255, 255)
+
+#background 
 #replace this bull shit with something to  deal with whitespace
-default_colors = {'backround_1':  (255,255,255),#white
-                  'backround_2':  (0,0,0),#black
+default_colors = {'background_image':  (255,255,255),#white
+                  'final_image_background':  (0,0,0),#black
                   'default_text': (55,55,55)}#white
 
 #                                                                         }
@@ -193,7 +197,7 @@ lines = tools.make_correct_lines(ideal_dimentions['num_lines'], ideal_dimentions
 #gets matrix of colors from image
 print('building color_matrix from original image...')
 # img_color_matrix = color_matrix.get_color_tile_matrix(input_image_filename, cols, scale, True)
-color_cords = color_matrix.get_color_tile_matrix(input_image_filename, cols, scale, True)
+color_cords = color_matrix.get_color_tile_matrix(input_image_filename, cols, scale, input_image_background_color)
 # print(img_color_matrix)#````````````````````````````````````````````````````````````````````````````````````````````````````````````````````
 
 # #look at text image lines to get cords of chars to be highlighted in final image

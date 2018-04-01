@@ -35,9 +35,9 @@ def text_image(lines, color_cords, default_colors, font_size, font_path = None):
     width = int(round(max_line_width * 3 + 0))  # a little oversized , needs to be exactly this # or cuts off text
 
 
-    image = Image.new("RGB", (width, height), default_colors['backround_2']) # scrap image
+    image = Image.new("RGB", (width, height), default_colors['final_image_background']) # scrap image
     draw = ImageDraw.Draw(image)
-    image2 = Image.new("RGB", (width, height), default_colors['backround_1']) # final image
+    image2 = Image.new("RGB", (width, height), default_colors['background_image']) # final image
     
     fill = " o "
     x = 0
