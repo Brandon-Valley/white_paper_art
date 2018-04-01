@@ -50,7 +50,7 @@ import font_size
 #     
 
 
-input_image_filename = 'test_pics/bitcoin.png'
+input_image_filename = 'test_pics/bitcoin2046.png'
 data_text_filename = 'full_paper.txt'#satoshi whitepaper in a txt file
 
 background_change_needed = True
@@ -118,9 +118,9 @@ desired_dimension_ratio = 1/1
 true_dimension_ratio = desired_dimension_ratio * const_HxW_ratio
 
 
-#0, 0 = centered
-image_position = {'x': 0,
-                  'y': 0}
+# 0, 0 = centered
+image_position = {'x_pos': 0,
+                  'y_pos': 0}
 
 
 offset_type = 'centered'#need??????????????????????????????????????????????????????????????
@@ -132,7 +132,7 @@ input_image_background_color = (255, 255, 255)
 #replace this bull shit with something to  deal with whitespace
 default_colors = {'background_image':  (255,255,255),#white
                   'final_image_background':  (0,0,0),#black
-                  'default_text': (55,55,55)}#white
+                  'default_text': (55, 55, 55)}#white
 
 
 
@@ -165,8 +165,9 @@ color_cords = color_cords.get_color_cords(input_image_filename, cols, scale, inp
 print('adjusting color cords to fit the image_resize_ratio...')
 adjusted_color_cords = tools.adjust_color_cords(color_cords, image_resize_ratio)
 
+
 print('adding offset to adjusted_color_cords THIS FUNCTION IS INCOMPLETE!!!!!!!!!!!!')
-offset_adjusted_color_cords = offset.offset_color_cords(adjusted_color_cords, image_position)
+offset_adjusted_color_cords = offset.offset_color_cords(adjusted_color_cords, image_position, lines)
 
 
 #put it all together and what have you got?  Bippity Boppity BOO!

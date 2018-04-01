@@ -1,21 +1,46 @@
+import tools
 
-
-def offset_color_cords(original_color_cords, img_pos):
-    offset_dict = calc_offset(original_color_cords, img_pos)
+def offset_color_cords(original_color_cords, img_pos, lines):
+    lines_dims = get_lines_dimensions(lines)
+    offset_dict = calc_offset(original_color_cords, img_pos, lines_dims)
     new_color_cords = tools.apply_offset(original_color_cords, offset_dict)
     return new_color_cords
     
-#inclomlete, will probably need line dimentions to do this right!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!    
-def calc_offset(color_cords, img_pos_dict):
-    dim_dict = get_dimentions(color_cords)
+#incomplete, will probably need line dimensions to do this right!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!    
+def calc_offset(color_cords, img_pos_dict, lines_dims_dict):
+    img_dim_dict = get_dimentions(color_cords)
     
-    print('in offsed, dims: ', dim_dict)#``````````````````````````````````````````````````````````
-    if offset_type_str == 'centered':
-        bad_default_offset_dict = {'x_offset': 10,
-                                   'y_offset': 10}
-        return bad_default_offset_dict
-    else:
-        raise Exception('ERROR  Unknown offset type: ', offset_type_str)
+    x_0 = ( lines_dims_dict['lenght_of_longest_line'] - img_dim_dict['width'] ) / 2
+    y_0 = ( lines_dims_dict['num_lines'] - img_dim_dict['height'] ) /2
+    
+    img_offset_dict = {'x_offset': int( x_0 ) + img_pos_dict['x_pos'],
+                       'y_offset': int( y_0 ) + img_pos_dict['y_pos']}
+    
+    #remove VVVVVVVVVV !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+#     print('in offsed, dims: ', dim_dict)#``````````````````````````````````````````````````````````
+#     if offset_type_str == 'centered':
+#         bad_default_offset_dict = {'x_offset': 10,
+#                                    'y_offset': 10}
+#         return bad_default_offset_dict
+#     else:
+#         raise Exception('ERROR  Unknown offset type: ', offset_type_str)
+
+    print('in offset, img_offset_dict: ', img_offset_dict)#`````````````````````````````````````````````````````````````````
+    return img_offset_dict
+    
+    
+#returns a dict with the number of lines and the length of the longest line
+def get_lines_dimensions(lines):
+    max_len = 0
+    
+    for line in lines:
+        if max_len < len(line):
+            max_len = len(line)
+    
+    l_dims = {'num_lines': len(lines),
+              'lenght_of_longest_line': max_len}
+    return l_dims
+
     
 #get height and width, mins are 0 because of trim in color_cords so only need to find max
 def get_dimentions(c_cords):
