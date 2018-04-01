@@ -51,7 +51,7 @@ import font_size
 #     
 
 
-input_image_filename = 'test_pics/bitcoin2046.png'
+input_image_filename = 'test_pics/bitcoin.png'
 data_text_filename = 'full_paper.txt'#satoshi whitepaper in a txt file
 
 background_change_needed = True
@@ -124,7 +124,7 @@ offset_type = 'centered'
 #replace this bull shit with something to  deal with whitespace
 default_colors = {'backround_1':  (255,255,255),#white
                   'backround_2':  (0,0,0),#black
-                  'default_text': (255,255,255)}#white
+                  'default_text': (55,55,55)}#white
 
 #                                                                         }
 # char_types = {'remove'      : [':>{"'],
