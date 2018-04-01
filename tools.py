@@ -75,29 +75,29 @@ def make_lines(line_length, word_list):
                 end_line = True
         lines.append(line)        
     return lines               
-    
-#to speed things up maybe do something to not need to record whitespace
-def get_color_cords(color_matrix):
-    c_cords = {}
-    for line_num in range(len(color_matrix)):
-        line = color_matrix[line_num]
-        for color_num in range(len(line)):
-            color = line[color_num]
-            #to add something for whitespace put something like if not whitespace here!!!!!!!
-            
-            #check if this color is already a key in highlight_cords
-            color_known = False
-            for known_color, cord_list in c_cords.items():
-                if color == known_color:
-                    color_known = True
-                    break
-            #add color to keys in c_cords if new
-            if color_known == False:
-                c_cords[color] = []
-            #add cord
-            c_cords[color].append( [line_num, color_num] )
-    return c_cords
-    
+#     
+# #to speed things up maybe do something to not need to record whitespace
+# def get_color_cords(color_matrix):
+#     c_cords = {}
+#     for line_num in range(len(color_matrix)):
+#         line = color_matrix[line_num]
+#         for color_num in range(len(line)):
+#             color = line[color_num]
+#             #to add something for whitespace put something like if not whitespace here!!!!!!!
+#             
+#             #check if this color is already a key in highlight_cords
+#             color_known = False
+#             for known_color, cord_list in c_cords.items():
+#                 if color == known_color:
+#                     color_known = True
+#                     break
+#             #add color to keys in c_cords if new
+#             if color_known == False:
+#                 c_cords[color] = []
+#             #add cord
+#             c_cords[color].append( [line_num, color_num] )
+#     return c_cords
+#     
     
 def adjust_color_cords(c_cords, image_resize_ratio):
     adjusted_c_cords = {}
