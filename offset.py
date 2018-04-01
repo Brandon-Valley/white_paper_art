@@ -6,7 +6,6 @@ def offset_color_cords(original_color_cords, img_pos, lines):
     new_color_cords = tools.apply_offset(original_color_cords, offset_dict)
     return new_color_cords
     
-#incomplete, will probably need line dimensions to do this right!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!    
 def calc_offset(color_cords, img_pos_dict, lines_dims_dict):
     img_dim_dict = get_dimentions(color_cords)
     
@@ -15,17 +14,7 @@ def calc_offset(color_cords, img_pos_dict, lines_dims_dict):
     
     img_offset_dict = {'x_offset': int( x_0 ) + img_pos_dict['x_pos'],
                        'y_offset': int( y_0 ) + img_pos_dict['y_pos']}
-    
-    #remove VVVVVVVVVV !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-#     print('in offsed, dims: ', dim_dict)#``````````````````````````````````````````````````````````
-#     if offset_type_str == 'centered':
-#         bad_default_offset_dict = {'x_offset': 10,
-#                                    'y_offset': 10}
-#         return bad_default_offset_dict
-#     else:
-#         raise Exception('ERROR  Unknown offset type: ', offset_type_str)
 
-    print('in offset, img_offset_dict: ', img_offset_dict)#`````````````````````````````````````````````````````````````````
     return img_offset_dict
     
     

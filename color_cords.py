@@ -96,8 +96,6 @@ def trim(c_cords):
     offset_dict = {'x_offset': -1 * x_min,
                    'y_offset': -1 * y_min}
     
-    print('in color_cords, un-trimmed color_cords: ', c_cords)#```````````````````````````````````````````````````````````````````````````
-    print("in color_cords, offset_dict = " , offset_dict)#`````````````````````````````````````````````````````````````````````````````````
     return tools.apply_offset(c_cords, offset_dict)
     
 

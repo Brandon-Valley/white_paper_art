@@ -162,11 +162,11 @@ color_cords = color_cords.get_color_cords(input_image_filename, cols, scale, inp
 # print(img_color_matrix)#````````````````````````````````````````````````````````````````````````````````````````````````````````````````````
 
 #adjust the color cords to compensate for the difference between the width of a char and the height of a line
-print('adjusting color cords to fit the image_resize_ratio...')
+print('adjusting color_cords to fit the image_resize_ratio...')
 adjusted_color_cords = tools.adjust_color_cords(color_cords, image_resize_ratio)
 
 
-print('adding offset to adjusted_color_cords THIS FUNCTION IS INCOMPLETE!!!!!!!!!!!!')
+print('calculating and adding user defined offset to adjusted_color_cords...')
 offset_adjusted_color_cords = offset.offset_color_cords(adjusted_color_cords, image_position, lines)
 
 
