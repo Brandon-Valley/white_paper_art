@@ -1,6 +1,5 @@
 from PIL import Image
 
-
 import tools
 
 
@@ -23,7 +22,6 @@ def get_color_cords(fileName, cols, scale, background_color):
     # compute tile height based on aspect ratio and scale #used to be h
     tile_h = tile_w / scale
     
-
     # compute number of rows
     rows = int(H / tile_h)
     
@@ -40,7 +38,7 @@ def get_color_cords(fileName, cols, scale, background_color):
     for j in range(rows):
         y_pos = j * tile_h
          
-        for i in range(cols):
+        for i in range(cols):   #for every tile:
             x_pos = i * tile_w
              
             potential_tile_colors = {}

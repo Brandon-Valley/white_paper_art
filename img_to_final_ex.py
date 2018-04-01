@@ -8,7 +8,6 @@ import ascii_art
 import ascii_image_editor
 import color_cords
 import offset
-# from test.datetimetester import OTHERSTUFF
 import font_size
 
 #MUST USE MONO-SPACED FONTS
@@ -154,7 +153,7 @@ color_cords = color_cords.get_color_cords(input_image_filename, cols, scale, inp
 # print(img_color_matrix)#````````````````````````````````````````````````````````````````````````````````````````````````````````````````````
 
 #adjust the color cords to compensate for the difference between the width of a char and the height of a line
-print('adjusting color cords to fit the image_risize_ratio...')
+print('adjusting color cords to fit the image_resize_ratio...')
 adjusted_color_cords = tools.adjust_color_cords(color_cords, image_resize_ratio)
 
 print('adding offset to adjusted_color_cords THIS FUNCTION IS INCOMPLETE!!!!!!!!!!!!')
