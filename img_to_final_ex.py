@@ -46,7 +46,7 @@ import font_size
 #     
 
 
-input_image_filename = 'test_pics/bitcoin.png'
+input_image_filename = 'test_pics/bitcoin2046.png'
 data_text_filename = 'full_paper.txt'#satoshi whitepaper in a txt file
 
 background_change_needed = True
