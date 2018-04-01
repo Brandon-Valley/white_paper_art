@@ -4,7 +4,7 @@ from PIL import Image
 import tools
 
 
-def get_color_tile_matrix(fileName, cols, scale, background_color):   
+def get_color_cords(fileName, cols, scale, background_color):   
     color_cords = {} 
 
     color_image = Image.open(fileName).convert('RGB')
