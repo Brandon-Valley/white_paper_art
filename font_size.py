@@ -29,7 +29,7 @@ def get_font_size(font_path = None):
     max_height = pt2px(font.getsize(test_string)[1])
     
 #     print ('in test_image, font size: ' , font.getsize(test_string))#`````````````````````````````````````````````````````````````
-    return(font.getsize(test_string))
+    return(font.getsize("a"))#return(font.getsize(test_string))
     
 # #     max_width = pt2px(font.getsize(max_width_line)[0])
 #     height = max_height * len(lines) + 2  # perfect or a little oversized

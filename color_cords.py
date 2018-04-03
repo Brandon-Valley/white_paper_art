@@ -15,13 +15,15 @@ def get_color_cords(fileName, cols, scale, background_color):
 
     # store dimensions
     W, H = color_image.size[0], color_image.size[1]
-#     print("input image dims: %d x %d" % (W, H))
+    print("in color_cords, input image dims: %d x %d" % (W, H))#````````````````````````````````````
 
     # compute width of tile # used to be w
-    tile_w = W/cols
+    tile_w = W / cols
 
     # compute tile height based on aspect ratio and scale #used to be h
     tile_h = tile_w / scale
+    
+    print('in color_cords, tile_w: %s  tile_h: %s' %(tile_w, tile_h))#````````````````````````````````````````````````````
     
     half_pixles_per_tile = ( tile_w * tile_h ) / 2
     
@@ -46,6 +48,7 @@ def get_color_cords(fileName, cols, scale, background_color):
              
             potential_tile_colors = {}
             
+            #find the most common color in the tile
             x = 0
             while(x < int( tile_w ) and x_pos + x <= x_max):
                 
@@ -58,7 +61,6 @@ def get_color_cords(fileName, cols, scale, background_color):
                     else:
                         potential_tile_colors[(r, g, b)] = 1
                     y += 1
-              
                 x += 1
                          
             #add most common color in tile to color_cords

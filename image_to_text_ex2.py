@@ -12,7 +12,7 @@ from PIL import Image
 gscale1 = "$@B%8&WM#*oahkbdpqwmZO0QLCJUYXzcvunxrjft/\|()1{}[]?-_+~<>i!lI;:,\"^`'. "
 
 # 10 levels of gray
-gscale2 = '@%#*+=-:. '
+gscale2 = '@%#*+=-:c '
 
 
 
@@ -126,7 +126,7 @@ def main():
     # parse args
     args = parser.parse_args()
   
-    imgFile = 'bitcoin.png'#args.imgFile
+    imgFile = 'test_pics/bitcoin.png'#args.imgFile
 
     # set output file
     outFile = 'out.txt'

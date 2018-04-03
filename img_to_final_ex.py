@@ -50,7 +50,7 @@ import font_size
 #     
 
 
-input_image_filename = 'test_pics/bitcoin2046.png'
+input_image_filename = 'test_pics/blue_circle.png'
 data_text_filename = 'full_paper.txt'#satoshi whitepaper in a txt file
 
 background_change_needed = True
@@ -63,14 +63,14 @@ final_image_filename = 'TEST_OUTPUT.png'
 
 # set scale default as 0.43 which suits
 # a Courier font
-scale = 0.43
+scale = .7#0.43
 
 # set cols
 cols = 150#made smaller for testing, was 200
 
 #found by making a 99x99 txt file and looking at dimensions of image,
 #used to get the best dimentions for laying out text, nothing to do with the image
-const_HxW_ratio = 5150 / 9600 
+const_HxW_ratio = 5150 / 9600  
                     
                     
 #THE REASON COUR AND DEFAULT WERE WORKING IS BECAUSE THEY ARE BOTH MONOSPACE FONTS,
@@ -84,6 +84,7 @@ const_HxW_ratio = 5150 / 9600
 #'cour.ttf'
 #'Verdana.ttf'
 #'Calibri.ttf'
+# 'Consolas.ttf'
 font_path = 'fonts/' + 'cour.ttf'
 # font_path = 'fonts/' + 'cour.ttf'
 
@@ -97,6 +98,8 @@ font_path = 'fonts/' + 'cour.ttf'
 # font_h = 11
 
 font_dims = font_size.get_font_size(font_path)
+
+print('font dims: ', font_dims)#````````````````````````````````````````````````````````````````````````````````````
 
 font_h = font_dims[1]
 font_w = font_dims[0]
@@ -132,7 +135,7 @@ input_image_background_color = (255, 255, 255)
 #replace this bull shit with something to  deal with whitespace
 default_colors = {'background_image':  (255,255,255),#white
                   'final_image_background':  (0,0,0),#black
-                  'default_text': (55, 55, 55)}#white
+                  'default_text': (255, 255, 255)}#white
 
 
 
@@ -161,27 +164,31 @@ print('building color_cords from input image...')
 color_cords = color_cords.get_color_cords(input_image_filename, cols, scale, input_image_background_color)
 # print(img_color_matrix)#````````````````````````````````````````````````````````````````````````````````````````````````````````````````````
 
-#adjust the color cords to compensate for the difference between the width of a char and the height of a line
-print('adjusting color_cords to fit the image_resize_ratio...')
-adjusted_color_cords = tools.adjust_color_cords(color_cords, image_resize_ratio)
 
-
-print('calculating and adding user defined offset to adjusted_color_cords...')
-offset_adjusted_color_cords = offset.offset_color_cords(adjusted_color_cords, image_position, lines)
-
-
+# #just for test!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+# offset_adjusted_color_cords = offset.offset_color_cords(color_cords, image_position, lines)
+ 
+ 
+# #adjust the color cords to compensate for the difference between the width of a char and the height of a line
+# print('adjusting color_cords to fit the image_resize_ratio...')
+# adjusted_color_cords = tools.adjust_color_cords(color_cords, image_resize_ratio)
+#  
+#  
+# print('calculating and adding user defined offset to adjusted_color_cords...')
+# offset_adjusted_color_cords = offset.offset_color_cords(adjusted_color_cords, image_position, lines)
+ 
 #put it all together and what have you got?  Bippity Boppity BOO!
 print('creating final image...')
-image = text_image.text_image(lines, offset_adjusted_color_cords, default_colors, font_size, font_path)
-
+image = text_image.text_image(lines, color_cords, default_colors, font_size, font_path)#offset_adjusted_
+ 
 # image.save('test_output.jpg', format='JPEG', subsampling=0,quality = 100)
 print('saving high-resolution image...')
 image.save(final_image_filename, subsampling = 0, quality = 100)
-
+ 
 print('showing low-resolution image...')
 image.show()
-
+ 
 print('done!')
-
+ 
 
 
