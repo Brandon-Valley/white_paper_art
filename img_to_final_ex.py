@@ -59,19 +59,20 @@ cols = 110#made smaller for testing, was 200
 # 'Consolas.ttf'
 font_path = 'fonts/' + 'Consolas.ttf'
 
-#found by making a 99x99 txt file and looking at dimensions of image,
-#used to get the best dimentions for laying out text, nothing to do with the image
-const_HxW_ratio = 5150 / 9600  
+  
   
 font_size = 40# get better resolution with larger size  
+
+
+
+
 
 #2/3:
 # a a a
 # a a a
 desired_dimension_ratio = 1/1
 
-#find correct image dimensions by adjusting desired ratio for the difference between the length of a char and the height of a line
-true_dimension_ratio = desired_dimension_ratio * const_HxW_ratio
+
 
 # 0, 0 = centered
 image_position = {'x_pos': 0,
@@ -92,7 +93,7 @@ default_colors = {'background_image':  (255,255,255),#white
 
 print('getting font properties...')
 font = font_tools.load_font(font_path, font_size)
-aspect_ratio = font_tools.get_aspect_ratio(font)
+font_aspect_ratio = font_tools.get_aspect_ratio(font)
 
 
 #read in the text that will be colored to show a picture
@@ -108,6 +109,8 @@ word_list = data_str.split(' ')
 
 #turn true_dimension_ratio into max number of lines and max chars per line
 print('calculating ideal text image dimensions...')
+#find correct image dimensions by adjusting desired ratio for the difference between the length of a char and the height of a line
+true_dimension_ratio = desired_dimension_ratio * font_aspect_ratio
 ideal_dimentions = tools.calc_ideal_dimentions(true_dimension_ratio, num_chars)
 
 #make list of lines to be output in final image
@@ -116,7 +119,7 @@ lines = tools.make_correct_lines(ideal_dimentions['num_lines'], ideal_dimentions
 # print("number of lines:", len(lines))
 
 print('building color_cords from input image...')
-color_cords = color_cords.get_color_cords(input_image_filename, cols, aspect_ratio, input_image_background_color)
+color_cords = color_cords.get_color_cords(input_image_filename, cols, font_aspect_ratio, input_image_background_color)
 # print(img_color_matrix)#````````````````````````````````````````````````````````````````````````````````````````````````````````````````````
 
 print('calculating and adding user defined offset to adjusted_color_cords...')
