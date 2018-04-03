@@ -8,7 +8,7 @@ def offset_color_cords(original_color_cords, img_pos, lines):
     
 def calc_offset(color_cords, img_pos_dict, lines_dims_dict):
     img_dim_dict = get_dimentions(color_cords)
-    print('in offset, dims: ', img_dim_dict)#````````````````````````````````````````````````````````````````````````````````````
+#     print('in offset, dims: ', img_dim_dict)#````````````````````````````````````````````````````````````````````````````````````
     
     
     x_0 = ( lines_dims_dict['lenght_of_longest_line'] - img_dim_dict['width'] ) / 2

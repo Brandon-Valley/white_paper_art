@@ -15,7 +15,7 @@ def get_color_cords(fileName, cols, aspect_ratio, background_color):
 
     # store dimensions
     W, H = color_image.size[0], color_image.size[1]
-    print("in color_cords, input image dims: %d x %d" % (W, H))#````````````````````````````````````
+#     print("in color_cords, input image dims: %d x %d" % (W, H))#````````````````````````````````````
 
     # compute width of tile # used to be w
     tile_w = W / cols
@@ -23,7 +23,7 @@ def get_color_cords(fileName, cols, aspect_ratio, background_color):
     # compute tile height based on aspect ratio and aspect_ratio #used to be h
     tile_h = tile_w / aspect_ratio
     
-    print('in color_cords, tile_w: %s  tile_h: %s' %(tile_w, tile_h))#````````````````````````````````````````````````````
+#     print('in color_cords, tile_w: %s  tile_h: %s' %(tile_w, tile_h))#````````````````````````````````````````````````````
     
     half_pixles_per_tile = ( tile_w * tile_h ) / 2
     

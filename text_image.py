@@ -3,19 +3,7 @@ from PIL import Image, ImageDraw
 import tools
 
 
-def text_image(lines, color_cords, default_colors, font_size, font_path = None):
-    # choose a font (you can see more detail in my library on github)
-#     large_font = 40#works with 40  # get better resolution with larger size
-#     font_path = font_path or 'HelveticaBold.ttf'#'cour.ttf' ## # Courier New. works in windows. linux may need more explicit path
-#     font_path = font_path or 'cour.ttf'# ## # Courier New. works in windows. linux may need more explicit path
-#     font = PIL.ImageFont.truetype("Verdana.ttf",14)
-    try:
-        font = PIL.ImageFont.truetype(font_path, font_size)
-#         font = PIL.ImageFont.truetype(font_path, size=large_font)
-    except IOError:
-        font = PIL.ImageFont.load_default()
-        print('Could not use chosen font. Using default.')
-    
+def text_image(lines, color_cords, default_colors, font):    
     # make the background image based on the combination of font and lines
     pt2px = lambda pt: int(round(pt * 96.0 / 72))  # convert points to pixels
     
