@@ -47,9 +47,6 @@ import font_tools
 
 input_image_filename = 'test_pics/bitcoin2046.png'
 data_text_filename = 'full_paper.txt'
-
-# background_change_needed = True
-
 final_image_filename = 'TEST_OUTPUT.png'
 
 # set cols
@@ -64,15 +61,10 @@ font_path = 'fonts/' + 'Consolas.ttf'
 font_size = 40# get better resolution with larger size  
 
 
-
-
-
 #2/3:
 # a a a
 # a a a
 desired_dimension_ratio = 1/1
-
-
 
 # 0, 0 = centered
 image_position = {'x_pos': 0,
@@ -83,11 +75,9 @@ input_image_background_color = (255, 255, 255)
 
 #background 
 #replace this bull shit with something to  deal with whitespace
-default_colors = {'background_image':  (255,255,255),#white
+default_colors = {'background_image':        (255,255,255),#white
                   'final_image_background':  (0,0,0),#black
-                  'default_text': (255, 255, 255)}#white
-
-
+                  'default_text':            (255, 255, 255)}#white
 
 
 
@@ -109,7 +99,7 @@ word_list = data_str.split(' ')
 
 #turn true_dimension_ratio into max number of lines and max chars per line
 print('calculating ideal text image dimensions...')
-#find correct image dimensions by adjusting desired ratio for the difference between the length of a char and the height of a line
+#find correct image dimensions by adjusting desired ratio for the difference between width and height of a char
 true_dimension_ratio = desired_dimension_ratio * font_aspect_ratio
 ideal_dimentions = tools.calc_ideal_dimentions(true_dimension_ratio, num_chars)
 
