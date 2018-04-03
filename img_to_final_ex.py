@@ -4,11 +4,11 @@ from random import randint
 
 import tools
 import text_image
-import ascii_art
-import ascii_image_editor
+# import ascii_art
+# import ascii_image_editor
 import color_cords
 import offset
-import font_size
+import font_tools
 
 
 #IF IMAGE STARTS LOOKING WEIRD, LOOK INTO WHY SOMETIMES IN COLOR_CORDS, 
@@ -61,16 +61,14 @@ background_change_needed = True
 
 final_image_filename = 'TEST_OUTPUT.png'
 
-# set scale default as 0.43 which suits
-# a Courier font
-scale = .7#0.43
+# # set aspect_ratio default as 0.43 which suits
+# # a Courier font
+# aspect_ratio = .7#0.43
 
 # set cols
 cols = 150#made smaller for testing, was 200
 
-#found by making a 99x99 txt file and looking at dimensions of image,
-#used to get the best dimentions for laying out text, nothing to do with the image
-const_HxW_ratio = 5150 / 9600  
+
                     
                     
 #THE REASON COUR AND DEFAULT WERE WORKING IS BECAUSE THEY ARE BOTH MONOSPACE FONTS,
@@ -86,25 +84,28 @@ const_HxW_ratio = 5150 / 9600
 #'Calibri.ttf'
 # 'Consolas.ttf'
 font_path = 'fonts/' + 'cour.ttf'
-# font_path = 'fonts/' + 'cour.ttf'
 
 
+#found by making a 99x99 txt file and looking at dimensions of image,
+#used to get the best dimentions for laying out text, nothing to do with the image
+const_HxW_ratio = 5150 / 9600  
+  
                
-# test_string = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
-# font_h = font.getsize(test_string)[1]
-# font_h = pt2px(font.getsize(test_string)[0])
-                                
-# font_w = 156
-# font_h = 11
-
-font_dims = font_size.get_font_size(font_path)
-
-print('font dims: ', font_dims)#````````````````````````````````````````````````````````````````````````````````````
-
-font_h = font_dims[1]
-font_w = font_dims[0]
-
-image_resize_ratio = ( font_h / font_w ) * 12.8   #HAVE NOT FULLY TESTED YET, JUST A GUESS!!!!!!!!!!!!!!!!!!!
+# # test_string = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+# # font_h = font.getsize(test_string)[1]
+# # font_h = pt2px(font.getsize(test_string)[0])
+#                                 
+# # font_w = 156
+# # font_h = 11
+# 
+# font_dims = font_size.get_font_size(font_path)
+# 
+# print('font dims: ', font_dims)#````````````````````````````````````````````````````````````````````````````````````
+# 
+# font_h = font_dims[1]
+# font_w = font_dims[0]
+# 
+# image_resize_ratio = ( font_h / font_w ) * 12.8   #HAVE NOT FULLY TESTED YET, JUST A GUESS!!!!!!!!!!!!!!!!!!!
 
 
 
@@ -139,6 +140,10 @@ default_colors = {'background_image':  (255,255,255),#white
 
 
 
+print('getting font properties...')
+font = font_tools.load_font(font_path, font_size)
+aspect_ratio = font_tools.get_aspect_ratio(font)
+
 
 #read in the text that will be colored to show a picture
 print('reading in data text file...') 
@@ -161,7 +166,7 @@ lines = tools.make_correct_lines(ideal_dimentions['num_lines'], ideal_dimentions
 # print("number of lines:", len(lines))
 
 print('building color_cords from input image...')
-color_cords = color_cords.get_color_cords(input_image_filename, cols, scale, input_image_background_color)
+color_cords = color_cords.get_color_cords(input_image_filename, cols, aspect_ratio, input_image_background_color)
 # print(img_color_matrix)#````````````````````````````````````````````````````````````````````````````````````````````````````````````````````
 
 
@@ -177,6 +182,7 @@ color_cords = color_cords.get_color_cords(input_image_filename, cols, scale, inp
 # print('calculating and adding user defined offset to adjusted_color_cords...')
 # offset_adjusted_color_cords = offset.offset_color_cords(adjusted_color_cords, image_position, lines)
  
+# go back and make it so this func doesnt need font_path!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 #put it all together and what have you got?  Bippity Boppity BOO!
 print('creating final image...')
 image = text_image.text_image(lines, color_cords, default_colors, font_size, font_path)#offset_adjusted_

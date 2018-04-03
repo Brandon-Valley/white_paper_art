@@ -4,7 +4,7 @@ import tools
 
 
 
-def get_color_cords(fileName, cols, scale, background_color):   
+def get_color_cords(fileName, cols, aspect_ratio, background_color):   
     color_cords = {} 
 
     color_image = Image.open(fileName).convert('RGB')
@@ -20,8 +20,8 @@ def get_color_cords(fileName, cols, scale, background_color):
     # compute width of tile # used to be w
     tile_w = W / cols
 
-    # compute tile height based on aspect ratio and scale #used to be h
-    tile_h = tile_w / scale
+    # compute tile height based on aspect ratio and aspect_ratio #used to be h
+    tile_h = tile_w / aspect_ratio
     
     print('in color_cords, tile_w: %s  tile_h: %s' %(tile_w, tile_h))#````````````````````````````````````````````````````
     
