@@ -13,6 +13,11 @@ import font_tools
 #high resolution images will give better results
 
 
+
+
+#reading raw data: http://effbot.org/zone/pil-large-images.htm
+
+
 # from IPython.testing.iptest import have
 # from scipy.sparse.linalg.eigen.arpack.tests.test_arpack import CheckingLinearOperator
 
@@ -46,7 +51,7 @@ import font_tools
 
 
 input_image_filename = 'test_pics/bitcoin2046.png'
-data_text_filename = 'full_paper.txt'
+data_text_filename = 'full_paper_10x.txt'
 final_image_filename = 'TEST_OUTPUT.png'
 
 # set cols
@@ -64,7 +69,7 @@ font_size = 40# get better resolution with larger size
 #2/3:
 # a a a
 # a a a
-desired_dimension_ratio = 1/1
+desired_dimension_ratio = 1 / 1
 
 # 0, 0 = centered
 image_position = {'x_pos': 0,
