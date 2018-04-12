@@ -14,7 +14,7 @@ import font_tools
 
 
 
-
+#might also be helpful for making big images: https://stackoverflow.com/questions/3397157/how-to-read-a-raw-image-using-pil?utm_medium=organic&utm_source=google_rich_qa&utm_campaign=google_rich_qa
 #reading raw data: http://effbot.org/zone/pil-large-images.htm
 
 
@@ -35,13 +35,6 @@ import font_tools
 
 # todo:
 # 
-# figure out font stuff
-# 
-# finish offset
-#     -need to make trimming
-#         -need to add whitespace stuff
-#         
-# make tinker tool
 # 
 # figure out UI / final file structure stuff
 # 
@@ -51,7 +44,7 @@ import font_tools
 
 
 input_image_filename = 'test_pics/bitcoin2046.png'
-data_text_filename = 'full_paper_10x.txt'
+data_text_filename = 'full_paper.txt'
 final_image_filename = 'TEST_OUTPUT.png'
 
 # set cols
