@@ -26,7 +26,7 @@ def show_gui():
     
     window = Tk()
     window.title("Text Image Maker")
-    window.geometry('600x400')
+    window.geometry('800x400')
      
      
     #text file path text box
@@ -108,20 +108,12 @@ def show_gui():
     img_dims_option_sel = IntVar()
     match_input_img_dims_btn = Radiobutton(window,text='Use Input Image Dimensions', value=1, variable=img_dims_option_sel, command = img_dims_radio_btn_sel)
     user_def_img_dims_btn    = Radiobutton(window,text='Image Dimensions: ', value=0, variable=img_dims_option_sel, command = img_dims_radio_btn_sel)
-    
-    
-    
-#     output_img_dim_rat_lbl = Label(window, text="Image Dimensions: ")
+        
     slash_lbl = Label(window, text="/")
     output_img_dim_rat_num_text_box = Entry(window,width=10) #numerator
     output_img_dim_rat_din_text_box = Entry(window,width=10) #denominator
     output_img_dim_rat_num_text_box.insert(END, DEFAULT_IMAGE_DIMENSION_RATIO_NUM) #default
     output_img_dim_rat_din_text_box.insert(END, DEFAULT_IMAGE_DIMENSION_RATIO_DIN) #default
-     
-    def input_img_file_path_clk():
-        print('pretend to go into directory to get text file path')#`````````````````````````````````````````````````````
-         
-    input_img_file_path_btn = Button(window, text="Browse", command = input_img_file_path_clk)
     
 
 
@@ -147,6 +139,19 @@ def show_gui():
     
 
 
+    #quality radio buttons
+    #gets called each time you click one of the radio buttons, changes state of font_size_sbox
+#     def font_size_radio_btn_sel():
+#         font_size_sbox_state = GUI_utils.bool_to_state(font_size_option_sel.get())
+#         font_size_sbox.configure(state = font_size_sbox_state )
+
+    quality_selected  = StringVar()
+    quality_selected.set("low")
+    high_qual_rad_btn = Radiobutton(window,text='Show Low Quality Image (Fast)', value='low', variable = quality_selected)
+    low_qual_rad_btn  = Radiobutton(window,text='Save High Quality Image (Slow)', value='high', variable = quality_selected)
+
+
+
     #build image button   
     def build_img_btn_clk():
         #read the current state of all arguments
@@ -158,7 +163,7 @@ def show_gui():
                     'output_image_dim_ratio':   GUI_utils.strs_to_int_ratio( output_img_dim_rat_num_text_box.get() , output_img_dim_rat_din_text_box.get() ),
                     'image_size':               img_size_sbox.get(),
                     'image_position_cords':     {'x': x_cord_sbox.get(), 'y': y_cord_sbox.get()},
-                    'quality':                  None,
+                    'quality':                  quality_selected.get(),
                     'output_image_file_path':   None}
         
         #build final image using arguments
@@ -216,6 +221,10 @@ def show_gui():
     comma_lbl                       .grid(column=4, row=13)
     y_cord_sbox                     .grid(column=5, row=13)
     prnth_close_lbl                 .grid(column=6, row=13)
+    
+    #quality radio buttons
+    high_qual_rad_btn               .grid(column=3, row=16)
+    low_qual_rad_btn                .grid(column=3, row=17)
     
     
     #build image button
