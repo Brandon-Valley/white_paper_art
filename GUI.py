@@ -17,7 +17,8 @@ import GUI_utils
     
     
     
-    
+DEFAULT_FONT_NAME = "cour"
+DEFAULT_FONT_SIZE = 40
 
 
 
@@ -26,38 +27,16 @@ def show_gui():
     window = Tk()
     window.title("Text Image Maker")
     window.geometry('350x200')
-    
-    #set Tinker variables
-    input_text_file_path = StringVar
-    input_img_file_path = StringVar
-     
-    #default arguments
-    input_text_file_path = GUI_utils.get_defalt_text_file_path()
-    input_img_file_path = GUI_utils.get_defalt_image_file_path()
-     
-    #initialize img_args
-    img_args = {}
-#     img_args = {'input_text_file_path':     input_text_file_path,
-#                 'image_file_path':          input_img_file_path,
-#                 'max_font_size':            None,
-#                 'font_name':                None,
-#                 'desired_dimension_ratio':  None,
-#                 'image_size':               None,
-#                 'image_position_cords':     None,
-#                 'output_image_file_path':   None}
- 
- 
      
      
     #text file path text box
     input_text_file_path_lbl = Label(window, text="Text File Input: ")
     input_text_file_path_text_box = Entry(window,width=10)
-    input_text_file_path_text_box.insert(END, input_text_file_path)
-     
+    input_text_file_path_text_box.insert(END, GUI_utils.get_defalt_text_file_path()) #default
+         
     def input_text_file_path_clk():
         print('pretend to go into directory to get text file path')#`````````````````````````````````````````````````````
         
-         
     input_text_file_path_btn = Button(window, text="Directory", command = input_text_file_path_clk)
      
      
@@ -65,32 +44,58 @@ def show_gui():
     #image file path text box
     input_img_file_path_lbl = Label(window, text="Image File Input: ")
     input_img_file_path_text_box = Entry(window,width=10)
-    input_img_file_path_text_box.insert(END, input_img_file_path)
+    input_img_file_path_text_box.insert(END, GUI_utils.get_defalt_image_file_path()) #default
      
     def input_img_file_path_clk():
-        input_img_file_path = input_img_file_path_text_box.get()
+        print('pretend to go into directory to get text file path')#`````````````````````````````````````````````````````
          
     input_img_file_path_btn = Button(window, text="Directory", command = input_img_file_path_clk)
      
      
      
+    #font section labels
+    font_lbl = Label(window, text="Font:")
+    font_size_lbl = Label(window, text="Font Size:")
+    maximize_font_size_lbl = Label(window, text="Maximize Font Size:")
+    
+     
      
     #font select drop-down
-    font_lbl = Label(window, text="Font: ")
-    font_drop_down = Combobox(window)#,text='First', value=1, variable=selected)
-    font_drop_down['values']= GUI_utils.get_font_list()
-    font_drop_down.current(0) #set the selected item
+    font_drop_down = Combobox(window)
+    font_drop_down['values'] = GUI_utils.get_font_list()
+    default_font_index = font_drop_down['values'].index(DEFAULT_FONT_NAME) #default
+    font_drop_down.current(default_font_index) #set the selected item
+
+
+
+    #maximize font drop-down
+    maximize_font_size_drop_down = Combobox(window)
+    maximize_font_size_drop_down['values'] = ['False', 'True']
+    maximize_font_size_drop_down.current(0) #change default by changing oredr of above list
+
+
+    #font size spinbox
+    font_size_dims = GUI_utils.get_font_size_dimensions()
+    font_size_sbox_state = StringVar
+    font_size_sbox_state = GUI_utils.get_font_size_state(maximize_font_size_drop_down.get())
+    font_size_sbox = Spinbox(window, from_ = font_size_dims['min'], to = font_size_dims['max'], width = 5, state = font_size_sbox_state)#state='disabled'
+#     font_size_sbox.state = 'disabled'#GUI_utils.get_font_size_state(maximize_font_size_drop_down.get())
+    font_size_sbox.delete(0, "end") #gets rid of 0 so the next line makes the default value 40 instead of 400
+    font_size_sbox.insert(0, DEFAULT_FONT_SIZE) #default 
 
 
     
 
     #build image button   
     def build_img_btn_clk():
+        
+        font_size_sbox.Enabled = False
         #read the current state of all arguments
         img_args = {'input_text_file_path':     input_text_file_path_text_box.get(),
                     'image_file_path':          input_img_file_path_text_box.get(),
-                    'max_font_size':            None,
                     'font_name':                font_drop_down.get() + '.ttf',
+                    'font_size':                font_size_sbox.get(),
+                    'maximize_font_size':       GUI_utils.str_to_bool( maximize_font_size_drop_down.get() ),
                     'desired_dimension_ratio':  None,
                     'image_size':               None,
                     'image_position_cords':     None,
@@ -102,6 +107,8 @@ def show_gui():
     build_img_btn = Button(window, text="Build Image", command = build_img_btn_clk)
     
     
+    #blank label (for spacing)
+    blank_lbl = Label(window, text=" ")
     
     #input text file path
     input_text_file_path_lbl        .grid(column=0, row=0)
@@ -113,12 +120,22 @@ def show_gui():
     input_img_file_path_text_box    .grid(column=1, row=1)
     input_img_file_path_btn         .grid(column=2, row=1)
      
-    #font drop down
+    #space between
+    blank_lbl                        .grid(column=0, row=2)
+    
+    #font section labels
     font_lbl                        .grid(column=0, row=3)
-    font_drop_down                  .grid(column=1, row=3)
+    font_size_lbl                   .grid(column=1, row=3)
+    maximize_font_size_lbl          .grid(column=2, row=3)
+
+    
+    #font inputs
+    font_drop_down                  .grid(column=0, row=4) 
+    font_size_sbox                  .grid(column=1, row=4)
+    maximize_font_size_drop_down    .grid(column=2, row=4)
     
     #build image button
-    build_img_btn.grid(column=2, row=4)
+    build_img_btn.grid(column=2, row=9)
     
     
 
