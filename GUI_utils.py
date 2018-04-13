@@ -17,12 +17,12 @@ def get_font_size_dimensions():
     return f_size_dims
 
 
-def get_font_size_state(bool_str):
-    if   bool_str == 'True':
+def bool_to_state(bool_int):
+    if   bool_int == 1:
         return 'disabled'
-    elif bool_str == 'False':
+    elif bool_int == 0:
         return 'normal'
     else:
-        raise('ERROR    get_font_size_state in GUI_utils received an invalid argument: ', bool_str)
+        raise Exception('ERROR    bool_str_to_state in GUI_utils received an invalid argument: ', bool_int)
 
 

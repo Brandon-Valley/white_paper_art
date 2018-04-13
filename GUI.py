@@ -26,7 +26,7 @@ def show_gui():
     
     window = Tk()
     window.title("Text Image Maker")
-    window.geometry('350x200')
+    window.geometry('500x200')
      
      
     #text file path text box
@@ -75,8 +75,20 @@ def show_gui():
 
     font_size_sbox.configure(state='disabled')
     font_size_sbox.configure(state='normal')
-#     self.ent.configure(state='disabled')
-#     '   # Disable the button.
+
+
+
+    #maximize font size radio buttons
+    #gets called each time you click one of the radio buttons, changes state of font_size_sbox
+    def radio_button_select():
+        font_size_sbox_state = GUI_utils.bool_to_state(selected.get())
+        font_size_sbox.configure(state = font_size_sbox_state )
+        
+#     var = StringVar() #used to get the 'value' property of a tkinter.Radiobutton
+
+    selected = IntVar()
+    max_font_size_true_btn = Radiobutton(window,text='True', value=1, variable=selected, command = radio_button_select)
+    max_font_size_false_btn = Radiobutton(window,text='False', value=0, variable=selected, command = radio_button_select)
     
 
     #build image button   
@@ -86,6 +98,7 @@ def show_gui():
                     'image_file_path':          input_img_file_path_text_box.get(),
                     'font_name':                font_drop_down.get() + '.ttf',
                     'font_size':                font_size_sbox.get(),
+                    'maximize_font_size':       None,
                     'desired_dimension_ratio':  None,
                     'image_size':               None,
                     'image_position_cords':     None,
@@ -116,10 +129,13 @@ def show_gui():
     #font section labels
     font_lbl                        .grid(column=0, row=3)
     font_size_lbl                   .grid(column=1, row=3)
+    maximize_font_size_lbl          .grid(column=2, row=3)
     
     #font inputs
     font_drop_down                  .grid(column=0, row=4) 
     font_size_sbox                  .grid(column=1, row=4)
+    max_font_size_true_btn          .grid(column=3, row=4)
+    max_font_size_false_btn         .grid(column=5, row=4)
     
     #build image button
     build_img_btn.grid(column=2, row=9)
