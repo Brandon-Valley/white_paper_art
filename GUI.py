@@ -140,15 +140,21 @@ def show_gui():
 
 
     #quality radio buttons
-    #gets called each time you click one of the radio buttons, changes state of font_size_sbox
-#     def font_size_radio_btn_sel():
-#         font_size_sbox_state = GUI_utils.bool_to_state(font_size_option_sel.get())
-#         font_size_sbox.configure(state = font_size_sbox_state )
+    #gets called each time you click one of the radio buttons, changes font size options
+    def quality_rad_btn_sel():
+        if  quality_selected.get() == 'low':
+            font_size_option_sel.set(0)
+            font_size_sbox.configure(state = 'normal' )
+        elif quality_selected.get() == 'high':
+            font_size_option_sel.set(1)
+            font_size_sbox.configure(state = 'disable' )
+        else:
+            print('something wrong with quality thing!!!!!!!!!!!!!!!!!!!!!!!!!')#```````````````````````````````````````````````
 
     quality_selected  = StringVar()
-    quality_selected.set("low")
-    high_qual_rad_btn = Radiobutton(window,text='Show Low Quality Image (Fast)', value='low', variable = quality_selected)
-    low_qual_rad_btn  = Radiobutton(window,text='Save High Quality Image (Slow)', value='high', variable = quality_selected)
+    quality_selected.set("low") #defalt
+    high_qual_rad_btn = Radiobutton(window,text='Show Low Quality Image (Fast)', value='low', variable = quality_selected, command = quality_rad_btn_sel)
+    low_qual_rad_btn  = Radiobutton(window,text='Save High Quality Image (Slow)', value='high', variable = quality_selected, command = quality_rad_btn_sel)
 
 
 
