@@ -69,11 +69,14 @@ def show_gui():
 
     #font size spinbox
     font_size_dims = GUI_utils.get_font_size_dimensions()
-    font_size_sbox = Spinbox(window, from_ = font_size_dims['min'], to = font_size_dims['max'], width = 5)
+    font_size_sbox = Spinbox(window, from_ = font_size_dims['min'], to = font_size_dims['max'], width = 5)#, state = "disabled")
     font_size_sbox.delete(0, "end") #gets rid of 0 so the next line makes the default value 40 instead of 400
     font_size_sbox.insert(0, DEFAULT_FONT_SIZE) #default 
 
-
+    font_size_sbox.configure(state='disabled')
+    font_size_sbox.configure(state='normal')
+#     self.ent.configure(state='disabled')
+#     '   # Disable the button.
     
 
     #build image button   
