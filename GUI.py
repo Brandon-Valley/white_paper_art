@@ -158,6 +158,18 @@ def show_gui():
 
 
 
+    #output image path text box
+    output_img_file_path_lbl = Label(window, text="Output Image File Path: ")
+    output_img_file_path_text_box = Entry(window,width=20)
+    output_img_file_path_text_box.insert(END, GUI_utils.get_defalt_output_img_file_path()) #default
+         
+    def output_file_path_clk():
+        print('pretend to go into directory to get text file path')#`````````````````````````````````````````````````````
+        
+    output_img_file_path_btn = Button(window, text="Browse", command = output_file_path_clk)
+
+
+
     #build image button   
     def build_img_btn_clk():
         #read the current state of all arguments
@@ -170,10 +182,21 @@ def show_gui():
                     'image_size':               img_size_sbox.get(),
                     'image_position_cords':     {'x': x_cord_sbox.get(), 'y': y_cord_sbox.get()},
                     'quality':                  quality_selected.get(),
-                    'output_image_file_path':   None}
+                    'output_image_file_path':   output_img_file_path_text_box.get()}
         
         #build final image using arguments
         build_image.build_img_test(img_args)
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
     
     build_img_btn = Button(window, text="Build Image", command = build_img_btn_clk)
     
@@ -232,9 +255,15 @@ def show_gui():
     high_qual_rad_btn               .grid(column=3, row=16)
     low_qual_rad_btn                .grid(column=3, row=17)
     
+    #output image file path text box
+    output_img_file_path_lbl        .grid(column=1, row=19)
+    output_img_file_path_text_box   .grid(column=2, row=19)
+    output_img_file_path_btn        .grid(column=3, row=19)
+    
     
     #build image button
     build_img_btn                   .grid(column=2, row=20)
+    
     
     
     window.mainloop()

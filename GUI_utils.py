@@ -33,7 +33,8 @@ def strs_to_int_ratio(str1, str2):
     return i1 / i2
     
     
-    
+def get_defalt_output_img_file_path():
+    return "output/img/defalt/fuiles/path"
     
     
     
