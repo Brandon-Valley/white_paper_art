@@ -68,17 +68,18 @@ def show_gui():
 
 
 
-    #maximize font drop-down
-    maximize_font_size_drop_down = Combobox(window)
-    maximize_font_size_drop_down['values'] = ['False', 'True']
-    maximize_font_size_drop_down.current(0) #change default by changing oredr of above list
+#     #maximize font drop-down
+#     maximize_font_size_drop_down = Combobox(window)
+#     maximize_font_size_drop_down['values'] = ['False', 'True']
+#     maximize_font_size_drop_down.current(0) #change default by changing order of above list
 
 
-    #font size spinbox
+    #font size spinbox #enable/disable not working!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     font_size_dims = GUI_utils.get_font_size_dimensions()
     font_size_sbox_state = StringVar
-    font_size_sbox_state = GUI_utils.get_font_size_state(maximize_font_size_drop_down.get())
-    font_size_sbox = Spinbox(window, from_ = font_size_dims['min'], to = font_size_dims['max'], width = 5, state = font_size_sbox_state)#state='disabled'
+#     font_size_sbox_state = GUI_utils.get_font_size_state(maximize_font_size_drop_down.get())
+    font_size_sbox = Spinbox(window, from_ = font_size_dims['min'], to = font_size_dims['max'], width = 5)#, state = font_size_sbox_state)#state='disabled'
+
 #     font_size_sbox.state = 'disabled'#GUI_utils.get_font_size_state(maximize_font_size_drop_down.get())
     font_size_sbox.delete(0, "end") #gets rid of 0 so the next line makes the default value 40 instead of 400
     font_size_sbox.insert(0, DEFAULT_FONT_SIZE) #default 
@@ -89,7 +90,7 @@ def show_gui():
     #build image button   
     def build_img_btn_clk():
         
-        font_size_sbox.Enabled = False
+
         #read the current state of all arguments
         img_args = {'input_text_file_path':     input_text_file_path_text_box.get(),
                     'image_file_path':          input_img_file_path_text_box.get(),
@@ -126,13 +127,13 @@ def show_gui():
     #font section labels
     font_lbl                        .grid(column=0, row=3)
     font_size_lbl                   .grid(column=1, row=3)
-    maximize_font_size_lbl          .grid(column=2, row=3)
+#     maximize_font_size_lbl          .grid(column=2, row=3)
 
     
     #font inputs
     font_drop_down                  .grid(column=0, row=4) 
     font_size_sbox                  .grid(column=1, row=4)
-    maximize_font_size_drop_down    .grid(column=2, row=4)
+#     maximize_font_size_drop_down    .grid(column=2, row=4)
     
     #build image button
     build_img_btn.grid(column=2, row=9)

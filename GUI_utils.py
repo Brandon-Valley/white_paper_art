@@ -26,10 +26,10 @@ def get_font_size_state(bool_str):
         raise('ERROR    get_font_size_state in GUI_utils received an invalid argument: ', bool_str)
 
 
-def str_to_bool(b_str):
-    if   b_str == 'True':
-        return True
-    elif b_str == 'False':
-        return False
-    else:
-        raise('ERROR    Str_to_bool in GUI_utils received an invalid argument: ', b_str)
+# def str_to_bool(b_str):
+#     if   b_str == 'True':
+#         return True
+#     elif b_str == 'False':
+#         return False
+#     else:
+#         raise('ERROR    Str_to_bool in GUI_utils received an invalid argument: ', b_str)
