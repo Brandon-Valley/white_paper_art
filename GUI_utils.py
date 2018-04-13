@@ -2,7 +2,7 @@
 
 def get_defalt_text_file_path():
     return 'default/text/file/path'
-
+ 
 def get_defalt_image_file_path():
     return 'default/image/file/path'
 
