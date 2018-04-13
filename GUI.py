@@ -5,18 +5,6 @@ import build_image
 import GUI_utils
 
 
-# def build_img_btn_clk(image_args):
-# # #     print(font_drop_down.get())
-# # #     print('in GUI, image_args: ', image_args)
-# #     build_image.build_img_test(image_args)
-#     print('out of build_image')
-
-
-    
-
-    
-    
-    
 DEFAULT_FONT_NAME = "cour"
 DEFAULT_FONT_SIZE = 40
 
@@ -31,7 +19,7 @@ def show_gui():
      
     #text file path text box
     input_text_file_path_lbl = Label(window, text="Text File Input: ")
-    input_text_file_path_text_box = Entry(window,width=10)
+    input_text_file_path_text_box = Entry(window,width=20)
     input_text_file_path_text_box.insert(END, GUI_utils.get_defalt_text_file_path()) #default
          
     def input_text_file_path_clk():
@@ -115,8 +103,8 @@ def show_gui():
     
     #input text file path
     input_text_file_path_lbl        .grid(column=0, row=0)
-    input_text_file_path_text_box   .grid(column=1, row=0)
-    input_text_file_path_btn        .grid(column=2, row=0)
+    input_text_file_path_text_box   .grid(column=1, row=0, columnspan = 2)
+    input_text_file_path_btn        .grid(column=3, row=0)
      
     #input image file path
     input_img_file_path_lbl         .grid(column=0, row=1)
