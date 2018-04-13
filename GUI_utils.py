@@ -10,11 +10,6 @@ def get_defalt_image_file_path():
 def get_font_list():
     return['font1', 'font2', 'cour', "font22222222222222222222222222222222222222222222222222222222"]
     
-    
-def get_font_size_dimensions():
-    f_size_dims = {'min': 0,
-                   'max': 100}
-    return f_size_dims
 
 
 def bool_to_state(bool_int):
