@@ -61,6 +61,7 @@ def show_gui():
     input_text_file_path_btn = Button(window, text="Directory", command = input_text_file_path_clk)
      
      
+     
     #image file path text box
     input_img_file_path_lbl = Label(window, text="Image File Input: ")
     input_img_file_path_text_box = Entry(window,width=10)
@@ -75,33 +76,28 @@ def show_gui():
      
      
     #font select drop-down
+    font_lbl = Label(window, text="Font: ")
     font_drop_down = Combobox(window)#,text='First', value=1, variable=selected)
     font_drop_down['values']= GUI_utils.get_font_list()
     font_drop_down.current(0) #set the selected item
-    print(font_drop_down.get())
 
 
     
 
     #build image button   
     def build_img_btn_clk():
-            #initialize img_args
+        #read the current state of all arguments
         img_args = {'input_text_file_path':     input_text_file_path_text_box.get(),
                     'image_file_path':          input_img_file_path_text_box.get(),
                     'max_font_size':            None,
-                    'font_name':                None,
+                    'font_name':                font_drop_down.get() + '.ttf',
                     'desired_dimension_ratio':  None,
                     'image_size':               None,
                     'image_position_cords':     None,
                     'output_image_file_path':   None}
-        print('sofiuhgiudsnfn')
-#         input_text_file_path = input_text_file_path_text_box.get()
-        img_args['input_text_file_path'] = input_text_file_path_text_box.get()# "wwwwwwwwwwwwwwwwwwwwwwwwww" #input_img_file_path
-
-#     print(font_drop_down.get())
-#     print('in GUI, image_args: ', image_args)
+        
+        #build final image using arguments
         build_image.build_img_test(img_args)
-        print('out of build_image')
     
     build_img_btn = Button(window, text="Build Image", command = build_img_btn_clk)
     
@@ -118,7 +114,8 @@ def show_gui():
     input_img_file_path_btn         .grid(column=2, row=1)
      
     #font drop down
-    font_drop_down                  .grid(column=0, row=3)
+    font_lbl                        .grid(column=0, row=3)
+    font_drop_down                  .grid(column=1, row=3)
     
     #build image button
     build_img_btn.grid(column=2, row=4)
