@@ -60,21 +60,16 @@ def show_gui():
     
      
      
-    #font select drop-down
+    #font select drop-down #make read only??????????????????????????????????????????????????
     font_drop_down = Combobox(window)
     font_drop_down['values'] = GUI_utils.get_font_list()
     default_font_index = font_drop_down['values'].index(DEFAULT_FONT_NAME) #default
     font_drop_down.current(default_font_index) #set the selected item
 
 
-
-
-
+    #font size spinbox
     font_size_dims = GUI_utils.get_font_size_dimensions()
-    font_size_sbox_state = StringVar
     font_size_sbox = Spinbox(window, from_ = font_size_dims['min'], to = font_size_dims['max'], width = 5)
-
-#     font_size_sbox.state = 'disabled'#GUI_utils.get_font_size_state(maximize_font_size_drop_down.get())
     font_size_sbox.delete(0, "end") #gets rid of 0 so the next line makes the default value 40 instead of 400
     font_size_sbox.insert(0, DEFAULT_FONT_SIZE) #default 
 
@@ -83,14 +78,11 @@ def show_gui():
 
     #build image button   
     def build_img_btn_clk():
-        
-
         #read the current state of all arguments
         img_args = {'input_text_file_path':     input_text_file_path_text_box.get(),
                     'image_file_path':          input_img_file_path_text_box.get(),
                     'font_name':                font_drop_down.get() + '.ttf',
                     'font_size':                font_size_sbox.get(),
-                    'maximize_font_size':       GUI_utils.str_to_bool( maximize_font_size_drop_down.get() ),
                     'desired_dimension_ratio':  None,
                     'image_size':               None,
                     'image_position_cords':     None,
@@ -121,7 +113,6 @@ def show_gui():
     #font section labels
     font_lbl                        .grid(column=0, row=3)
     font_size_lbl                   .grid(column=1, row=3)
-
     
     #font inputs
     font_drop_down                  .grid(column=0, row=4) 
@@ -129,11 +120,6 @@ def show_gui():
     
     #build image button
     build_img_btn.grid(column=2, row=9)
-    
-    
-
-    
-
     
     
     window.mainloop()
