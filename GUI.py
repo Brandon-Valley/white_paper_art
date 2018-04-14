@@ -55,14 +55,9 @@ def show_gui():
         folder_name_text_box_state = GUI_utils.bool_to_state(create_new_folder_sel.get(), False)
         folder_name_text_box.configure( state = folder_name_text_box_state )
     
-    #sets default
-    default_val = 1
-    if default_val == 0:
-        folder_name_text_box.configure( state = 'disabled' )
-    
-    create_new_folder_sel = IntVar(value = default_val)#value sets default
+    create_new_folder_sel = IntVar(value = 1)#value sets default
     create_new_folder_cbtn = Checkbutton(text="Create New Folder", variable=create_new_folder_sel, command = create_new_foler_btn_clk)
-    
+    create_new_foler_btn_clk() #disabled folder name by default if create_new_folder_cbtn is 0 by default
     
      
     #text file path text box
@@ -123,7 +118,7 @@ def show_gui():
     
 
     
-    #match input image dimensions checkbox
+    #match input image dimensions check box
     def use_input_img_dims_btn_sel():        
         img_dims_txt_boxes_state = GUI_utils.bool_to_state(use_input_img_dims_sel.get())
          
