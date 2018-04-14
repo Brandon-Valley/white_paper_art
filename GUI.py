@@ -16,6 +16,8 @@ DEFAULT_MAX_FONT_SIZE = 999
 DEFAULT_MIN_IMAGE_SIZE = 0
 DEFAULT_MAX_IMAGE_SIZE = 999
 
+DEFAULT_MAX_IMAGE_DIM = 999999
+
 DEFAULT_IMAGE_SIZE = 100 #REALLY need to figure something out for this!!!!!!!!!!!
 
 
@@ -37,7 +39,7 @@ def show_gui():
     def input_text_file_path_clk():
         print('pretend to go into directory to get text file path')#`````````````````````````````````````````````````````
         
-    input_text_file_path_btn = Button(window, text="Browse", command = input_text_file_path_clk)
+    input_text_file_path_btn = Button(window, text="Browse...", command = input_text_file_path_clk)
      
      
      
@@ -49,7 +51,7 @@ def show_gui():
     def input_img_file_path_clk():
         print('pretend to go into directory to get text file path')#`````````````````````````````````````````````````````
          
-    input_img_file_path_btn = Button(window, text="Browse", command = input_img_file_path_clk)
+    input_img_file_path_btn = Button(window, text="Browse...", command = input_img_file_path_clk)
      
      
      
@@ -94,14 +96,14 @@ def show_gui():
         #if using input image dimensions, change the test boxes to show the dimensions before disabling them
         if img_dims_txt_boxes_state == 'disabled':
             in_img_dims = GUI_utils.get_input_img_dims( input_img_file_path_text_box.get() )
-            output_img_dim_rat_num_text_box.delete(0, "end")
-            output_img_dim_rat_din_text_box.delete(0, "end")
-            output_img_dim_rat_num_text_box.insert(END, in_img_dims['num'])
-            output_img_dim_rat_din_text_box.insert(END, in_img_dims['din'])
+            output_img_dim_rat_num_sbox.delete(0, "end")
+            output_img_dim_rat_din_sbox.delete(0, "end")
+            output_img_dim_rat_num_sbox.insert(END, in_img_dims['num'])
+            output_img_dim_rat_din_sbox.insert(END, in_img_dims['din'])
         
         #disable or enable text boxes
-        output_img_dim_rat_num_text_box.configure(state = img_dims_txt_boxes_state )
-        output_img_dim_rat_din_text_box.configure(state = img_dims_txt_boxes_state )
+        output_img_dim_rat_num_sbox.configure(state = img_dims_txt_boxes_state )
+        output_img_dim_rat_din_sbox.configure(state = img_dims_txt_boxes_state )
     
     use_input_img_dims_sel = IntVar()
     match_input_image_dims_cbtn = Checkbutton(text="Use Input Image Dimensions", variable=use_input_img_dims_sel, command = use_input_img_dims_btn_sel)
@@ -111,10 +113,12 @@ def show_gui():
     #image dimension spin boxes 
     output_img_dim_lbl = Label(window, text="Image Dimensions:")
     slash_lbl = Label(window, text="/")
-    output_img_dim_rat_num_text_box = Entry(window,width=10) #numerator
-    output_img_dim_rat_din_text_box = Entry(window,width=10) #denominator
-    output_img_dim_rat_num_text_box.insert(END, DEFAULT_IMAGE_DIMENSION_RATIO_NUM) #default
-    output_img_dim_rat_din_text_box.insert(END, DEFAULT_IMAGE_DIMENSION_RATIO_DIN) #default
+    output_img_dim_rat_num_sbox = Spinbox(window, from_ = 0, to = DEFAULT_MAX_IMAGE_DIM, width = 5) #numerator
+    output_img_dim_rat_din_sbox = Spinbox(window, from_ = 0, to = DEFAULT_MAX_IMAGE_DIM, width = 5) #denominator
+    output_img_dim_rat_num_sbox.delete(0, "end") 
+    output_img_dim_rat_din_sbox.delete(0, "end") #gets rid of 0 so the next line makes the default value 40 instead of 400
+    output_img_dim_rat_num_sbox.insert(END, DEFAULT_IMAGE_DIMENSION_RATIO_NUM) #default
+    output_img_dim_rat_din_sbox.insert(END, DEFAULT_IMAGE_DIMENSION_RATIO_DIN) #default
     
 
 
@@ -144,10 +148,10 @@ def show_gui():
     #gets called each time you click one of the radio buttons, changes font size options
     def quality_rad_btn_sel():
         if  quality_selected.get() == 'low':
-            font_size_option_sel.set(0)
+            max_font_size_sel.set(0)
             font_size_sbox.configure(state = 'normal' )
         elif quality_selected.get() == 'high':
-            font_size_option_sel.set(1)
+            max_font_size_sel.set(1)
             font_size_sbox.configure(state = 'disable' )
         else:
             print('something wrong with quality thing!!!!!!!!!!!!!!!!!!!!!!!!!')#```````````````````````````````````````````````
@@ -167,7 +171,7 @@ def show_gui():
     def output_file_path_clk():
         print('pretend to go into directory to get text file path')#`````````````````````````````````````````````````````
         
-    output_img_file_path_btn = Button(window, text="Browse", command = output_file_path_clk)
+    output_img_file_path_btn = Button(window, text="Browse...", command = output_file_path_clk)
 
 
 
@@ -178,8 +182,8 @@ def show_gui():
                     'image_file_path':          input_img_file_path_text_box.get(),
                     'font_name':                font_drop_down.get() + '.ttf',
                     'font_size':                font_size_sbox.get(),
-                    'maximize_font_size':       font_size_option_sel.get(),
-                    'output_image_dim_ratio':   GUI_utils.strs_to_int_ratio( output_img_dim_rat_num_text_box.get() , output_img_dim_rat_din_text_box.get() ),
+                    'maximize_font_size':       max_font_size_sel.get(),
+                    'output_image_dim_ratio':   GUI_utils.strs_to_int_ratio( output_img_dim_rat_num_sbox.get() , output_img_dim_rat_din_sbox.get() ),
                     'image_size':               img_size_sbox.get(),
                     'image_position_cords':     {'x': x_cord_sbox.get(), 'y': y_cord_sbox.get()},
                     'quality':                  quality_selected.get(),
@@ -244,9 +248,9 @@ def show_gui():
     
     #image dimensions
     output_img_dim_lbl              .grid(column=1, row=row_num)
-    output_img_dim_rat_num_text_box .grid(column=2, row=row_num)
+    output_img_dim_rat_num_sbox     .grid(column=2, row=row_num)
     slash_lbl                       .grid(column=3, row=row_num)
-    output_img_dim_rat_din_text_box .grid(column=4, row=row_num)
+    output_img_dim_rat_din_sbox     .grid(column=4, row=row_num)
     match_input_image_dims_cbtn     .grid(column=5, row=row_num)
     
     row_num += 10
