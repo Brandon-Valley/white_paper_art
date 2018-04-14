@@ -43,6 +43,13 @@ def show_gui():
     location_browse_btn = Button(window, text="Browse...", command = location_browse_btn_clk)
     
     
+    
+    #folder name text box 
+    folder_name_lbl = Label(window, text="Folder Name: ")
+    folder_name_text_box = Entry(window,width=20)
+#     folder_name_text_box.insert(END, GUI_utils.get_current_dir_path()) #default
+    
+    
      
     #text file path text box
     input_text_file_path_lbl = Label(window, text="Text File Input: ")
@@ -225,6 +232,12 @@ def show_gui():
     location_lbl                    .grid(column=0, row=row_num)
     location_text_box               .grid(column=1, row=row_num)
     location_browse_btn             .grid(column=2, row=row_num)
+    
+    row_num += 10
+    
+    #folder_name
+    folder_name_lbl                    .grid(column=0, row=row_num)
+    folder_name_text_box               .grid(column=1, row=row_num)
     
     row_num += 10
     
