@@ -44,7 +44,7 @@ import GUI
 
 
 input_image_filename = 'test_pics/bitcoin2046.png'
-data_text_filename = 'full_paper.txt'
+data_text_filename = 'full_paper_5x.txt'
 final_image_filename = 'TEST_OUTPUT.png'
 
 # set cols

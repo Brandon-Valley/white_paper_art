@@ -26,7 +26,7 @@ def show_gui():
     
     window = Tk()
     window.title("Text Image Maker")
-    window.geometry('800x400')
+    window.geometry('800x400') #1500x700 takes up aplmost the whole screen
      
      
     #text file path text box
@@ -77,14 +77,22 @@ def show_gui():
 
 
     #maximize font size radio buttons
-    #gets called each time you click one of the radio buttons, changes state of font_size_sbox
-    def font_size_radio_btn_sel():
-        font_size_sbox_state = GUI_utils.bool_to_state(font_size_option_sel.get())
+#     gets called each time you click one of the radio buttons, changes state of font_size_sbox
+#     def font_size_radio_btn_sel():
+#         font_size_sbox_state = GUI_utils.bool_to_state(font_size_option_sel.get())
+#         font_size_sbox.configure(state = font_size_sbox_state )
+# 
+#     font_size_option_sel = IntVar()
+#     max_font_size_true_btn = Radiobutton(window,text='True', value=1, variable=font_size_option_sel, command = font_size_radio_btn_sel)
+#     max_font_size_false_btn = Radiobutton(window,text='False', value=0, variable=font_size_option_sel, command = font_size_radio_btn_sel)
+    
+    
+    def max_font_size_btn_sel():
+        font_size_sbox_state = GUI_utils.bool_to_state(max_font_size_sel.get())
         font_size_sbox.configure(state = font_size_sbox_state )
-
-    font_size_option_sel = IntVar()
-    max_font_size_true_btn = Radiobutton(window,text='True', value=1, variable=font_size_option_sel, command = font_size_radio_btn_sel)
-    max_font_size_false_btn = Radiobutton(window,text='False', value=0, variable=font_size_option_sel, command = font_size_radio_btn_sel)
+    
+    max_font_size_sel = IntVar()
+    max_font_size_cbtn = Checkbutton(text="Maximize Font Size", variable=max_font_size_sel, command = max_font_size_btn_sel)
     
     
     
@@ -159,7 +167,7 @@ def show_gui():
 
 
     #output image path text box
-    output_img_file_path_lbl = Label(window, text="Output Image File Path: ")
+    output_img_file_path_lbl = Label(window, text="Output Image File: ")
     output_img_file_path_text_box = Entry(window,width=20)
     output_img_file_path_text_box.insert(END, GUI_utils.get_defalt_output_img_file_path()) #default
          
@@ -186,83 +194,106 @@ def show_gui():
         
         #build final image using arguments
         build_image.build_img_test(img_args)
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-    
     build_img_btn = Button(window, text="Build Image", command = build_img_btn_clk)
     
+    
+    
+    
+#     blank_lbl = Label(window, text=" ")     
     
     
     #blank label (for spacing)
     blank_lbl = Label(window, text=" ")
     
+    
+    
+    #physical GUI layout
+    row_num = 0
+    
+    row_num += 10
+    
     #input text file path
-    input_text_file_path_lbl        .grid(column=0, row=0)
-    input_text_file_path_text_box   .grid(column=1, row=0, columnspan = 2)
-    input_text_file_path_btn        .grid(column=3, row=0)
+    input_text_file_path_lbl        .grid(column=0, row=row_num)
+    input_text_file_path_text_box   .grid(column=1, row=row_num, columnspan = 2)
+    input_text_file_path_btn        .grid(column=3, row=row_num)
      
+    row_num += 10 
+    
     #input image file path
-    input_img_file_path_lbl         .grid(column=0, row=1)
-    input_img_file_path_text_box    .grid(column=1, row=1)
-    input_img_file_path_btn         .grid(column=2, row=1)
+    input_img_file_path_lbl         .grid(column=0, row=row_num)
+    input_img_file_path_text_box    .grid(column=1, row=row_num)
+    input_img_file_path_btn         .grid(column=2, row=row_num)
+     
+    row_num += 10
      
     #space between
-    blank_lbl                       .grid(column=0, row=2)
+    blank_lbl                       .grid(column=0, row=row_num)
+    
+    row_num += 10
     
     #font section labels
-    font_lbl                        .grid(column=0, row=3)
-    font_size_lbl                   .grid(column=1, row=3)
-    maximize_font_size_lbl          .grid(column=2, row=3)
+    font_lbl                        .grid(column=0, row=row_num)
+    font_size_lbl                   .grid(column=1, row=row_num)
+#     maximize_font_size_lbl          .grid(column=2, row=row_num)
+    
+    row_num += 10 
     
     #font inputs
-    font_drop_down                  .grid(column=0, row=4) 
-    font_size_sbox                  .grid(column=1, row=4)
-    max_font_size_true_btn          .grid(column=3, row=4)
-    max_font_size_false_btn         .grid(column=5, row=4)
+    font_drop_down                  .grid(column=0, row=row_num) 
+    font_size_sbox                  .grid(column=1, row=row_num)
+#     max_font_size_true_btn          .grid(column=3, row=row_num)
+#     max_font_size_false_btn         .grid(column=5, row=row_num)
+    
+    max_font_size_cbtn              .grid(column=6, row=row_num)
+    
+    row_num += 10 
     
     #space between
-    blank_lbl                       .grid(column=0, row=5)
+    blank_lbl                       .grid(column=0, row=row_num)
+    
+    row_num += 10
     
     #image dimension ratio boxes
-    match_input_img_dims_btn        .grid(column=0, row=8)
-    user_def_img_dims_btn           .grid(column=0, row=9)
-    output_img_dim_rat_num_text_box .grid(column=1, row=9)
-    slash_lbl                       .grid(column=2, row=9)
-    output_img_dim_rat_din_text_box .grid(column=3, row=9)
+    match_input_img_dims_btn        .grid(column=0, row=row_num - 1)
+    user_def_img_dims_btn           .grid(column=0, row=row_num)
+    output_img_dim_rat_num_text_box .grid(column=1, row=row_num)
+    slash_lbl                       .grid(column=2, row=row_num)
+    output_img_dim_rat_din_text_box .grid(column=3, row=row_num)
+    
+    row_num += 10
     
     #font size spinbox
-    img_size_lbl                    .grid(column=1, row=10)
-    img_size_sbox                   .grid(column=2, row=10)
+    img_size_lbl                    .grid(column=1, row=row_num)
+    img_size_sbox                   .grid(column=2, row=row_num)
+    
+    row_num += 10
     
     #image position cords
-    img_cords_lbl                   .grid(column=1, row=13)
-    prnth_open_lbl                  .grid(column=2, row=13)
-    x_cord_sbox                     .grid(column=3, row=13)
-    comma_lbl                       .grid(column=4, row=13)
-    y_cord_sbox                     .grid(column=5, row=13)
-    prnth_close_lbl                 .grid(column=6, row=13)
+    img_cords_lbl                   .grid(column=1, row=row_num)
+    prnth_open_lbl                  .grid(column=2, row=row_num)
+    x_cord_sbox                     .grid(column=3, row=row_num)
+    comma_lbl                       .grid(column=4, row=row_num)
+    y_cord_sbox                     .grid(column=5, row=row_num)
+    prnth_close_lbl                 .grid(column=6, row=row_num)
+    
+    row_num += 10
     
     #quality radio buttons
-    high_qual_rad_btn               .grid(column=3, row=16)
-    low_qual_rad_btn                .grid(column=3, row=17)
+    high_qual_rad_btn               .grid(column=3, row=row_num - 1)
+    low_qual_rad_btn                .grid(column=3, row=row_num)
+    
+    row_num += 10
     
     #output image file path text box
-    output_img_file_path_lbl        .grid(column=1, row=19)
-    output_img_file_path_text_box   .grid(column=2, row=19)
-    output_img_file_path_btn        .grid(column=3, row=19)
+    output_img_file_path_lbl        .grid(column=1, row=row_num)
+    output_img_file_path_text_box   .grid(column=2, row=row_num)
+    output_img_file_path_btn        .grid(column=3, row=row_num)
     
+    
+    row_num += 10
     
     #build image button
-    build_img_btn                   .grid(column=2, row=20)
+    build_img_btn                   .grid(column=2, row=row_num)
     
     
     
