@@ -30,6 +30,19 @@ def show_gui():
     window.title("Text Image Maker")
     window.geometry('900x400') #1500x700 takes up aplmost the whole screen
      
+    
+    
+    #Location path text box 
+    location_lbl = Label(window, text="Location: ")
+    location_text_box = Entry(window,width=20)
+    location_text_box.insert(END, GUI_utils.get_current_dir_path()) #default
+         
+    def location_browse_btn_clk():
+        print('pretend to go into directory to get text file path')#`````````````````````````````````````````````````````
+        
+    location_browse_btn = Button(window, text="Browse...", command = location_browse_btn_clk)
+    
+    
      
     #text file path text box
     input_text_file_path_lbl = Label(window, text="Text File Input: ")
@@ -205,7 +218,13 @@ def show_gui():
     
     
     #physical GUI layout
-    row_num = 0
+    row_num = 10
+
+    
+    #location
+    location_lbl                    .grid(column=0, row=row_num)
+    location_text_box               .grid(column=1, row=row_num)
+    location_browse_btn             .grid(column=2, row=row_num)
     
     row_num += 10
     

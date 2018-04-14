@@ -1,5 +1,10 @@
 
 
+
+
+def get_current_dir_path():
+    return 'defaut/home?dir/path'
+
 def get_defalt_text_file_path():
     return 'default/text/file/path'
  
