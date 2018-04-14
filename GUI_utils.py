@@ -17,13 +17,21 @@ def get_font_list():
     
 
 
-def bool_to_state(bool_int):
-    if   bool_int == 1:
-        return 'disabled'
-    elif bool_int == 0:
-        return 'normal'
-    else:
-        raise Exception('ERROR    bool_str_to_state in GUI_utils received an invalid argument: ', bool_int)
+def bool_to_state(bool_int, active_low = True):
+
+    if active_low == True:
+        if   bool_int == 1:
+            return 'disabled'
+        elif bool_int == 0:
+            return 'normal'
+        
+    elif active_low == False:
+        if   bool_int == 0:
+            return 'disabled'
+        elif bool_int == 1:
+            return 'normal'
+        
+    raise Exception('ERROR    bool_str_to_state in GUI_utils received an invalid argument: ', bool_int)
 
 
 def get_input_img_dims(img_path):

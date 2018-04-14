@@ -47,7 +47,21 @@ def show_gui():
     #folder name text box 
     folder_name_lbl = Label(window, text="Folder Name: ")
     folder_name_text_box = Entry(window,width=20)
-#     folder_name_text_box.insert(END, GUI_utils.get_current_dir_path()) #default
+    
+    
+    
+    #create new folder check button
+    def create_new_foler_btn_clk():#changes state and contents of folder name
+        folder_name_text_box_state = GUI_utils.bool_to_state(create_new_folder_sel.get(), False)
+        folder_name_text_box.configure( state = folder_name_text_box_state )
+    
+    #sets default
+    default_val = 1
+    if default_val == 0:
+        folder_name_text_box.configure( state = 'disabled' )
+    
+    create_new_folder_sel = IntVar(value = default_val)#value sets default
+    create_new_folder_cbtn = Checkbutton(text="Create New Folder", variable=create_new_folder_sel, command = create_new_foler_btn_clk)
     
     
      
@@ -235,9 +249,14 @@ def show_gui():
     
     row_num += 10
     
+    #create new folder check button
+    create_new_folder_cbtn          .grid(column=0, row=row_num)
+    
+    row_num += 10
+    
     #folder_name
-    folder_name_lbl                    .grid(column=0, row=row_num)
-    folder_name_text_box               .grid(column=1, row=row_num)
+    folder_name_lbl                 .grid(column=0, row=row_num)
+    folder_name_text_box            .grid(column=1, row=row_num)
     
     row_num += 10
     
