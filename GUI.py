@@ -26,7 +26,7 @@ def show_gui():
     
     window = Tk()
     window.title("Text Image Maker")
-    window.geometry('800x400') #1500x700 takes up aplmost the whole screen
+    window.geometry('900x400') #1500x700 takes up aplmost the whole screen
      
      
     #text file path text box
@@ -68,7 +68,7 @@ def show_gui():
 
 
 
-    #font size spinbox
+    #font size spin box
 #     font_size_dims = GUI_utils.get_font_size_dimensions()
     font_size_sbox = Spinbox(window, from_ = 0, to = DEFAULT_MAX_FONT_SIZE, width = 5)#, state = "disabled")
     font_size_sbox.delete(0, "end") #gets rid of 0 so the next line makes the default value 40 instead of 400
@@ -76,17 +76,8 @@ def show_gui():
 
 
 
-    #maximize font size radio buttons
-#     gets called each time you click one of the radio buttons, changes state of font_size_sbox
-#     def font_size_radio_btn_sel():
-#         font_size_sbox_state = GUI_utils.bool_to_state(font_size_option_sel.get())
-#         font_size_sbox.configure(state = font_size_sbox_state )
-# 
-#     font_size_option_sel = IntVar()
-#     max_font_size_true_btn = Radiobutton(window,text='True', value=1, variable=font_size_option_sel, command = font_size_radio_btn_sel)
-#     max_font_size_false_btn = Radiobutton(window,text='False', value=0, variable=font_size_option_sel, command = font_size_radio_btn_sel)
-    
-    
+    #maximize font size check button
+    #gets called each time you click the check button, changes state of font_size_sbox
     def max_font_size_btn_sel():
         font_size_sbox_state = GUI_utils.bool_to_state(max_font_size_sel.get())
         font_size_sbox.configure(state = font_size_sbox_state )
@@ -122,6 +113,25 @@ def show_gui():
     output_img_dim_rat_din_text_box = Entry(window,width=10) #denominator
     output_img_dim_rat_num_text_box.insert(END, DEFAULT_IMAGE_DIMENSION_RATIO_NUM) #default
     output_img_dim_rat_din_text_box.insert(END, DEFAULT_IMAGE_DIMENSION_RATIO_DIN) #default
+    
+    
+    def use_input_img_dims_btn_sel():        
+        img_dims_txt_boxes_state = GUI_utils.bool_to_state(use_input_img_dims_sel.get())
+         
+        #if using input image dimensions, change the test boxes to show the dimensions before disabling them
+        if img_dims_txt_boxes_state == 'disabled':
+            in_img_dims = GUI_utils.get_input_img_dims( input_img_file_path_text_box.get() )
+            output_img_dim_rat_num_text_box.delete(0, "end")
+            output_img_dim_rat_din_text_box.delete(0, "end")
+            output_img_dim_rat_num_text_box.insert(END, in_img_dims['num'])
+            output_img_dim_rat_din_text_box.insert(END, in_img_dims['din'])
+        
+        #disable or enable text boxes
+        output_img_dim_rat_num_text_box.configure(state = img_dims_txt_boxes_state )
+        output_img_dim_rat_din_text_box.configure(state = img_dims_txt_boxes_state )
+    
+    use_input_img_dims_sel = IntVar()
+    match_input_image_dims_cbtn = Checkbutton(text="Use Input Image Dimensions", variable=use_input_img_dims_sel, command = use_input_img_dims_btn_sel)
     
 
 
@@ -234,17 +244,13 @@ def show_gui():
     #font section labels
     font_lbl                        .grid(column=0, row=row_num)
     font_size_lbl                   .grid(column=1, row=row_num)
-#     maximize_font_size_lbl          .grid(column=2, row=row_num)
     
     row_num += 10 
     
     #font inputs
     font_drop_down                  .grid(column=0, row=row_num) 
-    font_size_sbox                  .grid(column=1, row=row_num)
-#     max_font_size_true_btn          .grid(column=3, row=row_num)
-#     max_font_size_false_btn         .grid(column=5, row=row_num)
-    
-    max_font_size_cbtn              .grid(column=6, row=row_num)
+    font_size_sbox                  .grid(column=1, row=row_num)  
+    max_font_size_cbtn              .grid(column=3, row=row_num)
     
     row_num += 10 
     
@@ -259,6 +265,8 @@ def show_gui():
     output_img_dim_rat_num_text_box .grid(column=1, row=row_num)
     slash_lbl                       .grid(column=2, row=row_num)
     output_img_dim_rat_din_text_box .grid(column=3, row=row_num)
+    
+    match_input_image_dims_cbtn     .grid(column=4, row=row_num)
     
     row_num += 10
     
