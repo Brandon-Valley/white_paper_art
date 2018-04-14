@@ -3,13 +3,13 @@
 
 
 def get_current_dir_path():
-    return 'defaut/home?dir/path'
+    return 'defaut\home?dir\hfolder_name'
 
 def get_defalt_text_file_path():
-    return 'default/text/file/path'
+    return 'default\text\file\path'
  
 def get_defalt_image_file_path():
-    return 'default/image/file/path'
+    return 'default\image\file\path'
 
 
 def get_font_list():
@@ -47,7 +47,7 @@ def strs_to_int_ratio(str1, str2):
     
     
 def get_defalt_output_img_file_path():
-    return "output/img/defalt/fuiles/path"
+    return "output\img\defalt\fuiles\path"
     
     
     

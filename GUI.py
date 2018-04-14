@@ -52,13 +52,35 @@ def show_gui():
     
     #create new folder check button
     def create_new_foler_btn_clk():#changes state and contents of folder name
-        folder_name_text_box_state = GUI_utils.bool_to_state(create_new_folder_sel.get(), False)
-        folder_name_text_box.configure( state = folder_name_text_box_state )
+        #not using bool_to_state because depending on what state, configure needs to be called at different times
+#         folder_name_text_box_state = GUI_utils.bool_to_state(create_new_folder_sel.get(), False)
+        
+#         print('create_new_folder_sel.get(): ' , create_new_folder_sel.get())#1``````````````````````````````````````````````````
+#         print('    folder_name_text_box_state: ', folder_name_text_box_state)#```````````````````````````````````````````````````
+        
+        if create_new_folder_sel.get() == 0:
+            print('disabled!')#``````````````````````````````````````````````````````````````````````
+            folder_name_text_box.delete(0, "end")
+            folder_name_text_box.insert(END, location_text_box.get().split('\\')[-1])
+#             folder_name_text_box.insert(END, 'enable og')
+            folder_name_text_box.configure( state = 'disabled' )
+        else:
+            folder_name_text_box.configure( state = 'normal' )
+            folder_name_text_box.delete(0, "end")
+#             folder_name_text_box.insert(END, location_text_box.get().split('\\')[-1])
+#             folder_name_text_box.insert(END, '2222222')
+            print('not disabled!')#``````````````````````````````````````````````````````````````````````````````````
+# #             folder_name_text_box.delete(0, END)
+#             folder_name_text_box.insert(END, 'meeeep')
+            
+#         print('        right before setting real state:  folder_name_text_box_state: ', folder_name_text_box_state)#````````````````````````````
+#         folder_name_text_box.configure( state = folder_name_text_box_state )
     
-    create_new_folder_sel = IntVar(value = 1)#value sets default
+    create_new_folder_sel = IntVar(value = 0)#value sets default
     create_new_folder_cbtn = Checkbutton(text="Create New Folder", variable=create_new_folder_sel, command = create_new_foler_btn_clk)
     create_new_foler_btn_clk() #disabled folder name by default if create_new_folder_cbtn is 0 by default
     
+     
      
     #text file path text box
     input_text_file_path_lbl = Label(window, text="Text File Input: ")

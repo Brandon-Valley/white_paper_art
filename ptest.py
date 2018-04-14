@@ -1,13 +1,21 @@
-import itertools
+import tkinter as tk
 
-# 7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Oy8tLW4sri/tPG1tKKytL+1uL
-# +28bKwv7W4tbCltKLxo7S3tKOjtLXs7Ozs7Ozs7Ozs7Ozs7Ozs
-# 7Ozs7A
+class App(tk.Frame):
+    def __init__(self, master):
+        tk.Frame.__init__(self, master, height=42, width=42)
+        self.entry = tk.Entry(self)
+        self.entry.focus()
+        self.entry.pack()
+        self.clear_button = tk.Button(self, text="Clear text", command=self.clear_text)
+        self.clear_button.pack()
 
-d = {3: [1,2],
-     4: [9,8]}
+    def clear_text(self):
+        self.entry.delete(0, 'end')
 
-if 3 in d:
-    d[3].append(49999)
-    
-print(d)
+def main():
+    root = tk.Tk()
+    App(root).pack(expand=True, fill='both')
+    root.mainloop()
+
+if __name__ == "__main__":
+    main()
