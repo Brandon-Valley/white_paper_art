@@ -89,32 +89,32 @@ def show_gui():
     
     #output image dimension ratio text boxes and match input image dimensions option radio buttons
         #gets called each time you click one of the radio buttons, changes state of font_size_sbox
-    def img_dims_radio_btn_sel():
-        img_dims_txt_boxes_state = GUI_utils.bool_to_state(img_dims_option_sel.get())
-        
-        #if using input image dimensions, change the test boxes to show the dimensions before disabling them
-        if img_dims_txt_boxes_state == 'disabled':
-            in_img_dims = GUI_utils.get_input_img_dims( input_img_file_path_text_box.get() )
-            output_img_dim_rat_num_text_box.delete(0, "end")
-            output_img_dim_rat_din_text_box.delete(0, "end")
-            output_img_dim_rat_num_text_box.insert(END, in_img_dims['num'])
-            output_img_dim_rat_din_text_box.insert(END, in_img_dims['din'])
-        
-        #disable or enable text boxes
-        output_img_dim_rat_num_text_box.configure(state = img_dims_txt_boxes_state )
-        output_img_dim_rat_din_text_box.configure(state = img_dims_txt_boxes_state )
-
-    img_dims_option_sel = IntVar()
-    match_input_img_dims_btn = Radiobutton(window,text='Use Input Image Dimensions', value=1, variable=img_dims_option_sel, command = img_dims_radio_btn_sel)
-    user_def_img_dims_btn    = Radiobutton(window,text='Image Dimensions: ', value=0, variable=img_dims_option_sel, command = img_dims_radio_btn_sel)
-        
-    slash_lbl = Label(window, text="/")
-    output_img_dim_rat_num_text_box = Entry(window,width=10) #numerator
-    output_img_dim_rat_din_text_box = Entry(window,width=10) #denominator
-    output_img_dim_rat_num_text_box.insert(END, DEFAULT_IMAGE_DIMENSION_RATIO_NUM) #default
-    output_img_dim_rat_din_text_box.insert(END, DEFAULT_IMAGE_DIMENSION_RATIO_DIN) #default
+#     def img_dims_radio_btn_sel():
+#         img_dims_txt_boxes_state = GUI_utils.bool_to_state(img_dims_option_sel.get())
+#         
+#         #if using input image dimensions, change the test boxes to show the dimensions before disabling them
+#         if img_dims_txt_boxes_state == 'disabled':
+#             in_img_dims = GUI_utils.get_input_img_dims( input_img_file_path_text_box.get() )
+#             output_img_dim_rat_num_text_box.delete(0, "end")
+#             output_img_dim_rat_din_text_box.delete(0, "end")
+#             output_img_dim_rat_num_text_box.insert(END, in_img_dims['num'])
+#             output_img_dim_rat_din_text_box.insert(END, in_img_dims['din'])
+#         
+#         #disable or enable text boxes
+#         output_img_dim_rat_num_text_box.configure(state = img_dims_txt_boxes_state )
+#         output_img_dim_rat_din_text_box.configure(state = img_dims_txt_boxes_state )
+# 
+#     img_dims_option_sel = IntVar()
+#     match_input_img_dims_btn = Radiobutton(window,text='Use Input Image Dimensions', value=1, variable=img_dims_option_sel, command = img_dims_radio_btn_sel)
+#     user_def_img_dims_btn    = Radiobutton(window,text='Image Dimensions: ', value=0, variable=img_dims_option_sel, command = img_dims_radio_btn_sel)
+#         
+#     slash_lbl = Label(window, text="/")
+#     output_img_dim_rat_num_text_box = Entry(window,width=10, text = "Image Dimensions:") #numerator
+#     output_img_dim_rat_din_text_box = Entry(window,width=10) #denominator
+#     output_img_dim_rat_num_text_box.insert(END, DEFAULT_IMAGE_DIMENSION_RATIO_NUM) #default
+#     output_img_dim_rat_din_text_box.insert(END, DEFAULT_IMAGE_DIMENSION_RATIO_DIN) #default
     
-    
+    #match input image dimensions checkbox
     def use_input_img_dims_btn_sel():        
         img_dims_txt_boxes_state = GUI_utils.bool_to_state(use_input_img_dims_sel.get())
          
@@ -132,6 +132,16 @@ def show_gui():
     
     use_input_img_dims_sel = IntVar()
     match_input_image_dims_cbtn = Checkbutton(text="Use Input Image Dimensions", variable=use_input_img_dims_sel, command = use_input_img_dims_btn_sel)
+    
+    
+    
+    #image dimension spin boxes 
+    output_img_dim_lbl = Label(window, text="Image Dimensions:")
+    slash_lbl = Label(window, text="/")
+    output_img_dim_rat_num_text_box = Entry(window,width=10) #numerator
+    output_img_dim_rat_din_text_box = Entry(window,width=10) #denominator
+    output_img_dim_rat_num_text_box.insert(END, DEFAULT_IMAGE_DIMENSION_RATIO_NUM) #default
+    output_img_dim_rat_din_text_box.insert(END, DEFAULT_IMAGE_DIMENSION_RATIO_DIN) #default
     
 
 
@@ -260,13 +270,14 @@ def show_gui():
     row_num += 10
     
     #image dimension ratio boxes
-    match_input_img_dims_btn        .grid(column=0, row=row_num - 1)
-    user_def_img_dims_btn           .grid(column=0, row=row_num)
-    output_img_dim_rat_num_text_box .grid(column=1, row=row_num)
-    slash_lbl                       .grid(column=2, row=row_num)
-    output_img_dim_rat_din_text_box .grid(column=3, row=row_num)
+#     match_input_img_dims_btn        .grid(column=0, row=row_num - 1)
+#     user_def_img_dims_btn           .grid(column=0, row=row_num)
+    output_img_dim_lbl              .grid(column=1, row=row_num)
+    output_img_dim_rat_num_text_box .grid(column=2, row=row_num)
+    slash_lbl                       .grid(column=3, row=row_num)
+    output_img_dim_rat_din_text_box .grid(column=4, row=row_num)
     
-    match_input_image_dims_cbtn     .grid(column=4, row=row_num)
+    match_input_image_dims_cbtn     .grid(column=5, row=row_num)
     
     row_num += 10
     
