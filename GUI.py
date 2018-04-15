@@ -40,9 +40,13 @@ def show_gui():
     location_text_box.insert(END, GUI_utils.get_current_dir_path()) #default
          
     def location_browse_btn_clk():
+        #get file path and place it in text box
         dir = filedialog.askdirectory()
         location_text_box.delete(0, "end")#clear text box
         location_text_box.insert(END, dir)
+        #make sure new folder text box updates correctly
+        folder_name_text_box.configure( state = 'normal' )
+        create_new_folder_btn_clk()
         
     location_browse_btn = Button(window, text="Browse...", command = location_browse_btn_clk)
     
@@ -60,7 +64,7 @@ def show_gui():
         if create_new_folder_sel.get() == 0:
             folder_name_text_box.delete(0, "end")
             cf_path = re.split(r'[\\/]', location_text_box.get())
-            folder_name_text_box.insert(END, cf_path[-1])#location_text_box.get().split('\\')
+            folder_name_text_box.insert(END, cf_path[-1])
             folder_name_text_box.configure( state = 'disabled' )
         else:
             folder_name_text_box.configure( state = 'normal' )
