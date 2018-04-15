@@ -36,14 +36,16 @@ def show_gui():
     
     #Location path text box 
     location_lbl = Label(window, text="Location: ")
-    location_text_box = Entry(window,width=80)
+    location_text_box = Entry(window,width=40)
     location_text_box.insert(END, GUI_utils.get_current_dir_path()) #default
+    location_text_box.bind('<Expose>', xview_event_handler)#scrolls text to end if needed
          
     def location_browse_btn_clk():
         #get file path and place it in text box
         dir = filedialog.askdirectory()
         location_text_box.delete(0, "end")#clear text box
         location_text_box.insert(END, dir)
+        
         #make sure new folder text box updates correctly
         folder_name_text_box.configure( state = 'normal' )
         create_new_folder_btn_clk()
@@ -78,11 +80,13 @@ def show_gui():
      
     #text file path text box
     input_text_file_path_lbl = Label(window, text="Text File Input: ")
-    input_text_file_path_text_box = Entry(window,width=20)
+    input_text_file_path_text_box = Entry(window,width=80)
     input_text_file_path_text_box.insert(END, GUI_utils.get_defalt_text_file_path()) #default
          
     def input_text_file_path_clk():
-        print('pretend to go into directory to get text file path')#`````````````````````````````````````````````````````
+        file = filedialog.askopenfilename()
+        input_text_file_path_text_box.delete(0, "end")#clear text box
+        input_text_file_path_text_box.insert(END, file)
         
     input_text_file_path_btn = Button(window, text="Browse...", command = input_text_file_path_clk)
      
@@ -273,15 +277,15 @@ def show_gui():
     
     #input text file path
     input_text_file_path_lbl        .grid(column=0, row=row_num)
-    input_text_file_path_text_box   .grid(column=1, row=row_num, columnspan = 2)
-    input_text_file_path_btn        .grid(column=3, row=row_num)
+    input_text_file_path_text_box   .grid(column=1, row=row_num, columnspan = 3)
+    input_text_file_path_btn        .grid(column=5, row=row_num)
      
     row_num += 10 
     
     #input image file path
     input_img_file_path_lbl         .grid(column=0, row=row_num)
-    input_img_file_path_text_box    .grid(column=1, row=row_num)
-    input_img_file_path_btn         .grid(column=2, row=row_num)
+    input_img_file_path_text_box    .grid(column=1, row=row_num, columnspan = 3)
+    input_img_file_path_btn         .grid(column=5, row=row_num)
      
     row_num += 10
      
@@ -355,8 +359,11 @@ def show_gui():
     window.mainloop()
     print('after mainloop, should only het here after closing gui')
     
-    
-    
+#makes xview (scrolling within an entry text box) work
+def xview_event_handler(e):
+    e.widget.update_idletasks()
+    e.widget.xview_moveto(1)
+    e.widget.unbind('<Expose>')
     
     
 
