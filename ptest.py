@@ -1,21 +1,15 @@
-import tkinter as tk
+import os 
+import re
+dir_path = os.path.dirname(os.path.realpath(__file__))
+print(dir_path)
+print(type(dir_path))
+s1 = dir_path.split('\\')
+s1 = re.split(r'[\\/]', dir_path)
+print(s1)
 
-class App(tk.Frame):
-    def __init__(self, master):
-        tk.Frame.__init__(self, master, height=42, width=42)
-        self.entry = tk.Entry(self)
-        self.entry.focus()
-        self.entry.pack()
-        self.clear_button = tk.Button(self, text="Clear text", command=self.clear_text)
-        self.clear_button.pack()
-
-    def clear_text(self):
-        self.entry.delete(0, 'end')
-
-def main():
-    root = tk.Tk()
-    App(root).pack(expand=True, fill='both')
-    root.mainloop()
-
-if __name__ == "__main__":
-    main()
+from tkinter import filedialog
+dir = filedialog.askdirectory()
+print(dir)
+# split(r'[,;]', string)
+s = re.split(r'[\\/]', dir)
+print(s)

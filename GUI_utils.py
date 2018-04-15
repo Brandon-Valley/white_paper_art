@@ -3,7 +3,10 @@
 
 
 def get_current_dir_path():
-    return 'defaut\home?dir\hfolder_name'
+    
+    import os 
+    dir_path = os.path.dirname(os.path.realpath(__file__))
+    return dir_path#'sdfsfdfsfsd\sdffsdfsf'#"'C:\Users\Brandon\Documents\Personal Projects\white_paper_art\examples'"
 
 def get_defalt_text_file_path():
     return 'default\text\file\path'

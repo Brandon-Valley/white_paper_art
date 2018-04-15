@@ -1,5 +1,7 @@
 from tkinter import *
 from tkinter.ttk import *
+from tkinter import filedialog
+import re
 
 import build_image
 import GUI_utils
@@ -34,11 +36,13 @@ def show_gui():
     
     #Location path text box 
     location_lbl = Label(window, text="Location: ")
-    location_text_box = Entry(window,width=20)
+    location_text_box = Entry(window,width=80)
     location_text_box.insert(END, GUI_utils.get_current_dir_path()) #default
          
     def location_browse_btn_clk():
-        print('pretend to go into directory to get text file path')#`````````````````````````````````````````````````````
+        dir = filedialog.askdirectory()
+        location_text_box.delete(0, "end")#clear text box
+        location_text_box.insert(END, dir)
         
     location_browse_btn = Button(window, text="Browse...", command = location_browse_btn_clk)
     
@@ -51,19 +55,20 @@ def show_gui():
     
     
     #create new folder check button
-    def create_new_foler_btn_clk():#changes state and contents of folder name
+    def create_new_folder_btn_clk():#changes state and contents of folder name
         #not using bool_to_state because depending on what state, configure needs to be called at different times
         if create_new_folder_sel.get() == 0:
             folder_name_text_box.delete(0, "end")
-            folder_name_text_box.insert(END, location_text_box.get().split('\\')[-1])
+            cf_path = re.split(r'[\\/]', location_text_box.get())
+            folder_name_text_box.insert(END, cf_path[-1])#location_text_box.get().split('\\')
             folder_name_text_box.configure( state = 'disabled' )
         else:
             folder_name_text_box.configure( state = 'normal' )
             folder_name_text_box.delete(0, "end")
     
     create_new_folder_sel = IntVar(value = 1)#value sets default
-    create_new_folder_cbtn = Checkbutton(text="Create New Folder", variable=create_new_folder_sel, command = create_new_foler_btn_clk)
-    create_new_foler_btn_clk() #disabled folder name by default if create_new_folder_cbtn is 0 by default
+    create_new_folder_cbtn = Checkbutton(text="Create New Folder", variable=create_new_folder_sel, command = create_new_folder_btn_clk)
+    create_new_folder_btn_clk() #disabled folder name by default if create_new_folder_cbtn is 0 by default
     
      
      
@@ -246,8 +251,8 @@ def show_gui():
     
     #location
     location_lbl                    .grid(column=0, row=row_num)
-    location_text_box               .grid(column=1, row=row_num)
-    location_browse_btn             .grid(column=2, row=row_num)
+    location_text_box               .grid(column=1, row=row_num, columnspan = 3)
+    location_browse_btn             .grid(column=5, row=row_num)
     
     row_num += 10
     
