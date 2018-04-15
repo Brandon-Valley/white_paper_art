@@ -36,7 +36,7 @@ def show_gui():
     
     #Location path text box 
     location_lbl = Label(window, text="Location: ")
-    location_text_box = Entry(window,width=40)
+    location_text_box = Entry(window,width=80)
     location_text_box.insert(END, GUI_utils.get_current_dir_path()) #default
     location_text_box.bind('<Expose>', xview_event_handler)#scrolls text to end if needed
          
@@ -84,9 +84,10 @@ def show_gui():
     input_text_file_path_text_box.insert(END, GUI_utils.get_defalt_text_file_path()) #default
          
     def input_text_file_path_clk():
-        file = filedialog.askopenfilename()
+        file = filedialog.askopenfilename(filetypes = (("Text files","*.txt"),("all files","*.*")))
         input_text_file_path_text_box.delete(0, "end")#clear text box
         input_text_file_path_text_box.insert(END, file)
+        input_text_file_path_text_box.bind('<Expose>', xview_event_handler)#scrolls text to end if needed
         
     input_text_file_path_btn = Button(window, text="Browse...", command = input_text_file_path_clk)
      
@@ -96,9 +97,13 @@ def show_gui():
     input_img_file_path_lbl = Label(window, text="Image File Input: ")
     input_img_file_path_text_box = Entry(window,width=10)
     input_img_file_path_text_box.insert(END, GUI_utils.get_defalt_image_file_path()) #default
+    input_img_file_path_text_box.bind('<Expose>', xview_event_handler)#scrolls text to end if needed
      
     def input_img_file_path_clk():
-        print('pretend to go into directory to get text file path')#`````````````````````````````````````````````````````
+        img_file = filedialog.askopenfilename(filetypes = (("Image files","*.jpg"),("Image files","*.png"),("all files","*.*")))
+        input_text_file_path_text_box.delete(0, "end")#clear text box
+        input_text_file_path_text_box.insert(END, img_file)
+        input_text_file_path_text_box.bind('<Expose>', xview_event_handler)#scrolls text to end if needed
          
     input_img_file_path_btn = Button(window, text="Browse...", command = input_img_file_path_clk)
      
@@ -216,6 +221,7 @@ def show_gui():
     output_img_file_path_lbl = Label(window, text="Output Image File: ")
     output_img_file_path_text_box = Entry(window,width=20)
     output_img_file_path_text_box.insert(END, GUI_utils.get_defalt_output_img_file_path()) #default
+    output_img_file_path_text_box.bind('<Expose>', xview_event_handler)#scrolls text to end if needed
          
     def output_file_path_clk():
         print('pretend to go into directory to get text file path')#`````````````````````````````````````````````````````
@@ -260,7 +266,7 @@ def show_gui():
     #location
     location_lbl                    .grid(column=0, row=row_num)
     location_text_box               .grid(column=1, row=row_num, columnspan = 3)
-    location_browse_btn             .grid(column=5, row=row_num)
+    location_browse_btn             .grid(column=4, row=row_num)
     
     row_num += 10
     
@@ -278,14 +284,14 @@ def show_gui():
     #input text file path
     input_text_file_path_lbl        .grid(column=0, row=row_num)
     input_text_file_path_text_box   .grid(column=1, row=row_num, columnspan = 3)
-    input_text_file_path_btn        .grid(column=5, row=row_num)
+    input_text_file_path_btn        .grid(column=4, row=row_num)
      
     row_num += 10 
     
     #input image file path
     input_img_file_path_lbl         .grid(column=0, row=row_num)
     input_img_file_path_text_box    .grid(column=1, row=row_num, columnspan = 3)
-    input_img_file_path_btn         .grid(column=5, row=row_num)
+    input_img_file_path_btn         .grid(column=4, row=row_num)
      
     row_num += 10
      
