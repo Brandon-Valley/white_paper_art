@@ -260,24 +260,24 @@ class Main_Window():
     
         quality_selected  = StringVar()
         quality_selected.set("low") #defalt
-        high_qual_rad_btn = Radiobutton(self.master,text='Show Low Quality Image (Fast)', value='low', variable = quality_selected, command = quality_rad_btn_sel)
-        low_qual_rad_btn  = Radiobutton(self.master,text='Save High Quality Image (Slow)', value='high', variable = quality_selected, command = quality_rad_btn_sel)
+        self.high_qual_rad_btn = Radiobutton(self.master,text='Show Low Quality Image (Fast)', value='low', variable = quality_selected, command = quality_rad_btn_sel)
+        self.low_qual_rad_btn  = Radiobutton(self.master,text='Save High Quality Image (Slow)', value='high', variable = quality_selected, command = quality_rad_btn_sel)
     
     
     
         #output image path text box
-        output_img_file_path_lbl = Label(self.master, text="Output Image File: ")
-        output_img_file_path_text_box = Entry(self.master,width=FILE_PATH_TEXT_BOX_WIDTH)
-        output_img_file_path_text_box.bind('<Expose>', xview_event_handler)#scrolls text to end if needed
+        self.output_img_file_path_lbl = Label(self.master, text="Output Image File: ")
+        self.output_img_file_path_text_box = Entry(self.master,width=FILE_PATH_TEXT_BOX_WIDTH)
+        self.output_img_file_path_text_box.bind('<Expose>', xview_event_handler)#scrolls text to end if needed
         
         def set_output_img_txt_box_contents():
-            output_img_file_path_text_box.insert(END, GUI_utils.get_defalt_output_img_file_path(self.input_img_file_path_text_box.get())) #default
+            self.output_img_file_path_text_box.insert(END, GUI_utils.get_defalt_output_img_file_path(self.input_img_file_path_text_box.get())) #default
              
         def output_file_path_clk():
             print('pretend to go into directory to get text file path')#`````````````````````````````````````````````````````
             
         set_output_img_txt_box_contents()
-        output_img_file_path_btn = Button(self.master, text="Browse...", command = output_file_path_clk)
+        self.output_img_file_path_btn = Button(self.master, text="Browse...", command = output_file_path_clk)
     
     
     
@@ -293,11 +293,11 @@ class Main_Window():
                             'image_size':               self.img_size_sbox.get(),
                             'image_position_cords':     {'x': self.x_cord_sbox.get(), 'y': self.y_cord_sbox.get()},
                             'quality':                  quality_selected.get(),
-                            'output_image_file_path':   output_img_file_path_text_box.get()}
+                            'output_image_file_path':   self.output_img_file_path_text_box.get()}
             
             #build final image using arguments
             build_image.build_img_test(image_kwargs)
-        build_img_btn = Button(self.master, text="Build Image", command = build_img_btn_clk)
+        self.build_img_btn = Button(self.master, text="Build Image", command = build_img_btn_clk)
         
         
         
@@ -395,24 +395,24 @@ class Main_Window():
         row_num += 10
         
         #quality radio buttons
-        high_qual_rad_btn               .grid(column=3, row=row_num - 1)
-        low_qual_rad_btn                .grid(column=3, row=row_num)
+        self.high_qual_rad_btn               .grid(column=3, row=row_num - 1)
+        self.low_qual_rad_btn                .grid(column=3, row=row_num)
         
         row_num += 10
         
         #output image file path text box
-        output_img_file_path_lbl        .grid(column=1, row=row_num)
-        output_img_file_path_text_box   .grid(column=2, row=row_num, columnspan = 3)
-        output_img_file_path_btn        .grid(column=5, row=row_num)
+        self.output_img_file_path_lbl        .grid(column=1, row=row_num)
+        self.output_img_file_path_text_box   .grid(column=2, row=row_num, columnspan = 3)
+        self.output_img_file_path_btn        .grid(column=5, row=row_num)
         
         
         row_num += 10
         
         #build image button
-        build_img_btn                   .grid(column=2, row=row_num)
+        self.build_img_btn                   .grid(column=2, row=row_num)
          
 def set_output_img_txt_box_contents(text_box, file_path):
-#     output_img_file_path_text_box.insert(END, GUI_utils.get_defalt_output_img_file_path(self.input_img_file_path_text_box.get())) #default
+#     self.output_img_file_path_text_box.insert(END, GUI_utils.get_defalt_output_img_file_path(self.input_img_file_path_text_box.get())) #default
     text_box.insert(END, GUI_utils.get_defalt_output_img_file_path(file_path)) #default
     
 #makes xview (scrolling within an entry text box) work
