@@ -115,22 +115,27 @@ class Main_Window():
 #             return True
 
         #modify folder name text box
-        def key_press_loc(event):
-            if self.create_new_folder_sel.get() == 0:#if new folder disabled
-                self.folder_name_text_box.configure( state = 'normal' )
-                self.folder_name_text_box.insert(END, event.char)
-                self.folder_name_text_box.configure( state = 'disabled' )
-        
-        def backspace_press_loc(event):
-            if self.create_new_folder_sel.get() == 0:#if new folder disabled
-                self.folder_name_text_box.configure( state = 'normal' )
-                temp_txt = self.folder_name_text_box.get()[:-1]#maybe change this to something that gets the last file name from location?????????????????????????
-                self.folder_name_text_box.delete(0, "end")#clear text box
-                self.folder_name_text_box.insert(END, temp_txt)  
-                self.folder_name_text_box.configure( state = 'disabled' )
+#         def key_press_loc(event):
+#             if self.create_new_folder_sel.get() == 0:#if new folder disabled
+#                 self.folder_name_text_box.configure( state = 'normal' )
+#                 self.folder_name_text_box.insert(END, event.char)
+#                 self.folder_name_text_box.configure( state = 'disabled' )
+#         
+#         def backspace_press_loc(event):
+#             if self.create_new_folder_sel.get() == 0:#if new folder disabled
+#                 self.folder_name_text_box.configure( state = 'normal' )
+#                 temp_txt = self.folder_name_text_box.get()[:-1]#maybe change this to something that gets the last file name from location?????????????????????????
+#                 self.folder_name_text_box.delete(0, "end")#clear text box
+#                 self.folder_name_text_box.insert(END, temp_txt)  
+#                 self.folder_name_text_box.configure( state = 'disabled' )
 
 
-
+#         def update_new_folder_text_box():
+#             if self.create_new_folder_sel.get() == 0:#if new folder disabled
+#                 self.folder_name_text_box.configure( state = 'normal' )
+#                 self.folder_name_text_box.delete(0, "end")#clear text box
+#                 self.folder_name_text_box.insert(END, self.folder_name_text_box.get())
+#                 self.folder_name_text_box.configure( state = 'disabled' )
 
 
         
@@ -139,8 +144,12 @@ class Main_Window():
         self.location_text_box.insert(END, GUI_utils.get_current_dir_path()) #default #put back!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 #         self.location_text_box.set('3333333333333333')
         self.location_text_box.bind('<Expose>', xview_event_handler)#scrolls text to end if needed
-        self.location_text_box.bind("<Key>", key_press_loc)
-        self.location_text_box.bind("<BackSpace>", backspace_press_loc)
+        self.location_text_box.bind("<Key>", self.update_folder_name_text_box)
+        self.location_text_box.bind("<BackSpace>", self.update_folder_name_text_box)
+#         self.location_text_box.bind("<Key>", update_new_folder_text_box)
+#         self.location_text_box.bind("<BackSpace>", update_new_folder_text_box)
+#         self.location_text_box.bind("<Key>", key_press_loc)
+#         self.location_text_box.bind("<BackSpace>", backspace_press_loc)
              
         def location_browse_btn_clk():
             #get file path and place it in text box
@@ -168,7 +177,7 @@ class Main_Window():
         
     
     #create new folder check button
-    def update_folder_name_text_box(self):#changes state and contents of folder name
+    def update_folder_name_text_box(self, event = None):#changes state and contents of folder name
 #         print('in update_folder_name)texrwsgfndkjfgnkjn')#``````````````````````````````````````````````````````````````````````````````````
 #         return True
         #not using bool_to_state because depending on what state, configure needs to be called at different times

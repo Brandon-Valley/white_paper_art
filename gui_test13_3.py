@@ -14,8 +14,8 @@ class Demo1:
         self.tb2 = Entry(master,width=20)
         
         
-        self.tb.bind("<Key>", self.key)
-        self.tb.bind("<BackSpace>", self.backspace)
+        self.tb.bind("<KeyRelease>", self.key)
+        self.tb.bind("<KeyRelease-BackSpace>", self.backspace)
         
         
         self.tb.grid(column=2, row=3)
@@ -33,7 +33,8 @@ class Demo1:
         temp_txt = self.tb2.get()[:-1]
         
         self.tb2.delete(0, "end")#clear text box
-        self.tb2.insert(END, temp_txt)
+#         self.tb2.insert(END, temp_txt)
+        self.tb2.insert(END, self.tb2.get())
         
  
 def main(): 
