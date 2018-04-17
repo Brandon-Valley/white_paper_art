@@ -144,8 +144,11 @@ class Main_Window():
         self.location_text_box.insert(END, GUI_utils.get_current_dir_path()) #default #put back!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 #         self.location_text_box.set('3333333333333333')
         self.location_text_box.bind('<Expose>', xview_event_handler)#scrolls text to end if needed
-        self.location_text_box.bind("<Key>", self.update_folder_name_text_box)
-        self.location_text_box.bind("<BackSpace>", self.update_folder_name_text_box)
+        #update folder name text box any time any of the following keys are pressed
+        self.location_text_box.bind("<KeyRelease>", self.update_folder_name_text_box)
+        self.location_text_box.bind("<KeyRelease-BackSpace>", self.update_folder_name_text_box)
+        self.location_text_box.bind("<KeyRelease-Delete>", self.update_folder_name_text_box)
+        self.location_text_box.bind("<KeyRelease-space>", self.update_folder_name_text_box)
 #         self.location_text_box.bind("<Key>", update_new_folder_text_box)
 #         self.location_text_box.bind("<BackSpace>", update_new_folder_text_box)
 #         self.location_text_box.bind("<Key>", key_press_loc)
