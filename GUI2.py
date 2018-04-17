@@ -32,30 +32,10 @@ DEFAULT_IMAGE_SIZE = 100 #REALLY need to figure something out for this!!!!!!!!!!
 DEFAULT_MAX_IMG_POS_CORD = 999
 DEFAULT_MIN_IMG_POS_CORD = -999
 
-def show_gui():
-    
-    window = Tk()
-    window.title("Text Image Maker")
-    window.geometry('900x400') #1500x700 takes up aplmost the whole screen
-     
-    
 
     
     
-    
-    window.mainloop()
-    print('after mainloop, should only het here after closing gui')
-    
-    
-def set_output_img_txt_box_contents(text_box, file_path):
-#     output_img_file_path_text_box.insert(END, GUI_utils.get_defalt_output_img_file_path(input_img_file_path_text_box.get())) #default
-    text_box.insert(END, GUI_utils.get_defalt_output_img_file_path(file_path)) #default
-    
-#makes xview (scrolling within an entry text box) work
-def xview_event_handler(e):
-    e.widget.update_idletasks()
-    e.widget.xview_moveto(1)
-    e.widget.unbind('<Expose>')
+
     
     
 
@@ -71,87 +51,19 @@ def xview_event_handler(e):
     
 
  
-class Main_Window():
-    
-#     def onValidate(self, P):
-#         return True
-#         self.folder_name_text_box.delete("1.0", "end")
-#     #             self.text.insert("end","OnValidate:\n")#!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-#         print("trying to get full: " , self.entry.get())
-#     #             print('P: ', P)
-#     #             
-#         self.location_text_box.insert("end", P)
-#     
-#         self.text.insert("end", self.location_text_box.get() + P)
-#     
-#         return True
-    
+class Main_Window():    
     def location_set_up(self):
-#         def callback():#`````````````````````````````````````````````````````
-#             print('skidhniush')
-#             return True
-
-
-        #Location path text box 
         self.l_path = StringVar()
         self.location_lbl = Label(self.master, text="Location: ")
-        
-        
-        
-#         self.e = Entry(master, textvariable=self.sv, validate="key", validatecommand=self.call_back)
-#         self.e.insert(END, "solifoi")
-
-        #to make sure the copied text box isn't always one character behind, there is probably a less stupid way to do this
-#         vcmd = (self.register(self.onValidate), '%P')    
-        
-#         def onValidate(self, P):
-#             self.folder_name_text_box.delete("1.0", "end")
-# #             self.text.insert("end","OnValidate:\n")#!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-#             print("trying to get full: " , self.entry.get())
-# #             print('P: ', P)
-# #             
-#             self.location_text_box.insert("end", P)
-#     
-#             self.text.insert("end", self.location_text_box.get() + P)
-#     
-#             return True
-
-        #modify folder name text box
-#         def key_press_loc(event):
-#             if self.create_new_folder_cbtn_sel.get() == 0:#if new folder disabled
-#                 self.folder_name_text_box.configure( state = 'normal' )
-#                 self.folder_name_text_box.insert(END, event.char)
-#                 self.folder_name_text_box.configure( state = 'disabled' )
-#         
-#         def backspace_press_loc(event):
-#             if self.create_new_folder_cbtn_sel.get() == 0:#if new folder disabled
-#                 self.folder_name_text_box.configure( state = 'normal' )
-#                 temp_txt = self.folder_name_text_box.get()[:-1]#maybe change this to something that gets the last file name from location?????????????????????????
-#                 self.folder_name_text_box.delete(0, "end")#clear text box
-#                 self.folder_name_text_box.insert(END, temp_txt)  
-#                 self.folder_name_text_box.configure( state = 'disabled' )
-
-
-#         def update_new_folder_text_box():
-#             if self.create_new_folder_cbtn_sel.get() == 0:#if new folder disabled
-#                 self.folder_name_text_box.configure( state = 'normal' )
-#                 self.folder_name_text_box.delete(0, "end")#clear text box
-#                 self.folder_name_text_box.insert(END, self.folder_name_text_box.get())
-#                 self.folder_name_text_box.configure( state = 'disabled' )
 
         #if focus leaves location_text_box while ending in a \, folder_name_text_box should be enabled if not already
         def enable_folder_name_text_box_if_needed(event):
             if GUI_utils.get_last_path_var(self.location_text_box.get()) == '':
                 self.create_new_folder_cbtn_sel.set(1) 
                 self.update_folder_name_text_box()
-#                 self.folder_name_text_box.configure(state = 'normal')
-                
-                
-
-        
-        
-        self.location_text_box = Entry(self.master,width=FILE_PATH_TEXT_BOX_WIDTH)#, textvariable=self.l_path, validate="key", validatecommand=vcmd)#self.double_click_folder_name_cbtn)#update_folder_name_text_box)
-        self.location_text_box.insert(END, GUI_utils.get_current_dir_path()) #default #put back!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+#                 
+        self.location_text_box = Entry(self.master,width=FILE_PATH_TEXT_BOX_WIDTH)
+        self.location_text_box.insert(END, GUI_utils.get_current_dir_path()) #default
         
         self.location_text_box.bind('<Expose>', xview_event_handler)#scrolls text to end if needed
         
@@ -164,72 +76,39 @@ class Main_Window():
         #update any time focus leaves text box, meant to help make sure that if you leave
         #location_text_box ending in a \, new_folder_text_box will enable itself if disabled
         self.location_text_box.bind("<FocusOut>", enable_folder_name_text_box_if_needed)
-#         self.location_text_box.bind("<Key>", update_new_folder_text_box)
-#         self.location_text_box.bind("<BackSpace>", update_new_folder_text_box)
-#         self.location_text_box.bind("<Key>", key_press_loc)
-#         self.location_text_box.bind("<BackSpace>", backspace_press_loc)
              
         def location_browse_btn_clk():
             #get file path and place it in text box
             dir = filedialog.askdirectory()
-            self.location_text_box.delete(0, "end")#clear text box
+            self.location_text_box.delete(0, "end")
             self.location_text_box.insert(END, dir)
             
-            #make sure new folder text box updates correctly
-            folder_name_text_box.configure( state = 'normal' )
-            update_folder_name_text_box()
+            self.update_folder_name_text_box()
             
         self.location_browse_btn = Button(self.master, text="Browse...", command = location_browse_btn_clk)
         
-#     def double_click_folder_name_cbtn(self):
-#         try:
-#             print('trying to print full: %P')
-#             self.create_new_folder_cbtn_sel.set(1)
-#             self.update_folder_name_text_box()
-#             self.create_new_folder_cbtn_sel.set(0)
-#             self.update_folder_name_text_box()
-#         except:
-#             print("HIT EXCEPTION!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")#`````````````````````````````````````````````
-#             pass
-#         return True
-        
-    
     #create new folder check button
     def update_folder_name_text_box(self, event = None):#changes state and contents of folder name
-#         print('in update_folder_name)texrwsgfndkjfgnkjn')#``````````````````````````````````````````````````````````````````````````````````
-#         return True
-        #not using bool_to_state because depending on what state, configure needs to be called at different times
-#         try: #wont work the first time because folder_name_text_box hasn't been declared yet
-        print('current')#`111111``````````````````````````````````````````````````````````````````````````````````````````````
+        self.folder_name_text_box.configure( state = 'normal' )
+        self.folder_name_text_box.delete(0, "end")
+        
         if self.create_new_folder_cbtn_sel.get() == 0:
-            self.folder_name_text_box.configure( state = 'normal' )#`````````````````````````````````````````````````probably needed!!!!!!!!!!
-            self.folder_name_text_box.delete(0, "end")#``````````````````````````````````````````````````is this needed???????????
-#                 print(self.location_text_box.get())#```````````````````````````````````````````````````````````````
-#                 print('0')#````````````````````````````````````````````````````````````````````````````````````````````````````````````
-            self.folder_name_text_box.delete(0, "end")
-#                 print('after')#````````````````````````````````````````````````````````````````````````````
-#                 cf_path = re.split(r'[\\/]', self.location_text_box.get())#```````````````````````````````````````````````
-#                 self.folder_name_text_box.insert(END, cf_path[-1])#````````````````````````````````````````````````````````````
             self.folder_name_text_box.insert(END, GUI_utils.get_last_path_var(self.location_text_box.get()))
             self.folder_name_text_box.configure( state = 'disabled' )
-        else:
-#                 print(1)#1111111111111111``````````````````````````````````````````````````````````````````````````````````
-            self.folder_name_text_box.configure( state = 'normal' )
-            self.folder_name_text_box.delete(0, "end")
-#             print('about to return ture!!!!!!!!!!!!!!!!!!!!!')#```````````````````````````````````````````````````
-#         except:
-#             pass
-        return True #so that this can be called by validatecommand in location
+
     
     
     def __init__(self, master):
 #         tk.Frame.__init__(self, master)
         self.master = master
+        self.master.title("Text Image Maker")
+        self.master.geometry('900x400') #1500x700 takes up aplmost the whole screen
 
 
-
-        self.folder_name_text_box = Entry(self.master,width=20)
         self.location_set_up()
+        
+        self.folder_name_text_box = Entry(self.master,width=20)
+        
         
         
         
@@ -532,13 +411,19 @@ class Main_Window():
         #build image button
         build_img_btn                   .grid(column=2, row=row_num)
          
-
+def set_output_img_txt_box_contents(text_box, file_path):
+#     output_img_file_path_text_box.insert(END, GUI_utils.get_defalt_output_img_file_path(input_img_file_path_text_box.get())) #default
+    text_box.insert(END, GUI_utils.get_defalt_output_img_file_path(file_path)) #default
+    
+#makes xview (scrolling within an entry text box) work
+def xview_event_handler(e):
+    e.widget.update_idletasks()
+    e.widget.xview_moveto(1)
+    e.widget.unbind('<Expose>')
          
  
 def main(): 
     root = Tk()
-    root.title("Text Image Maker")
-    root.geometry('900x400') #1500x700 takes up aplmost the whole screen
     Main_Window(root)#.pack(fill="both", expand=True)
     
 #     app = Main_Window(root)

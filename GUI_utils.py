@@ -71,13 +71,7 @@ def get_defalt_output_img_file_path(img_file_path):
         out_img_path += e
         
     return out_img_path
-#     
-#     
-#     
-#     folder_name_text_box.insert(END, cf_path[-1])
-#     
-#     
-#     return "output\img\defalt\fuiles\path"
+
     
     
     
