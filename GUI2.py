@@ -1,6 +1,8 @@
 from tkinter import *
 from tkinter.ttk import *
 from tkinter import filedialog
+import tkinter as tk
+
 import re
 
 import build_image
@@ -69,17 +71,53 @@ def xview_event_handler(e):
     
 
  
-class Main_Window:
+class Main_Window(tk.Frame):
+    
+    def onValidate(self, P):
+        return True
+        self.folder_name_text_box.delete("1.0", "end")
+    #             self.text.insert("end","OnValidate:\n")#!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        print("trying to get full: " , self.entry.get())
+    #             print('P: ', P)
+    #             
+        self.location_text_box.insert("end", P)
+    
+        self.text.insert("end", self.location_text_box.get() + P)
+    
+        return True
     
     def location_set_up(self):
-        def callback():
+        def callback():#`````````````````````````````````````````````````````
             print('skidhniush')
             return True
         #Location path text box 
-        l_path = StringVar()
+        self.l_path = StringVar()
         self.location_lbl = Label(self.master, text="Location: ")
-        self.location_text_box = Entry(self.master,width=FILE_PATH_TEXT_BOX_WIDTH)#, textvariable=l_path, validate="key", validatecommand=update_folder_name_text_box)
-        self.location_text_box.insert(END, GUI_utils.get_current_dir_path()) #default
+        
+        
+        
+#         self.e = Entry(master, textvariable=self.sv, validate="key", validatecommand=self.call_back)
+#         self.e.insert(END, "solifoi")
+
+        #to make sure the copied text box isn't always one character behind, there is probably a less stupid way to do this
+        vcmd = (self.register(self.onValidate), '%P')    
+        
+#         def onValidate(self, P):
+#             self.folder_name_text_box.delete("1.0", "end")
+# #             self.text.insert("end","OnValidate:\n")#!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+#             print("trying to get full: " , self.entry.get())
+# #             print('P: ', P)
+# #             
+#             self.location_text_box.insert("end", P)
+#     
+#             self.text.insert("end", self.location_text_box.get() + P)
+#     
+#             return True
+        
+        
+        self.location_text_box = Entry(self.master,width=FILE_PATH_TEXT_BOX_WIDTH, textvariable=self.l_path, validate="key", validatecommand=vcmd)#self.double_click_folder_name_cbtn)#update_folder_name_text_box)
+        self.location_text_box.insert(END, '12345')#GUI_utils.get_current_dir_path()) #default #put back!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+#         self.location_text_box.set('3333333333333333')
         self.location_text_box.bind('<Expose>', xview_event_handler)#scrolls text to end if needed
              
         def location_browse_btn_clk():
@@ -93,27 +131,53 @@ class Main_Window:
             update_folder_name_text_box()
             
         self.location_browse_btn = Button(self.master, text="Browse...", command = location_browse_btn_clk)
-    
+        
+    def double_click_folder_name_cbtn(self):
+        try:
+            print('trying to print full: %P')
+            self.create_new_folder_sel.set(1)
+            self.update_folder_name_text_box()
+            self.create_new_folder_sel.set(0)
+            self.update_folder_name_text_box()
+        except:
+            print("HIT EXCEPTION!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")#`````````````````````````````````````````````
+            pass
+        return True
+        
     
     #create new folder check button
     def update_folder_name_text_box(self):#changes state and contents of folder name
+#         print('in update_folder_name)texrwsgfndkjfgnkjn')#``````````````````````````````````````````````````````````````````````````````````
+#         return True
         #not using bool_to_state because depending on what state, configure needs to be called at different times
-        if self.create_new_folder_sel.get() == 0:
-            folder_name_text_box.delete(0, "end")
-            cf_path = re.split(r'[\\/]', location_text_box.get())
-            folder_name_text_box.insert(END, cf_path[-1])
-            folder_name_text_box.configure( state = 'disabled' )
-        else:
-            self.folder_name_text_box.configure( state = 'normal' )
-            self.folder_name_text_box.delete(0, "end")
+        try: #wont work the first time because folder_name_text_box hasn't been declared yet
+            if self.create_new_folder_sel.get() == 0:
+                self.folder_name_text_box.configure( state = 'normal' )#`````````````````````````````````````````````````
+                self.folder_name_text_box.delete(0, "end")#``````````````````````````````````````````````````
+                print(self.location_text_box.get())
+                print('0')#````````````````````````````````````````````````````````````````````````````````````````````````````````````
+                self.folder_name_text_box.delete(0, "end")
+                print('after')
+                cf_path = re.split(r'[\\/]', self.location_text_box.get())
+                self.folder_name_text_box.insert(END, cf_path[-1])
+                self.folder_name_text_box.configure( state = 'disabled' )
+            else:
+                print(1)
+                self.folder_name_text_box.configure( state = 'normal' )
+                self.folder_name_text_box.delete(0, "end")
+            print('about to return ture!!!!!!!!!!!!!!!!!!!!!')#```````````````````````````````````````````````````
+        except:
+            pass
+        return True #so that this can be called by validatecommand in location
     
     
     def __init__(self, master):
+        tk.Frame.__init__(self, master)
         self.master = master
 
 
 
-
+        self.folder_name_text_box = Entry(self.master,width=20)
         self.location_set_up()
         
         
@@ -424,9 +488,9 @@ def main():
     root = Tk()
     root.title("Text Image Maker")
     root.geometry('900x400') #1500x700 takes up aplmost the whole screen
+    Main_Window(root).pack(fill="both", expand=True)
     
-    
-    app = Main_Window(root)
+#     app = Main_Window(root)
     root.mainloop()
  
 if __name__ == '__main__':

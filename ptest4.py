@@ -37,13 +37,16 @@ class Demo1:
         self.sv = StringVar()
          
         
-        self.e = Entry(master, textvariable=self.sv, validate="key", validatecommand=self.call_back)
+        self.e = Entry(master, width = 30, textvariable=self.sv, validate="key", validatecommand=self.call_back)
+        self.e.insert(END, "solifoi")
         self.later_var = "LATER_VAR IS HERE!"
         self.e.grid()
         
     def call_back(self):
         print('hi')
-        print(self.later_var)
+        self.CONST_STR = 'oooooooo'
+        print(self.CONST_STR)
+#         print(self.later_var)
         return True
              
 #     def callback(self):
