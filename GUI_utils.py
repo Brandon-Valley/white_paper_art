@@ -49,6 +49,12 @@ def strs_to_int_ratio(str1, str2):
     return i1 / i2
     
     
+    
+def get_last_path_var(f_path):
+    split_f_path = re.split(r'[\\/]', f_path)
+    return split_f_path[-1]
+
+    
 def get_defalt_output_img_file_path(img_file_path):
     out_img_path = ''
     
