@@ -2,13 +2,14 @@ from tkinter import *
 from tkinter.ttk import *
 from tkinter import filedialog
 import tkinter as tk
+from tkinter import ttk
 
 import build_image
 import GUI_utils
 
 
 
-FILE_PATH_TEXT_BOX_WIDTH = 20
+FILE_PATH_TEXT_BOX_WIDTH = 80
 
 
 DEFAULT_FONT_NAME = "cour"
@@ -126,7 +127,7 @@ class Main_Window():
             img_file = filedialog.askopenfilename(filetypes = (("Image files","*.jpg"),("Image files","*.png"),("all files","*.*")))
             self.input_text_file_path_text_box.delete(0, "end")#clear text box
             self.input_text_file_path_text_box.insert(END, img_file)
-#             self.input_text_file_path_text_box.bind('<Expose>', xview_event_handler)#scrolls text to end if needed
+            self.input_text_file_path_text_box.bind('<Expose>', xview_event_handler)#scrolls text to end if needed #need???????????????????????????????????
              
         self.input_img_file_path_btn = Button(self.master, text="Browse...", command = input_img_file_path_clk)
     
@@ -384,8 +385,8 @@ class Main_Window():
     
     def __init__(self, master):
         self.master = master
-        self.master.title("Text Image Maker")
-        self.master.geometry('900x400') #1500x700 takes up aplmost the whole screen
+#         self.master.title("Text Image Maker")
+#         self.master.geometry('900x400') #1500x700 takes up almost the whole screen
 
         #setup widgets
         self.location___widgets_setup()
@@ -410,10 +411,42 @@ def xview_event_handler(e):
     e.widget.unbind('<Expose>')
          
  
+ 
+ 
+# from tkinter import *
+# from tkinter import ttk
+# window = Tk()
+# window.title("Welcome to LikeGeeks app")
+# tab_control = ttk.Notebook(window)
+# tab1 = ttk.Frame(tab_control)
+# tab2 = ttk.Frame(tab_control)
+# tab_control.add(tab1, text='First')
+# tab_control.add(tab2, text='Second')
+# lbl1 = Label(tab1, text= 'label1')
+# lbl1.grid(column=0, row=0)
+# lbl2 = Label(tab2, text= 'label2')
+# lbl2.grid(column=0, row=0)
+# tab_control.pack(expand=1, fill='both')
+# window.mainloop()
+ 
+ 
+ 
+ 
 def main(): 
     root = Tk()
-    Main_Window(root)#.pack(fill="both", expand=True)
     
+    root.title("Text Image Maker")
+    root.geometry('900x400') #1500x700 takes up almost the whole screen
+    
+    tab_control = ttk.Notebook(root)
+    tab1 = ttk.Frame(tab_control)
+    tab2 = ttk.Frame(tab_control)
+    tab_control.add(tab1, text='First')
+    tab_control.add(tab2, text='Second')
+    
+    
+    Main_Window(tab1)#.pack(fill="both", expand=True)
+    tab_control.pack(expand=1, fill='both')
     root.mainloop()
  
 if __name__ == '__main__':
