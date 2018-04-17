@@ -127,67 +127,67 @@ class Main_Window():
          
          
         #text file path text box
-        input_text_file_path_lbl = Label(self.master, text="Text File Input: ")
-        input_text_file_path_text_box = Entry(self.master,width=FILE_PATH_TEXT_BOX_WIDTH)
-        input_text_file_path_text_box.insert(END, GUI_utils.get_defalt_text_file_path()) #default
+        self.input_text_file_path_lbl = Label(self.master, text="Text File Input: ")
+        self.input_text_file_path_text_box = Entry(self.master,width=FILE_PATH_TEXT_BOX_WIDTH)
+        self.input_text_file_path_text_box.insert(END, GUI_utils.get_defalt_text_file_path()) #default
              
         def input_text_file_path_clk():
             file = filedialog.askopenfilename(filetypes = (("Text files","*.txt"),("all files","*.*")))
-            input_text_file_path_text_box.delete(0, "end")#clear text box
-            input_text_file_path_text_box.insert(END, file)
-            input_text_file_path_text_box.bind('<Expose>', xview_event_handler)#scrolls text to end if needed
+            self.input_text_file_path_text_box.delete(0, "end")#clear text box
+            self.input_text_file_path_text_box.insert(END, file)
+            self.input_text_file_path_text_box.bind('<Expose>', xview_event_handler)#scrolls text to end if needed
             
-        input_text_file_path_btn = Button(self.master, text="Browse...", command = input_text_file_path_clk)
+        self.input_text_file_path_btn = Button(self.master, text="Browse...", command = input_text_file_path_clk)
          
          
          
         #image file path text box
-        input_img_file_path_lbl = Label(self.master, text="Image File Input: ")
-        input_img_file_path_text_box = Entry(self.master,width=FILE_PATH_TEXT_BOX_WIDTH)#, command = set_output_img_txt_box_contents())#modify output image contents every time this changes
-        input_img_file_path_text_box.insert(END, GUI_utils.get_defalt_image_file_path()) #default
-        input_img_file_path_text_box.bind('<Expose>', xview_event_handler)#scrolls text to end if needed
+        self.input_img_file_path_lbl = Label(self.master, text="Image File Input: ")
+        self.input_img_file_path_text_box = Entry(self.master,width=FILE_PATH_TEXT_BOX_WIDTH)#, command = set_output_img_txt_box_contents())#modify output image contents every time this changes
+        self.input_img_file_path_text_box.insert(END, GUI_utils.get_defalt_image_file_path()) #default
+        self.input_img_file_path_text_box.bind('<Expose>', xview_event_handler)#scrolls text to end if needed
          
         def input_img_file_path_clk():
             img_file = filedialog.askopenfilename(filetypes = (("Image files","*.jpg"),("Image files","*.png"),("all files","*.*")))
-            input_text_file_path_text_box.delete(0, "end")#clear text box
-            input_text_file_path_text_box.insert(END, img_file)
-            input_text_file_path_text_box.bind('<Expose>', xview_event_handler)#scrolls text to end if needed
+            self.input_text_file_path_text_box.delete(0, "end")#clear text box
+            self.input_text_file_path_text_box.insert(END, img_file)
+            self.input_text_file_path_text_box.bind('<Expose>', xview_event_handler)#scrolls text to end if needed
              
-        input_img_file_path_btn = Button(self.master, text="Browse...", command = input_img_file_path_clk)
+        self.input_img_file_path_btn = Button(self.master, text="Browse...", command = input_img_file_path_clk)
          
          
          
         #font section labels
-        font_lbl = Label(self.master, text="Font:")
-        font_size_lbl = Label(self.master, text="Font Size:")
+        self.font_lbl = Label(self.master, text="Font:")
+        self.font_size_lbl = Label(self.master, text="Font Size:")
         maximize_font_size_lbl = Label(self.master, text="Maximize Font Size:")
         
          
          
         #font select drop-down #make read only??????????????????????????????????????????????????
-        font_drop_down = Combobox(self.master)
-        font_drop_down['values'] = GUI_utils.get_font_list()
-        default_font_index = font_drop_down['values'].index(DEFAULT_FONT_NAME) #default
-        font_drop_down.current(default_font_index) #set the selected item
+        self.font_drop_down = Combobox(self.master)
+        self.font_drop_down['values'] = GUI_utils.get_font_list()
+        default_font_index = self.font_drop_down['values'].index(DEFAULT_FONT_NAME) #default
+        self.font_drop_down.current(default_font_index) #set the selected item
     
     
     
         #font size spin box
     #     font_size_dims = GUI_utils.get_font_size_dimensions()
-        font_size_sbox = Spinbox(self.master, from_ = 0, to = DEFAULT_MAX_FONT_SIZE, width = 5)#, state = "disabled")
-        font_size_sbox.delete(0, "end") #gets rid of 0 so the next line makes the default value 40 instead of 400
-        font_size_sbox.insert(0, DEFAULT_FONT_SIZE) #default 
+        self.font_size_sbox = Spinbox(self.master, from_ = 0, to = DEFAULT_MAX_FONT_SIZE, width = 5)#, state = "disabled")
+        self.font_size_sbox.delete(0, "end") #gets rid of 0 so the next line makes the default value 40 instead of 400
+        self.font_size_sbox.insert(0, DEFAULT_FONT_SIZE) #default 
     
     
     
         #maximize font size check button
-        #gets called each time you click the check button, changes state of font_size_sbox
+        #gets called each time you click the check button, changes state of self.font_size_sbox
         def max_font_size_btn_sel():
-            font_size_sbox_state = GUI_utils.bool_to_state(max_font_size_sel.get())
-            font_size_sbox.configure(state = font_size_sbox_state )
+            self.font_size_sbox_state = GUI_utils.bool_to_state(max_font_size_sel.get())
+            self.font_size_sbox.configure(state = self.font_size_sbox_state )
         
         max_font_size_sel = IntVar()
-        max_font_size_cbtn = Checkbutton(text="Maximize Font Size", variable=max_font_size_sel, command = max_font_size_btn_sel)
+        self.max_font_size_cbtn = Checkbutton(text="Maximize Font Size", variable=max_font_size_sel, command = max_font_size_btn_sel)
         
     
         
@@ -197,52 +197,52 @@ class Main_Window():
              
             #if using input image dimensions, change the test boxes to show the dimensions before disabling them
             if img_dims_txt_boxes_state == 'disabled':
-                in_img_dims = GUI_utils.get_input_img_dims( input_img_file_path_text_box.get() )
-                output_img_dim_rat_num_sbox.delete(0, "end")
-                output_img_dim_rat_din_sbox.delete(0, "end")
-                output_img_dim_rat_num_sbox.insert(END, in_img_dims['num'])
-                output_img_dim_rat_din_sbox.insert(END, in_img_dims['din'])
+                in_img_dims = GUI_utils.get_input_img_dims( self.input_img_file_path_text_box.get() )
+                self.output_img_dim_rat_num_sbox.delete(0, "end")
+                self.output_img_dim_rat_din_sbox.delete(0, "end")
+                self.output_img_dim_rat_num_sbox.insert(END, in_img_dims['num'])
+                self.output_img_dim_rat_din_sbox.insert(END, in_img_dims['din'])
             
             #disable or enable text boxes
-            output_img_dim_rat_num_sbox.configure(state = img_dims_txt_boxes_state )
-            output_img_dim_rat_din_sbox.configure(state = img_dims_txt_boxes_state )
+            self.output_img_dim_rat_num_sbox.configure(state = img_dims_txt_boxes_state )
+            self.output_img_dim_rat_din_sbox.configure(state = img_dims_txt_boxes_state )
         
         use_input_img_dims_sel = IntVar()
-        match_input_image_dims_cbtn = Checkbutton(text="Use Input Image Dimensions", variable=use_input_img_dims_sel, command = use_input_img_dims_btn_sel)
+        self.match_input_image_dims_cbtn = Checkbutton(text="Use Input Image Dimensions", variable=use_input_img_dims_sel, command = use_input_img_dims_btn_sel)
         
         
         
         #image dimension spin boxes 
-        output_img_dim_lbl = Label(self.master, text="Image Dimensions:")
-        slash_lbl = Label(self.master, text="/")
-        output_img_dim_rat_num_sbox = Spinbox(self.master, from_ = 0, to = DEFAULT_MAX_IMAGE_DIM, width = 5) #numerator
-        output_img_dim_rat_din_sbox = Spinbox(self.master, from_ = 0, to = DEFAULT_MAX_IMAGE_DIM, width = 5) #denominator
-        output_img_dim_rat_num_sbox.delete(0, "end") 
-        output_img_dim_rat_din_sbox.delete(0, "end") #gets rid of 0 so the next line makes the default value 40 instead of 400
-        output_img_dim_rat_num_sbox.insert(END, DEFAULT_IMAGE_DIMENSION_RATIO_NUM) #default
-        output_img_dim_rat_din_sbox.insert(END, DEFAULT_IMAGE_DIMENSION_RATIO_DIN) #default
+        self.output_img_dim_lbl = Label(self.master, text="Image Dimensions:")
+        self.slash_lbl = Label(self.master, text="/")
+        self.output_img_dim_rat_num_sbox = Spinbox(self.master, from_ = 0, to = DEFAULT_MAX_IMAGE_DIM, width = 5) #numerator
+        self.output_img_dim_rat_din_sbox = Spinbox(self.master, from_ = 0, to = DEFAULT_MAX_IMAGE_DIM, width = 5) #denominator
+        self.output_img_dim_rat_num_sbox.delete(0, "end") 
+        self.output_img_dim_rat_din_sbox.delete(0, "end") #gets rid of 0 so the next line makes the default value 40 instead of 400
+        self.output_img_dim_rat_num_sbox.insert(END, DEFAULT_IMAGE_DIMENSION_RATIO_NUM) #default
+        self.output_img_dim_rat_din_sbox.insert(END, DEFAULT_IMAGE_DIMENSION_RATIO_DIN) #default
         
     
     
         #image size spinbox
-        img_size_lbl  = Label(self.master, text="Image Size:")
-        img_size_sbox = Spinbox(self.master, from_ = DEFAULT_MIN_IMAGE_SIZE, to = DEFAULT_MAX_IMAGE_SIZE, width = 5)
-        img_size_sbox.delete(0, "end") #gets rid of 0 so the next line makes the default value 40 instead of 400
-        img_size_sbox.insert(0, DEFAULT_IMAGE_SIZE) #default 
+        self.img_size_lbl  = Label(self.master, text="Image Size:")
+        self.img_size_sbox = Spinbox(self.master, from_ = DEFAULT_MIN_IMAGE_SIZE, to = DEFAULT_MAX_IMAGE_SIZE, width = 5)
+        self.img_size_sbox.delete(0, "end") #gets rid of 0 so the next line makes the default value 40 instead of 400
+        self.img_size_sbox.insert(0, DEFAULT_IMAGE_SIZE) #default 
     
     
     
         #image cord spinboxes
-        img_cords_lbl   = Label(self.master, text="Image Position:")
-        prnth_open_lbl  = Label(self.master, text="(")
-        comma_lbl       = Label(self.master, text=",")
-        prnth_close_lbl = Label(self.master, text=")")
-        x_cord_sbox     = Spinbox(self.master, from_ = DEFAULT_MIN_IMG_POS_CORD, to = DEFAULT_MAX_IMG_POS_CORD, width = 3)
-        y_cord_sbox     = Spinbox(self.master, from_ = DEFAULT_MIN_IMG_POS_CORD, to = DEFAULT_MAX_IMG_POS_CORD, width = 3)
-        x_cord_sbox.delete(0, "end") #gets rid of 0 so the next line makes the default value 40 instead of 400
-        y_cord_sbox.delete(0, "end")
-        x_cord_sbox.insert(0, 0) #default 
-        y_cord_sbox.insert(0, 0) #default 
+        self.img_cords_lbl   = Label(self.master, text="Image Position:")
+        self.prnth_open_lbl  = Label(self.master, text="(")
+        self.comma_lbl       = Label(self.master, text=",")
+        self.prnth_close_lbl = Label(self.master, text=")")
+        self.x_cord_sbox     = Spinbox(self.master, from_ = DEFAULT_MIN_IMG_POS_CORD, to = DEFAULT_MAX_IMG_POS_CORD, width = 3)
+        self.y_cord_sbox     = Spinbox(self.master, from_ = DEFAULT_MIN_IMG_POS_CORD, to = DEFAULT_MAX_IMG_POS_CORD, width = 3)
+        self.x_cord_sbox.delete(0, "end") #gets rid of 0 so the next line makes the default value 40 instead of 400
+        self.y_cord_sbox.delete(0, "end")
+        self.x_cord_sbox.insert(0, 0) #default 
+        self.y_cord_sbox.insert(0, 0) #default 
         
     
     
@@ -251,10 +251,10 @@ class Main_Window():
         def quality_rad_btn_sel():
             if  quality_selected.get() == 'low':
                 max_font_size_sel.set(0)
-                font_size_sbox.configure(state = 'normal' )
+                self.font_size_sbox.configure(state = 'normal' )
             elif quality_selected.get() == 'high':
                 max_font_size_sel.set(1)
-                font_size_sbox.configure(state = 'disable' )
+                self.font_size_sbox.configure(state = 'disable' )
             else:
                 print('something wrong with quality thing!!!!!!!!!!!!!!!!!!!!!!!!!')#```````````````````````````````````````````````
     
@@ -271,7 +271,7 @@ class Main_Window():
         output_img_file_path_text_box.bind('<Expose>', xview_event_handler)#scrolls text to end if needed
         
         def set_output_img_txt_box_contents():
-            output_img_file_path_text_box.insert(END, GUI_utils.get_defalt_output_img_file_path(input_img_file_path_text_box.get())) #default
+            output_img_file_path_text_box.insert(END, GUI_utils.get_defalt_output_img_file_path(self.input_img_file_path_text_box.get())) #default
              
         def output_file_path_clk():
             print('pretend to go into directory to get text file path')#`````````````````````````````````````````````````````
@@ -284,14 +284,14 @@ class Main_Window():
         #build image button   
         def build_img_btn_clk():
             #read the current state of all arguments
-            image_kwargs = {'input_text_file_path':     input_text_file_path_text_box.get(),
-                            'image_file_path':          input_img_file_path_text_box.get(),
-                            'font_name':                font_drop_down.get() + '.ttf',
-                            'font_size':                font_size_sbox.get(),
+            image_kwargs = {'input_text_file_path':     self.input_text_file_path_text_box.get(),
+                            'image_file_path':          self.input_img_file_path_text_box.get(),
+                            'font_name':                self.font_drop_down.get() + '.ttf',
+                            'font_size':                self.font_size_sbox.get(),
                             'maximize_font_size':       max_font_size_sel.get(),
-                            'output_image_dim_ratio':   GUI_utils.strs_to_int_ratio( output_img_dim_rat_num_sbox.get() , output_img_dim_rat_din_sbox.get() ),
-                            'image_size':               img_size_sbox.get(),
-                            'image_position_cords':     {'x': x_cord_sbox.get(), 'y': y_cord_sbox.get()},
+                            'output_image_dim_ratio':   GUI_utils.strs_to_int_ratio( self.output_img_dim_rat_num_sbox.get() , self.output_img_dim_rat_din_sbox.get() ),
+                            'image_size':               self.img_size_sbox.get(),
+                            'image_position_cords':     {'x': self.x_cord_sbox.get(), 'y': self.y_cord_sbox.get()},
                             'quality':                  quality_selected.get(),
                             'output_image_file_path':   output_img_file_path_text_box.get()}
             
@@ -333,16 +333,16 @@ class Main_Window():
         row_num += 10
         
         #input text file path
-        input_text_file_path_lbl        .grid(column=1, row=row_num)
-        input_text_file_path_text_box   .grid(column=2, row=row_num, columnspan = 3)
-        input_text_file_path_btn        .grid(column=5, row=row_num)
+        self.input_text_file_path_lbl        .grid(column=1, row=row_num)
+        self.input_text_file_path_text_box   .grid(column=2, row=row_num, columnspan = 3)
+        self.input_text_file_path_btn        .grid(column=5, row=row_num)
          
         row_num += 10 
         
         #input image file path
-        input_img_file_path_lbl         .grid(column=1, row=row_num)
-        input_img_file_path_text_box    .grid(column=2, row=row_num, columnspan = 3)
-        input_img_file_path_btn         .grid(column=5, row=row_num)
+        self.input_img_file_path_lbl         .grid(column=1, row=row_num)
+        self.input_img_file_path_text_box    .grid(column=2, row=row_num, columnspan = 3)
+        self.input_img_file_path_btn         .grid(column=5, row=row_num)
          
         row_num += 10
          
@@ -352,15 +352,15 @@ class Main_Window():
         row_num += 10
         
         #font section labels
-        font_lbl                        .grid(column=1, row=row_num)
-        font_size_lbl                   .grid(column=2, row=row_num)
+        self.font_lbl                        .grid(column=1, row=row_num)
+        self.font_size_lbl                   .grid(column=2, row=row_num)
         
         row_num += 10 
         
         #font inputs
-        font_drop_down                  .grid(column=1, row=row_num) 
-        font_size_sbox                  .grid(column=2, row=row_num)  
-        max_font_size_cbtn              .grid(column=4, row=row_num)
+        self.font_drop_down                  .grid(column=1, row=row_num) 
+        self.font_size_sbox                  .grid(column=2, row=row_num)  
+        self.max_font_size_cbtn              .grid(column=4, row=row_num)
         
         row_num += 10 
         
@@ -370,27 +370,27 @@ class Main_Window():
         row_num += 10
         
         #image dimensions
-        output_img_dim_lbl              .grid(column=1, row=row_num)
-        output_img_dim_rat_num_sbox     .grid(column=2, row=row_num)
-        slash_lbl                       .grid(column=3, row=row_num)
-        output_img_dim_rat_din_sbox     .grid(column=4, row=row_num)
-        match_input_image_dims_cbtn     .grid(column=5, row=row_num)
+        self.output_img_dim_lbl              .grid(column=1, row=row_num)
+        self.output_img_dim_rat_num_sbox     .grid(column=2, row=row_num)
+        self.slash_lbl                       .grid(column=3, row=row_num)
+        self.output_img_dim_rat_din_sbox     .grid(column=4, row=row_num)
+        self.match_input_image_dims_cbtn     .grid(column=5, row=row_num)
         
         row_num += 10
         
         #font size spinbox
-        img_size_lbl                    .grid(column=1, row=row_num)
-        img_size_sbox                   .grid(column=2, row=row_num)
+        self.img_size_lbl                    .grid(column=1, row=row_num)
+        self.img_size_sbox                   .grid(column=2, row=row_num)
         
         row_num += 10
         
         #image position cords
-        img_cords_lbl                   .grid(column=1, row=row_num)
-        prnth_open_lbl                  .grid(column=2, row=row_num)
-        x_cord_sbox                     .grid(column=3, row=row_num)
-        comma_lbl                       .grid(column=4, row=row_num)
-        y_cord_sbox                     .grid(column=5, row=row_num)
-        prnth_close_lbl                 .grid(column=6, row=row_num)
+        self.img_cords_lbl                   .grid(column=1, row=row_num)
+        self.prnth_open_lbl                  .grid(column=2, row=row_num)
+        self.x_cord_sbox                     .grid(column=3, row=row_num)
+        self.comma_lbl                       .grid(column=4, row=row_num)
+        self.y_cord_sbox                     .grid(column=5, row=row_num)
+        self.prnth_close_lbl                 .grid(column=6, row=row_num)
         
         row_num += 10
         
@@ -412,7 +412,7 @@ class Main_Window():
         build_img_btn                   .grid(column=2, row=row_num)
          
 def set_output_img_txt_box_contents(text_box, file_path):
-#     output_img_file_path_text_box.insert(END, GUI_utils.get_defalt_output_img_file_path(input_img_file_path_text_box.get())) #default
+#     output_img_file_path_text_box.insert(END, GUI_utils.get_defalt_output_img_file_path(self.input_img_file_path_text_box.get())) #default
     text_box.insert(END, GUI_utils.get_defalt_output_img_file_path(file_path)) #default
     
 #makes xview (scrolling within an entry text box) work
