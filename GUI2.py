@@ -199,25 +199,26 @@ class Main_Window():
 #         print('in update_folder_name)texrwsgfndkjfgnkjn')#``````````````````````````````````````````````````````````````````````````````````
 #         return True
         #not using bool_to_state because depending on what state, configure needs to be called at different times
-        try: #wont work the first time because folder_name_text_box hasn't been declared yet
-            if self.create_new_folder_cbtn_sel.get() == 0:
-                self.folder_name_text_box.configure( state = 'normal' )#`````````````````````````````````````````````````
-                self.folder_name_text_box.delete(0, "end")#``````````````````````````````````````````````````
-                print(self.location_text_box.get())
-                print('0')#````````````````````````````````````````````````````````````````````````````````````````````````````````````
-                self.folder_name_text_box.delete(0, "end")
-                print('after')#````````````````````````````````````````````````````````````````````````````
+#         try: #wont work the first time because folder_name_text_box hasn't been declared yet
+        print('current')#`111111``````````````````````````````````````````````````````````````````````````````````````````````
+        if self.create_new_folder_cbtn_sel.get() == 0:
+            self.folder_name_text_box.configure( state = 'normal' )#`````````````````````````````````````````````````probably needed!!!!!!!!!!
+            self.folder_name_text_box.delete(0, "end")#``````````````````````````````````````````````````is this needed???????????
+#                 print(self.location_text_box.get())#```````````````````````````````````````````````````````````````
+#                 print('0')#````````````````````````````````````````````````````````````````````````````````````````````````````````````
+            self.folder_name_text_box.delete(0, "end")
+#                 print('after')#````````````````````````````````````````````````````````````````````````````
 #                 cf_path = re.split(r'[\\/]', self.location_text_box.get())#```````````````````````````````````````````````
 #                 self.folder_name_text_box.insert(END, cf_path[-1])#````````````````````````````````````````````````````````````
-                self.folder_name_text_box.insert(END, GUI_utils.get_last_path_var(self.location_text_box.get()))
-                self.folder_name_text_box.configure( state = 'disabled' )
-            else:
-                print(1)#1111111111111111``````````````````````````````````````````````````````````````````````````````````
-                self.folder_name_text_box.configure( state = 'normal' )
-                self.folder_name_text_box.delete(0, "end")
-            print('about to return ture!!!!!!!!!!!!!!!!!!!!!')#```````````````````````````````````````````````````
-        except:
-            pass
+            self.folder_name_text_box.insert(END, GUI_utils.get_last_path_var(self.location_text_box.get()))
+            self.folder_name_text_box.configure( state = 'disabled' )
+        else:
+#                 print(1)#1111111111111111``````````````````````````````````````````````````````````````````````````````````
+            self.folder_name_text_box.configure( state = 'normal' )
+            self.folder_name_text_box.delete(0, "end")
+#             print('about to return ture!!!!!!!!!!!!!!!!!!!!!')#```````````````````````````````````````````````````
+#         except:
+#             pass
         return True #so that this can be called by validatecommand in location
     
     
