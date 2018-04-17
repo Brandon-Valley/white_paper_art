@@ -3,8 +3,6 @@ from tkinter.ttk import *
 from tkinter import filedialog
 import tkinter as tk
 
-# import re
-
 import build_image
 import GUI_utils
 
@@ -32,27 +30,13 @@ DEFAULT_IMAGE_SIZE = 100 #REALLY need to figure something out for this!!!!!!!!!!
 DEFAULT_MAX_IMG_POS_CORD = 999
 DEFAULT_MIN_IMG_POS_CORD = -999
 
-
-    
-    
-
-    
-    
-
-    
-# if __name__ == "__main__":
-#     print('GUI MAIN')
-#     show_gui()
-    
-    
-    
-    
-    
-    
-
  
-class Main_Window():    
-    def location_set_up(self):
+class Main_Window():        
+    
+    """location path is the home directory for everything 
+       else, contents of location_text_box will be reflected in
+       the contents / state of folder_name_text_box"""
+    def location_setup(self):
         self.l_path = StringVar()
         self.location_lbl = Label(self.master, text="Location: ")
 
@@ -87,7 +71,7 @@ class Main_Window():
             
         self.location_browse_btn = Button(self.master, text="Browse...", command = location_browse_btn_clk)
         
-    #create new folder check button
+    #create new folder check button #should this be put inside something else / somewhere else????????????????????????????
     def update_folder_name_text_box(self, event = None):#changes state and contents of folder name
         self.folder_name_text_box.configure( state = 'normal' )
         self.folder_name_text_box.delete(0, "end")
@@ -96,6 +80,21 @@ class Main_Window():
             self.folder_name_text_box.insert(END, GUI_utils.get_last_path_var(self.location_text_box.get()))
             self.folder_name_text_box.configure( state = 'disabled' )
 
+
+    """folder_name_text_box used to get name of new folder
+       to be make and put at the end of location path,
+        can be enabled/disabled with create_new_folder_cbutn 
+        as well as from conditions inside location_text_box"""
+    def folder_name_setup(self):
+        #folder name text box 
+        self.folder_name_text_box = Entry(self.master,width=20)
+        self.folder_name_lbl = Label(self.master, text="Folder Name: ")
+        self.folder_name_text_box = Entry(self.master,width=20)
+        
+        self.create_new_folder_cbtn_sel = IntVar(value = 1)#value sets default
+        self.create_new_folder_cbtn = Checkbutton(text="Create New Folder", variable=self.create_new_folder_cbtn_sel, command = self.update_folder_name_text_box)
+        self.update_folder_name_text_box() #disabled folder name by default if create_new_folder_cbtn is 0 by default
+    
     
     
     def __init__(self, master):
@@ -105,24 +104,25 @@ class Main_Window():
         self.master.geometry('900x400') #1500x700 takes up aplmost the whole screen
 
 
-        self.location_set_up()
+        self.location_setup()
+        self.folder_name_setup()
         
-        self.folder_name_text_box = Entry(self.master,width=20)
+#         self.folder_name_text_box = Entry(self.master,width=20)
         
         
         
         
-        #folder name text box 
-        folder_name_lbl = Label(self.master, text="Folder Name: ")
-        self.folder_name_text_box = Entry(self.master,width=20)
+#         #folder name text box 
+#         folder_name_lbl = Label(self.master, text="Folder Name: ")
+#         self.folder_name_text_box = Entry(self.master,width=20)
         
         
         
 
         
-        self.create_new_folder_cbtn_sel = IntVar(value = 1)#value sets default
-        create_new_folder_cbtn = Checkbutton(text="Create New Folder", variable=self.create_new_folder_cbtn_sel, command = self.update_folder_name_text_box)
-        self.update_folder_name_text_box() #disabled folder name by default if create_new_folder_cbtn is 0 by default
+#         self.create_new_folder_cbtn_sel = IntVar(value = 1)#value sets default
+#         create_new_folder_cbtn = Checkbutton(text="Create New Folder", variable=self.create_new_folder_cbtn_sel, command = self.update_folder_name_text_box)
+#         self.update_folder_name_text_box() #disabled folder name by default if create_new_folder_cbtn is 0 by default
         
          
          
@@ -322,12 +322,12 @@ class Main_Window():
         row_num += 10
         
         #create new folder check button
-        create_new_folder_cbtn          .grid(column=1, row=row_num)
+        self.create_new_folder_cbtn          .grid(column=1, row=row_num)
         
         row_num += 10
         
         #folder_name
-        folder_name_lbl                 .grid(column=1, row=row_num)
+        self.folder_name_lbl                 .grid(column=1, row=row_num)
         self.folder_name_text_box            .grid(column=2, row=row_num)
         
         row_num += 10
