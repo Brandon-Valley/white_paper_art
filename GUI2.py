@@ -32,7 +32,26 @@ DEFAULT_MAX_IMG_POS_CORD = 999
 DEFAULT_MIN_IMG_POS_CORD = -999
 
  
-class Main_Window():        
+class Edit_Tab():    
+    def __init__(self, master):
+        self.master = master
+    #         self.master.title("Text Image Maker")
+    #         self.master.geometry('900x400') #1500x700 takes up almost the whole screen
+    
+        #setup widgets
+        self.location___widgets_setup()
+        self.folder_name___widgets_setup()
+        self.input_text_file_path___widgets_setup()
+        self.input_image_file_path___widgets_setup()
+        self.font___widgets_setup()
+        self.image_dimensions___widgets_setup()
+        self.image_size___widgets_setup()
+        self.image_cords___widgets_setup()
+        self.quality___widgets_setup()
+        self.output_image_path___widgets_setup()
+        self.build_image___widgets_setup()
+        
+        self.grid_widgets()    
     
     """location path is the home directory for everything 
        else, contents of location_text_box will be reflected in
@@ -92,8 +111,9 @@ class Main_Window():
         self.folder_name_lbl = Label(self.master, text="Folder Name: ")
         self.folder_name_text_box = Entry(self.master,width=20)
         
+        #create new folder check button
         self.create_new_folder_cbtn_sel = IntVar(value = 1)#value sets default
-        self.create_new_folder_cbtn = Checkbutton(text="Create New Folder", variable=self.create_new_folder_cbtn_sel, command = self.update_folder_name_text_box)
+        self.create_new_folder_cbtn = Checkbutton(self.master, text="Create New Folder", variable=self.create_new_folder_cbtn_sel, command = self.update_folder_name_text_box)
         self.update_folder_name_text_box() #disabled folder name by default if create_new_folder_cbtn is 0 by default
     
     
@@ -158,7 +178,7 @@ class Main_Window():
             self.font_size_sbox.configure(state = self.font_size_sbox_state )
         
         self.max_font_size_sel = IntVar()
-        self.max_font_size_cbtn = Checkbutton(text="Maximize Font Size", variable=self.max_font_size_sel, command = max_font_size_btn_sel)
+        self.max_font_size_cbtn = Checkbutton(self.master, text="Maximize Font Size", variable=self.max_font_size_sel, command = max_font_size_btn_sel)
     
     
     """final dimensions of output image, option to 
@@ -181,7 +201,7 @@ class Main_Window():
             self.output_img_dim_rat_din_sbox.configure(state = img_dims_txt_boxes_state )
         
         use_input_img_dims_sel = IntVar()
-        self.match_input_image_dims_cbtn = Checkbutton(text="Use Input Image Dimensions", variable=use_input_img_dims_sel, command = use_input_img_dims_btn_sel)
+        self.match_input_image_dims_cbtn = Checkbutton(self.master, text="Use Input Image Dimensions", variable=use_input_img_dims_sel, command = use_input_img_dims_btn_sel)
         
         
         #image dimension spin boxes 
@@ -279,83 +299,83 @@ class Main_Window():
         self.build_img_btn = Button(self.master, text="Build Image", command = build_img_btn_clk)
 
 
-        
+        #MAYBE USE LABELFRAMES???????????????????????????????????????????????????????????????????????????????????????????????????????????
     def grid_widgets(self):
         blank_lbl = Label(self.master, text=" ") #for spacing 
-
+ 
         #physical GUI layout
         row_num = 10
-        
+         
         #location
         self.location_lbl                    .grid(column=1, row=row_num)
         self.location_text_box               .grid(column=2, row=row_num, columnspan = 3)
         self.location_browse_btn             .grid(column=5, row=row_num)
-        
+         
         row_num += 10
-        
+         
         #create new folder check button
         self.create_new_folder_cbtn          .grid(column=1, row=row_num)
-        
+         
         row_num += 10
-        
+         
         #folder_name
         self.folder_name_lbl                 .grid(column=1, row=row_num)
         self.folder_name_text_box            .grid(column=2, row=row_num)
-        
+         
         row_num += 10
-        
+         
         #input text file path
         self.input_text_file_path_lbl        .grid(column=1, row=row_num)
         self.input_text_file_path_text_box   .grid(column=2, row=row_num, columnspan = 3)
         self.input_text_file_path_btn        .grid(column=5, row=row_num)
-         
+          
         row_num += 10 
-        
+         
         #input image file path
         self.input_img_file_path_lbl         .grid(column=1, row=row_num)
         self.input_img_file_path_text_box    .grid(column=2, row=row_num, columnspan = 3)
         self.input_img_file_path_btn         .grid(column=5, row=row_num)
-         
+          
         row_num += 10
-         
+          
         #space between
         blank_lbl                           .grid(column=1, row=row_num)
-        
+         
         row_num += 10
-        
+         
         #font section labels
         self.font_lbl                        .grid(column=1, row=row_num)
         self.font_size_lbl                   .grid(column=2, row=row_num)
-        
+         
         row_num += 10 
-        
+         
         #font inputs
         self.font_drop_down                  .grid(column=1, row=row_num) 
         self.font_size_sbox                  .grid(column=2, row=row_num)  
         self.max_font_size_cbtn              .grid(column=4, row=row_num)
-        
+         
         row_num += 10 
-        
+         
         #space between
         blank_lbl                           .grid(column=1, row=row_num)
-        
+         
         row_num += 10
-        
+         
         #image dimensions
         self.output_img_dim_lbl              .grid(column=1, row=row_num)
         self.output_img_dim_rat_num_sbox     .grid(column=2, row=row_num)
         self.slash_lbl                       .grid(column=3, row=row_num)
         self.output_img_dim_rat_din_sbox     .grid(column=4, row=row_num)
         self.match_input_image_dims_cbtn     .grid(column=5, row=row_num)
-        
+         
         row_num += 10
-        
+         
         #font size spinbox
         self.img_size_lbl                    .grid(column=1, row=row_num)
         self.img_size_sbox                   .grid(column=2, row=row_num)
-        
+         
         row_num += 10
-        
+         
         #image position cords
         self.img_cords_lbl                   .grid(column=1, row=row_num)
         self.prnth_open_lbl                  .grid(column=2, row=row_num)
@@ -363,45 +383,27 @@ class Main_Window():
         self.comma_lbl                       .grid(column=4, row=row_num)
         self.y_cord_sbox                     .grid(column=5, row=row_num)
         self.prnth_close_lbl                 .grid(column=6, row=row_num)
-        
+         
         row_num += 10
-        
+         
         #quality radio buttons
         self.high_qual_rad_btn               .grid(column=3, row=row_num - 1)
         self.low_qual_rad_btn                .grid(column=3, row=row_num)
-        
+         
         row_num += 10
-        
+         
         #output image file path text box
         self.output_img_file_path_lbl        .grid(column=1, row=row_num)
         self.output_img_file_path_text_box   .grid(column=2, row=row_num, columnspan = 3)
         self.output_img_file_path_btn        .grid(column=5, row=row_num)
-        
+         
         row_num += 10
-        
+         
         #build image button
         self.build_img_btn                   .grid(column=2, row=row_num)
 
     
-    def __init__(self, master):
-        self.master = master
-#         self.master.title("Text Image Maker")
-#         self.master.geometry('900x400') #1500x700 takes up almost the whole screen
 
-        #setup widgets
-        self.location___widgets_setup()
-        self.folder_name___widgets_setup()
-        self.input_text_file_path___widgets_setup()
-        self.input_image_file_path___widgets_setup()
-        self.font___widgets_setup()
-        self.image_dimensions___widgets_setup()
-        self.image_size___widgets_setup()
-        self.image_cords___widgets_setup()
-        self.quality___widgets_setup()
-        self.output_image_path___widgets_setup()
-        self.build_image___widgets_setup()
-        
-        self.grid_widgets()
         
     
 #makes xview (scrolling within an entry text box) work
@@ -431,23 +433,89 @@ def xview_event_handler(e):
  
  
  
+class Advanced_Edit_Tab():
+    def __init__(self, master):
+        lbl2 = Label(master, text= 'label2')
+        lbl2.grid(column=0, row=0)
+#  
+# window = Tk()
+# window.title("Welcome to LikeGeeks app")
+# tab_control = ttk.Notebook(window)
+# tab1 = ttk.Frame(tab_control)
+# tab2 = ttk.Frame(tab_control)
+# tab_control.add(tab1, text='First')
+# tab_control.add(tab2, text='Second')
+# # lbl1 = Label(tab1, text= 'label1')
+# # lbl1.grid(column=0, row=0)
+# # lbl2 = Label(tab2, text= 'label2')
+# # lbl2.grid(column=0, row=0)
+# 
+# first_tab(tab1)
+# second_tab(tab2)
+# tab_control.pack(expand=1, fill='both')
+# window.mainloop()
  
 def main(): 
     root = Tk()
     
     root.title("Text Image Maker")
-    root.geometry('900x400') #1500x700 takes up almost the whole screen
+#     root.geometry('900x400') #1500x700 takes up almost the whole screen
     
+#     tab_control = ttk.Notebook(root)
+#     tab1 = ttk.Frame(tab_control)
+#     tab2 = ttk.Frame(tab_control)
+#     tab_control.add(tab1, text='Edit')
+#     tab_control.add(tab2, text='Advanced Edit')
+#     
+#     Edit_Tab(tab1)
+#     Advanced_Edit_Tab(tab2)
+#     tab_control.pack(expand=1, fill='both')
+#     root.mainloop()
+
+
+    # Defines and places the notebook widget
+    nb = ttk.Notebook(root)
+    nb.grid(row=1, column=0, columnspan=50, rowspan=49, sticky='NESW')
+     
+    # Adds tab 1 of the notebook
+    page1 = ttk.Frame(nb)
+    nb.add(page1, text='Tab1')
+     
+    # Adds tab 2 of the notebook
+    page2 = ttk.Frame(nb)
+    nb.add(page2, text='Tab2')
+
+
+
     tab_control = ttk.Notebook(root)
-    tab1 = ttk.Frame(tab_control)
-    tab2 = ttk.Frame(tab_control)
-    tab_control.add(tab1, text='First')
-    tab_control.add(tab2, text='Second')
+#     tab_control.pack(expand=1, fill='both')
+    tab_control.grid(row=1, column=0, columnspan=100, rowspan=100, sticky='NESW')
+    
+    tab1 = Frame(tab_control)
+    tab2 = Frame(tab_control)
+    tab_control.add(tab1, text='Edit')
+    tab_control.add(tab2, text='Advanced Edit')
     
     
-    Main_Window(tab1)#.pack(fill="both", expand=True)
-    tab_control.pack(expand=1, fill='both')
+    Edit_Tab(tab1)
+    Advanced_Edit_Tab(tab2)
+#     tab_control.pack(expand=1, fill='both')
     root.mainloop()
+        
+        
+        
+        
+#     
+#     tab_control = ttk.Notebook(root)
+#     tab1 = ttk.Frame(tab_control)
+#     tab2 = ttk.Frame(tab_control)
+#     tab_control.add(tab1, text='First')
+#     tab_control.add(tab2, text='Second')
+#     
+#     
+#     Main_Window(tab1)#.pack(fill="both", expand=True)
+# #     tab_control.pack(expand=1, fill='both')
+#     root.mainloop()
  
 if __name__ == '__main__':
     main()

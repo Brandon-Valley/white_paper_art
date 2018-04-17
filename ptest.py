@@ -1,50 +1,62 @@
-# import tkinter as tk
-# 
-# class Demo1:
-#     def __init__(self, master):
-#         self.master = master
-# #         self.frame = tk.Frame(self.master)
-#         
-#         self.text1 = StringVar()
-#         self.test2 = StringVar()
-#         
-#         self.text1.trace("w", lambda name, index, mode, var=self.text1, self.update_tb2())
-#         
-#         
-#         self.tb1 = tk.Entry(self.master,width=20)
-#         self.tb2 = tk.Entry(self.master,width=20)
-#         
-#         
-#         
-#         self.tb1                .grid(column=1, row=2)
-#         self.tb2                .grid(column=2, row=2)
-#         
-#         
-#     def update_tb2(self):
-#         self.tb2.insert(0, "siodhf")
-#         
-# #         s
-# #         self.button1 = tk.Button(self.frame, text = 'New Window', width = 25, command = self.new_window)
-# #         self.button1.pack()
-# #         self.frame.pack()
-# #     def new_window(self):
-# #         self.newWindow = tk.Toplevel(self.master)
-# #         self.app = Demo2(self.newWindow)
-# # 
-# # class Demo2:
-# #     def __init__(self, master):
-# #         self.master = master
-# #         self.frame = tk.Frame(self.master)
-# #         self.quitButton = tk.Button(self.frame, text = 'Quit', width = 25, command = self.close_windows)
-# #         self.quitButton.pack()
-# #         self.frame.pack()
-# #     def close_windows(self):
-# #         self.master.destroy()
-# 
-# def main(): 
-#     root = tk.Tk()
-#     app = Demo1(root)
-#     root.mainloop()
-# 
-# if __name__ == '__main__':
-#     main()
+from tkinter import *
+
+class Tabs(Frame):
+
+    """Tabs for testgen output"""
+
+    def __init__(self, parent):
+        super(Tabs, self).__init__()
+        self.parent = parent
+        self.columnconfigure(10, weight=1)
+        self.rowconfigure(3, weight=1)
+        self.curtab = None
+        self.tabs = {}
+        self.addTab()                
+        self.pack(fill=BOTH, expand=1, padx=5, pady=5)
+
+    def addTab(self):
+        tabslen = len(self.tabs)
+        if tabslen < 10:
+            tab = {}
+            btn = Button(self, text="Tab "+str(tabslen), command=lambda: self.raiseTab(tabslen))
+            btn.grid(row=0, column=tabslen, sticky=W+E)
+
+            textbox = Text(self.parent)
+            textbox.grid(row=1, column=0, columnspan=10, rowspan=2, sticky=W+E+N+S, in_=self)
+
+            # Y axis scroll bar
+            scrollby = Scrollbar(self, command=textbox.yview)
+            scrollby.grid(row=7, column=5, rowspan=2, columnspan=1, sticky=N+S+E)
+            textbox['yscrollcommand'] = scrollby.set
+
+            tab['id']=tabslen
+            tab['btn']=btn
+            tab['txtbx']=textbox
+            self.tabs[tabslen] = tab
+            self.raiseTab(tabslen)
+
+    def raiseTab(self, tabid):
+        print(tabid)
+        print("curtab"+str(self.curtab))
+        if self.curtab!= None and self.curtab != tabid and len(self.tabs)>1:
+                self.tabs[tabid]['txtbx'].lift(self)
+                self.tabs[self.curtab]['txtbx'].lower(self)
+        self.curtab = tabid
+
+
+class Advanced_Edit_Tab():
+    def __init__(self, master):
+        lbl2 = Label(master, text= 'label2')
+        lbl2.grid(column=0, row=0)
+
+def main():
+    root = Tk()
+    root.geometry("600x450+300+300")
+    t = Tabs(root)
+    t.addTab()
+    
+    Advanced_Edit_Tab(t)
+    root.mainloop()
+
+if __name__ == '__main__':
+    main()
