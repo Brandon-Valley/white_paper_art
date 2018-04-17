@@ -1,6 +1,6 @@
+import re
 
-
-
+OUTPUT_IMAGE_SUFFIX = '_text_art'
 
 def get_current_dir_path():
     
@@ -9,10 +9,10 @@ def get_current_dir_path():
     return dir_path#'sdfsfdfsfsd\sdffsdfsf'#"'C:\Users\Brandon\Documents\Personal Projects\white_paper_art\examples'"
 
 def get_defalt_text_file_path():
-    return 'default\text\file\path'
+    return 'default\text\file\path.txt'
  
 def get_defalt_image_file_path():
-    return 'default\image\file\path'
+    return 'ddddd\aaaaa\file\bitcoin.jpg'
 
 
 def get_font_list():
@@ -49,8 +49,29 @@ def strs_to_int_ratio(str1, str2):
     return i1 / i2
     
     
-def get_defalt_output_img_file_path():
-    return "output\img\defalt\fuiles\path"
+def get_defalt_output_img_file_path(img_file_path):
+    out_img_path = ''
+    
+    splt_path = re.split(r'[\\/]', img_file_path)
+    
+    filename = splt_path.pop()
+    splt_filename = filename.split('.')
+    splt_filename.insert(1, OUTPUT_IMAGE_SUFFIX)
+    
+    for e in splt_path:
+        out_img_path += e
+        
+    for e in splt_filename:
+        out_img_path += e
+        
+    return out_img_path
+#     
+#     
+#     
+#     folder_name_text_box.insert(END, cf_path[-1])
+#     
+#     
+#     return "output\img\defalt\fuiles\path"
     
     
     

@@ -7,6 +7,10 @@ import build_image
 import GUI_utils
 
 
+
+FILE_PATH_TEXT_BOX_WIDTH = 80
+
+
 DEFAULT_FONT_NAME = "cour"
 DEFAULT_FONT_SIZE = 40
 
@@ -33,10 +37,13 @@ def show_gui():
     window.geometry('900x400') #1500x700 takes up aplmost the whole screen
      
     
-    
+    def callback():
+        print('skidhniush')
+        return True
     #Location path text box 
+    l_path = StringVar()
     location_lbl = Label(window, text="Location: ")
-    location_text_box = Entry(window,width=80)
+    location_text_box = Entry(window,width=FILE_PATH_TEXT_BOX_WIDTH)#, textvariable=l_path, validate="key", validatecommand=update_folder_name_text_box)
     location_text_box.insert(END, GUI_utils.get_current_dir_path()) #default
     location_text_box.bind('<Expose>', xview_event_handler)#scrolls text to end if needed
          
@@ -48,7 +55,7 @@ def show_gui():
         
         #make sure new folder text box updates correctly
         folder_name_text_box.configure( state = 'normal' )
-        create_new_folder_btn_clk()
+        update_folder_name_text_box()
         
     location_browse_btn = Button(window, text="Browse...", command = location_browse_btn_clk)
     
@@ -61,7 +68,7 @@ def show_gui():
     
     
     #create new folder check button
-    def create_new_folder_btn_clk():#changes state and contents of folder name
+    def update_folder_name_text_box():#changes state and contents of folder name
         #not using bool_to_state because depending on what state, configure needs to be called at different times
         if create_new_folder_sel.get() == 0:
             folder_name_text_box.delete(0, "end")
@@ -73,14 +80,14 @@ def show_gui():
             folder_name_text_box.delete(0, "end")
     
     create_new_folder_sel = IntVar(value = 1)#value sets default
-    create_new_folder_cbtn = Checkbutton(text="Create New Folder", variable=create_new_folder_sel, command = create_new_folder_btn_clk)
-    create_new_folder_btn_clk() #disabled folder name by default if create_new_folder_cbtn is 0 by default
+    create_new_folder_cbtn = Checkbutton(text="Create New Folder", variable=create_new_folder_sel, command = update_folder_name_text_box)
+    update_folder_name_text_box() #disabled folder name by default if create_new_folder_cbtn is 0 by default
     
      
      
     #text file path text box
     input_text_file_path_lbl = Label(window, text="Text File Input: ")
-    input_text_file_path_text_box = Entry(window,width=80)
+    input_text_file_path_text_box = Entry(window,width=FILE_PATH_TEXT_BOX_WIDTH)
     input_text_file_path_text_box.insert(END, GUI_utils.get_defalt_text_file_path()) #default
          
     def input_text_file_path_clk():
@@ -95,7 +102,7 @@ def show_gui():
      
     #image file path text box
     input_img_file_path_lbl = Label(window, text="Image File Input: ")
-    input_img_file_path_text_box = Entry(window,width=10)
+    input_img_file_path_text_box = Entry(window,width=FILE_PATH_TEXT_BOX_WIDTH)#, command = set_output_img_txt_box_contents())#modify output image contents every time this changes
     input_img_file_path_text_box.insert(END, GUI_utils.get_defalt_image_file_path()) #default
     input_img_file_path_text_box.bind('<Expose>', xview_event_handler)#scrolls text to end if needed
      
@@ -219,13 +226,16 @@ def show_gui():
 
     #output image path text box
     output_img_file_path_lbl = Label(window, text="Output Image File: ")
-    output_img_file_path_text_box = Entry(window,width=20)
-    output_img_file_path_text_box.insert(END, GUI_utils.get_defalt_output_img_file_path()) #default
+    output_img_file_path_text_box = Entry(window,width=FILE_PATH_TEXT_BOX_WIDTH)
     output_img_file_path_text_box.bind('<Expose>', xview_event_handler)#scrolls text to end if needed
+    
+    def set_output_img_txt_box_contents():
+        output_img_file_path_text_box.insert(END, GUI_utils.get_defalt_output_img_file_path(input_img_file_path_text_box.get())) #default
          
     def output_file_path_clk():
         print('pretend to go into directory to get text file path')#`````````````````````````````````````````````````````
         
+    set_output_img_txt_box_contents()
     output_img_file_path_btn = Button(window, text="Browse...", command = output_file_path_clk)
 
 
@@ -233,19 +243,19 @@ def show_gui():
     #build image button   
     def build_img_btn_clk():
         #read the current state of all arguments
-        img_args = {'input_text_file_path':     input_text_file_path_text_box.get(),
-                    'image_file_path':          input_img_file_path_text_box.get(),
-                    'font_name':                font_drop_down.get() + '.ttf',
-                    'font_size':                font_size_sbox.get(),
-                    'maximize_font_size':       max_font_size_sel.get(),
-                    'output_image_dim_ratio':   GUI_utils.strs_to_int_ratio( output_img_dim_rat_num_sbox.get() , output_img_dim_rat_din_sbox.get() ),
-                    'image_size':               img_size_sbox.get(),
-                    'image_position_cords':     {'x': x_cord_sbox.get(), 'y': y_cord_sbox.get()},
-                    'quality':                  quality_selected.get(),
-                    'output_image_file_path':   output_img_file_path_text_box.get()}
+        image_kwargs = {'input_text_file_path':     input_text_file_path_text_box.get(),
+                        'image_file_path':          input_img_file_path_text_box.get(),
+                        'font_name':                font_drop_down.get() + '.ttf',
+                        'font_size':                font_size_sbox.get(),
+                        'maximize_font_size':       max_font_size_sel.get(),
+                        'output_image_dim_ratio':   GUI_utils.strs_to_int_ratio( output_img_dim_rat_num_sbox.get() , output_img_dim_rat_din_sbox.get() ),
+                        'image_size':               img_size_sbox.get(),
+                        'image_position_cords':     {'x': x_cord_sbox.get(), 'y': y_cord_sbox.get()},
+                        'quality':                  quality_selected.get(),
+                        'output_image_file_path':   output_img_file_path_text_box.get()}
         
         #build final image using arguments
-        build_image.build_img_test(img_args)
+        build_image.build_img_test(image_kwargs)
     build_img_btn = Button(window, text="Build Image", command = build_img_btn_clk)
     
     
@@ -264,57 +274,57 @@ def show_gui():
 
     
     #location
-    location_lbl                    .grid(column=0, row=row_num)
-    location_text_box               .grid(column=1, row=row_num, columnspan = 3)
-    location_browse_btn             .grid(column=4, row=row_num)
+    location_lbl                    .grid(column=1, row=row_num)
+    location_text_box               .grid(column=2, row=row_num, columnspan = 3)
+    location_browse_btn             .grid(column=5, row=row_num)
     
     row_num += 10
     
     #create new folder check button
-    create_new_folder_cbtn          .grid(column=0, row=row_num)
+    create_new_folder_cbtn          .grid(column=1, row=row_num)
     
     row_num += 10
     
     #folder_name
-    folder_name_lbl                 .grid(column=0, row=row_num)
-    folder_name_text_box            .grid(column=1, row=row_num)
+    folder_name_lbl                 .grid(column=1, row=row_num)
+    folder_name_text_box            .grid(column=2, row=row_num)
     
     row_num += 10
     
     #input text file path
-    input_text_file_path_lbl        .grid(column=0, row=row_num)
-    input_text_file_path_text_box   .grid(column=1, row=row_num, columnspan = 3)
-    input_text_file_path_btn        .grid(column=4, row=row_num)
+    input_text_file_path_lbl        .grid(column=1, row=row_num)
+    input_text_file_path_text_box   .grid(column=2, row=row_num, columnspan = 3)
+    input_text_file_path_btn        .grid(column=5, row=row_num)
      
     row_num += 10 
     
     #input image file path
-    input_img_file_path_lbl         .grid(column=0, row=row_num)
-    input_img_file_path_text_box    .grid(column=1, row=row_num, columnspan = 3)
-    input_img_file_path_btn         .grid(column=4, row=row_num)
+    input_img_file_path_lbl         .grid(column=1, row=row_num)
+    input_img_file_path_text_box    .grid(column=2, row=row_num, columnspan = 3)
+    input_img_file_path_btn         .grid(column=5, row=row_num)
      
     row_num += 10
      
     #space between
-    blank_lbl                       .grid(column=0, row=row_num)
+    blank_lbl                       .grid(column=1, row=row_num)
     
     row_num += 10
     
     #font section labels
-    font_lbl                        .grid(column=0, row=row_num)
-    font_size_lbl                   .grid(column=1, row=row_num)
+    font_lbl                        .grid(column=1, row=row_num)
+    font_size_lbl                   .grid(column=2, row=row_num)
     
     row_num += 10 
     
     #font inputs
-    font_drop_down                  .grid(column=0, row=row_num) 
-    font_size_sbox                  .grid(column=1, row=row_num)  
-    max_font_size_cbtn              .grid(column=3, row=row_num)
+    font_drop_down                  .grid(column=1, row=row_num) 
+    font_size_sbox                  .grid(column=2, row=row_num)  
+    max_font_size_cbtn              .grid(column=4, row=row_num)
     
     row_num += 10 
     
     #space between
-    blank_lbl                       .grid(column=0, row=row_num)
+    blank_lbl                       .grid(column=1, row=row_num)
     
     row_num += 10
     
@@ -351,8 +361,8 @@ def show_gui():
     
     #output image file path text box
     output_img_file_path_lbl        .grid(column=1, row=row_num)
-    output_img_file_path_text_box   .grid(column=2, row=row_num)
-    output_img_file_path_btn        .grid(column=3, row=row_num)
+    output_img_file_path_text_box   .grid(column=2, row=row_num, columnspan = 3)
+    output_img_file_path_btn        .grid(column=5, row=row_num)
     
     
     row_num += 10
@@ -364,6 +374,11 @@ def show_gui():
     
     window.mainloop()
     print('after mainloop, should only het here after closing gui')
+    
+    
+def set_output_img_txt_box_contents(text_box, file_path):
+#     output_img_file_path_text_box.insert(END, GUI_utils.get_defalt_output_img_file_path(input_img_file_path_text_box.get())) #default
+    text_box.insert(END, GUI_utils.get_defalt_output_img_file_path(file_path)) #default
     
 #makes xview (scrolling within an entry text box) work
 def xview_event_handler(e):
