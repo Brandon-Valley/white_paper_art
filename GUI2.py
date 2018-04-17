@@ -347,7 +347,7 @@ class Main_Window():
         row_num += 10
          
         #space between
-        blank_lbl                       .grid(column=1, row=row_num)
+        blank_lbl                           .grid(column=1, row=row_num)
         
         row_num += 10
         
@@ -365,7 +365,7 @@ class Main_Window():
         row_num += 10 
         
         #space between
-        blank_lbl                       .grid(column=1, row=row_num)
+        blank_lbl                           .grid(column=1, row=row_num)
         
         row_num += 10
         
