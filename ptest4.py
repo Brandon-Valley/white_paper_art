@@ -37,7 +37,7 @@ class Demo1:
         self.sv = StringVar()
          
         
-        self.e = Entry(root, textvariable=self.sv, validate="key", validatecommand=self.call_back)
+        self.e = Entry(master, textvariable=self.sv, validate="key", validatecommand=self.call_back)
         self.later_var = "LATER_VAR IS HERE!"
         self.e.grid()
         
