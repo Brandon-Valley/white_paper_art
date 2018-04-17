@@ -118,7 +118,7 @@ class Main_Window():
     def input_image_file_path___widgets_setup(self):
         #image file path text box
         self.input_img_file_path_lbl = Label(self.master, text="Image File Input: ")
-        self.input_img_file_path_text_box = Entry(self.master,width=FILE_PATH_TEXT_BOX_WIDTH)#, command = set_output_img_txt_box_contents())#modify output image contents every time this changes
+        self.input_img_file_path_text_box = Entry(self.master,width=FILE_PATH_TEXT_BOX_WIDTH)
         self.input_img_file_path_text_box.insert(END, GUI_utils.get_defalt_image_file_path()) #default
         self.input_img_file_path_text_box.bind('<Expose>', xview_event_handler)#scrolls text to end if needed
          
@@ -153,11 +153,11 @@ class Main_Window():
 
         #maximize font size check button
         def max_font_size_btn_sel():#gets called each time you click the check button, changes state of self.font_size_sbox
-            self.font_size_sbox_state = GUI_utils.bool_to_state(max_font_size_sel.get())
+            self.font_size_sbox_state = GUI_utils.bool_to_state(self.max_font_size_sel.get())
             self.font_size_sbox.configure(state = self.font_size_sbox_state )
         
-        max_font_size_sel = IntVar()
-        self.max_font_size_cbtn = Checkbutton(text="Maximize Font Size", variable=max_font_size_sel, command = max_font_size_btn_sel)
+        self.max_font_size_sel = IntVar()
+        self.max_font_size_cbtn = Checkbutton(text="Maximize Font Size", variable=self.max_font_size_sel, command = max_font_size_btn_sel)
     
     
     """final dimensions of output image, option to 
@@ -227,19 +227,19 @@ class Main_Window():
         #quality radio buttons
         #gets called each time you click one of the radio buttons, changes font size options
         def quality_rad_btn_sel():
-            if  quality_selected.get() == 'low':
-                max_font_size_sel.set(0)
+            if  self.quality_selected.get() == 'low':
+                self.max_font_size_sel.set(0)
                 self.font_size_sbox.configure(state = 'normal' )
-            elif quality_selected.get() == 'high':
-                max_font_size_sel.set(1)
+            elif self.quality_selected.get() == 'high':
+                self.max_font_size_sel.set(1)
                 self.font_size_sbox.configure(state = 'disable' )
             else:
                 print('something wrong with quality thing!!!!!!!!!!!!!!!!!!!!!!!!!')#```````````````````````````````````````````````
     
-        quality_selected  = StringVar()
-        quality_selected.set("low") #defalt
-        self.high_qual_rad_btn = Radiobutton(self.master,text='Show Low Quality Image (Fast)', value='low', variable = quality_selected, command = quality_rad_btn_sel)
-        self.low_qual_rad_btn  = Radiobutton(self.master,text='Save High Quality Image (Slow)', value='high', variable = quality_selected, command = quality_rad_btn_sel)
+        self.quality_selected  = StringVar()
+        self.quality_selected.set("low") #defalt
+        self.high_qual_rad_btn = Radiobutton(self.master,text='Show Low Quality Image (Fast)', value='low', variable = self.quality_selected, command = quality_rad_btn_sel)
+        self.low_qual_rad_btn  = Radiobutton(self.master,text='Save High Quality Image (Slow)', value='high', variable = self.quality_selected, command = quality_rad_btn_sel)
 
 
     """path to save location of final 
@@ -269,11 +269,11 @@ class Main_Window():
                             'image_file_path':          self.input_img_file_path_text_box.get(),
                             'font_name':                self.font_drop_down.get() + '.ttf',
                             'font_size':                self.font_size_sbox.get(),
-                            'maximize_font_size':       max_font_size_sel.get(),
+                            'maximize_font_size':       self.max_font_size_sel.get(),
                             'output_image_dim_ratio':   GUI_utils.strs_to_int_ratio( self.output_img_dim_rat_num_sbox.get() , self.output_img_dim_rat_din_sbox.get() ),
                             'image_size':               self.img_size_sbox.get(),
                             'image_position_cords':     {'x': self.x_cord_sbox.get(), 'y': self.y_cord_sbox.get()},
-                            'quality':                  quality_selected.get(),
+                            'quality':                  self.quality_selected.get(),
                             'output_image_file_path':   self.output_img_file_path_text_box.get()}
             
             #build final image using arguments
@@ -481,11 +481,11 @@ class Main_Window():
 #         #maximize font size check button
 #         #gets called each time you click the check button, changes state of self.font_size_sbox
 #         def max_font_size_btn_sel():
-#             self.font_size_sbox_state = GUI_utils.bool_to_state(max_font_size_sel.get())
+#             self.font_size_sbox_state = GUI_utils.bool_to_state(self.max_font_size_sel.get())
 #             self.font_size_sbox.configure(state = self.font_size_sbox_state )
 #         
-#         max_font_size_sel = IntVar()
-#         self.max_font_size_cbtn = Checkbutton(text="Maximize Font Size", variable=max_font_size_sel, command = max_font_size_btn_sel)
+#         self.max_font_size_sel = IntVar()
+#         self.max_font_size_cbtn = Checkbutton(text="Maximize Font Size", variable=self.max_font_size_sel, command = max_font_size_btn_sel)
         
     
         
@@ -547,19 +547,19 @@ class Main_Window():
 #         #quality radio buttons
 #         #gets called each time you click one of the radio buttons, changes font size options
 #         def quality_rad_btn_sel():
-#             if  quality_selected.get() == 'low':
-#                 max_font_size_sel.set(0)
+#             if  self.quality_selected.get() == 'low':
+#                 self.max_font_size_sel.set(0)
 #                 self.font_size_sbox.configure(state = 'normal' )
-#             elif quality_selected.get() == 'high':
-#                 max_font_size_sel.set(1)
+#             elif self.quality_selected.get() == 'high':
+#                 self.max_font_size_sel.set(1)
 #                 self.font_size_sbox.configure(state = 'disable' )
 #             else:
 #                 print('something wrong with quality thing!!!!!!!!!!!!!!!!!!!!!!!!!')#```````````````````````````````````````````````
 #     
-#         quality_selected  = StringVar()
-#         quality_selected.set("low") #defalt
-#         self.high_qual_rad_btn = Radiobutton(self.master,text='Show Low Quality Image (Fast)', value='low', variable = quality_selected, command = quality_rad_btn_sel)
-#         self.low_qual_rad_btn  = Radiobutton(self.master,text='Save High Quality Image (Slow)', value='high', variable = quality_selected, command = quality_rad_btn_sel)
+#         self.quality_selected  = StringVar()
+#         self.quality_selected.set("low") #defalt
+#         self.high_qual_rad_btn = Radiobutton(self.master,text='Show Low Quality Image (Fast)', value='low', variable = self.quality_selected, command = quality_rad_btn_sel)
+#         self.low_qual_rad_btn  = Radiobutton(self.master,text='Save High Quality Image (Slow)', value='high', variable = self.quality_selected, command = quality_rad_btn_sel)
     
     
     
@@ -586,11 +586,11 @@ class Main_Window():
 #                             'image_file_path':          self.input_img_file_path_text_box.get(),
 #                             'font_name':                self.font_drop_down.get() + '.ttf',
 #                             'font_size':                self.font_size_sbox.get(),
-#                             'maximize_font_size':       max_font_size_sel.get(),
+#                             'maximize_font_size':       self.max_font_size_sel.get(),
 #                             'output_image_dim_ratio':   GUI_utils.strs_to_int_ratio( self.output_img_dim_rat_num_sbox.get() , self.output_img_dim_rat_din_sbox.get() ),
 #                             'image_size':               self.img_size_sbox.get(),
 #                             'image_position_cords':     {'x': self.x_cord_sbox.get(), 'y': self.y_cord_sbox.get()},
-#                             'quality':                  quality_selected.get(),
+#                             'quality':                  self.quality_selected.get(),
 #                             'output_image_file_path':   self.output_img_file_path_text_box.get()}
 #             
 #             #build final image using arguments
@@ -708,9 +708,9 @@ class Main_Window():
 #         #build image button
 #         self.build_img_btn                   .grid(column=2, row=row_num)
          
-def set_output_img_txt_box_contents(text_box, file_path):
-#     self.output_img_file_path_text_box.insert(END, GUI_utils.get_defalt_output_img_file_path(self.input_img_file_path_text_box.get())) #default
-    text_box.insert(END, GUI_utils.get_defalt_output_img_file_path(file_path)) #default
+# def set_output_img_txt_box_contents(text_box, file_path):
+# #     self.output_img_file_path_text_box.insert(END, GUI_utils.get_defalt_output_img_file_path(self.input_img_file_path_text_box.get())) #default
+#     text_box.insert(END, GUI_utils.get_defalt_output_img_file_path(file_path)) #default
     
 #makes xview (scrolling within an entry text box) work
 def xview_event_handler(e):
