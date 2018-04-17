@@ -70,77 +70,65 @@ def xview_event_handler(e):
 
  
 class Main_Window:
-    def __init__(self, master):
-        self.master = master
-
-
-         
-#         self.sv = StringVar()
-#          
-#         
-#         self.e = Entry(self.master, textvariable=self.sv, validate="key", validatecommand=self.call_back)
-#         self.later_var = "LATER_VAR IS HERE!"
-#         self.e.grid()
-#         
-#     def call_back(self):
-#         print('hi')
-#         print(self.later_var)
-#         return True
-#              
-# #     def callback(self):
-# #         print(self.CONST_STR)
-# #         print(sv.get())
-# #         print('bla')
-# #         print(self.later_var)
-# #         return True
-
-
-
+    
+    def location_set_up(self):
         def callback():
             print('skidhniush')
             return True
         #Location path text box 
         l_path = StringVar()
-        location_lbl = Label(self.master, text="Location: ")
-        location_text_box = Entry(self.master,width=FILE_PATH_TEXT_BOX_WIDTH)#, textvariable=l_path, validate="key", validatecommand=update_folder_name_text_box)
-        location_text_box.insert(END, GUI_utils.get_current_dir_path()) #default
-        location_text_box.bind('<Expose>', xview_event_handler)#scrolls text to end if needed
+        self.location_lbl = Label(self.master, text="Location: ")
+        self.location_text_box = Entry(self.master,width=FILE_PATH_TEXT_BOX_WIDTH)#, textvariable=l_path, validate="key", validatecommand=update_folder_name_text_box)
+        self.location_text_box.insert(END, GUI_utils.get_current_dir_path()) #default
+        self.location_text_box.bind('<Expose>', xview_event_handler)#scrolls text to end if needed
              
         def location_browse_btn_clk():
             #get file path and place it in text box
             dir = filedialog.askdirectory()
-            location_text_box.delete(0, "end")#clear text box
-            location_text_box.insert(END, dir)
+            self.location_text_box.delete(0, "end")#clear text box
+            self.location_text_box.insert(END, dir)
             
             #make sure new folder text box updates correctly
             folder_name_text_box.configure( state = 'normal' )
             update_folder_name_text_box()
             
-        location_browse_btn = Button(self.master, text="Browse...", command = location_browse_btn_clk)
+        self.location_browse_btn = Button(self.master, text="Browse...", command = location_browse_btn_clk)
+    
+    
+    #create new folder check button
+    def update_folder_name_text_box(self):#changes state and contents of folder name
+        #not using bool_to_state because depending on what state, configure needs to be called at different times
+        if self.create_new_folder_sel.get() == 0:
+            folder_name_text_box.delete(0, "end")
+            cf_path = re.split(r'[\\/]', location_text_box.get())
+            folder_name_text_box.insert(END, cf_path[-1])
+            folder_name_text_box.configure( state = 'disabled' )
+        else:
+            self.folder_name_text_box.configure( state = 'normal' )
+            self.folder_name_text_box.delete(0, "end")
+    
+    
+    def __init__(self, master):
+        self.master = master
+
+
+
+
+        self.location_set_up()
         
         
         
         #folder name text box 
         folder_name_lbl = Label(self.master, text="Folder Name: ")
-        folder_name_text_box = Entry(self.master,width=20)
+        self.folder_name_text_box = Entry(self.master,width=20)
         
         
         
-        #create new folder check button
-        def update_folder_name_text_box():#changes state and contents of folder name
-            #not using bool_to_state because depending on what state, configure needs to be called at different times
-            if create_new_folder_sel.get() == 0:
-                folder_name_text_box.delete(0, "end")
-                cf_path = re.split(r'[\\/]', location_text_box.get())
-                folder_name_text_box.insert(END, cf_path[-1])
-                folder_name_text_box.configure( state = 'disabled' )
-            else:
-                folder_name_text_box.configure( state = 'normal' )
-                folder_name_text_box.delete(0, "end")
+
         
-        create_new_folder_sel = IntVar(value = 1)#value sets default
-        create_new_folder_cbtn = Checkbutton(text="Create New Folder", variable=create_new_folder_sel, command = update_folder_name_text_box)
-        update_folder_name_text_box() #disabled folder name by default if create_new_folder_cbtn is 0 by default
+        self.create_new_folder_sel = IntVar(value = 1)#value sets default
+        create_new_folder_cbtn = Checkbutton(text="Create New Folder", variable=self.create_new_folder_sel, command = self.update_folder_name_text_box)
+        self.update_folder_name_text_box() #disabled folder name by default if create_new_folder_cbtn is 0 by default
         
          
          
@@ -333,9 +321,9 @@ class Main_Window:
     
         
         #location
-        location_lbl                    .grid(column=1, row=row_num)
-        location_text_box               .grid(column=2, row=row_num, columnspan = 3)
-        location_browse_btn             .grid(column=5, row=row_num)
+        self.location_lbl                    .grid(column=1, row=row_num)
+        self.location_text_box               .grid(column=2, row=row_num, columnspan = 3)
+        self.location_browse_btn             .grid(column=5, row=row_num)
         
         row_num += 10
         
@@ -346,7 +334,7 @@ class Main_Window:
         
         #folder_name
         folder_name_lbl                 .grid(column=1, row=row_num)
-        folder_name_text_box            .grid(column=2, row=row_num)
+        self.folder_name_text_box            .grid(column=2, row=row_num)
         
         row_num += 10
         
