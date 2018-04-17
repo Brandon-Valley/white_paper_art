@@ -61,7 +61,7 @@ def build_final_image(kwargs):
     image_position = {'x_pos': 0,
                       'y_pos': 0}
      
-    #set this to None for no background color separation
+    #set this to None for no background color separation #there is a reason for this!  this trims the whitespace so that image size can be more consistent!!!!!!!!!!!!
     input_image_background_color = None #(255, 255, 255)
      
     #background 
