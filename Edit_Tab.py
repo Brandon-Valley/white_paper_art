@@ -299,8 +299,8 @@ class Edit_Tab():
                             'output_image_file_path':       self.output_img_file_path_text_box.get(),
                             
                             #from Advanced_Tab
-                            'input_image_background_color': None,
-                            'final_image_background_color': None,
+                            'final_image_background_color': self.tabs['advanced'].output_bgnd_clr_tup_tb .get(),
+                            'input_image_background_color': self.tabs['advanced'].bgnd_text_clr_tup_tb.get(),
                             'background_text_color':        None}
             
             #build final image using arguments
