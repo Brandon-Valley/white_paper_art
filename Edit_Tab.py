@@ -194,28 +194,47 @@ class Edit_Tab():
         vcmd = (self.master.register(self.validate),
                 '%d', '%i', '%P', '%s', '%S', '%v', '%V', '%W')
         
-        self.font_size_sbox = Spinbox(self.master, from_ = 0, to = DEFAULT_MAX_FONT_SIZE, width = 5, validate = 'key', validatecommand = vcmd_font)#, state = "disabled")
+        def log_current_font_size(event = None):
+            print('hi')
+            print(self.font_size_sbox.get())
+            self.last_known_font_size = self.font_size_sbox.get()
+            
+        
+        self.font_size_sbox = Spinbox(self.master, from_ = 0, to = DEFAULT_MAX_FONT_SIZE, width = 5,
+                                       validate = 'key', validatecommand = vcmd_font, command = log_current_font_size)#, state = "disabled")
+        
+
+        
         self.font_size_sbox.delete(0, "end") #gets rid of 0 so the next line makes the default value 40 instead of 400
         self.font_size_sbox.insert(0, DEFAULT_FONT_SIZE) #default 
 
         self.last_known_font_size = IntVar(value = DEFAULT_FONT_SIZE)
-        self.last_known_font_size = IntVar(value = DEFAULT_FONT_SIZE)
+        
+        #update last known font size any time any of the following keys are pressed
+        self.font_size_sbox.bind("<KeyRelease>", log_current_font_size)
+        self.font_size_sbox.bind("<KeyRelease-BackSpace>", log_current_font_size)
+        self.font_size_sbox.bind("<KeyRelease-Delete>", log_current_font_size)
+        self.font_size_sbox.bind("<KeyRelease-space>", log_current_font_size)
+        
+        
+        
+#         self.last_known_font_size = IntVar(value = DEFAULT_FONT_SIZE)
         
 
         #maximize font size check button
         def max_font_size_btn_sel():#gets called each time you click the check button, changes state of self.font_size_sbox
-            
             self.font_size_sbox.configure( state = 'normal' )
             self.font_size_sbox.delete(0, "end")
             
             if self.max_font_size_sel.get() == 1:
                 last_known_font_size = self.font_size_sbox.get()#i dont think this fully works!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                 print('type(self.font_size_sbox.get(): ', type(self.font_size_sbox.get()))#````````````````````````````````````````````````````
-                print('.get():', self.font_size_sbox.get())#``````````````````````````````````````````````````````````````````````#???????????????????????
+                print('.get():',self.font_size_sbox.get())#``````````````````````````````````````````````````````````````````````#???????????????????????
                 self.font_size_sbox.delete(0, "end")
                 self.font_size_sbox.configure( state = 'disabled' )
             else:
-                self.font_size_sbox.insert(0, self.last_known_font_size.get()) #default 
+#                 self.font_size_sbox.insert(0, self.last_known_font_size.get()) #default 
+                self.font_size_sbox.insert(0, self.last_known_font_size)
 
         
         self.max_font_size_sel = IntVar()
