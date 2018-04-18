@@ -172,15 +172,20 @@ class Edit_Tab(Tab.Tab):
         default_font_index = self.font_drop_down['values'].index(DEFAULT_FONT_NAME) #default
         self.font_drop_down.current(default_font_index) #set the selected item
     
+        #font size spin box
+        self.last_known_font_size = IntVar(value = DEFAULT_FONT_SIZE)
+        
         def log_current_font_size(event = None):
             self.last_known_font_size = self.font_size_sbox.get()
+            print('last known: ', self.last_known_font_size)
+            
             
         self.font_size_sbox = Spinbox(self.master, from_ = 0, to = DEFAULT_MAX_FONT_SIZE, width = 5,
                                        validate = 'key', validatecommand = self.digits_only, command = log_current_font_size)
         
         self.font_size_sbox.delete(0, "end") #gets rid of 0 so the next line makes the default value 40 instead of 400
         self.font_size_sbox.insert(0, DEFAULT_FONT_SIZE) #default 
-        self.last_known_font_size = IntVar(value = DEFAULT_FONT_SIZE)
+        log_current_font_size()
         
         #record  current font size any time the contents of font_size_sbox change
         self.bind_to_edit(self.font_size_sbox, log_current_font_size)
