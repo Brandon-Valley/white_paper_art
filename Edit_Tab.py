@@ -162,36 +162,16 @@ class Edit_Tab():
     
     #add something to make delete work!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     def validate(self, allowed_chars, action, index, value_if_allowed, prior_value, text, validation_type, trigger_type, widget_name):
-        print('in validata, allowed chars: ', allowed_chars)
-        print('in validata, value_if_allowed: ', value_if_allowed)
-#         print('in validata, type(value_if_allowed): ', type(value_if_allowed))
         
         #need this to make delete work
         if (value_if_allowed == ''):
             return True
-        
-        if type(value_if_allowed) == int:#isinstance(text, int):
-            print('  ^^^ is an int, allowing')
-            return True
-        else:
-            print('      is this really not an int? : ', value_if_allowed)
-            print('        in validata, type(value_if_allowed): ', type(value_if_allowed))#the type is str, thats the problem!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        
-
+    
         for char in value_if_allowed:
             if char not in allowed_chars:
                 return False
         return True
         
-#         if text in allowed_chars:
-#             try:
-#                 float(value_if_allowed)
-#                 return True
-#             except ValueError:
-#                 return False
-#         else:
-#             return False
-    
     """MUST USE MONO-SPACED FONTS!  
        Higher resolution with larger font sizes, 
        thats why there's a maximize font size button"""
@@ -207,7 +187,7 @@ class Edit_Tab():
         default_font_index = self.font_drop_down['values'].index(DEFAULT_FONT_NAME) #default
         self.font_drop_down.current(default_font_index) #set the selected item
     
-        #font size spin box
+        #font size spin box #make it not reser size after clicking check button !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         vcmd_font = (self.master.register(self.validate), DIGITS, '%d', '%i', '%P', '%s', '%S', '%v', '%V', '%W')
         
         
@@ -219,14 +199,19 @@ class Edit_Tab():
         self.font_size_sbox.insert(0, DEFAULT_FONT_SIZE) #default 
 
         self.last_known_font_size = IntVar(value = DEFAULT_FONT_SIZE)
+        self.last_known_font_size = IntVar(value = DEFAULT_FONT_SIZE)
+        
 
         #maximize font size check button
         def max_font_size_btn_sel():#gets called each time you click the check button, changes state of self.font_size_sbox
+            
             self.font_size_sbox.configure( state = 'normal' )
             self.font_size_sbox.delete(0, "end")
             
             if self.max_font_size_sel.get() == 1:
-                last_known_font_size = self.font_size_sbox.get()
+                last_known_font_size = self.font_size_sbox.get()#i dont think this fully works!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                print('type(self.font_size_sbox.get(): ', type(self.font_size_sbox.get()))#````````````````````````````````````````````````````
+                print('.get():', self.font_size_sbox.get())#``````````````````````````````````````````````````````````````````````#???????????????????????
                 self.font_size_sbox.delete(0, "end")
                 self.font_size_sbox.configure( state = 'disabled' )
             else:
