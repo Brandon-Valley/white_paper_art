@@ -95,7 +95,6 @@ def get_defalt_output_img_file_path(img_file_path):
     
     
 def round_color(color_tup):
-    print('in round, color_tup: ', color_tup)
     r, g, b = color_tup
     return (int(r), int(g), int(b))
 
@@ -116,8 +115,6 @@ def apply_color_change(tup_tb, color_tb, color_tuple):
     
 def change_color(tup_tb, color_tb):
     color = askcolor()
-    print(color)#    `    ``````````````````````````````
-    print(color[0])
     apply_color_change(tup_tb, color_tb, color[0])
 
 

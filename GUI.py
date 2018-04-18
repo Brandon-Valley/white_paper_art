@@ -18,7 +18,7 @@ def main():
     root.title("Text Image Maker")
 
     tab_control = ttk.Notebook(root)
-    tab_control.grid(row=1, column=0, columnspan=100, rowspan=100, sticky='NESW')
+    tab_control.grid(row=1, column=0, columnspan=999, rowspan=999, sticky='NESW')
     
     tab1 = Frame(tab_control)
     tab2 = Frame(tab_control)

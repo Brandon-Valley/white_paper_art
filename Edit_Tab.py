@@ -163,7 +163,7 @@ class Edit_Tab():
         maximize_font_size_lbl = Label(self.master, text="Maximize Font Size:")
         
         #font select drop-down #make read only??????????????????????????????????????????????????
-        self.font_drop_down = Combobox(self.master)
+        self.font_drop_down = Combobox(self.master, state = 'readonly')
         self.font_drop_down['values'] = GUI_utils.get_font_list()
         default_font_index = self.font_drop_down['values'].index(DEFAULT_FONT_NAME) #default
         self.font_drop_down.current(default_font_index) #set the selected item
