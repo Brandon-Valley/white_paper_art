@@ -1,5 +1,14 @@
 import re
 
+from tkinter.colorchooser import *
+
+
+from tkinter import *
+from tkinter.ttk import *
+from tkinter import filedialog
+import tkinter as tk
+from tkinter import ttk
+
 OUTPUT_IMAGE_SUFFIX = '_text_art'
 
 def get_current_dir_path():
@@ -81,6 +90,31 @@ def get_defalt_output_img_file_path(img_file_path):
     
     
     
+    #advanced_tab
     
     
     
+def change_color(tup_tb, color_tb):
+    color = askcolor()
+    print(color)
+    print(color[0])
+    
+    tup_tb.configure(state = 'normal')
+    color_tb.configure(state = 'normal')
+    
+    tup_tb.delete(0, "end")
+    tup_tb.insert(END, str(color[0]))
+    
+    tup_tb.configure(state = 'readonly')
+    color_tb.configure(state = 'readonly')
+
+    
+    
+    
+    
+    
+    
+    
+import GUI
+if __name__ == '__main__':
+    GUI.main()

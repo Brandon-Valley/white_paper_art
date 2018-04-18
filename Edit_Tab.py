@@ -38,28 +38,26 @@ class Edit_Tab():
         self.master = master
         
         self.tabs = None
-#         self.master.title("Text Image Maker")
-    #         self.master.geometry('900x400') #1500x700 takes up almost the whole screen
     
         #setup widgets
-        self.location___widgets_setup()
-        self.folder_name___widgets_setup()
-        self.input_text_file_path___widgets_setup()
-        self.input_image_file_path___widgets_setup()
-        self.font___widgets_setup()
-        self.image_dimensions___widgets_setup()
-        self.image_size___widgets_setup()
-        self.image_cords___widgets_setup()
-        self.quality___widgets_setup()
-        self.output_image_path___widgets_setup()
-        self.build_image___widgets_setup()
+        self.location______widgets_setup()
+        self.folder_name______widgets_setup()
+        self.input_text_file_path______widgets_setup()
+        self.input_image_file_path______widgets_setup()
+        self.font______widgets_setup()
+        self.image_dimensions______widgets_setup()
+        self.image_size______widgets_setup()
+        self.image_cords______widgets_setup()
+        self.quality______widgets_setup()
+        self.output_image_path______widgets_setup()
+        self.build_image______widgets_setup()
         
         self.grid_widgets()    
     
     """location path is the home directory for everything 
        else, contents of location_text_box will be reflected in
        the contents / state of folder_name_text_box"""
-    def location___widgets_setup(self):
+    def location______widgets_setup(self):
         self.l_path = StringVar()
         self.location_lbl = Label(self.master, text="Location: ")
 
@@ -108,7 +106,7 @@ class Edit_Tab():
        to be make and put at the end of location path,
         can be enabled/disabled with create_new_folder_cbutn 
         as well as from conditions inside location_text_box"""
-    def folder_name___widgets_setup(self):
+    def folder_name______widgets_setup(self):
         #folder name text box 
         self.folder_name_text_box = Entry(self.master,width=20)
         self.folder_name_lbl = Label(self.master, text="Folder Name: ")
@@ -122,7 +120,7 @@ class Edit_Tab():
     
     """path to the text file that will become the "background"
        to the final text image, referred to as "data" later on"""
-    def input_text_file_path___widgets_setup(self):
+    def input_text_file_path______widgets_setup(self):
         #text file path text box
         self.input_text_file_path_lbl = Label(self.master, text="Text File Input: ")
         self.input_text_file_path_text_box = Entry(self.master,width=FILE_PATH_TEXT_BOX_WIDTH)
@@ -139,7 +137,7 @@ class Edit_Tab():
         
     """path to the image that will be re-created in the final 
        text image by coloring the text from the input text file"""
-    def input_image_file_path___widgets_setup(self):
+    def input_image_file_path______widgets_setup(self):
         #image file path text box
         self.input_img_file_path_lbl = Label(self.master, text="Image File Input: ")
         self.input_img_file_path_text_box = Entry(self.master,width=FILE_PATH_TEXT_BOX_WIDTH)
@@ -158,7 +156,7 @@ class Edit_Tab():
     """MUST USE MONO-SPACED FONTS!  
        Higher resolution with larger font sizes, 
        thats why there's a maximize font size button"""
-    def font___widgets_setup(self):
+    def font______widgets_setup(self):
         #font section labels
         self.font_lbl = Label(self.master, text="Font:")
         self.font_size_lbl = Label(self.master, text="Font Size:")
@@ -186,7 +184,7 @@ class Edit_Tab():
     
     """final dimensions of output image, option to 
        automatically match dimensions of input image"""
-    def image_dimensions___widgets_setup(self):
+    def image_dimensions______widgets_setup(self):
         #match input image dimensions check box
         def use_input_img_dims_btn_sel():        
             img_dims_txt_boxes_state = GUI_utils.bool_to_state(use_input_img_dims_sel.get())
@@ -220,7 +218,7 @@ class Edit_Tab():
     
     """determines size of colored text meant to look like 
        the input image relative to the surrounding text"""
-    def image_size___widgets_setup(self):
+    def image_size______widgets_setup(self):
         #image size spin box
         self.img_size_lbl  = Label(self.master, text="Image Size:")
         self.img_size_sbox = Spinbox(self.master, from_ = DEFAULT_MIN_IMAGE_SIZE, to = DEFAULT_MAX_IMAGE_SIZE, width = 5)
@@ -230,7 +228,7 @@ class Edit_Tab():
     
     """determines position of colored text meant to look 
     like input image relative to surrounding text, normal x,y cords"""
-    def image_cords___widgets_setup(self):
+    def image_cords______widgets_setup(self):
         #image cord spin boxes
         self.img_cords_lbl   = Label(self.master, text="Image Position:")
         self.prnth_open_lbl  = Label(self.master, text="(")
@@ -247,7 +245,7 @@ class Edit_Tab():
     """building an image with max font size and saving a high quality image takes forever, 
        so when you just need a quick test to see how the final product looks so far, a quick, 
        a low resolution image that just pops up is convenient"""
-    def quality___widgets_setup(self):
+    def quality______widgets_setup(self):
         #quality radio buttons
         def quality_rad_btn_sel():#changes font size options
             if  self.quality_selected.get() == 'low':
@@ -265,7 +263,7 @@ class Edit_Tab():
 
     """path to save location of final 
        high-quality text image"""
-    def output_image_path___widgets_setup(self):
+    def output_image_path______widgets_setup(self):
         #output image path text box
         self.output_img_file_path_lbl = Label(self.master, text="Output Image File: ")
         self.output_img_file_path_text_box = Entry(self.master,width=FILE_PATH_TEXT_BOX_WIDTH)
@@ -285,20 +283,25 @@ class Edit_Tab():
         
     """ties everything up and sets the kwargs 
        to be sent off to build the final text image"""
-    def build_image___widgets_setup(self):
+    def build_image______widgets_setup(self):
                 #build image button   
         def build_img_btn_clk():
             #read the current state of all arguments
-            image_kwargs = {'input_text_file_path':     self.input_text_file_path_text_box.get(),
-                            'image_file_path':          self.input_img_file_path_text_box.get(),
-                            'font_name':                self.font_drop_down.get() + '.ttf',
-                            'font_size':                self.font_size_sbox.get(),
-                            'maximize_font_size':       self.max_font_size_sel.get(),
-                            'output_image_dim_ratio':   GUI_utils.strs_to_int_ratio( self.output_img_dim_rat_num_sbox.get() , self.output_img_dim_rat_din_sbox.get() ),
-                            'image_size':               self.img_size_sbox.get(),
-                            'image_position_cords':     {'x': self.x_cord_sbox.get(), 'y': self.y_cord_sbox.get()},
-                            'quality':                  self.quality_selected.get(),
-                            'output_image_file_path':   self.output_img_file_path_text_box.get()}
+            image_kwargs = {'input_text_file_path':         self.input_text_file_path_text_box.get(),
+                            'image_file_path':              self.input_img_file_path_text_box.get(),
+                            'font_name':                    self.font_drop_down.get() + '.ttf',
+                            'font_size':                    self.font_size_sbox.get(),
+                            'maximize_font_size':           self.max_font_size_sel.get(),
+                            'output_image_dim_ratio':       GUI_utils.strs_to_int_ratio( self.output_img_dim_rat_num_sbox.get() , self.output_img_dim_rat_din_sbox.get() ),
+                            'image_size':                   self.img_size_sbox.get(),
+                            'image_position_cords':         {'x': self.x_cord_sbox.get(), 'y': self.y_cord_sbox.get()},
+                            'quality':                      self.quality_selected.get(),
+                            'output_image_file_path':       self.output_img_file_path_text_box.get(),
+                            
+                            #from Advanced_Tab
+                            'input_image_background_color': None,
+                            'final_image_background_color': None,
+                            'background_text_color':        None}
             
             #build final image using arguments
             build_image.build_img_test(image_kwargs)
@@ -420,21 +423,6 @@ def xview_event_handler(e):
     e.widget.unbind('<Expose>')
          
  
-
- 
- 
-# class Advanced_Tab():
-#     def __init__(self, master):
-#         self.master = master
-#         self.tabs = None
-#         lbl2 = Label(master, text= 'label2')
-#         lbl2.grid(column=0, row=0)
-#         
-#         self.tb = Entry(self.master,width=20)
-#         self.tb.grid(column=1, row=1)
-        
- 
-
  
 if __name__ == '__main__':
     GUI.main()
