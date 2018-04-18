@@ -10,6 +10,7 @@ from tkinter import *
 import build_image
 import GUI_utils
 import GUI
+import Tab
 
 
 COLOR_TUP_TB_WIDTH = 13
@@ -18,10 +19,9 @@ COLOR_DISPLAY_TB_WIDTH = 10
 DEFAULT_OUTPUT_IMAGE_BACKGROUND_COLOR = (0, 0, 0)
 DEFAULT_BACKGROUND_TEXT_COLOR = (255, 255, 255)
 
-class Advanced_Tab():
+class Advanced_Tab(Tab.Tab):
     def __init__(self, master):
-        self.master = master
-        self.tabs = None
+        Tab.Tab.__init__(self, master)
         
         self.output_background_color______widget_setup()
         self.background_text_color______widget_setup()

@@ -9,6 +9,7 @@ from tkinter import ttk
 import build_image
 import GUI_utils
 import GUI
+import Tab
 
 
 
@@ -23,25 +24,23 @@ DEFAULT_IMAGE_DIMENSION_RATIO_DIN = 16
 
 DEFAULT_MAX_FONT_SIZE = 999
 
-DEFAULT_MIN_IMAGE_SIZE = 0
-DEFAULT_MAX_IMAGE_SIZE = 999
+MIN_IMAGE_SIZE = 0
+MAX_IMAGE_SIZE = 999
 
-DEFAULT_MAX_IMAGE_DIM = 999999
+MAX_IMAGE_DIM = 999999
 
 DEFAULT_IMAGE_SIZE = 100 #REALLY need to figure something out for this!!!!!!!!!!!
 
 
-DEFAULT_MAX_IMG_POS_CORD = 999
-DEFAULT_MIN_IMG_POS_CORD = -999
+MAX_IMG_POS_CORD = 999
+MIN_IMG_POS_CORD = -999
 
-DIGITS = '0123456789.-+'
+
 
  
-class Edit_Tab():    
+class Edit_Tab(Tab.Tab):    
     def __init__(self, master):
-        self.master = master
-        
-        self.tabs = None
+        Tab.Tab.__init__(self, master)
     
         #setup widgets
         self.location______widgets_setup()
@@ -79,11 +78,9 @@ class Edit_Tab():
         
         self.location_text_box.bind('<Expose>', xview_event_handler)#scrolls text to end if needed
         
-        #update folder name text box any time any of the following keys are pressed
-        self.location_text_box.bind("<KeyRelease>", self.update_folder_name_text_box)
-        self.location_text_box.bind("<KeyRelease-BackSpace>", self.update_folder_name_text_box)
-        self.location_text_box.bind("<KeyRelease-Delete>", self.update_folder_name_text_box)
-        self.location_text_box.bind("<KeyRelease-space>", self.update_folder_name_text_box)
+        
+        #update folder name any time the contents of location_text_box change
+        self.bind_to_edit(self.location_text_box, self.update_folder_name_text_box)
         
         #update any time focus leaves text box, meant to help make sure that if you leave
         #location_text_box ending in a \, new_folder_text_box will enable itself if disabled
@@ -120,7 +117,7 @@ class Edit_Tab():
         self.folder_name_text_box = Entry(self.master,width=20)
         
         #create new folder check button
-        self.create_new_folder_cbtn_sel = IntVar(value = 1)#value sets default
+        self.create_new_folder_cbtn_sel = IntVar(value = 0)#value sets default
         self.create_new_folder_cbtn = Checkbutton(self.master, text="Create New Folder", variable=self.create_new_folder_cbtn_sel, command = self.update_folder_name_text_box)
         self.update_folder_name_text_box() #disabled folder name by default if create_new_folder_cbtn is 0 by default
     
@@ -159,17 +156,6 @@ class Edit_Tab():
              
         self.input_img_file_path_btn = Button(self.master, text="Browse...", command = input_img_file_path_clk)
     
-    
-    #put in Tab!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    def validate(self, allowed_chars, action, index, value_if_allowed, prior_value, text, validation_type, trigger_type, widget_name):
-        #need this to make delete work
-        if (value_if_allowed == ''):
-            return True
-    
-        for char in value_if_allowed:
-            if char not in allowed_chars:
-                return False
-        return True
         
     """MUST USE MONO-SPACED FONTS!  
        Higher resolution with larger font sizes, 
@@ -186,32 +172,20 @@ class Edit_Tab():
         default_font_index = self.font_drop_down['values'].index(DEFAULT_FONT_NAME) #default
         self.font_drop_down.current(default_font_index) #set the selected item
     
-        vcmd_font = (self.master.register(self.validate), DIGITS, '%d', '%i', '%P', '%s', '%S', '%v', '%V', '%W')#````````````````````````````
-        
-        
-        vcmd = (self.master.register(self.validate),#```````````````````````````````````````````````````````````````````````````````````
-                '%d', '%i', '%P', '%s', '%S', '%v', '%V', '%W')
-        
         def log_current_font_size(event = None):
             self.last_known_font_size = self.font_size_sbox.get()
             
-        
         self.font_size_sbox = Spinbox(self.master, from_ = 0, to = DEFAULT_MAX_FONT_SIZE, width = 5,
-                                       validate = 'key', validatecommand = vcmd_font, command = log_current_font_size)#, state = "disabled")
+                                       validate = 'key', validatecommand = self.digits_only, command = log_current_font_size)
         
         self.font_size_sbox.delete(0, "end") #gets rid of 0 so the next line makes the default value 40 instead of 400
         self.font_size_sbox.insert(0, DEFAULT_FONT_SIZE) #default 
-
         self.last_known_font_size = IntVar(value = DEFAULT_FONT_SIZE)
         
-        #update last known font size any time any of the following keys are pressed #make something in Tab for this!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        self.font_size_sbox.bind("<KeyRelease>", log_current_font_size)
-        self.font_size_sbox.bind("<KeyRelease-BackSpace>", log_current_font_size)
-        self.font_size_sbox.bind("<KeyRelease-Delete>", log_current_font_size)
-        self.font_size_sbox.bind("<KeyRelease-space>", log_current_font_size)
-
-
-
+        #record  current font size any time the contents of font_size_sbox change
+        self.bind_to_edit(self.font_size_sbox, log_current_font_size)
+        
+        
         #maximize font size check button
         def max_font_size_btn_sel():#gets called each time you click the check button, changes state of self.font_size_sbox
             self.font_size_sbox.configure( state = 'normal' )
@@ -252,8 +226,8 @@ class Edit_Tab():
         #image dimension spin boxes 
         self.output_img_dim_lbl = Label(self.master, text="Image Dimensions:")
         self.slash_lbl = Label(self.master, text="/")
-        self.output_img_dim_rat_num_sbox = Spinbox(self.master, from_ = 0, to = DEFAULT_MAX_IMAGE_DIM, width = 5) #numerator
-        self.output_img_dim_rat_din_sbox = Spinbox(self.master, from_ = 0, to = DEFAULT_MAX_IMAGE_DIM, width = 5) #denominator
+        self.output_img_dim_rat_num_sbox = Spinbox(self.master, from_ = 0, to=MAX_IMAGE_DIM, width = 5, validate='key', validatecommand=self.digits_only) #numerator
+        self.output_img_dim_rat_din_sbox = Spinbox(self.master, from_ = 0, to=MAX_IMAGE_DIM, width = 5, validate='key', validatecommand=self.digits_only) #denominator
         self.output_img_dim_rat_num_sbox.delete(0, "end") 
         self.output_img_dim_rat_din_sbox.delete(0, "end") #gets rid of 0 so the next line makes the default value 40 instead of 400
         self.output_img_dim_rat_num_sbox.insert(END, DEFAULT_IMAGE_DIMENSION_RATIO_NUM) #default
@@ -265,7 +239,7 @@ class Edit_Tab():
     def image_size______widgets_setup(self):
         #image size spin box
         self.img_size_lbl  = Label(self.master, text="Image Size:")
-        self.img_size_sbox = Spinbox(self.master, from_ = DEFAULT_MIN_IMAGE_SIZE, to = DEFAULT_MAX_IMAGE_SIZE, width = 5)
+        self.img_size_sbox = Spinbox(self.master, from_ = MIN_IMAGE_SIZE, to = MAX_IMAGE_SIZE, width = 5, validate='key', validatecommand=self.digits_only)
         self.img_size_sbox.delete(0, "end") #gets rid of 0 so the next line makes the default value 40 instead of 400
         self.img_size_sbox.insert(0, DEFAULT_IMAGE_SIZE) #default 
     
@@ -278,8 +252,8 @@ class Edit_Tab():
         self.prnth_open_lbl  = Label(self.master, text="(")
         self.comma_lbl       = Label(self.master, text=",")
         self.prnth_close_lbl = Label(self.master, text=")")
-        self.x_cord_sbox     = Spinbox(self.master, from_ = DEFAULT_MIN_IMG_POS_CORD, to = DEFAULT_MAX_IMG_POS_CORD, width = 3)
-        self.y_cord_sbox     = Spinbox(self.master, from_ = DEFAULT_MIN_IMG_POS_CORD, to = DEFAULT_MAX_IMG_POS_CORD, width = 3)
+        self.x_cord_sbox     = Spinbox(self.master, from_ = MIN_IMG_POS_CORD, to = MAX_IMG_POS_CORD, width = 3, validate='key', validatecommand=self.digits_only)
+        self.y_cord_sbox     = Spinbox(self.master, from_ = MIN_IMG_POS_CORD, to = MAX_IMG_POS_CORD, width = 3, validate='key', validatecommand=self.digits_only)
         self.x_cord_sbox.delete(0, "end") #gets rid of 0 so the next line makes the default value 40 instead of 400
         self.y_cord_sbox.delete(0, "end")
         self.x_cord_sbox.insert(0, 0) #default 
@@ -469,13 +443,4 @@ def xview_event_handler(e):
  
  
 if __name__ == '__main__':
-    GUI.main()
-    
-    
-    
-    
-    
-    
-    
-    
-    
+    GUI.main()    
