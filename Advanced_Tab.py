@@ -16,6 +16,7 @@ COLOR_TUP_TB_WIDTH = 13
 COLOR_DISPLAY_TB_WIDTH = 10
 
 DEFAULT_OUTPUT_IMAGE_BACKGROUND_COLOR = (0, 0, 0)
+DEFAULT_BACKGROUND_TEXT_COLOR = (255, 255, 255)
 
 class Advanced_Tab():
     def __init__(self, master):
@@ -23,6 +24,7 @@ class Advanced_Tab():
         self.tabs = None
         
         self.output_background_color______widget_setup()
+        self.background_text_color______widget_setup()
         
         self.grid_widgets()
 
@@ -36,6 +38,15 @@ class Advanced_Tab():
             
         self.output_bgnd_clr_change_clr_btn = Button(self.master, text="Change Color", 
                 command = lambda: GUI_utils.change_color(self.output_bgnd_clr_tup_tb, self.output_bgnd_clr_display_tb))
+        
+    def background_text_color______widget_setup(self):
+        self.bgnd_text_clr_lbl = Label(self.master, text="Background Text Color: ")
+        self.bgnd_text_clr_tup_tb = Entry(self.master,width=COLOR_TUP_TB_WIDTH, justify = 'center')
+        self.bgnd_text_clr_display_tb = Entry(self.master,width=COLOR_DISPLAY_TB_WIDTH, state = 'readonly')
+        GUI_utils.apply_color_change(self.bgnd_text_clr_tup_tb, self.bgnd_text_clr_display_tb, DEFAULT_BACKGROUND_TEXT_COLOR)#default, sets to readonly
+            
+        self.bgnd_text_clr_change_clr_btn = Button(self.master, text="Change Color", 
+                command = lambda: GUI_utils.change_color(self.bgnd_text_clr_tup_tb, self.bgnd_text_clr_display_tb))
         
         
         
@@ -52,6 +63,14 @@ class Advanced_Tab():
         self.output_bgnd_clr_tup_tb           .grid(column=2, row=row_num)
         self.output_bgnd_clr_display_tb       .grid(column=3, row=row_num)
         self.output_bgnd_clr_change_clr_btn   .grid(column=4, row=row_num)
+        
+        row_num += 10
+        
+        #background text color
+        self.bgnd_text_clr_lbl              .grid(column=1, row=row_num)
+        self.bgnd_text_clr_tup_tb           .grid(column=2, row=row_num)
+        self.bgnd_text_clr_display_tb       .grid(column=3, row=row_num)
+        self.bgnd_text_clr_change_clr_btn   .grid(column=4, row=row_num)
         
         
         
