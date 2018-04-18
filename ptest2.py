@@ -1,16 +1,38 @@
 import tkinter as tk
-from tkinter import ttk
 
-root = tk.Tk()
+DIGITS = '0123456789.-+'
 
-# background="..." doesn't work...
-ttk.Style().configure('green/black.TLabel', foreground='green', background='black')
-ttk.Style().configure('green/black.TButton', foreground='green', background='black')
+class window2:
+    def __init__(self, master1):
+        self.panel2 = tk.Frame(master1)
+        self.panel2.grid()
+        self.button2 = tk.Button(self.panel2, text = "Quit", command = self.panel2.quit)
+        self.button2.grid()
+        vcmd = (master1.register(self.validate),
+                '%d', '%i', '%P', '%s', '%S', '%v', '%V', '%W', DIGITS)
+        
+        dummy_var = (self.func_test())
+        self.text1 = tk.Entry(self.panel2, validate = 'key', validatecommand = vcmd)
+        self.text1.grid()
+        self.text1.focus()
+        
+    def func_test(self):
+        print('func test')
+        return True
 
-label = ttk.Label(root, text='I am a ttk.Label with text!', style='green/black.TLabel')
-label.pack()
+    def validate(self, action, index, value_if_allowed,
+                       prior_value, text, validation_type, trigger_type, widget_name, allowed_chars):
+        
+        print('in validata, allowed chars: ', allowed_chars)
+        if text in '0123456789.-+':
+            try:
+                float(value_if_allowed)
+                return True
+            except ValueError:
+                return False
+        else:
+            return False
 
-button = ttk.Button(root, text='Click Me!', style='green/black.TButton')
-button.pack()
-
-root.mainloop()
+root1 = tk.Tk()
+window2(root1)
+root1.mainloop()

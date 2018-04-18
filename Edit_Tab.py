@@ -4,6 +4,8 @@ from tkinter import filedialog
 import tkinter as tk
 from tkinter import ttk
 
+# import tkinter as tk
+
 import build_image
 import GUI_utils
 import GUI
@@ -14,7 +16,7 @@ FILE_PATH_TEXT_BOX_WIDTH = 80
 
 
 DEFAULT_FONT_NAME = "cour"
-DEFAULT_FONT_SIZE = 40
+DEFAULT_FONT_SIZE = 44
 
 DEFAULT_IMAGE_DIMENSION_RATIO_NUM = 14
 DEFAULT_IMAGE_DIMENSION_RATIO_DIN = 16
@@ -31,6 +33,8 @@ DEFAULT_IMAGE_SIZE = 100 #REALLY need to figure something out for this!!!!!!!!!!
 
 DEFAULT_MAX_IMG_POS_CORD = 999
 DEFAULT_MIN_IMG_POS_CORD = -999
+
+DIGITS = '0123456789.-+'
 
  
 class Edit_Tab():    
@@ -53,6 +57,9 @@ class Edit_Tab():
         self.build_image______widgets_setup()
         
         self.grid_widgets()    
+        
+        
+
     
     """location path is the home directory for everything 
        else, contents of location_text_box will be reflected in
@@ -153,6 +160,38 @@ class Edit_Tab():
         self.input_img_file_path_btn = Button(self.master, text="Browse...", command = input_img_file_path_clk)
     
     
+    #add something to make delete work!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    def validate(self, allowed_chars, action, index, value_if_allowed, prior_value, text, validation_type, trigger_type, widget_name):
+        print('in validata, allowed chars: ', allowed_chars)
+        print('in validata, value_if_allowed: ', value_if_allowed)
+#         print('in validata, type(value_if_allowed): ', type(value_if_allowed))
+        
+        #need this to make delete work
+        if (value_if_allowed == ''):
+            return True
+        
+        if type(value_if_allowed) == int:#isinstance(text, int):
+            print('  ^^^ is an int, allowing')
+            return True
+        else:
+            print('      is this really not an int? : ', value_if_allowed)
+            print('        in validata, type(value_if_allowed): ', type(value_if_allowed))#the type is str, thats the problem!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        
+
+        for char in value_if_allowed:
+            if char not in allowed_chars:
+                return False
+        return True
+        
+#         if text in allowed_chars:
+#             try:
+#                 float(value_if_allowed)
+#                 return True
+#             except ValueError:
+#                 return False
+#         else:
+#             return False
+    
     """MUST USE MONO-SPACED FONTS!  
        Higher resolution with larger font sizes, 
        thats why there's a maximize font size button"""
@@ -169,7 +208,13 @@ class Edit_Tab():
         self.font_drop_down.current(default_font_index) #set the selected item
     
         #font size spin box
-        self.font_size_sbox = Spinbox(self.master, from_ = 0, to = DEFAULT_MAX_FONT_SIZE, width = 5)#, state = "disabled")
+        vcmd_font = (self.master.register(self.validate), DIGITS, '%d', '%i', '%P', '%s', '%S', '%v', '%V', '%W')
+        
+        
+        vcmd = (self.master.register(self.validate),
+                '%d', '%i', '%P', '%s', '%S', '%v', '%V', '%W')
+        
+        self.font_size_sbox = Spinbox(self.master, from_ = 0, to = DEFAULT_MAX_FONT_SIZE, width = 5, validate = 'key', validatecommand = vcmd_font)#, state = "disabled")
         self.font_size_sbox.delete(0, "end") #gets rid of 0 so the next line makes the default value 40 instead of 400
         self.font_size_sbox.insert(0, DEFAULT_FONT_SIZE) #default 
 
@@ -177,7 +222,6 @@ class Edit_Tab():
 
         #maximize font size check button
         def max_font_size_btn_sel():#gets called each time you click the check button, changes state of self.font_size_sbox
-            
             self.font_size_sbox.configure( state = 'normal' )
             self.font_size_sbox.delete(0, "end")
             
@@ -187,17 +231,7 @@ class Edit_Tab():
                 self.font_size_sbox.configure( state = 'disabled' )
             else:
                 self.font_size_sbox.insert(0, self.last_known_font_size.get()) #default 
-            
-            
-            
-            
-            
-            
-            
-            
-            
-#             self.font_size_sbox_state = GUI_utils.bool_to_state(self.max_font_size_sel.get())
-#             self.font_size_sbox.configure(state = self.font_size_sbox_state )
+
         
         self.max_font_size_sel = IntVar()
         self.max_font_size_cbtn = Checkbutton(self.master, text="Maximize Font Size", variable=self.max_font_size_sel, command = max_font_size_btn_sel)

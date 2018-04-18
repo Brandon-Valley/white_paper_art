@@ -1,22 +1,28 @@
-from tkinter import *
+import tkinter as tk
 
-class App:
-    def __init__(self, root):
-        self.root = root
-        self.var = StringVar() #creates StringVar to store contents of entry
-        self.var.trace(mode="w", callback=self.command)
-        #the above sets up a callback if the variable containing
-        #the value of the entry gets updated
-#         self.entry = Entry(self.root, textvariable = self.var, background = "blue")
-        self.entry = Entry(self.root, background = "blue", state = 'readonly')
-        self.entry.pack()
-    def command(self, *args):
-        try: #trys to update the background to the entry contents
-            self.entry.config({"background": self.entry.get()})
-        except: #if the above fails then it does the below
-#             self.entry.config({"background": "black"})
-            self.entry.configure(background = "black")
+class window2:
+    def __init__(self, master1):
+        self.panel2 = tk.Frame(master1)
+        self.panel2.grid()
+        self.button2 = tk.Button(self.panel2, text = "Quit", command = self.panel2.quit)
+        self.button2.grid()
+        vcmd = (master1.register(self.validate),
+                '%d', '%i', '%P', '%s', '%S', '%v', '%V', '%W')
+        self.text1 = tk.Entry(master1, validate = 'key', validatecommand = vcmd)
+        self.text1.grid()
+        self.text1.focus()
 
-root = Tk()
-App(root)
-root.mainloop()
+    def validate(self, action, index, value_if_allowed,
+                       prior_value, text, validation_type, trigger_type, widget_name):
+        if text in '0123456789.-+':
+            try:
+                float(value_if_allowed)
+                return True
+            except ValueError:
+                return False
+        else:
+            return False
+
+root1 = tk.Tk()
+window2(root1)
+root1.mainloop()
