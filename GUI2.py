@@ -35,6 +35,8 @@ DEFAULT_MIN_IMG_POS_CORD = -999
 class Edit_Tab():    
     def __init__(self, master):
         self.master = master
+        
+        self.tabs = None
     #         self.master.title("Text Image Maker")
     #         self.master.geometry('900x400') #1500x700 takes up almost the whole screen
     
@@ -272,6 +274,9 @@ class Edit_Tab():
             self.output_img_file_path_text_box.insert(END, GUI_utils.get_defalt_output_img_file_path(self.input_img_file_path_text_box.get())) #default
              
         def output_file_path_clk():
+#             print(self.advanced_tab.tb.get())#``````````````````````````````````````````````````````````
+#             print(self.tb.get())
+            print('dict_method:', self.tabs['advanced'].tb.get())
             print('pretend to go into directory to get text file path')#`````````````````````````````````````````````````````
             
         set_output_img_txt_box_contents()
@@ -433,10 +438,16 @@ def xview_event_handler(e):
  
  
  
-class Advanced_Edit_Tab():
+class Advanced_Tab():
     def __init__(self, master):
+        self.master = master
+        self.tabs = None
         lbl2 = Label(master, text= 'label2')
         lbl2.grid(column=0, row=0)
+        
+        self.tb = Entry(self.master,width=20)
+        self.tb.grid(column=1, row=1)
+        
 #  
 # window = Tk()
 # window.title("Welcome to LikeGeeks app")
@@ -468,22 +479,22 @@ def main():
 #     tab_control.add(tab2, text='Advanced Edit')
 #     
 #     Edit_Tab(tab1)
-#     Advanced_Edit_Tab(tab2)
+#     Advanced_Tab(tab2)
 #     tab_control.pack(expand=1, fill='both')
 #     root.mainloop()
 
 
-    # Defines and places the notebook widget
-    nb = ttk.Notebook(root)
-    nb.grid(row=1, column=0, columnspan=50, rowspan=49, sticky='NESW')
-     
-    # Adds tab 1 of the notebook
-    page1 = ttk.Frame(nb)
-    nb.add(page1, text='Tab1')
-     
-    # Adds tab 2 of the notebook
-    page2 = ttk.Frame(nb)
-    nb.add(page2, text='Tab2')
+#     # Defines and places the notebook widget
+#     nb = ttk.Notebook(root)
+#     nb.grid(row=1, column=0, columnspan=50, rowspan=49, sticky='NESW')
+#      
+#     # Adds tab 1 of the notebook
+#     page1 = ttk.Frame(nb)
+#     nb.add(page1, text='Tab1')
+#      
+#     # Adds tab 2 of the notebook
+#     page2 = ttk.Frame(nb)
+#     nb.add(page2, text='Tab2')
 
 
 
@@ -495,11 +506,27 @@ def main():
     tab2 = Frame(tab_control)
     tab_control.add(tab1, text='Edit')
     tab_control.add(tab2, text='Advanced Edit')
+#     print(tab_control.)
+
+#     print(tab1.f_globals)
     
     
-    Edit_Tab(tab1)
-    Advanced_Edit_Tab(tab2)
+    
+#     a = Advanced_Tab(tab2)
+#     e = Edit_Tab(tab1)
 #     tab_control.pack(expand=1, fill='both')
+
+    tab_dict = {'edit': Edit_Tab(tab1),
+                'advanced': Advanced_Tab(tab2)}
+    
+    for tab_name, tab in tab_dict.items():
+        tab.tabs = tab_dict
+    
+    
+#     e.tabs = tab_dict
+#     print(e.tabs['advanced'].)
+
+
     root.mainloop()
         
         
