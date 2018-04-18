@@ -160,9 +160,8 @@ class Edit_Tab():
         self.input_img_file_path_btn = Button(self.master, text="Browse...", command = input_img_file_path_clk)
     
     
-    #add something to make delete work!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    #put in Tab!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     def validate(self, allowed_chars, action, index, value_if_allowed, prior_value, text, validation_type, trigger_type, widget_name):
-        
         #need this to make delete work
         if (value_if_allowed == ''):
             return True
@@ -187,39 +186,31 @@ class Edit_Tab():
         default_font_index = self.font_drop_down['values'].index(DEFAULT_FONT_NAME) #default
         self.font_drop_down.current(default_font_index) #set the selected item
     
-        #font size spin box #make it not reser size after clicking check button !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        vcmd_font = (self.master.register(self.validate), DIGITS, '%d', '%i', '%P', '%s', '%S', '%v', '%V', '%W')
+        vcmd_font = (self.master.register(self.validate), DIGITS, '%d', '%i', '%P', '%s', '%S', '%v', '%V', '%W')#````````````````````````````
         
         
-        vcmd = (self.master.register(self.validate),
+        vcmd = (self.master.register(self.validate),#```````````````````````````````````````````````````````````````````````````````````
                 '%d', '%i', '%P', '%s', '%S', '%v', '%V', '%W')
         
         def log_current_font_size(event = None):
-            print('hi')
-            print(self.font_size_sbox.get())
             self.last_known_font_size = self.font_size_sbox.get()
             
         
         self.font_size_sbox = Spinbox(self.master, from_ = 0, to = DEFAULT_MAX_FONT_SIZE, width = 5,
                                        validate = 'key', validatecommand = vcmd_font, command = log_current_font_size)#, state = "disabled")
         
-
-        
         self.font_size_sbox.delete(0, "end") #gets rid of 0 so the next line makes the default value 40 instead of 400
         self.font_size_sbox.insert(0, DEFAULT_FONT_SIZE) #default 
 
         self.last_known_font_size = IntVar(value = DEFAULT_FONT_SIZE)
         
-        #update last known font size any time any of the following keys are pressed
+        #update last known font size any time any of the following keys are pressed #make something in Tab for this!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         self.font_size_sbox.bind("<KeyRelease>", log_current_font_size)
         self.font_size_sbox.bind("<KeyRelease-BackSpace>", log_current_font_size)
         self.font_size_sbox.bind("<KeyRelease-Delete>", log_current_font_size)
         self.font_size_sbox.bind("<KeyRelease-space>", log_current_font_size)
-        
-        
-        
-#         self.last_known_font_size = IntVar(value = DEFAULT_FONT_SIZE)
-        
+
+
 
         #maximize font size check button
         def max_font_size_btn_sel():#gets called each time you click the check button, changes state of self.font_size_sbox
@@ -227,16 +218,10 @@ class Edit_Tab():
             self.font_size_sbox.delete(0, "end")
             
             if self.max_font_size_sel.get() == 1:
-                last_known_font_size = self.font_size_sbox.get()#i dont think this fully works!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-                print('type(self.font_size_sbox.get(): ', type(self.font_size_sbox.get()))#````````````````````````````````````````````````````
-                print('.get():',self.font_size_sbox.get())#``````````````````````````````````````````````````````````````````````#???????????????????????
-                self.font_size_sbox.delete(0, "end")
                 self.font_size_sbox.configure( state = 'disabled' )
             else:
-#                 self.font_size_sbox.insert(0, self.last_known_font_size.get()) #default 
                 self.font_size_sbox.insert(0, self.last_known_font_size)
 
-        
         self.max_font_size_sel = IntVar()
         self.max_font_size_cbtn = Checkbutton(self.master, text="Maximize Font Size", variable=self.max_font_size_sel, command = max_font_size_btn_sel)
     
