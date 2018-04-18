@@ -189,15 +189,6 @@ class Edit_Tab(Tab.Tab):
         self.bind_to_edit(self.font_size_sbox, log_current_font_size)
         
         
-#         #maximize font size check button
-#         def max_font_size_btn_sel():#gets called each time you click the check button, changes state of self.font_size_sbox
-#             self.font_size_sbox.configure( state = 'normal' )
-#             self.font_size_sbox.delete(0, "end")
-#             
-#             if self.max_font_size_sel.get() == 1:
-#                 self.font_size_sbox.configure( state = 'disabled' )
-#             else:
-#                 self.font_size_sbox.insert(0, self.last_known_font_size)
 
         #maximize font size check button
         self.max_font_size_sel = IntVar()
@@ -282,13 +273,10 @@ class Edit_Tab(Tab.Tab):
         def quality_rad_btn_sel():#changes font size options
             if  self.quality_selected.get() == 'low':
                 self.max_font_size_sel.set(0)
-                self.max_font_size_btn_sel()#!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-                
-#                 self.font_size_sbox.configure(state = 'normal' )
+                self.max_font_size_btn_sel()
             elif self.quality_selected.get() == 'high':
                 self.max_font_size_sel.set(1)
                 self.max_font_size_btn_sel()
-#                 self.font_size_sbox.configure(state = 'disable' )
     
         self.quality_selected  = StringVar()
         self.quality_selected.set("low") #default
