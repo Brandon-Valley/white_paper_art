@@ -162,7 +162,7 @@ class Edit_Tab():
         self.font_size_lbl = Label(self.master, text="Font Size:")
         maximize_font_size_lbl = Label(self.master, text="Maximize Font Size:")
         
-        #font select drop-down #make read only??????????????????????????????????????????????????
+        #font select drop-down 
         self.font_drop_down = Combobox(self.master, state = 'readonly')
         self.font_drop_down['values'] = GUI_utils.get_font_list()
         default_font_index = self.font_drop_down['values'].index(DEFAULT_FONT_NAME) #default
@@ -173,10 +173,31 @@ class Edit_Tab():
         self.font_size_sbox.delete(0, "end") #gets rid of 0 so the next line makes the default value 40 instead of 400
         self.font_size_sbox.insert(0, DEFAULT_FONT_SIZE) #default 
 
+        self.last_known_font_size = IntVar(value = DEFAULT_FONT_SIZE)
+
         #maximize font size check button
         def max_font_size_btn_sel():#gets called each time you click the check button, changes state of self.font_size_sbox
-            self.font_size_sbox_state = GUI_utils.bool_to_state(self.max_font_size_sel.get())
-            self.font_size_sbox.configure(state = self.font_size_sbox_state )
+            
+            self.font_size_sbox.configure( state = 'normal' )
+            self.font_size_sbox.delete(0, "end")
+            
+            if self.max_font_size_sel.get() == 1:
+                last_known_font_size = self.font_size_sbox.get()
+                self.font_size_sbox.delete(0, "end")
+                self.font_size_sbox.configure( state = 'disabled' )
+            else:
+                self.font_size_sbox.insert(0, self.last_known_font_size.get()) #default 
+            
+            
+            
+            
+            
+            
+            
+            
+            
+#             self.font_size_sbox_state = GUI_utils.bool_to_state(self.max_font_size_sel.get())
+#             self.font_size_sbox.configure(state = self.font_size_sbox_state )
         
         self.max_font_size_sel = IntVar()
         self.max_font_size_cbtn = Checkbutton(self.master, text="Maximize Font Size", variable=self.max_font_size_sel, command = max_font_size_btn_sel)
