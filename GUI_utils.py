@@ -91,15 +91,7 @@ def get_defalt_output_img_file_path(img_file_path):
     
     
     #advanced_tab
-    
-    
-#     
-# def color_to_tup(color):
-#     r, g, b = color[0]
-#     print(r)
-#     print(g)
-#     print(b)
-    
+
     
     
 def round_color(color_tup):
@@ -107,39 +99,18 @@ def round_color(color_tup):
     r, g, b = color_tup
     return (int(r), int(g), int(b))
 
-# def str_to_tup(str_tup):
-#     s = str_tup.split(',')
-#     return ( s[0][1:], s[1], s[2][:-1])
-    
-    
-    
-# def display_color(tuple_tb, clr_tb):
-#     tk_rgb = "#%02x%02x%02x" % round_color(str_to_tup(tuple_tb.get()))#(0, 0, 0)
-# 
-#     clr_tb.configure(readonlybackground = tk_rgb)
-#     
-#     tuple_tb.configure(state = 'readonly')
-# #     color_tb.configure(state = 'readonly')
-
 
 def apply_color_change(tup_tb, color_tb, color_tuple):
     tup_tb.configure(state = 'normal')
     
     tup_tb.delete(0, "end")
     tup_tb.insert(END, str(round_color(color_tuple)))
-    
-#     display_color(tuple_tb, color_tb)
-    
-#     color_tup = color_to_tup(color)
-#     color_tb.configure(background = str(color[0]))
+
     tk_rgb = "#%02x%02x%02x" % round_color(color_tuple)#(0, 0, 0)
  
     color_tb.configure(readonlybackground = tk_rgb)
-     
     tup_tb.configure(state = 'readonly')
-#     color_tb.configure(state = 'readonly')
-    
-#     print('done with change color')
+
 
     
     
@@ -148,24 +119,7 @@ def change_color(tup_tb, color_tb):
     print(color)#    `    ``````````````````````````````
     print(color[0])
     apply_color_change(tup_tb, color_tb, color[0])
-    
-#     tup_tb.configure(state = 'normal')
-#     
-#     tup_tb.delete(0, "end")
-#     tup_tb.insert(END, str(round_color(color)))
-#     
-#     display_color(tup_tb, color_tb)
-#     
-# #     color_tup = color_to_tup(color)
-# #     color_tb.configure(background = str(color[0]))
-# #     tk_rgb = "#%02x%02x%02x" % round_color(color)#(0, 0, 0)
-# # 
-# #     color_tb.configure(readonlybackground = tk_rgb)
-# #     
-# #     tup_tb.configure(state = 'readonly')
-# #     color_tb.configure(state = 'readonly')
-#     
-#     print('done with change color')
+
 
     
     

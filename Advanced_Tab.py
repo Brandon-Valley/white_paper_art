@@ -15,7 +15,7 @@ import GUI
 COLOR_TUP_TB_WIDTH = 13
 COLOR_DISPLAY_TB_WIDTH = 10
 
-DEFAULT_OUTPUT_IMAGE_BACKGROUND_COLOR = (0, 0, 0)#%02x%02x%02x" % GUI_utils.round_color("black")
+DEFAULT_OUTPUT_IMAGE_BACKGROUND_COLOR = (0, 0, 0)
 
 class Advanced_Tab():
     def __init__(self, master):
@@ -25,25 +25,7 @@ class Advanced_Tab():
         self.output_background_color______widget_setup()
         
         self.grid_widgets()
-#         lbl2 = Label(master, text= 'label2')
-#         lbl2.grid(column=0, row=0)
-#         
-#         self.tb = Entry(self.master,width=20)
-#         self.tb.grid(column=1, row=1)
 
-#     def change_color(self, tup_tb, color_tb):
-#         color = askcolor()
-#         print(color)
-#         print(color[0])
-#         
-#         tup_tb.configure(state = 'normal')
-#         color_tb.configure(state = 'normal')
-#         
-#         tup_tb.delete(0, "end")
-#         tup_tb.insert(END, str(color[0]))
-#         
-#         tup_tb.configure(state = 'readonly')
-#         color_tb.configure(state = 'readonly')
 
 
     def output_background_color______widget_setup(self):
@@ -51,22 +33,6 @@ class Advanced_Tab():
         self.output_bgnd_clr_tup_tb = Entry(self.master,width=COLOR_TUP_TB_WIDTH, justify = 'center')
         self.output_bgnd_clr_display_tb = Entry(self.master,width=COLOR_DISPLAY_TB_WIDTH, state = 'readonly')
         GUI_utils.apply_color_change(self.output_bgnd_clr_tup_tb, self.output_bgnd_clr_display_tb, DEFAULT_OUTPUT_IMAGE_BACKGROUND_COLOR)#default, sets to readonly
-#         self.output_bgnd_clr_tup_tb.configure(state = 'readonly')
-        
-#         self.output_bgnd_clr_display_tb.configure(background = "black")
-        
-#         def change_clr_btn_clk():
-            
-            
-            
-            
-            #get file path and place it in text box
-            
-#             dir = filedialog.askdirectory()
-#             self.location_tb.delete(0, "end")
-#             self.location_tb.insert(END, dir)
-#             
-#             self.update_folder_name_tb()
             
         self.output_bgnd_clr_change_clr_btn = Button(self.master, text="Change Color", 
                 command = lambda: GUI_utils.change_color(self.output_bgnd_clr_tup_tb, self.output_bgnd_clr_display_tb))
