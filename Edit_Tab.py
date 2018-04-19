@@ -27,7 +27,7 @@ DEFAULT_MAX_FONT_SIZE = 999
 MIN_IMAGE_SIZE = 0
 MAX_IMAGE_SIZE = 999
 
-MAX_IMAGE_DIM = 999999
+MAX_IMG_DIM = 999999
 
 DEFAULT_IMAGE_SIZE = 100 #REALLY need to figure something out for this!!!!!!!!!!!
 
@@ -35,6 +35,8 @@ DEFAULT_IMAGE_SIZE = 100 #REALLY need to figure something out for this!!!!!!!!!!
 MAX_IMG_POS_CORD = 999
 MIN_IMG_POS_CORD = -999
 
+# DEFAULT_NUM_DIM = 1
+# DEFAULT_DIN_DIM = 1
 
 
  
@@ -209,34 +211,77 @@ class Edit_Tab(Tab.Tab):
        automatically match dimensions of input image"""
     def image_dimensions______widgets_setup(self):
         #match input image dimensions check box
+        last_known_num_val = IntVar(value = DEFAULT_IMAGE_DIMENSION_RATIO_NUM) #default
+        last_known_din_val = IntVar(value = DEFAULT_IMAGE_DIMENSION_RATIO_DIN) #default
+        print('last_known_din_val :', last_known_din_val.get() )#```````````````````````````````````````````````````````````````````````
+        last_known_din_val.set(6666)# = 6666#````````````````````````````````````````````````````````````````````````
+        print(' should be 6666:  last_known_din_val :', last_known_din_val.get() )#```````````````````````````````````````````````````````````````````````
+        
         def use_input_img_dims_btn_sel():        
-            img_dims_txt_boxes_state = GUI_utils.bool_to_state(use_input_img_dims_sel.get())
+            print('in use_input_img_dims_btn_sel(),   last_known_din_val :', last_known_din_val )#```````````````````````````````````````````````````````````````````````
+            img_dims_txt_boxes_state = GUI_utils.bool_to_state(use_input_img_dims_cbtn_sel.get())
+            
+            self.output_img_dim_num_sbox.configure(state = 'normal' )
+            self.output_img_dim_din_sbox.configure(state = 'normal' )
+            print(use_input_img_dims_cbtn_sel.get())#~~~~~~~~~~~````````````````````````````````````````````````````````````````````````````
              
             #if using input image dimensions, change the test boxes to show the dimensions before disabling them
-            if img_dims_txt_boxes_state == 'disabled':
+#             if img_dims_txt_boxes_state == 'disabled':#````````````````````````````````````````````````````````````````````````
+            if use_input_img_dims_cbtn_sel.get() == 1:
                 in_img_dims = GUI_utils.get_input_img_dims( self.input_img_file_path_text_box.get() )
-                self.output_img_dim_rat_num_sbox.delete(0, "end")
-                self.output_img_dim_rat_din_sbox.delete(0, "end")
-                self.output_img_dim_rat_num_sbox.insert(END, in_img_dims['num'])
-                self.output_img_dim_rat_din_sbox.insert(END, in_img_dims['din'])
+                self.output_img_dim_num_sbox.delete(0, "end")
+                self.output_img_dim_din_sbox.delete(0, "end")
+                self.output_img_dim_num_sbox.insert(END, in_img_dims['num'])
+                self.output_img_dim_din_sbox.insert(END, in_img_dims['din'])
+                self.output_img_dim_num_sbox.configure(state = 'disabled' )
+                self.output_img_dim_din_sbox.configure(state = 'disabled' )
+            else:
+                self.output_img_dim_num_sbox.delete(0, "end")#move all 4, make 2 at top!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                self.output_img_dim_din_sbox.delete(0, "end")
+                self.output_img_dim_num_sbox.insert(END, last_known_num_val.get())#why returning 0???????????????????????????????????????????????????????
+                self.output_img_dim_din_sbox.insert(END, last_known_din_val.get())
             
-            #disable or enable text boxes
-            self.output_img_dim_rat_num_sbox.configure(state = img_dims_txt_boxes_state )
-            self.output_img_dim_rat_din_sbox.configure(state = img_dims_txt_boxes_state )
+#             #disable or enable text boxes!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+#             self.output_img_dim_num_sbox.configure(state = img_dims_txt_boxes_state )
+#             self.output_img_dim_din_sbox.configure(state = img_dims_txt_boxes_state )
         
-        use_input_img_dims_sel = IntVar()
-        self.match_input_image_dims_cbtn = Checkbutton(self.master, text="Use Input Image Dimensions", variable=use_input_img_dims_sel, command = use_input_img_dims_btn_sel)
+        use_input_img_dims_cbtn_sel = IntVar()
+        self.match_input_image_dims_cbtn = Checkbutton(self.master, text="Use Input Image Dimensions", variable=use_input_img_dims_cbtn_sel, command = use_input_img_dims_btn_sel)
         
+        
+#         last_known_num_val = IntVar(value = DEFAULT_NUM_DIM)
+#         last_known_din_val = IntVar(value = DEFAULT_DIN_DIM)
+        
+ 
+        #put this function back right here, only moving for test!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        def log_current_dim_vals(event = None):
+            print('in log_current_dim_vals()')#```````````````````````````````````````````````````````````````````````````
+            print('    start:  last_known_din_val :', last_known_din_val.get() )#``````````````````````````````````````````````````
+            last_known_num_val.set(self.output_img_dim_num_sbox.get())#DO I NEED TO MAKE IT SELF???????????????????????????????????????????????????
+            last_known_din_val.set(self.output_img_dim_din_sbox.get())
+            print('    end:  last_known_din_val :', last_known_din_val.get() )#``````````````````````````````````````````````````
+            
         
         #image dimension spin boxes 
         self.output_img_dim_lbl = Label(self.master, text="Image Dimensions:")
         self.slash_lbl = Label(self.master, text="/")
-        self.output_img_dim_rat_num_sbox = Spinbox(self.master, from_ = 0, to=MAX_IMAGE_DIM, width = 5, validate='key', validatecommand=self.digits_only) #numerator
-        self.output_img_dim_rat_din_sbox = Spinbox(self.master, from_ = 0, to=MAX_IMAGE_DIM, width = 5, validate='key', validatecommand=self.digits_only) #denominator
-        self.output_img_dim_rat_num_sbox.delete(0, "end") 
-        self.output_img_dim_rat_din_sbox.delete(0, "end") #gets rid of 0 so the next line makes the default value 40 instead of 400
-        self.output_img_dim_rat_num_sbox.insert(END, DEFAULT_IMAGE_DIMENSION_RATIO_NUM) #default
-        self.output_img_dim_rat_din_sbox.insert(END, DEFAULT_IMAGE_DIMENSION_RATIO_DIN) #default
+        self.output_img_dim_num_sbox = Spinbox(self.master, from_=0, to=MAX_IMG_DIM, width=5, 
+                                               validate='key', validatecommand=self.digits_only, command = log_current_dim_vals) #numerator
+        self.output_img_dim_din_sbox = Spinbox(self.master, from_=0, to=MAX_IMG_DIM, width=5, 
+                                               validate='key', validatecommand=self.digits_only, command = log_current_dim_vals) #denominator
+        self.output_img_dim_num_sbox.delete(0, "end") 
+        self.output_img_dim_din_sbox.delete(0, "end") #gets rid of 0 so the next line makes the default value 40 instead of 400
+        self.output_img_dim_num_sbox.insert(END, last_known_num_val.get()) #default
+        self.output_img_dim_din_sbox.insert(END, last_known_din_val.get()) #default
+        
+        log_current_dim_vals()
+        
+        
+        
+        
+        #record current dimension values any time the contents of either dim spin box changes
+        self.bind_to_edit(self.output_img_dim_num_sbox, log_current_dim_vals)
+        self.bind_to_edit(self.output_img_dim_din_sbox, log_current_dim_vals)
         
     
     """determines size of colored text meant to look like 
@@ -315,7 +360,7 @@ class Edit_Tab(Tab.Tab):
                             'font_name':                    self.font_drop_down.get() + '.ttf',
                             'font_size':                    self.font_size_sbox.get(),
                             'maximize_font_size':           self.max_font_size_sel.get(),
-                            'output_image_dim_ratio':       GUI_utils.strs_to_int_ratio( self.output_img_dim_rat_num_sbox.get() , self.output_img_dim_rat_din_sbox.get() ),
+                            'output_image_dim_ratio':       GUI_utils.strs_to_int_ratio( self.output_img_dim_num_sbox.get() , self.output_img_dim_din_sbox.get() ),
                             'image_size':                   self.img_size_sbox.get(),
                             'image_position_cords':         {'x': self.x_cord_sbox.get(), 'y': self.y_cord_sbox.get()},
                             'quality':                      self.quality_selected.get(),
@@ -372,7 +417,7 @@ class Edit_Tab(Tab.Tab):
             row_num += 10
               
             #space between
-            blank_lbl                           .grid(column=1, row=row_num)
+            blank_lbl                            .grid(column=1, row=row_num)
              
             row_num += 10
              
@@ -390,15 +435,15 @@ class Edit_Tab(Tab.Tab):
             row_num += 10 
              
             #space between
-            blank_lbl                           .grid(column=1, row=row_num)
+            blank_lbl                            .grid(column=1, row=row_num)
              
             row_num += 10
              
             #image dimensions
             self.output_img_dim_lbl              .grid(column=1, row=row_num)
-            self.output_img_dim_rat_num_sbox     .grid(column=2, row=row_num)
+            self.output_img_dim_num_sbox         .grid(column=2, row=row_num)
             self.slash_lbl                       .grid(column=3, row=row_num)
-            self.output_img_dim_rat_din_sbox     .grid(column=4, row=row_num)
+            self.output_img_dim_din_sbox         .grid(column=4, row=row_num)
             self.match_input_image_dims_cbtn     .grid(column=5, row=row_num)
              
             row_num += 10
