@@ -1,3 +1,5 @@
+# https://dzone.com/articles/python-gui-examples-tkinter-tutorial-like-geeks
+
 from tkinter import *
 from tkinter.ttk import *
 from tkinter import filedialog
