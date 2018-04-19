@@ -28,6 +28,8 @@ class Tab():
         widget.bind("<KeyRelease-Delete>", func)
         widget.bind("<KeyRelease-space>", func)
 
+    
+
         
         
         

@@ -215,8 +215,6 @@ class Edit_Tab(Tab.Tab):
         last_known_din_val = IntVar(value = DEFAULT_IMAGE_DIMENSION_RATIO_DIN) #default
         
         def use_input_img_dims_btn_sel():        
-#             img_dims_txt_boxes_state = GUI_utils.bool_to_state(use_input_img_dims_cbtn_sel.get())#need????????????????????????????????????????????????
-
             self.output_img_dim_num_sbox.configure(state = 'normal' )
             self.output_img_dim_din_sbox.configure(state = 'normal' )
             self.output_img_dim_num_sbox.delete(0, "end")
