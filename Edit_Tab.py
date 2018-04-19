@@ -213,54 +213,32 @@ class Edit_Tab(Tab.Tab):
         #match input image dimensions check box
         last_known_num_val = IntVar(value = DEFAULT_IMAGE_DIMENSION_RATIO_NUM) #default
         last_known_din_val = IntVar(value = DEFAULT_IMAGE_DIMENSION_RATIO_DIN) #default
-        print('last_known_din_val :', last_known_din_val.get() )#```````````````````````````````````````````````````````````````````````
-        last_known_din_val.set(6666)# = 6666#````````````````````````````````````````````````````````````````````````
-        print(' should be 6666:  last_known_din_val :', last_known_din_val.get() )#```````````````````````````````````````````````````````````````````````
         
         def use_input_img_dims_btn_sel():        
-            print('in use_input_img_dims_btn_sel(),   last_known_din_val :', last_known_din_val )#```````````````````````````````````````````````````````````````````````
-            img_dims_txt_boxes_state = GUI_utils.bool_to_state(use_input_img_dims_cbtn_sel.get())
-            
+            img_dims_txt_boxes_state = GUI_utils.bool_to_state(use_input_img_dims_cbtn_sel.get())#need????????????????????????????????????????????????
+
             self.output_img_dim_num_sbox.configure(state = 'normal' )
             self.output_img_dim_din_sbox.configure(state = 'normal' )
-            print(use_input_img_dims_cbtn_sel.get())#~~~~~~~~~~~````````````````````````````````````````````````````````````````````````````
-             
-            #if using input image dimensions, change the test boxes to show the dimensions before disabling them
-#             if img_dims_txt_boxes_state == 'disabled':#````````````````````````````````````````````````````````````````````````
+            self.output_img_dim_num_sbox.delete(0, "end")
+            self.output_img_dim_din_sbox.delete(0, "end")
+
             if use_input_img_dims_cbtn_sel.get() == 1:
                 in_img_dims = GUI_utils.get_input_img_dims( self.input_img_file_path_text_box.get() )
-                self.output_img_dim_num_sbox.delete(0, "end")
-                self.output_img_dim_din_sbox.delete(0, "end")
                 self.output_img_dim_num_sbox.insert(END, in_img_dims['num'])
                 self.output_img_dim_din_sbox.insert(END, in_img_dims['din'])
                 self.output_img_dim_num_sbox.configure(state = 'disabled' )
                 self.output_img_dim_din_sbox.configure(state = 'disabled' )
             else:
-                self.output_img_dim_num_sbox.delete(0, "end")#move all 4, make 2 at top!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-                self.output_img_dim_din_sbox.delete(0, "end")
-                self.output_img_dim_num_sbox.insert(END, last_known_num_val.get())#why returning 0???????????????????????????????????????????????????????
+                self.output_img_dim_num_sbox.insert(END, last_known_num_val.get())
                 self.output_img_dim_din_sbox.insert(END, last_known_din_val.get())
-            
-#             #disable or enable text boxes!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-#             self.output_img_dim_num_sbox.configure(state = img_dims_txt_boxes_state )
-#             self.output_img_dim_din_sbox.configure(state = img_dims_txt_boxes_state )
         
         use_input_img_dims_cbtn_sel = IntVar()
         self.match_input_image_dims_cbtn = Checkbutton(self.master, text="Use Input Image Dimensions", variable=use_input_img_dims_cbtn_sel, command = use_input_img_dims_btn_sel)
         
-        
-#         last_known_num_val = IntVar(value = DEFAULT_NUM_DIM)
-#         last_known_din_val = IntVar(value = DEFAULT_DIN_DIM)
-        
  
-        #put this function back right here, only moving for test!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         def log_current_dim_vals(event = None):
-            print('in log_current_dim_vals()')#```````````````````````````````````````````````````````````````````````````
-            print('    start:  last_known_din_val :', last_known_din_val.get() )#``````````````````````````````````````````````````
-            last_known_num_val.set(self.output_img_dim_num_sbox.get())#DO I NEED TO MAKE IT SELF???????????????????????????????????????????????????
-            last_known_din_val.set(self.output_img_dim_din_sbox.get())
-            print('    end:  last_known_din_val :', last_known_din_val.get() )#``````````````````````````````````````````````````
-            
+            last_known_num_val.set(self.output_img_dim_num_sbox.get())
+            last_known_din_val.set(self.output_img_dim_din_sbox.get())            
         
         #image dimension spin boxes 
         self.output_img_dim_lbl = Label(self.master, text="Image Dimensions:")
@@ -275,9 +253,6 @@ class Edit_Tab(Tab.Tab):
         self.output_img_dim_din_sbox.insert(END, last_known_din_val.get()) #default
         
         log_current_dim_vals()
-        
-        
-        
         
         #record current dimension values any time the contents of either dim spin box changes
         self.bind_to_edit(self.output_img_dim_num_sbox, log_current_dim_vals)
