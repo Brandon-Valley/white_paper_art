@@ -57,11 +57,7 @@ class Edit_Tab(Tab.Tab):
         self.output_image_path______widgets_setup()
         self.build_image______widgets_setup()
         
-        self.grid_widgets()    
-        
-        
-
-    
+        self.grid_widgets() 
 
     def location______widgets_setup(self):
         self.l_path = StringVar()
@@ -226,6 +222,7 @@ class Edit_Tab(Tab.Tab):
         def log_current_dim_vals(event = None):
             last_known_num_val.set(self.output_img_dim_num_sbox.get())
             last_known_din_val.set(self.output_img_dim_din_sbox.get())            
+        
         
         #image dimension spin boxes 
         self.output_img_dim_lbl = Label(self.master, text="Image Dimensions:")

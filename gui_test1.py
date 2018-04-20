@@ -1,20 +1,36 @@
+import tkinter as tk
+import GUI_utils
 
-from tkinter import *
-window = Tk()
-window.title("Welcome to LikeGeeks app")
-window.geometry('350x200')
-lbl = Label(window, text="Hello")
-lbl.grid(column=0, row=0)
-txt = Entry(window,width=10)
-txt.insert(END, 'default text')
-# txt.pack()
-# txt.current('default_test')
+def demo(master):
+    listbox = tk.Listbox(master)
+#     listbox.pack(expand=1, fill="both")
 
-txt.grid(column=1, row=0)
-def clicked():
-    res = "Welcome to " + txt.get()
-    lbl.configure(text= res)
-btn = Button(window, text="Click Me", command=clicked)
-btn.grid(column=2, row=0)
-# txt.focus()
-window.mainloop()
+    # inserting some items
+    listbox.insert("end", "A list item")
+
+    for item in ["one", "two", "three", "four"]:
+        listbox.insert("end", item)
+
+    # this changes the background colour of the 2nd item
+    listbox.itemconfig(1, {'bg':'red'})
+
+    # this changes the font color of the 4th item
+    listbox.itemconfig(3, {'fg': 'blue'})
+
+    # another way to pass the colour
+    listbox.itemconfig(2, bg='green')
+    
+    color_tuple = (255,255,0)
+    tk_rgb = "#%02x%02x%02x" % GUI_utils.round_color(color_tuple)
+    
+    
+    listbox.itemconfig(2, bg=tk_rgb)
+    listbox.itemconfig(0, foreground="purple")
+    
+    listbox.grid(column=1, row=1)
+
+
+if __name__ == "__main__":
+    root = tk.Tk()
+    demo(root)
+    root.mainloop()

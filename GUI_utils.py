@@ -98,6 +98,9 @@ def round_color(color_tup):
     r, g, b = color_tup
     return (int(r), int(g), int(b))
 
+def tk_color(clr_tuple):
+    return "#%02x%02x%02x" % round_color(clr_tuple)
+
 
 def apply_color_change(tup_tb, color_tb, color_tuple):
     tup_tb.configure(state = 'normal')
@@ -105,7 +108,8 @@ def apply_color_change(tup_tb, color_tb, color_tuple):
     tup_tb.delete(0, "end")
     tup_tb.insert(END, str(round_color(color_tuple)))
 
-    tk_rgb = "#%02x%02x%02x" % round_color(color_tuple)#(0, 0, 0)
+#     tk_rgb = "#%02x%02x%02x" % round_color(color_tuple)#(0, 0, 0)
+    tk_rgb = tk_color(color_tuple)
  
     color_tb.configure(readonlybackground = tk_rgb)
     tup_tb.configure(state = 'readonly')
@@ -118,6 +122,21 @@ def change_color(tup_tb, color_tb):
     apply_color_change(tup_tb, color_tb, color[0])
 
 
+def highest_contrast_label_color(background_color):
+    r, g, b = background_color
+    
+    for c in r,g,b:
+        c = c / 255.0
+        if c <= 0.03928:
+            c = c/12.92 
+        else:
+            c = ((c+0.055)/1.055) ** 2.4
+    L = 0.2126 * r + 0.7152 * g + 0.0722 * b
+    
+    if (255 - L) > L:
+        return (255, 255, 255) #white
+    else:
+        return (0, 0, 0) #black
     
     
     

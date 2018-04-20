@@ -1,28 +1,27 @@
-#!/usr/bin/env python2.7
-# -*- coding: utf-8 -*-
 from tkinter import *
-from tkinter.ttk import *
-# import Tkinter as tk
 
-root = Tk()
+window = Tk()
+window.geometry("680x500")
 
-class Principal():
-    def __init__(self, *args, **kwargs):
 
-        self.foo = StringVar()
-        self.nac = IntVar()      
-        ck1 = Checkbutton(root, text='Test',variable=self.nac, command=self.naccheck)
-        ck1.pack()
 
-        self.ent = Entry(root, width = 20, background = 'white', 
-                            textvariable = self.foo, state = tk.DISABLED)       
-        self.ent.pack()
+frame = Frame(window)
+frame.pack()
 
-    def naccheck(self):
-        if self.nac.get() == 1:
-            self.ent.configure(state='disabled')
-        else:
-            self.ent.configure(state='normal')       
+Label(window, text="Top label").pack()
 
-app=Principal()
-root.mainloop()
+listNodes = Listbox(frame, width=20, height=20, font=("Helvetica", 12))
+listNodes.pack(side="left", fill="y")
+
+scrollbar = Scrollbar(frame, orient="vertical")
+scrollbar.config( command=listNodes.yview )
+scrollbar.pack(side="right", fill="y")
+
+listNodes.config(yscrollcommand=scrollbar.set)
+
+for x in range(100):
+    listNodes.insert(END, str(x))
+
+
+
+window.mainloop()
