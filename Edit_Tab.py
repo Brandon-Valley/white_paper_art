@@ -62,9 +62,7 @@ class Edit_Tab(Tab.Tab):
         
 
     
-    """location path is the home directory for everything 
-       else, contents of location_text_box will be reflected in
-       the contents / state of folder_name_text_box"""
+
     def location______widgets_setup(self):
         self.l_path = StringVar()
         self.location_lbl = Label(self.master, text="Location: ")
@@ -108,10 +106,6 @@ class Edit_Tab(Tab.Tab):
             self.folder_name_text_box.configure( state = 'disabled' )
 
 
-    """folder_name_text_box used to get name of new folder
-       to be make and put at the end of location path,
-        can be enabled/disabled with create_new_folder_cbutn 
-        as well as from conditions inside location_text_box"""
     def folder_name______widgets_setup(self):
         #folder name text box 
         self.folder_name_text_box = Entry(self.master,width=20)
@@ -124,8 +118,7 @@ class Edit_Tab(Tab.Tab):
         self.update_folder_name_text_box() #disabled folder name by default if create_new_folder_cbtn is 0 by default
     
     
-    """path to the text file that will become the "background"
-       to the final text image, referred to as "data" later on"""
+  
     def input_text_file_path______widgets_setup(self):
         #text file path text box
         self.input_text_file_path_lbl = Label(self.master, text="Text File Input: ")
@@ -141,8 +134,7 @@ class Edit_Tab(Tab.Tab):
         self.input_text_file_path_btn = Button(self.master, text="Browse...", command = input_text_file_path_clk)
         
         
-    """path to the image that will be re-created in the final 
-       text image by coloring the text from the input text file"""
+   
     def input_image_file_path______widgets_setup(self):
         #image file path text box
         self.input_img_file_path_lbl = Label(self.master, text="Image File Input: ")
@@ -159,9 +151,7 @@ class Edit_Tab(Tab.Tab):
         self.input_img_file_path_btn = Button(self.master, text="Browse...", command = input_img_file_path_clk)
     
         
-    """MUST USE MONO-SPACED FONTS!  
-       Higher resolution with larger font sizes, 
-       thats why there's a maximize font size button"""
+   
     def font______widgets_setup(self):
         #font section labels
         self.font_lbl = Label(self.master, text="Font:")
@@ -207,8 +197,7 @@ class Edit_Tab(Tab.Tab):
             self.font_size_sbox.insert(0, self.last_known_font_size)
     
     
-    """final dimensions of output image, option to 
-       automatically match dimensions of input image"""
+    
     def image_dimensions______widgets_setup(self):
         #match input image dimensions check box
         last_known_num_val = IntVar(value = DEFAULT_IMAGE_DIMENSION_RATIO_NUM) #default
@@ -257,8 +246,7 @@ class Edit_Tab(Tab.Tab):
         self.bind_to_edit(self.output_img_dim_din_sbox, log_current_dim_vals)
         
     
-    """determines size of colored text meant to look like 
-       the input image relative to the surrounding text"""
+    
     def image_size______widgets_setup(self):
         #image size spin box
         self.img_size_lbl  = Label(self.master, text="Image Size:")
@@ -267,8 +255,7 @@ class Edit_Tab(Tab.Tab):
         self.img_size_sbox.insert(0, DEFAULT_IMAGE_SIZE) #default 
     
     
-    """determines position of colored text meant to look 
-    like input image relative to surrounding text, normal x,y cords"""
+    
     def image_cords______widgets_setup(self):
         #image cord spin boxes
         self.img_cords_lbl   = Label(self.master, text="Image Position:")
@@ -283,9 +270,7 @@ class Edit_Tab(Tab.Tab):
         self.y_cord_sbox.insert(0, 0) #default 
     
     
-    """building an image with max font size and saving a high quality image takes forever, 
-       so when you just need a quick test to see how the final product looks so far, a quick, 
-       a low resolution image that just pops up is convenient"""
+    
     def quality______widgets_setup(self):
         #quality radio buttons
         def quality_rad_btn_sel():#changes font size options
@@ -302,8 +287,7 @@ class Edit_Tab(Tab.Tab):
         self.low_qual_rad_btn  = Radiobutton(self.master,text='Save High Quality Image (Slow)', value='high', variable = self.quality_selected, command = quality_rad_btn_sel)
 
 
-    """path to save location of final 
-       high-quality text image"""
+   
     def output_image_path______widgets_setup(self):
         #output image path text box
         self.output_img_file_path_lbl = Label(self.master, text="Output Image File: ")
@@ -322,8 +306,7 @@ class Edit_Tab(Tab.Tab):
         set_output_img_txt_box_contents()
         self.output_img_file_path_btn = Button(self.master, text="Browse...", command = output_file_path_clk)
         
-    """ties everything up and sets the kwargs 
-       to be sent off to build the final text image"""
+  
     def build_image______widgets_setup(self):
                 #build image button   
         def build_img_btn_clk():
@@ -458,6 +441,9 @@ class Edit_Tab(Tab.Tab):
         
     
 #makes xview (scrolling within an entry text box) work
+
+
+
 def xview_event_handler(e):
     e.widget.update_idletasks()
     e.widget.xview_moveto(1)
