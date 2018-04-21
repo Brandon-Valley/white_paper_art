@@ -45,7 +45,7 @@ class Advanced_Tab(Tab.Tab):
         self.output_bgnd_clr_lbl = Label(self.master, text="Output Image Background Color: ")
         self.output_bgnd_clr_tup_tb = Entry(self.master,width=COLOR_TUP_TB_WIDTH, justify = 'center')
         self.output_bgnd_clr_display_tb = Entry(self.master,width=COLOR_DISPLAY_TB_WIDTH, state = 'readonly')
-        GUI_utils.apply_color_change(self.output_bgnd_clr_tup_tb, self.output_bgnd_clr_display_tb, DEFAULT_OUTPUT_IMAGE_BACKGROUND_COLOR)#default, sets to readonly
+        GUI_utils.apply_color_change(self.output_bgnd_clr_tup_tb, self.output_bgnd_clr_display_tb, DEFAULT_OUTPUT_IMAGE_BACKGROUND_COLOR)#default, sets to read only
             
         self.output_bgnd_clr_change_clr_btn = Button(self.master, text="Change Color", 
                 command = lambda: GUI_utils.change_color(self.output_bgnd_clr_tup_tb, self.output_bgnd_clr_display_tb))
@@ -54,7 +54,7 @@ class Advanced_Tab(Tab.Tab):
         self.bgnd_text_clr_lbl = Label(self.master, text="Background Text Color: ")
         self.bgnd_text_clr_tup_tb = Entry(self.master,width=COLOR_TUP_TB_WIDTH, justify = 'center')
         self.bgnd_text_clr_display_tb = Entry(self.master,width=COLOR_DISPLAY_TB_WIDTH, state = 'readonly')
-        GUI_utils.apply_color_change(self.bgnd_text_clr_tup_tb, self.bgnd_text_clr_display_tb, DEFAULT_BACKGROUND_TEXT_COLOR)#default, sets to readonly
+        GUI_utils.apply_color_change(self.bgnd_text_clr_tup_tb, self.bgnd_text_clr_display_tb, DEFAULT_BACKGROUND_TEXT_COLOR)#default, sets to read only
             
         self.bgnd_text_clr_change_clr_btn = Button(self.master, text="Change Color", 
                 command = lambda: GUI_utils.change_color(self.bgnd_text_clr_tup_tb, self.bgnd_text_clr_display_tb))
@@ -62,14 +62,12 @@ class Advanced_Tab(Tab.Tab):
     def input_background_color______widget_setup(self):
 
         def update_color_display(event = None):
-            print('in update!')#``````````````````````````````````````````````````````````````````````````````
             #update tuple text box
             self.input_bgnd_clr_tup_tb.configure(state = 'normal')
             self.input_bgnd_clr_tup_tb.delete(0, END)
             self.input_bgnd_clr_tup_tb.insert(END, self.input_bgnd_clr_lbox.get(ACTIVE))
             self.input_bgnd_clr_tup_tb.configure(state = 'readonly')
             #update display text box
-#             GUI_utils.change_color(self.input_bgnd_clr_tup_tb, self.input_bgnd_clr_display_tb)#``````````````````````````````````````````````````````````
             active_color = GUI_utils.str_to_tup(self.input_bgnd_clr_lbox.get(ACTIVE))
             GUI_utils.apply_color_change(self.input_bgnd_clr_tup_tb, self.input_bgnd_clr_display_tb, active_color)#default, sets to readonly
 
@@ -90,25 +88,12 @@ class Advanced_Tab(Tab.Tab):
             font_color = GUI_utils.tk_color( GUI_utils.highest_contrast_label_color(color) )
             self.input_bgnd_clr_lbox.itemconfig(color_num, bg=bg_color, fg = font_color)
             
-
-            
-#         self.input_bgnd_clr_lbox.set(0)
-            
-
         #input background color display text boxes
         self.input_bgnd_clr_tup_tb = Entry(self.master,width=COLOR_TUP_TB_WIDTH, state = 'readonly', justify = 'center')
         self.input_bgnd_clr_display_tb = Entry(self.master,width=COLOR_DISPLAY_TB_WIDTH, state = 'readonly')
         
         update_color_display()#sets default to first color in the list
 
-        
-        GUI_utils.apply_color_change(self.output_bgnd_clr_tup_tb, self.output_bgnd_clr_display_tb, DEFAULT_OUTPUT_IMAGE_BACKGROUND_COLOR)#default, sets to readonly
-        
-
-        
-
-
-        
 
         
     def grid_widgets(self):
