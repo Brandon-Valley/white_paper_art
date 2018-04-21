@@ -27,6 +27,10 @@ class Tab():
         widget.bind("<KeyRelease-BackSpace>", func)
         widget.bind("<KeyRelease-Delete>", func)
         widget.bind("<KeyRelease-space>", func)
+        
+    def bind_to_click(self, widget, func):
+        widget.bind("<ButtonRelease>", func)
+        widget.bind("<Enter>", func)
 
     
 

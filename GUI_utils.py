@@ -95,6 +95,8 @@ def get_defalt_output_img_file_path(img_file_path):
     
     
 def round_color(color_tup):
+    print('in round, color_tup: ', color_tup)#`````````````````````````````````````````````````````````````````
+    print('   in round,  type(color_tup): ', type(color_tup))#`````````````````````````````````````````````````````````````````
     r, g, b = color_tup
     return (int(r), int(g), int(b))
 
@@ -140,12 +142,19 @@ def highest_contrast_label_color(background_color):
     
     
     
+def str_to_tup(tup_str):
+    split_tup_str = re.split(r'[(,)]', tup_str)
+    r, g, b = split_tup_str[1:4]
+    return(r, g, b)
+#     print('in str_to_tup: :::::::::::::::::::::' , split_tup_str)#`````````````````````````````````````````````````````````````````
+    
+    
     
     
     
     
 import GUI
 if __name__ == '__main__':
-#     print(str_to_tup("(222,4e,599)"))
+    print(str_to_tup("(222,4e,599)"))
 #     change_color(3,5)
     GUI.main()
