@@ -1,38 +1,21 @@
-import tkinter as tk
 
-DIGITS = '0123456789.-+'
 
-class window2:
-    def __init__(self, master1):
-        self.panel2 = tk.Frame(master1)
-        self.panel2.grid()
-        self.button2 = tk.Button(self.panel2, text = "Quit", command = self.panel2.quit)
-        self.button2.grid()
-        vcmd = (master1.register(self.validate),
-                '%d', '%i', '%P', '%s', '%S', '%v', '%V', '%W', DIGITS)
-        
-        dummy_var = (self.func_test())
-        self.text1 = tk.Entry(self.panel2, validate = 'key', validatecommand = vcmd)
-        self.text1.grid()
-        self.text1.focus()
-        
-    def func_test(self):
-        print('func test')
+
+#returns bool, is num2 within 10% of num1?
+def within_10_percent(num1, num2):
+    num1_low  = num1 - (num1 * 0.1)
+    num1_high = num1 + (num1 * 0.1)
+    
+    if   num1_low <= num2 and num2 <= num1:
         return True
+    elif     num1 <= num2 and num2 <= num1_high:
+        return True
+    else:
+        return False
 
-    def validate(self, action, index, value_if_allowed,
-                       prior_value, text, validation_type, trigger_type, widget_name, allowed_chars):
-        
-        print('in validata, allowed chars: ', allowed_chars)
-        if text in '0123456789.-+':
-            try:
-                float(value_if_allowed)
-                return True
-            except ValueError:
-                return False
-        else:
-            return False
 
-root1 = tk.Tk()
-window2(root1)
-root1.mainloop()
+
+
+print(within_10_percent(100, 90))
+print(within_10_percent(100, 110))
+print(within_10_percent(100, 89))
