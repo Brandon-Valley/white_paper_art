@@ -52,14 +52,14 @@ max_Rs = 110
 min_RD = 100
 max_RD = 120 #true max calculated later
 
-min_R3 = 100
-max_R3 = 120
+# min_R3 = 100
+# max_R3 = 120
+# 
+# min_RL = 100
+# max_RL = 101
 
-min_RL = 100
-max_RL = 101
 
-
-def calc_gain(R1, R2, Rs, RD, R3, RL, Vto):
+def calc_gain(R1, R2, Rs, RD,  Vto):
     VG = ( (VDD * R2) + (Vss * R1) ) / (R1 + R2)
 
     V1 = VG - Vss - Vto
@@ -83,7 +83,7 @@ def calc_gain(R1, R2, Rs, RD, R3, RL, Vto):
     rs = 1 / gm
 
 
-    A = parallel(-RD, RL) / ( rs + parallel(Rs, R3) )
+    A = -RD / rs
     return A
 
 
@@ -104,33 +104,33 @@ for r1_add in range( max_R1 - min_R1 ):
             Rs += rs_add
             for rd_add in range (max_R1 - min_R2):
                 RD += rd_add
-                for r3_add in range (max_R3 - min_R3):
-                    R3 += r3_add
-                    for rl_add in range (max_RL - min_RL):
-                        RL += rl_add
+#                 for r3_add in range (max_R3 - min_R3):
+#                     R3 += r3_add
+#                     for rl_add in range (max_RL - min_RL):
+#                         RL += rl_add
 #                         print('RL: ', RL)
                 
-                        A1 = calc_gain(R1, R2, Rs, RD, R3, RL, min_Vto)
+                A1 = calc_gain(R1, R2, Rs, RD, min_Vto)
+                
+                if A1 != False and 9 <= A1 and A1 <= 11:
+                    A2 = calc_gain(R1, R2, Rs, RD, max_Vto)  
+                    
+                    if within_10_percent(A1, A2) == True:
+                        print('SUCSESS!')
+                        print('R1: ', R1)
+                        print('R2: ', R2)
+                        print('Rs: ', Rs)
+                        print('RD: ', RD)
+#                                 print('R3: ', R3)
+#                                 print('RL: ', RL)
+                        print('gain using Vto = %s: %s' %(min_Vto, A1))
+                        print('gain using Vto = %s: %s' %(max_Vto, A2))
+                        print(' ')
                         
-                        if A1 != False and 9 <= A1 and A1 <= 11:
-                            A2 = calc_gain(R1, R2, Rs, RD, R3, RL, max_Vto)  
-                            
-                            if within_10_percent(A1, A2) == True:
-                                print('SUCSESS!')
-                                print('R1: ', R1)
-                                print('R2: ', R2)
-                                print('Rs: ', Rs)
-                                print('RD: ', RD)
-                                print('R3: ', R3)
-                                print('RL: ', RL)
-                                print('gain using Vto = %s: %s' %(min_Vto, A1))
-                                print('gain using Vto = %s: %s' %(max_Vto, A2))
-                                print(' ')
-                                
-                                num_answers -= 1
-                                if num_answers == 0:
-                                    print('done!')
-                                    exit()        
+                        num_answers -= 1
+                        if num_answers == 0:
+                            print('done!')
+                            exit()        
 print('no answers found :(')
         
         
