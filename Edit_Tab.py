@@ -286,6 +286,7 @@ class Edit_Tab(Tab.Tab):
 
    
     def output_image_path______widgets_setup(self):
+        print(self.location_text_box.get())#```````````````````````````````````````````````````````````````````````````
         #output image path text box
         self.output_img_file_path_lbl = Label(self.master, text="Output Image File: ")
         self.output_img_file_path_text_box = Entry(self.master,width=FILE_PATH_TEXT_BOX_WIDTH)
@@ -320,9 +321,9 @@ class Edit_Tab(Tab.Tab):
                             'output_image_file_path':       self.output_img_file_path_text_box.get(),
                             
                             #from Advanced_Tab
-                            'final_image_background_color': self.tabs['advanced'].output_bgnd_clr_tup_tb .get(),
+                            'final_image_background_color': self.tabs['advanced'].output_bgnd_clr_tup_tb.get(),
                             'input_image_background_color': self.tabs['advanced'].bgnd_text_clr_tup_tb.get(),
-                            'background_text_color':        None}
+                            'background_text_color':        self.tabs['advanced'].bgnd_text_clr_tup_tb.get()}  #does this line work???????????????????????????
             
             #build final image using arguments
             build_image.build_img_test(image_kwargs)

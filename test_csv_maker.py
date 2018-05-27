@@ -4,6 +4,7 @@ import os
 import random
 from random import randint
 import string
+from prompt_toolkit.key_binding.bindings.vi import ascii_lowercase
    
 full_path = os.path.realpath(__file__)
 csvPath =  os.path.dirname(full_path) + '\\ds_final_test.csv'
@@ -12,7 +13,7 @@ BLANK = ""
 
 
 def rand_header_name(size=6):
-    return ''.join(random.choice(string.ascii_uppercase) for _ in range(size))
+    return ''.join(random.choice(string.ascii_uppercase + ascii_lowercase) for _ in range(size))
 
 def rand_bribe_str(num_bribe_digits = 3):
     return ' (' +  ''.join(random.choice(string.digits) for _ in range(num_bribe_digits)) + ')'
@@ -61,7 +62,7 @@ def print_log_list(log_list):
     print('done printing log list')
 
 
-def make_csv_data(num_verticies, currency_name_length, num_bribe_digits):
+def make_csv_data(num_verticies, currency_name_length, num_bribe_digits, min_exchange_cost, max_exchange_cost):
     header_list = rand_header_list(num_verticies, currency_name_length, num_bribe_digits)
 #     print(header_list)#`````````````````````````````````````````````````````````````````````````````````````
     
@@ -71,26 +72,25 @@ def make_csv_data(num_verticies, currency_name_length, num_bribe_digits):
         line_dict = {BLANK: header_list[i]}
         
         for header_num in range(num_verticies):
-            line_dict[header_list[header_num]] = randint(0, 1000)
+            line_dict[header_list[header_num]] = randint(min_exchange_cost, max_exchange_cost)
 #             print(line_dict)#```````````````````````````````````````````````````````````````````````````````````````````````````````````
 #         print(line_dict)#```````````````````````````````````````````````````````````````````````````````````````    
         log_list.append(line_dict)
-        print_log_list(log_list)
+#         print_log_list(log_list)//`````````````````````````````````````````````````````````````````
 #         print(log_list)#```````````````````````````````````````````````````````````````````````
 #         logger.logList(dataDictList, csvPath, wantBackup = True)
     logger.logList(log_list, csvPath, False)
         
     
     
+NUM_VERTICIES = 100
+CURRENCY_NAME_LENGTH = 3
+NUM_BRIBE_DIGITS = 3
+MIN_EXCHANGE_COST = 100
+MAX_EXCHANGE_COST = 10000
     
-    
 
-
-# print(rand_header_list(10, 5, 3))
-# print(rand_header(6))
-
-# print(rand_header_list(10, 5, 3))
-make_csv_data(10, 4, 3)
+make_csv_data(NUM_VERTICIES, CURRENCY_NAME_LENGTH, NUM_BRIBE_DIGITS, MIN_EXCHANGE_COST, MAX_EXCHANGE_COST)
 print("Done!")
 
 

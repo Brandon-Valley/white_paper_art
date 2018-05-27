@@ -9,11 +9,13 @@ import font_tools
 TEST = {'test': 3,
         'tesT': '234'}
 
-def build_img_test(args = TEST):
+def build_img_test(kargs = TEST):
     print('making img...')
-    print('args: ')
+    print('kargs: ')
     
-    print(args)
+#     print(args)
+    for key, value in kargs.items():
+        print('  %s : %s' %(key, value))
     
     print('done!')
     
@@ -119,5 +121,4 @@ def build_final_image(kwargs):
       
     print('done!')
       
-     
-     
+
