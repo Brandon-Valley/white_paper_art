@@ -2,6 +2,8 @@ import re
 
 from tkinter.colorchooser import *
 
+from PIL import Image, ImageDraw
+
 
 from tkinter import *
 from tkinter.ttk import *
@@ -65,7 +67,19 @@ def get_last_path_var(f_path):
 
     
 # def get_defalt_output_img_file_path(img_file_path):
-    
+
+
+
+def valid_img_filename(filename):
+#     img = Image.new('RGB', (60, 30), color = 'red')
+#     img.save('pil_red.jpg')
+    try:
+        from PIL import Image
+        img = Image.new('RGB', (60, 30), color = 'red')
+        img.save(filename)
+        return True
+    except:
+        return False
     
     
     
