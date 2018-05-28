@@ -47,9 +47,9 @@ def build_final_image(kwargs):
     # why is there a space in front of every line?
      
      
-    input_image_filename = kwargs['input_image_file_path']
-    data_text_filename = kwargs['input_text_file_path']
-    final_image_filename = kwargs['output_image_file_path']
+    kwargs['input_image_file_path'] = kwargs['input_image_file_path']
+    kwargs['input_text_file_path'] = kwargs['input_text_file_path']
+    kwargs['output_image_file_path'] = kwargs['output_image_file_path']
 
      
     cols = kwargs['image_size']
@@ -101,7 +101,7 @@ def build_final_image(kwargs):
      
     #read in the text that will be colored to show a picture
     print('reading in data text file...') 
-    data = tools.read_text_file(data_text_filename)
+    data = tools.read_text_file(kwargs['input_text_file_path'])
      
     #turn list of lines of data into one big string, use that to get number of chars in data, then split it into words
     print('formatting data into word list...')
@@ -122,7 +122,7 @@ def build_final_image(kwargs):
     # print("number of lines:", len(lines))
      
     print('building color_cords from input image...')
-    color_cord_dict = color_cords.get_color_cords(input_image_filename, cols, font_aspect_ratio, input_image_background_color)
+    color_cord_dict = color_cords.get_color_cords(kwargs['input_image_file_path'], cols, font_aspect_ratio, input_image_background_color)
      
     print('calculating and adding user defined offset to adjusted_color_cords...')
     offset_color_cords = offset.offset_color_cords(color_cord_dict, image_position, lines)
@@ -134,7 +134,7 @@ def build_final_image(kwargs):
     if save_image == True:
         # image.save('test_output.jpg', format='JPEG', subsampling=0,quality = 100)
         print('saving high-resolution image...')
-        image.save(final_image_filename, subsampling = 0, quality = 100)
+        image.save(kwargs['output_image_file_path'], subsampling = 0, quality = 100)
       
     print('showing low-resolution image...')
     image.show()
