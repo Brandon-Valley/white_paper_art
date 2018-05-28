@@ -296,25 +296,26 @@ class Edit_Tab(Tab.Tab):
 #             self.font_size_sbox.insert(0, self.last_known_font_size)
     
     
+    def quality_rad_btn_sel(self):#changes font size options
+        self.output_img_file_path_text_box.configure( state = 'normal' )
+        self.output_img_file_path_text_box.delete(0, "end")
+        
+        if  self.quality_selected.get() == 'low':
+            self.max_font_size_sel.set(0)
+            self.max_font_size_btn_sel()
+            self.output_img_file_path_text_box.configure( state = 'disabled' )
+        elif self.quality_selected.get() == 'high':
+            self.max_font_size_sel.set(1)
+            self.max_font_size_btn_sel()
+            self.update_output_image_file_text_box()
+
     def quality______widgets_setup(self):
         #quality radio buttons
-        def quality_rad_btn_sel():#changes font size options
-            self.output_img_file_path_text_box.configure( state = 'normal' )
-            self.output_img_file_path_text_box.delete(0, "end")
-            
-            if  self.quality_selected.get() == 'low':
-                self.max_font_size_sel.set(0)
-                self.max_font_size_btn_sel()
-                self.output_img_file_path_text_box.configure( state = 'disabled' )
-            elif self.quality_selected.get() == 'high':
-                self.max_font_size_sel.set(1)
-                self.max_font_size_btn_sel()
-#                 update_output_image_file_text_box()
     
         self.quality_selected  = StringVar()
         self.quality_selected.set("low") #default
-        self.high_qual_rad_btn = Radiobutton(self.master,text='Show Low Quality Image (Fast)', value='low', variable = self.quality_selected, command = quality_rad_btn_sel)
-        self.low_qual_rad_btn  = Radiobutton(self.master,text='Save High Quality Image (Slow)', value='high', variable = self.quality_selected, command = quality_rad_btn_sel)
+        self.high_qual_rad_btn = Radiobutton(self.master,text='Show Low Quality Image (Fast)', value='low', variable = self.quality_selected, command = self.quality_rad_btn_sel)
+        self.low_qual_rad_btn  = Radiobutton(self.master,text='Save High Quality Image (Slow)', value='high', variable = self.quality_selected, command = self.quality_rad_btn_sel)
 
     #remove update param after a bit!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     #updates contents of output_img_file_path_text_box when contents of location_text_box change
@@ -342,6 +343,8 @@ class Edit_Tab(Tab.Tab):
         self.output_img_file_path_lbl = Label(self.master, text="Output Image File Path: ")
         self.output_img_file_path_text_box = Entry(self.master,width=FILE_PATH_TEXT_BOX_WIDTH)
         self.output_img_file_path_text_box.bind('<Expose>', xview_event_handler)#scrolls text to end if needed
+        
+        self.quality_rad_btn_sel()
         
         def update_output_img_file_name(event):
             filename = GUI_utils.get_last_path_var(self.output_img_file_path_text_box.get())
