@@ -102,11 +102,10 @@ def build_final_image(kwargs):
     # print("number of lines:", len(lines))
      
     print('building color_cords from input image...')
-    color_cords = color_cords.get_color_cords(input_image_filename, cols, font_aspect_ratio, input_image_background_color)
-    # print(img_color_matrix)#````````````````````````````````````````````````````````````````````````````````````````````````````````````````````
+    color_cord_dict = color_cords.get_color_cords(input_image_filename, cols, font_aspect_ratio, input_image_background_color)
      
     print('calculating and adding user defined offset to adjusted_color_cords...')
-    offset_color_cords = offset.offset_color_cords(color_cords, image_position, lines)
+    offset_color_cords = offset.offset_color_cords(color_cord_dict, image_position, lines)
       
     #put it all together and what have you got?  Bippity Boppity BOO!
     print('creating final image...')
@@ -121,4 +120,6 @@ def build_final_image(kwargs):
       
     print('done!')
       
+      
+build_final_image('empty')
 
