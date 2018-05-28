@@ -285,25 +285,19 @@ class Edit_Tab(Tab.Tab):
         self.x_cord_sbox.insert(0, 0) #default 
         self.y_cord_sbox.insert(0, 0) #default 
     
-    
-    
-#             self.font_size_sbox.configure( state = 'normal' )
-#         self.font_size_sbox.delete(0, "end")
-#         
-#         if self.max_font_size_sel.get() == 1:
-#             self.font_size_sbox.configure( state = 'disabled' )
-#         else:
-#             self.font_size_sbox.insert(0, self.last_known_font_size)
+
     
     
     def quality_rad_btn_sel(self):#changes font size options
         self.output_img_file_path_text_box.configure( state = 'normal' )
+        self.output_img_file_path_browse_btn.configure( state = 'normal' )
         self.output_img_file_path_text_box.delete(0, "end")
         
         if  self.quality_selected.get() == 'low':
             self.max_font_size_sel.set(0)
             self.max_font_size_btn_sel()
             self.output_img_file_path_text_box.configure( state = 'disabled' )
+            self.output_img_file_path_browse_btn.configure( state = 'disabled' )
         elif self.quality_selected.get() == 'high':
             self.max_font_size_sel.set(1)
             self.max_font_size_btn_sel()
@@ -311,15 +305,11 @@ class Edit_Tab(Tab.Tab):
 
     def quality______widgets_setup(self):
         #quality radio buttons
-    
         self.quality_selected  = StringVar()
         self.quality_selected.set("low") #default
         self.high_qual_rad_btn = Radiobutton(self.master,text='Show Low Quality Image (Fast)', value='low', variable = self.quality_selected, command = self.quality_rad_btn_sel)
         self.low_qual_rad_btn  = Radiobutton(self.master,text='Save High Quality Image (Slow)', value='high', variable = self.quality_selected, command = self.quality_rad_btn_sel)
 
-    #remove update param after a bit!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    #updates contents of output_img_file_path_text_box when contents of location_text_box change
-   
 
     
     def update_output_image_file_text_box(self, event = None):
@@ -344,7 +334,7 @@ class Edit_Tab(Tab.Tab):
         self.output_img_file_path_text_box = Entry(self.master,width=FILE_PATH_TEXT_BOX_WIDTH)
         self.output_img_file_path_text_box.bind('<Expose>', xview_event_handler)#scrolls text to end if needed
         
-        self.quality_rad_btn_sel()
+        
         
         def update_output_img_file_name(event):
             filename = GUI_utils.get_last_path_var(self.output_img_file_path_text_box.get())
@@ -353,7 +343,7 @@ class Edit_Tab(Tab.Tab):
         #updates output_image_file_name any time you edit output_img_file_path_text_box
         self.bind_to_edit(self.output_img_file_path_text_box, update_output_img_file_name)
              
-        def output_file_path_clk():
+        def output_file_path_browse_btn_clk():
             print('dict_method:', self.tabs['advanced'].tb.get())
             print('pretend to go into directory to get text file path')#`````````````````````````````````````````````````````
             
@@ -361,9 +351,9 @@ class Edit_Tab(Tab.Tab):
         self.update_output_image_file_text_box()  
           
 #         set_output_img_txt_box_contents() #need????????????????????????????????????????????????????????????????????????????????????
-        self.output_img_file_path_btn = Button(self.master, text="Browse...", command = output_file_path_clk)
+        self.output_img_file_path_browse_btn = Button(self.master, text="Browse...", command = output_file_path_browse_btn_clk)
         
-        
+        self.quality_rad_btn_sel()
         
   
     def build_image______widgets_setup(self):
@@ -493,7 +483,7 @@ class Edit_Tab(Tab.Tab):
             #output image file path text box
             self.output_img_file_path_lbl        .grid(column=1, row=row_num)
             self.output_img_file_path_text_box   .grid(column=2, row=row_num, columnspan = 3)
-            self.output_img_file_path_btn        .grid(column=5, row=row_num)
+            self.output_img_file_path_browse_btn        .grid(column=5, row=row_num)
              
             row_num += 10
              
