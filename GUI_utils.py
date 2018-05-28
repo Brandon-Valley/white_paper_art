@@ -70,10 +70,6 @@ def get_last_path_var(f_path):
     
 
 def valid_dir_name(dir_name):
-    if not os.path.exists(dir_name):
-        os.makedirs(dir_name)
-        os.rmdir(dir_name)
-#     os.makedirs(dir_name)
     try:
         if not os.path.exists(dir_name):
             os.makedirs(dir_name)
