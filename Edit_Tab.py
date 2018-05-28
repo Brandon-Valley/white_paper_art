@@ -287,15 +287,29 @@ class Edit_Tab(Tab.Tab):
     
     
     
+#             self.font_size_sbox.configure( state = 'normal' )
+#         self.font_size_sbox.delete(0, "end")
+#         
+#         if self.max_font_size_sel.get() == 1:
+#             self.font_size_sbox.configure( state = 'disabled' )
+#         else:
+#             self.font_size_sbox.insert(0, self.last_known_font_size)
+    
+    
     def quality______widgets_setup(self):
         #quality radio buttons
         def quality_rad_btn_sel():#changes font size options
+            self.output_img_file_path_text_box.configure( state = 'normal' )
+            self.output_img_file_path_text_box.delete(0, "end")
+            
             if  self.quality_selected.get() == 'low':
                 self.max_font_size_sel.set(0)
                 self.max_font_size_btn_sel()
+                self.output_img_file_path_text_box.configure( state = 'disabled' )
             elif self.quality_selected.get() == 'high':
                 self.max_font_size_sel.set(1)
                 self.max_font_size_btn_sel()
+#                 update_output_image_file_text_box()
     
         self.quality_selected  = StringVar()
         self.quality_selected.set("low") #default
@@ -305,13 +319,13 @@ class Edit_Tab(Tab.Tab):
     #remove update param after a bit!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     #updates contents of output_img_file_path_text_box when contents of location_text_box change
    
-    
+
     
     def update_output_image_file_text_box(self, event = None):
         self.output_img_file_path_text_box.delete(0, "end")
 
-        NEW_FOLDER_VALID_NEED__MAKE_A_REAL_THING_FOR_THIS = True #make a thing for this!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        if self.create_new_folder_cbtn_sel.get() == 1 and NEW_FOLDER_VALID_NEED__MAKE_A_REAL_THING_FOR_THIS == True:
+#         NEW_FOLDER_VALID_NEED__MAKE_A_REAL_THING_FOR_THIS = True #make a thing for this!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        if self.create_new_folder_cbtn_sel.get() == 1 and GUI_utils.valid_dir_name(self.folder_name_text_box.get()) == True:
 #             print('box is checked')#```````````````````````````````````````````````````````````````````````````````````````````````
             self.output_img_file_path_text_box.insert(END, self.location_text_box.get() + '\\' + self.folder_name_text_box.get() + '\\' + self.output_image_file_name)
         else:
