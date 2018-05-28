@@ -2,7 +2,9 @@ import re
 
 from tkinter.colorchooser import *
 
-from PIL import Image, ImageDraw
+# from PIL import Image, ImageDraw
+import os
+
 
 
 from tkinter import *
@@ -67,12 +69,27 @@ def get_last_path_var(f_path):
 
     
 
+def valid_dir_name(dir_name):
+    if not os.path.exists(dir_name):
+        os.makedirs(dir_name)
+        os.rmdir(dir_name)
+#     os.makedirs(dir_name)
+    try:
+        if not os.path.exists(dir_name):
+            os.makedirs(dir_name)
+            os.rmdir(dir_name)
+        return True
+    except:
+        return False
+
+
 
 def valid_img_filename(filename):
     try:
         from PIL import Image
         img = Image.new('RGB', (60, 30), color = 'red')
         img.save(filename)
+        os.remove(filename)
         return True
     except:
         return False

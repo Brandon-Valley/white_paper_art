@@ -37,6 +37,8 @@ MIN_IMG_POS_CORD = -999
 
 DEFAULT_OUTPUT_IMAGE_FILE_NAME = 'output.jpg'
 
+INVALID_ENTRY_COLOR = 'red'
+
 # DEFAULT_NUM_DIM = 1
 # DEFAULT_DIN_DIM = 1
 
@@ -110,14 +112,25 @@ class Edit_Tab(Tab.Tab):
 
     def folder_name______widgets_setup(self):
         #folder name text box 
-        self.folder_name_text_box = Entry(self.master,width=20)
-        self.folder_name_lbl = Label(self.master, text="Folder Name: ")
-        self.folder_name_text_box = Entry(self.master,width=20)
+        self.folder_name_text_box =     Entry(self.master, width=20)
+        self.folder_name_lbl =          Label(self.master, text="Folder Name: ")
+        self.folder_name_text_box =     Entry(self.master, width=20)
+        self.folder_name_invalid_lbl =  Label(self.master, text="*", foreground = INVALID_ENTRY_COLOR)
+        self.folder_name_valid_lbl =    Label(self.master, text=" ")
+        
+        def update_folder_name_validity(event):
+            print('valid: ', GUI_utils.valid_dir_name(self.folder_name_text_box.get()))#`````````````````````````````````````````````````````
+            if GUI_utils.valid_dir_name(self.folder_name_text_box.get()) == True:
+                self.folder_name_invalid_lbl.lower()
+            else:
+                self.folder_name_invalid_lbl.lift()
+        
+        self.folder_name_text_box.bind("<FocusOut>", update_folder_name_validity)
         self.bind_to_edit(self.folder_name_text_box, self.update_output_image_file_text_box) 
         
         #create new folder check button
         self.create_new_folder_cbtn_sel = IntVar(value = 0)#value sets default
-        self.create_new_folder_cbtn = Checkbutton(self.master, text="Create New Folder", variable=self.create_new_folder_cbtn_sel, command = self.update_folder_name_text_box)
+        self.create_new_folder_cbtn =   Checkbutton(self.master, text="Create New Folder", variable=self.create_new_folder_cbtn_sel, command = self.update_folder_name_text_box)
         self.update_folder_name_text_box() #disabled folder name by default if create_new_folder_cbtn is 0 by default
     
     
@@ -302,8 +315,8 @@ class Edit_Tab(Tab.Tab):
 # #         print('self.folder_name_text_box:', self.folder_name_text_box.get())#`````````````````````````````````````````````````````````
         self.output_img_file_path_text_box.delete(0, "end")
 
-        NEW_FOLDER_VALID_NEED__MAKE_A_REAL_THING_FOR_THIS = True#make a thing for this!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        if self.create_new_folder_cbtn_sel.get() == 1:# and NEW_FOLDER_VALID_NEED__MAKE_A_REAL_THING_FOR_THIS == True:
+        NEW_FOLDER_VALID_NEED__MAKE_A_REAL_THING_FOR_THIS = True #make a thing for this!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        if self.create_new_folder_cbtn_sel.get() == 1 and NEW_FOLDER_VALID_NEED__MAKE_A_REAL_THING_FOR_THIS == True:
 #             print('box is checked')#```````````````````````````````````````````````````````````````````````````````````````````````
             self.output_img_file_path_text_box.insert(END, self.location_text_box.get() + '\\' + self.folder_name_text_box.get() + '\\' + self.output_image_file_name)
         else:
@@ -386,6 +399,8 @@ class Edit_Tab(Tab.Tab):
             #folder_name
             self.folder_name_lbl                 .grid(column=1, row=row_num)
             self.folder_name_text_box            .grid(column=2, row=row_num)
+            self.folder_name_invalid_lbl         .grid(column=3, row=row_num)
+            self.folder_name_valid_lbl           .grid(column=3, row=row_num) 
              
             row_num += 10
              
