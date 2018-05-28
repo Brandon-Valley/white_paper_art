@@ -50,36 +50,25 @@ def build_final_image(kwargs):
     input_image_filename = kwargs['input_image_file_path']
     data_text_filename = kwargs['input_text_file_path']
     final_image_filename = kwargs['output_image_file_path']
-#     input_image_filename = 'test_pics/bitcoin2046.png'
-#     data_text_filename = 'full_paper.txt'
-#     final_image_filename = 'TEST_OUTPUT.png'
+
      
-    # set cols
     cols = kwargs['image_size']
-#     cols = 110#made smaller for testing, was 200
      
-    #'cour.ttf'
-    # 'Consolas.ttf'
     font_path = kwargs['font_path']
-#     font_path = 'fonts/' + 'Consolas.ttf'
      
        
-    font_size = kwargs['font_size']
-#     font_size = 40# get better resolution with larger size  
+    font_size = kwargs['font_size']# get better resolution with larger size  
      
      
     #2/3:
     # a a a
     # a a a
-    
     desired_dimension_ratio = kwargs['output_image_dim_ratio']
-#     desired_dimension_ratio = 1 / 1
+
      
     # 0, 0 = centered
     image_position = kwargs['image_position_cords']
-#     image_position = {'x_pos': 0,
-#                       'y_pos': 0}
-     
+
     #set this to None for no background color separation #there is a reason for this!  this trims the whitespace so that image size can be more consistent!!!!!!!!!!!!
     input_image_background_color = None #(255, 255, 255) #gui not done!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
      
@@ -88,15 +77,12 @@ def build_final_image(kwargs):
     default_colors = {'background_image':        (255,255,255),#white
                       'final_image_background':  kwargs['final_image_background_color'],
                       'default_text':            kwargs['background_text_color']}
-#     default_colors = {'background_image':        (255,255,255),#white
-#                       'final_image_background':  (0,0,0),#black
-#                       'default_text':            (255, 255, 255)}#white
+
     
     save_image = True
     if len(kwargs['output_image_file_path']) == 0:
         save_image = False
         
-    print(type(kwargs['final_image_background_color'][0]))#````````````````````````````````````````````````````````````````````
     
 
      
