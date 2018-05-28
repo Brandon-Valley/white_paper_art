@@ -296,10 +296,10 @@ class Edit_Tab(Tab.Tab):
     
     
     def update_output_image_file_text_box(self, event = None):
-        print('update_output_image_file_text_box() called')#`````````````````````````````````````````````````````````````````````
-        print("test, self.output_image_file_name: ", self.output_image_file_name)#`````````````````````````````````````````````
-        print('self.create_new_folder_cbtn_sel.get(): ', self.create_new_folder_cbtn_sel.get())#`````````````````````````````````````
-#         print('self.folder_name_text_box:', self.folder_name_text_box.get())#`````````````````````````````````````````````````````````
+#         print('update_output_image_file_text_box() called')#`````````````````````````````````````````````````````````````````````
+#         print("test, self.output_image_file_name: ", self.output_image_file_name)#`````````````````````````````````````````````
+#         print('self.create_new_folder_cbtn_sel.get(): ', self.create_new_folder_cbtn_sel.get())#`````````````````````````````````````
+# #         print('self.folder_name_text_box:', self.folder_name_text_box.get())#`````````````````````````````````````````````````````````
         self.output_img_file_path_text_box.delete(0, "end")
 
         NEW_FOLDER_VALID_NEED__MAKE_A_REAL_THING_FOR_THIS = True#make a thing for this!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!

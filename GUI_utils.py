@@ -66,13 +66,9 @@ def get_last_path_var(f_path):
     return split_f_path[-1]
 
     
-# def get_defalt_output_img_file_path(img_file_path):
-
 
 
 def valid_img_filename(filename):
-#     img = Image.new('RGB', (60, 30), color = 'red')
-#     img.save('pil_red.jpg')
     try:
         from PIL import Image
         img = Image.new('RGB', (60, 30), color = 'red')
