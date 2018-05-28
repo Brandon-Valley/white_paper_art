@@ -23,14 +23,14 @@ def get_current_dir_path():
 # def get_defalt_text_file_path():
 #     return 'default\text\file\path.txt'
 #  
-def get_defalt_image_file_path():
-    return 'ddddd\aaaaa\file\bitcoin.jpg'
+# def get_defalt_image_file_path():
+#     return 'ddddd\aaaaa\file\bitcoin.jpg'
 
 def get_defalt_file_path(home_dir_path, file_ext_list):
     valid_filenames = get_matching_filenames_list(home_dir_path, file_ext_list)
     
-    print('valid_filenames: ',valid_filenames)#`````````````````````````````````````````````````````````````````````````````````````
-    print(type(valid_filenames))#``````````````````````````````````````````````````````````````````````````````````````````````````
+#     print('valid_filenames: ',valid_filenames)#`````````````````````````````````````````````````````````````````````````````````````
+#     print(type(valid_filenames))#``````````````````````````````````````````````````````````````````````````````````````````````````
     if len(valid_filenames) != 0:
         return home_dir_path + '\\' + valid_filenames[0]
     else:

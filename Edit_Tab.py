@@ -145,7 +145,7 @@ class Edit_Tab(Tab.Tab):
   
     def input_text_file_path______widgets_setup(self):
         #text file path text box
-        self.input_text_file_path_lbl = Label(self.master, text="Text File Input: ")
+        self.input_text_file_path_lbl = Label(self.master, text="Text File Input Path: ")
         self.input_text_file_path_text_box = Entry(self.master,width=FILE_PATH_TEXT_BOX_WIDTH)
         self.input_text_file_path_text_box.insert(END, GUI_utils.get_defalt_file_path(self.location_text_box.get(), INPUT_TXT_FILE_TYPES)) #default
              
@@ -161,7 +161,7 @@ class Edit_Tab(Tab.Tab):
    
     def input_image_file_path______widgets_setup(self):
         #image file path text box
-        self.input_img_file_path_lbl = Label(self.master, text="Image File Input: ")
+        self.input_img_file_path_lbl = Label(self.master, text="Image File Input Path: ")
         self.input_img_file_path_text_box = Entry(self.master,width=FILE_PATH_TEXT_BOX_WIDTH)
         self.input_img_file_path_text_box.insert(END, GUI_utils.get_defalt_file_path(self.location_text_box.get(), INPUT_IMG_FILE_TYPES)) #default
         self.input_img_file_path_text_box.bind('<Expose>', xview_event_handler)#scrolls text to end if needed
@@ -343,8 +343,6 @@ class Edit_Tab(Tab.Tab):
         self.output_img_file_path_text_box = Entry(self.master,width=FILE_PATH_TEXT_BOX_WIDTH)
         self.output_img_file_path_text_box.bind('<Expose>', xview_event_handler)#scrolls text to end if needed
         
-        
-        
         def update_output_img_file_name(event):
             filename = GUI_utils.get_last_path_var(self.output_img_file_path_text_box.get())
             self.output_image_file_name = filename
@@ -359,15 +357,12 @@ class Edit_Tab(Tab.Tab):
         #set initial contents of text box
         self.update_output_image_file_text_box()  
           
-#         set_output_img_txt_box_contents() #need????????????????????????????????????????????????????????????????????????????????????
         self.output_img_file_path_browse_btn = Button(self.master, text="Browse...", command = output_file_path_browse_btn_clk)
         
         self.quality_rad_btn_sel()
         
   
-    def build_image______widgets_setup(self):
-#         GUI_utils.get_matching_filenames_list(self.location_text_box.get())#````````````````````````````````````````````````````````````````
-        
+    def build_image______widgets_setup(self):        
         #build image button   
         def build_img_btn_clk():
             #read the current state of all arguments
