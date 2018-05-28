@@ -11,12 +11,12 @@ import GUI #just for testing
 TEST = {'test': 3,
         'tesT': '234'}
 
-def build_img_test(kargs = TEST):
+def build_img_test(kwargs = TEST):
     print('making img...')
     print('kargs: ')
     
 #     print(args)
-    for key, value in kargs.items():
+    for key, value in kwargs.items():
         print('  %s : %s' %(key, value))
     
     print('done!')
@@ -27,7 +27,13 @@ def build_img_test(kargs = TEST):
 test_kwargs = {}
     
 def build_final_image(kwargs):
-    print(kwargs)#````````````````````````````````````````````````````````````````````````````````````````````````````````
+#     print(kwargs)#````````````````````````````````````````````````````````````````````````````````````````````````````````
+    print('kwargs: ')
+    
+#     print(args)
+    for key, value in kwargs.items():
+        print('  %s : %s' %(key, value))
+    print(' ')
     
     #IF IMAGE STARTS LOOKING WEIRD, LOOK INTO WHY SOMETIMES IN COLOR_CORDS, 
     #THERE ARE 2 OF THE SAME CORD IN ONE COLOR'S LIST, COULD HAVE TO DO WITH ROUNDING? NOT SURE IF IT EFFECTS OTHER THINGS
@@ -42,16 +48,20 @@ def build_final_image(kwargs):
      
      
     input_image_filename = kwargs['input_image_file_path']
+    data_text_filename = kwargs['input_text_file_path']
+    final_image_filename = kwargs['output_image_file_path']
 #     input_image_filename = 'test_pics/bitcoin2046.png'
-    data_text_filename = 'full_paper.txt'
-    final_image_filename = 'TEST_OUTPUT.png'
+#     data_text_filename = 'full_paper.txt'
+#     final_image_filename = 'TEST_OUTPUT.png'
      
     # set cols
-    cols = 110#made smaller for testing, was 200
+    cols = kwargs['image_size']
+#     cols = 110#made smaller for testing, was 200
      
     #'cour.ttf'
     # 'Consolas.ttf'
-    font_path = 'fonts/' + 'Consolas.ttf'
+    font_path = kwargs['font_path']
+#     font_path = 'fonts/' + 'Consolas.ttf'
      
        
        
