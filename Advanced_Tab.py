@@ -74,26 +74,40 @@ class Advanced_Tab(Tab.Tab):
             log_current_input_bgnd_clr_vars()
             print('this is what just got inserted correctly: %s    this is its type: %s' %(self.input_bgnd_clr_lbox.get(ACTIVE), type(self.input_bgnd_clr_lbox.get(ACTIVE))))#```````````````````````````````````````
 
-
-        self.last_known_bgnd_clr_tup = StringVar() #this can probably be made not self!@@!@!!!!!!!!!!!!!!!!! maybe not?????????????????????????????????????
+        self.last_known_bgnd_clr_lbox_contents  = StringVar()
+        self.last_known_bgnd_clr_tup            = StringVar() #this can probably be made not self!@@!@!!!!!!!!!!!!!!!!! maybe not?????????????????????????????????????
         def log_current_input_bgnd_clr_vars():
+            print('self.input_bgnd_clr_lbox.get(): ', self.input_bgnd_clr_lbox.curselection())#````````````````````````````````````````````````````````
             print('self.input_bgnd_clr_tup_tb.get(): ', self.input_bgnd_clr_tup_tb.get())#````````````````````````````````````````````````````````
 #             self.last_known_font_size = self.font_size_sbox.get()#`````````````````````````````````````````````````````````````````
             self.last_known_bgnd_clr_tup = self.input_bgnd_clr_tup_tb.get()
             print('last_known_bgnd_clr_tup: ', self.last_known_bgnd_clr_tup)#````````````````````````````````````````````````````````
             print('    type: ', type(self.last_known_bgnd_clr_tup))#````````````````````````````````````````````````````````
+            
+            self.last_known_bgnd_clr_lbox_contents = GUI_utils.lbox_contents_to_str(self.input_bgnd_clr_lbox)
+            
 
 
         #trim input background color check button
         def trim_input_bgnd_clr_cbtn_clk():
             print('cbtn clicked, last_known_bgnd_clr_tup: ', self.last_known_bgnd_clr_tup)#``````````````````````````````````````````````````````````````````````````````````````````````````````````````
             print('    self.input_bgnd_clr_display_tb.state: ', self.input_bgnd_clr_display_tb['state'])#`````````````````````````````````````````````````````
+            print('    self.input_bgnd_clr_lbox .state: ', self.input_bgnd_clr_lbox['state'])#`````````````````````````````````````````````````````
+
+            print('about to clear, self.input_bgnd_clr_lbox.curselection(): ', self.input_bgnd_clr_lbox.curselection())#````````````````````````````````````````````````````````
+#             print('about to clear, self.input_bgnd_clr_lbox.items(): ', self.input_bgnd_clr_lbox.items())#````````````````````````````````````````````````````````
+            for item_num in range( self.input_bgnd_clr_lbox.size() ):#``````````````````````````````````````````````````````````````````````````````````````
+                print(str(item_num) + ' ' + self.input_bgnd_clr_lbox.get(item_num))
+            self.input_bgnd_clr_lbox            .configure( state = 'normal' )
+            self.input_bgnd_clr_lbox.delete(0, "end")
+            
             self.input_bgnd_clr_tup_tb          .configure( state = 'normal' )
             self.input_bgnd_clr_tup_tb.delete(0, "end")
             
             self.input_bgnd_clr_display_tb      .configure( state = 'readonly' )
             
             if trim_input_bgnd_clr_cbtn_sel.get() == 0:
+                self.input_bgnd_clr_lbox        .configure( state = 'disabled' )
                 self.input_bgnd_clr_sel_btn     .configure( state = 'disabled' )
                 self.input_bgnd_clr_tup_tb      .configure( state = 'disabled' )
                 self.input_bgnd_clr_display_tb  .configure( state = 'disabled' )
@@ -101,8 +115,11 @@ class Advanced_Tab(Tab.Tab):
                 self.input_bgnd_clr_sel_btn     .configure( state = 'normal' )
                 
                 active_color = GUI_utils.str_to_tup(self.last_known_bgnd_clr_tup)
-                GUI_utils.apply_color_change(self.input_bgnd_clr_tup_tb, self.input_bgnd_clr_display_tb, active_color)#default, sets to read only
+                GUI_utils.apply_color_change(self.input_bgnd_clr_tup_tb, self.input_bgnd_clr_display_tb, active_color)#sets to read only
+                
+                GUI_utils.load_colors(self.input_bgnd_clr_lbox, GUI_utils.lbox_str_to_tup_list(self.last_known_bgnd_clr_lbox_contents))
                             
+                        #``````````````````````````````````````````````````````````````````````````````````````````````````````
 #             self.input_bgnd_clr_lbox.configure( state = 'normal' )
 #             self.input_bgnd_clr_lbox.delete(0, "end")
 #              
@@ -125,21 +142,29 @@ class Advanced_Tab(Tab.Tab):
         self.input_bgnd_clr_lbox.bind("<Return>",update_color_display_with_selected_color)
         self.input_bgnd_clr_lbox.bind("<Double-Button>",update_color_display_with_selected_color)
     
-    
+        
+#         def load_colors(list_box_widget ,color_list):
+#             for color_num in range(len(TEST_COLOR_LIST)):
+#                 color = TEST_COLOR_LIST[color_num]
+#                 self.input_bgnd_clr_lbox.insert(END, str(color))
+#                 bg_color = GUI_utils.tk_color(color)
+#                 font_color = GUI_utils.tk_color( GUI_utils.highest_contrast_label_color(color) )
+#                 self.input_bgnd_clr_lbox.itemconfig(color_num, bg=bg_color, fg = font_color)
+# 
+#         
+#         #load colors
+#         for color_num in range(len(TEST_COLOR_LIST)):
+#             color = TEST_COLOR_LIST[color_num]
+#             self.input_bgnd_clr_lbox.insert(END, str(color))
+#             bg_color = GUI_utils.tk_color(color)
+#             font_color = GUI_utils.tk_color( GUI_utils.highest_contrast_label_color(color) )
+#             self.input_bgnd_clr_lbox.itemconfig(color_num, bg=bg_color, fg = font_color)
 
-
-
-        #load colors
-        for color_num in range(len(TEST_COLOR_LIST)):
-            color = TEST_COLOR_LIST[color_num]
-            self.input_bgnd_clr_lbox.insert(END, str(color))
-            bg_color = GUI_utils.tk_color(color)
-            font_color = GUI_utils.tk_color( GUI_utils.highest_contrast_label_color(color) )
-            self.input_bgnd_clr_lbox.itemconfig(color_num, bg=bg_color, fg = font_color)
+        GUI_utils.load_colors(self.input_bgnd_clr_lbox, TEST_COLOR_LIST)
             
         #input background color display text boxes
-        self.input_bgnd_clr_tup_tb = Entry(self.master,width=COLOR_TUP_TB_WIDTH, state = 'readonly', justify = 'center')
-        self.input_bgnd_clr_display_tb = Entry(self.master,width=COLOR_DISPLAY_TB_WIDTH, state = 'readonly')
+        self.input_bgnd_clr_tup_tb      = Entry(self.master,width=COLOR_TUP_TB_WIDTH,     state = 'readonly', justify = 'center')
+        self.input_bgnd_clr_display_tb  = Entry(self.master,width=COLOR_DISPLAY_TB_WIDTH, state = 'readonly')
         
         update_color_display_with_selected_color()#sets default to first color in the list             #can these 2 be put together???????????   VVVVVVVVVVVV ???????????????
         log_current_input_bgnd_clr_vars()

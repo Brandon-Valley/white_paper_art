@@ -18,6 +18,8 @@ import fonts
 
 OUTPUT_IMAGE_SUFFIX = '_text_art' #used????????????????????????????????????????????????????????????????????????????????
 
+LBOX_STR_DELIM = '_'
+
 def get_current_dir_path():
     import os 
     dir_path = os.path.dirname(os.path.realpath(__file__))
@@ -199,6 +201,41 @@ def str_to_int_tup(tup_str):
     split_tup_str = re.split(r'[(,)]', tup_str)
     r, g, b = split_tup_str[1:4]
     return(int(r), int(g), int(b))
+
+
+
+
+def load_colors(list_box_widget, color_list):
+    for color_num in range(len(color_list)):
+        color = color_list[color_num]
+        list_box_widget.insert(END, str(color))
+        bg_color = tk_color(color)
+        font_color = tk_color( highest_contrast_label_color(color) )
+        list_box_widget.itemconfig(color_num, bg=bg_color, fg = font_color)
+    
+    
+    
+    
+def lbox_contents_to_str(lbox_widget):
+    lbox_string = ''
+    for item_num in range( lbox_widget.size() ):
+        if item_num != 0:
+            lbox_string += LBOX_STR_DELIM
+        lbox_string += str(lbox_widget.get(item_num))
+    return lbox_string
+    
+def lbox_str_to_tup_list(lbox_str):
+    tup_list = []
+    tup_str_list = lbox_str.split(LBOX_STR_DELIM)
+    
+    for tup_str in tup_str_list:
+        tup_list.append(str_to_int_tup(tup_str))
+    return tup_list
+    
+    
+    
+    
+    
     
     
     
