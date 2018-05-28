@@ -315,7 +315,6 @@ class Edit_Tab(Tab.Tab):
         self.output_image_file_name = StringVar()
         self.output_image_file_name = DEFAULT_OUTPUT_IMAGE_FILE_NAME
         
-#         print(self.location_text_box.get())#```````````````````````````````````````````````````````````````````````````
         #output image path text box
         self.output_img_file_path_lbl = Label(self.master, text="Output Image File Path: ")
         self.output_img_file_path_text_box = Entry(self.master,width=FILE_PATH_TEXT_BOX_WIDTH)
@@ -324,28 +323,11 @@ class Edit_Tab(Tab.Tab):
         def update_output_img_file_name(event):
             filename = GUI_utils.get_last_path_var(self.output_img_file_path_text_box.get())
             self.output_image_file_name = filename
-            
-            #```````````````````````````````````````````````````````````````````````````````````````````````````````````````````
-#             if GUI_utils.valid_img_filename(filename) == True:
-#                 self.output_image_file_name = filename
-#             else:
-#                 self.output_image_file_name = DEFAULT_OUTPUT_IMAGE_FILE_NAME
 
-            print("``        just got done with update_output_img_file_name, self.output_image_file_name: ", self.output_image_file_name)#`````````````````````````````````````````````
-            print(GUI_utils.valid_img_filename(filename))#````````````````````````````````````````````````````````````````````````````````````````````````````````````
         #updates output_image_file_name any time you edit output_img_file_path_text_box
         self.bind_to_edit(self.output_img_file_path_text_box, update_output_img_file_name)
-        
-        
-        
-        #need??????????????????????????????????????????????????????????????????????????????????????????????????????????
-#         def set_output_img_txt_box_contents():
-#             self.output_img_file_path_text_box.insert(END, self.location_text_box.get() + '\\' + self.output_image_file_name)
-#             #self.output_img_file_path_text_box.insert(END, GUI_utils.get_defalt_output_img_file_path(self.input_img_file_path_text_box.get())) #default
              
         def output_file_path_clk():
-#             print(self.advanced_tab.tb.get())#``````````````````````````````````````````````````````````
-#             print(self.tb.get())
             print('dict_method:', self.tabs['advanced'].tb.get())
             print('pretend to go into directory to get text file path')#`````````````````````````````````````````````````````
             
