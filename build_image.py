@@ -4,6 +4,8 @@ import color_cords
 import offset
 import font_tools
 
+import GUI #just for testing
+
 
 
 TEST = {'test': 3,
@@ -25,6 +27,8 @@ def build_img_test(kargs = TEST):
 test_kwargs = {}
     
 def build_final_image(kwargs):
+    print(kwargs)#````````````````````````````````````````````````````````````````````````````````````````````````````````
+    
     #IF IMAGE STARTS LOOKING WEIRD, LOOK INTO WHY SOMETIMES IN COLOR_CORDS, 
     #THERE ARE 2 OF THE SAME CORD IN ONE COLOR'S LIST, COULD HAVE TO DO WITH ROUNDING? NOT SURE IF IT EFFECTS OTHER THINGS
      
@@ -37,8 +41,8 @@ def build_final_image(kwargs):
     # why is there a space in front of every line?
      
      
-     
-    input_image_filename = 'test_pics/bitcoin2046.png'
+    input_image_filename = kwargs['input_text_file_path']
+#     input_image_filename = 'test_pics/bitcoin2046.png'
     data_text_filename = 'full_paper.txt'
     final_image_filename = 'TEST_OUTPUT.png'
      
@@ -121,5 +125,7 @@ def build_final_image(kwargs):
     print('done!')
       
       
-build_final_image('empty')
+# build_final_image('empty')
 
+if __name__ == '__main__':
+    GUI.main()   

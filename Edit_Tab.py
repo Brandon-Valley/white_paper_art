@@ -168,9 +168,9 @@ class Edit_Tab(Tab.Tab):
          
         def input_img_file_path_clk():
             img_file = filedialog.askopenfilename(filetypes = (("Image files","*.jpg"),("Image files","*.png"),("all files","*.*")))
-            self.input_text_file_path_text_box.delete(0, "end")#clear text box
-            self.input_text_file_path_text_box.insert(END, img_file)
-            self.input_text_file_path_text_box.bind('<Expose>', xview_event_handler)#scrolls text to end if needed #need???????????????????????????????????
+            self.input_img_file_path_text_box.delete(0, "end")#clear text box
+            self.input_img_file_path_text_box.insert(END, img_file)
+            self.input_img_file_path_text_box.bind('<Expose>', xview_event_handler)#scrolls text to end if needed #need???????????????????????????????????
              
         self.input_img_file_path_btn = Button(self.master, text="Browse...", command = input_img_file_path_clk)
     
@@ -393,7 +393,7 @@ class Edit_Tab(Tab.Tab):
                             'background_text_color':        self.tabs['advanced'].bgnd_text_clr_tup_tb.get()}  #does this line work???????????????????????????
             
             #build final image using arguments
-            build_image.build_img_test(image_kwargs)
+            build_image.build_final_image(image_kwargs)
         self.build_img_btn = Button(self.master, text="Build Image", command = build_img_btn_clk)
 
 
