@@ -124,9 +124,12 @@ def get_defalt_output_img_file_path(img_file_path):
 def get_matching_filenames_list(path, file_extention_list):
     filename_list = []
     for file_extention in file_extention_list:
-        for file in os.listdir(path):
-            if file.endswith(file_extention):
-                filename_list.append(file)
+        try:
+            for file in os.listdir(path):
+                if file.endswith(file_extention):
+                    filename_list.append(file)
+        except:
+            pass
     return filename_list
     
     
