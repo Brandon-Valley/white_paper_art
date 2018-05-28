@@ -324,15 +324,10 @@ class Edit_Tab(Tab.Tab):
     def update_output_image_file_text_box(self, event = None):
         self.output_img_file_path_text_box.delete(0, "end")
 
-#         NEW_FOLDER_VALID_NEED__MAKE_A_REAL_THING_FOR_THIS = True #make a thing for this!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         if self.create_new_folder_cbtn_sel.get() == 1 and GUI_utils.valid_dir_name(self.folder_name_text_box.get()) == True:
-#             print('box is checked')#```````````````````````````````````````````````````````````````````````````````````````````````
             self.output_img_file_path_text_box.insert(END, self.location_text_box.get() + '\\' + self.folder_name_text_box.get() + '\\' + self.output_image_file_name)
         else:
             self.output_img_file_path_text_box.insert(END, self.location_text_box.get() + '\\' + self.output_image_file_name)
-            
-   
-   
    
     def output_image_path______widgets_setup(self):
         self.output_image_file_name = StringVar()
@@ -351,9 +346,24 @@ class Edit_Tab(Tab.Tab):
         self.bind_to_edit(self.output_img_file_path_text_box, update_output_img_file_name)
              
         def output_file_path_browse_btn_clk():
-            print('dict_method:', self.tabs['advanced'].tb.get())
-            print('pretend to go into directory to get text file path')#`````````````````````````````````````````````````````
+            dir = filedialog.askdirectory()
+            self.output_img_file_path_text_box.delete(0, "end")
+            self.output_img_file_path_text_box.insert(END, dir)
             
+#             dir = filedialog.askdirectory()
+#             self.location_text_box.delete(0, "end")
+#             self.location_text_box.insert(END, dir)
+            
+#dont delete                DO NOT DELETE   !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+#             #this is bad code, almost exactly copied from update_output_image_file_text_box, 
+#             #bad way of doing things but I am lazy, tired, and ill fix it later (maybe)
+#             self.output_img_file_path_text_box.delete(0, "end")
+# 
+#             if self.create_new_folder_cbtn_sel.get() == 1 and GUI_utils.valid_dir_name(self.folder_name_text_box.get()) == True:
+#                 self.output_img_file_path_text_box.insert(END, dir + '\\' + self.folder_name_text_box.get() + '\\' + self.output_image_file_name)
+#             else:
+#                 self.output_img_file_path_text_box.insert(END, dir + '\\' + self.output_image_file_name)
+                
         #set initial contents of text box
         self.update_output_image_file_text_box()  
           
