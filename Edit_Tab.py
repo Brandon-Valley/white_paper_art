@@ -104,6 +104,9 @@ class Edit_Tab(Tab.Tab):
         
         self.input_text_file_path_text_box.delete(0, "end")
         self.input_text_file_path_text_box.insert(END, GUI_utils.get_defalt_file_path(self.location_text_box.get(), INPUT_TXT_FILE_TYPES))
+        
+        self.input_img_file_path_text_box.delete(0, "end")
+        self.input_img_file_path_text_box.insert(END, GUI_utils.get_defalt_file_path(self.location_text_box.get(), INPUT_IMG_FILE_TYPES))
     
     #can I remove event param??????????????????????????????????????????????????????????????????????????????????????
     #create new folder check button #should this be put inside something else / somewhere else????????????????????????????
@@ -160,7 +163,7 @@ class Edit_Tab(Tab.Tab):
         #image file path text box
         self.input_img_file_path_lbl = Label(self.master, text="Image File Input: ")
         self.input_img_file_path_text_box = Entry(self.master,width=FILE_PATH_TEXT_BOX_WIDTH)
-        self.input_img_file_path_text_box.insert(END, GUI_utils.get_defalt_image_file_path()) #default
+        self.input_img_file_path_text_box.insert(END, GUI_utils.get_defalt_file_path(self.location_text_box.get(), INPUT_IMG_FILE_TYPES)) #default
         self.input_img_file_path_text_box.bind('<Expose>', xview_event_handler)#scrolls text to end if needed
          
         def input_img_file_path_clk():
