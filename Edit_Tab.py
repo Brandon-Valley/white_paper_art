@@ -71,7 +71,7 @@ class Edit_Tab(Tab.Tab):
         self.location_lbl = Label(self.master, text="Location: ")
 
         #if focus leaves location_text_box while ending in a \, folder_name_text_box should be enabled if not already
-        def enable_folder_name_text_box_if_needed(event):
+        def enable_folder_name_text_box_if_needed(): #event #dont remove until tested to make sure you dont need!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
             if GUI_utils.get_last_path_var(self.location_text_box.get()) == '':
                 self.create_new_folder_cbtn_sel.set(1) 
                 self.update_folder_name_text_box()
@@ -98,7 +98,7 @@ class Edit_Tab(Tab.Tab):
             
         self.location_browse_btn = Button(self.master, text="Browse...", command = location_browse_btn_clk)
         
-    def location_text_box_updated(self, event = None):
+    def location_text_box_updated(self): #event = None #dont remove until tested to make sure you dont need!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         self.update_folder_name_text_box()
         self.update_output_image_file_text_box()
         
@@ -110,7 +110,7 @@ class Edit_Tab(Tab.Tab):
     
     #can I remove event param??????????????????????????????????????????????????????????????????????????????????????
     #create new folder check button #should this be put inside something else / somewhere else????????????????????????????
-    def update_folder_name_text_box(self, event = None):#changes state and contents of folder name
+    def update_folder_name_text_box(self):#changes state and contents of folder name   #event = None #dont remove until tested to make sure you dont need!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         self.folder_name_text_box.configure( state = 'normal' )
         self.folder_name_text_box.delete(0, "end")
         
@@ -127,7 +127,7 @@ class Edit_Tab(Tab.Tab):
         self.folder_name_invalid_lbl =  Label(self.master, text="*", foreground = INVALID_ENTRY_COLOR)
         self.folder_name_valid_lbl =    Label(self.master, text=" ")
         
-        def update_folder_name_validity(event):
+        def update_folder_name_validity(): #event #dont remove until tested to make sure you dont need!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
             if GUI_utils.valid_dir_name(self.folder_name_text_box.get()) == True:
                 self.folder_name_invalid_lbl.lower()
             else:
@@ -191,7 +191,7 @@ class Edit_Tab(Tab.Tab):
         #font size spin box
         self.last_known_font_size = IntVar(value = DEFAULT_FONT_SIZE)
         
-        def log_current_font_size(event = None):
+        def log_current_font_size(): #event = None #dont remove until tested to make sure you dont need!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
             self.last_known_font_size = self.font_size_sbox.get()
             
         self.font_size_sbox = Spinbox(self.master, from_ = 0, to = DEFAULT_MAX_FONT_SIZE, width = 5,
@@ -247,7 +247,7 @@ class Edit_Tab(Tab.Tab):
         self.match_input_image_dims_cbtn = Checkbutton(self.master, text="Use Input Image Dimensions", variable=use_input_img_dims_cbtn_sel, command = use_input_img_dims_btn_sel)
         
  
-        def log_current_dim_vals(event = None):
+        def log_current_dim_vals(): #event = None #dont remove until tested to make sure you dont need!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
             last_known_num_val.set(self.output_img_dim_num_sbox.get())
             last_known_din_val.set(self.output_img_dim_din_sbox.get())            
         
@@ -321,7 +321,7 @@ class Edit_Tab(Tab.Tab):
 
 
     
-    def update_output_image_file_text_box(self, event = None):
+    def update_output_image_file_text_box(self): # = None #dont remove until tested to make sure you dont need!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         self.output_img_file_path_text_box.delete(0, "end")
 
         if self.create_new_folder_cbtn_sel.get() == 1 and GUI_utils.valid_dir_name(self.folder_name_text_box.get()) == True:
@@ -338,7 +338,7 @@ class Edit_Tab(Tab.Tab):
         self.output_img_file_path_text_box = Entry(self.master,width=FILE_PATH_TEXT_BOX_WIDTH)
         self.output_img_file_path_text_box.bind('<Expose>', xview_event_handler)#scrolls text to end if needed
         
-        def update_output_img_file_name(event):
+        def update_output_img_file_name(): #event #dont remove until tested to make sure you dont need!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
             filename = GUI_utils.get_last_path_var(self.output_img_file_path_text_box.get())
             self.output_image_file_name = filename
 

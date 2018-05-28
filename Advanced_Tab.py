@@ -69,16 +69,45 @@ class Advanced_Tab(Tab.Tab):
             self.input_bgnd_clr_tup_tb.configure(state = 'readonly')
             #update display text box
             active_color = GUI_utils.str_to_tup(self.input_bgnd_clr_lbox.get(ACTIVE))
-            GUI_utils.apply_color_change(self.input_bgnd_clr_tup_tb, self.input_bgnd_clr_display_tb, active_color)#default, sets to readonly
+            GUI_utils.apply_color_change(self.input_bgnd_clr_tup_tb, self.input_bgnd_clr_display_tb, active_color)#default, sets to read only
 
+        #trim input background color check button
+        def trim_input_bgnd_clr_cbtn_clk():
+            print('cbtn clicked')#``````````````````````````````````````````````````````````````````````````````````````````````````````````````
+            
+            
+            if trim_input_bgnd_clr_cbtn_sel.get() == 0:
+                self.input_bgnd_clr_sel_btn.configure( state = 'disabled' )
+            else:
+                self.input_bgnd_clr_sel_btn.configure( state = 'normal' )
+                            
+#             self.input_bgnd_clr_lbox.configure( state = 'normal' )
+#             self.input_bgnd_clr_lbox.delete(0, "end")
+#              
+#             if self.max_font_size_sel.get() == 1:
+#                 self.font_size_sbox.configure( state = 'disabled' )
+#             else:
+#                 self.font_size_sbox.insert(0, self.last_known_font_size)
+        
+        trim_input_bgnd_clr_cbtn_sel = IntVar(value = 1) #default to value
+        self.trim_input_bgnd_clr_cbtn   = Checkbutton(self.master, text="Trim Input Background Color: ", variable=trim_input_bgnd_clr_cbtn_sel, command=trim_input_bgnd_clr_cbtn_clk)
+        
+        
         #input background color list box
-        self.input_bgnd_clr_lbox = Listbox(self.master, width=COLOR_TUP_TB_WIDTH, height=5)#, font=("Helvetica", 12))
-        self.input_bgnd_clr_sel_btn = Button(self.master, text="Select", command = update_color_display) 
-        self.input_bgnd_clr_sbar = Scrollbar(self.master, orient="vertical", command=self.input_bgnd_clr_lbox.yview)
+        self.input_bgnd_clr_lbl         = Label(self.master, text="Input Background Color: ")
+        self.input_bgnd_clr_lbox        = Listbox(self.master, width=COLOR_TUP_TB_WIDTH, height=5)#, font=("Helvetica", 12))
+        self.input_bgnd_clr_sel_btn     = Button(self.master, text="Select", command = update_color_display) 
+        self.input_bgnd_clr_sbar        = Scrollbar(self.master, orient="vertical", command=self.input_bgnd_clr_lbox.yview)
         
         self.input_bgnd_clr_lbox.config(yscrollcommand=self.input_bgnd_clr_sbar.set)
         self.input_bgnd_clr_lbox.bind("<Return>",update_color_display)
         self.input_bgnd_clr_lbox.bind("<Double-Button>",update_color_display)
+        
+        trim_input_bgnd_clr_cbtn_clk()
+        
+        #CAN i REMOVE EVENT?????????????????????????????????????????????????????????????????????????????????????????????????
+        def log_current_input_bgnd_clr_vars():
+            self.last_known_font_size = self.font_size_sbox.get()
 
         #load colors
         for color_num in range(len(TEST_COLOR_LIST)):
@@ -122,13 +151,15 @@ class Advanced_Tab(Tab.Tab):
         row_num += 10
         
         #input image background color
+        self.input_bgnd_clr_lbl                 .grid(column=1, row=row_num)
         self.input_bgnd_clr_lbox                .grid(column=2, row=row_num)
         self.input_bgnd_clr_sbar                .grid(column=3, row=row_num, sticky=N+S+W)
         self.input_bgnd_clr_sel_btn             .grid(column=2, row=row_num + 1)
         
-        
         self.input_bgnd_clr_tup_tb              .grid(column=4, row=row_num)
         self.input_bgnd_clr_display_tb          .grid(column=5, row=row_num)
+        
+        self.trim_input_bgnd_clr_cbtn           .grid(column=2, row=row_num + 2)
         
         
         
