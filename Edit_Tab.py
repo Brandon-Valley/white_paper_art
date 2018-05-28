@@ -379,18 +379,18 @@ class Edit_Tab(Tab.Tab):
             image_kwargs = {'input_text_file_path':         self.input_text_file_path_text_box.get(),
                             'input_image_file_path':        self.input_img_file_path_text_box.get(),
                             'font_path':                    FONTS_PATH + '\\' + self.font_drop_down.get() + '.ttf',
-                            'font_size':                    self.font_size_sbox.get(),
+                            'font_size':                    int(self.font_size_sbox.get()),
                             'maximize_font_size':           self.max_font_size_sel.get(),
                             'output_image_dim_ratio':       GUI_utils.strs_to_int_ratio( self.output_img_dim_num_sbox.get() , self.output_img_dim_din_sbox.get() ),
                             'image_size':                   int(self.img_size_sbox.get()),
-                            'image_position_cords':         {'x': self.x_cord_sbox.get(), 'y': self.y_cord_sbox.get()},
-                            'quality':                      self.quality_selected.get(),
-                            'output_image_file_path':       self.output_img_file_path_text_box.get(),
+                            'image_position_cords':         {'x_pos': int(self.x_cord_sbox.get()), 'y_pos': int(self.y_cord_sbox.get())},
+                            'quality':                      self.quality_selected.get(),#need???????????????????????????????????????????????????????????????????????
+                            'output_image_file_path':       self.output_img_file_path_text_box.get(), 
                             
                             #from Advanced_Tab
-                            'final_image_background_color': self.tabs['advanced'].output_bgnd_clr_tup_tb.get(),
-                            'input_image_background_color': self.tabs['advanced'].bgnd_text_clr_tup_tb.get(),
-                            'background_text_color':        self.tabs['advanced'].bgnd_text_clr_tup_tb.get()}  #does this line work???????????????????????????
+                            'final_image_background_color': GUI_utils.str_to_int_tup(self.tabs['advanced'].output_bgnd_clr_tup_tb.get()),
+                            'input_image_background_color': GUI_utils.str_to_int_tup(self.tabs['advanced'].bgnd_text_clr_tup_tb.get()),
+                            'background_text_color':        GUI_utils.str_to_int_tup(self.tabs['advanced'].bgnd_text_clr_tup_tb.get())}  #does this line work???????????????????????????
             
             #build final image using arguments
             build_image.build_final_image(image_kwargs)

@@ -64,27 +64,47 @@ def build_final_image(kwargs):
 #     font_path = 'fonts/' + 'Consolas.ttf'
      
        
-       
-    font_size = 40# get better resolution with larger size  
+    font_size = kwargs['font_size']
+#     font_size = 40# get better resolution with larger size  
      
      
     #2/3:
     # a a a
     # a a a
-    desired_dimension_ratio = 1 / 1
+    
+    desired_dimension_ratio = kwargs['output_image_dim_ratio']
+#     desired_dimension_ratio = 1 / 1
      
     # 0, 0 = centered
-    image_position = {'x_pos': 0,
-                      'y_pos': 0}
+    image_position = kwargs['image_position_cords']
+#     image_position = {'x_pos': 0,
+#                       'y_pos': 0}
      
     #set this to None for no background color separation #there is a reason for this!  this trims the whitespace so that image size can be more consistent!!!!!!!!!!!!
-    input_image_background_color = None #(255, 255, 255)
+    input_image_background_color = None #(255, 255, 255) #gui not done!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
      
     #background 
     #replace this bull shit with something to  deal with whitespace
     default_colors = {'background_image':        (255,255,255),#white
-                      'final_image_background':  (0,0,0),#black
-                      'default_text':            (255, 255, 255)}#white
+                      'final_image_background':  kwargs['final_image_background_color'],
+                      'default_text':            kwargs['background_text_color']}
+#     default_colors = {'background_image':        (255,255,255),#white
+#                       'final_image_background':  (0,0,0),#black
+#                       'default_text':            (255, 255, 255)}#white
+    
+    save_image = True
+    if len(kwargs['output_image_file_path']) == 0:
+        save_image = False
+        
+    print(type(kwargs['final_image_background_color'][0]))#````````````````````````````````````````````````````````````````````
+    
+
+     
+     
+     
+     
+     
+     
      
      
      
@@ -125,9 +145,10 @@ def build_final_image(kwargs):
     print('creating final image...')
     image = text_image.text_image(lines, offset_color_cords, default_colors, font)#offset_adjusted_
       
-    # image.save('test_output.jpg', format='JPEG', subsampling=0,quality = 100)
-    print('saving high-resolution image...')
-    image.save(final_image_filename, subsampling = 0, quality = 100)
+    if save_image == True:
+        # image.save('test_output.jpg', format='JPEG', subsampling=0,quality = 100)
+        print('saving high-resolution image...')
+        image.save(final_image_filename, subsampling = 0, quality = 100)
       
     print('showing low-resolution image...')
     image.show()

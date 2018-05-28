@@ -194,6 +194,11 @@ def str_to_tup(tup_str):
     split_tup_str = re.split(r'[(,)]', tup_str)
     r, g, b = split_tup_str[1:4]
     return(r, g, b)
+
+def str_to_int_tup(tup_str):
+    split_tup_str = re.split(r'[(,)]', tup_str)
+    r, g, b = split_tup_str[1:4]
+    return(int(r), int(g), int(b))
     
     
     
