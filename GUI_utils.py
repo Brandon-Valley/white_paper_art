@@ -16,16 +16,25 @@ from tkinter import ttk
 OUTPUT_IMAGE_SUFFIX = '_text_art'
 
 def get_current_dir_path():
-    
     import os 
     dir_path = os.path.dirname(os.path.realpath(__file__))
     return dir_path#'sdfsfdfsfsd\sdffsdfsf'#"'C:\Users\Brandon\Documents\Personal Projects\white_paper_art\examples'"
 
-def get_defalt_text_file_path():
-    return 'default\text\file\path.txt'
- 
+# def get_defalt_text_file_path():
+#     return 'default\text\file\path.txt'
+#  
 def get_defalt_image_file_path():
     return 'ddddd\aaaaa\file\bitcoin.jpg'
+
+def get_defalt_file_path(home_dir_path, file_ext_list):
+    valid_filenames = get_matching_filenames_list(home_dir_path, file_ext_list)
+    
+    print('valid_filenames: ',valid_filenames)#`````````````````````````````````````````````````````````````````````````````````````
+    print(type(valid_filenames))#``````````````````````````````````````````````````````````````````````````````````````````````````
+    if len(valid_filenames) != 0:
+        return home_dir_path + '\\' + valid_filenames[0]
+    else:
+        return ''
 
 
 def get_font_list():
@@ -112,7 +121,13 @@ def get_defalt_output_img_file_path(img_file_path):
      return out_img_path
 
     
-    
+def get_matching_filenames_list(path, file_extention_list):
+    filename_list = []
+    for file_extention in file_extention_list:
+        for file in os.listdir(path):
+            if file.endswith(file_extention):
+                filename_list.append(file)
+    return filename_list
     
     
     

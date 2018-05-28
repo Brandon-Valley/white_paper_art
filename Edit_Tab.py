@@ -39,6 +39,9 @@ DEFAULT_OUTPUT_IMAGE_FILE_NAME = 'output.jpg'
 
 INVALID_ENTRY_COLOR = 'red'
 
+INPUT_TXT_FILE_TYPES = ['.txt']
+INPUT_IMG_FILE_TYPES = ['.jpg', '.png']
+
 # DEFAULT_NUM_DIM = 1
 # DEFAULT_DIN_DIM = 1
 
@@ -138,7 +141,7 @@ class Edit_Tab(Tab.Tab):
         #text file path text box
         self.input_text_file_path_lbl = Label(self.master, text="Text File Input: ")
         self.input_text_file_path_text_box = Entry(self.master,width=FILE_PATH_TEXT_BOX_WIDTH)
-        self.input_text_file_path_text_box.insert(END, GUI_utils.get_defalt_text_file_path()) #default
+        self.input_text_file_path_text_box.insert(END, GUI_utils.get_defalt_file_path(self.location_text_box.get(), INPUT_TXT_FILE_TYPES)) #default
              
         def input_text_file_path_clk():
             file = filedialog.askopenfilename(filetypes = (("Text files","*.txt"),("all files","*.*")))
@@ -357,7 +360,9 @@ class Edit_Tab(Tab.Tab):
         
   
     def build_image______widgets_setup(self):
-                #build image button   
+#         GUI_utils.get_matching_filenames_list(self.location_text_box.get())#````````````````````````````````````````````````````````````````
+        
+        #build image button   
         def build_img_btn_clk():
             #read the current state of all arguments
             image_kwargs = {'input_text_file_path':         self.input_text_file_path_text_box.get(),
