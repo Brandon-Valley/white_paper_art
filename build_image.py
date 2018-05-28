@@ -52,22 +52,22 @@ def build_final_image(kwargs):
     kwargs['output_image_file_path'] = kwargs['output_image_file_path']
 
      
-    cols = kwargs['image_size']
+    kwargs['image_size'] = kwargs['image_size']
      
-    font_path = kwargs['font_path']
+    kwargs['font_path'] = kwargs['font_path']
      
        
-    font_size = kwargs['font_size']# get better resolution with larger size  
+    kwargs['font_size'] = kwargs['font_size']# get better resolution with larger size  
      
      
     #2/3:
     # a a a
     # a a a
-    desired_dimension_ratio = kwargs['output_image_dim_ratio']
+    kwargs['output_image_dim_ratio'] = kwargs['output_image_dim_ratio']
 
      
     # 0, 0 = centered
-    image_position = kwargs['image_position_cords']
+    kwargs['image_position_cords'] = kwargs['image_position_cords']
 
     #set this to None for no background color separation #there is a reason for this!  this trims the whitespace so that image size can be more consistent!!!!!!!!!!!!
     input_image_background_color = None #(255, 255, 255) #gui not done!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -95,7 +95,7 @@ def build_final_image(kwargs):
      
      
     print('getting font properties...')
-    font = font_tools.load_font(font_path, font_size)
+    font = font_tools.load_font(kwargs['font_path'], kwargs['font_size'])
     font_aspect_ratio = font_tools.get_aspect_ratio(font)
      
      
@@ -113,7 +113,7 @@ def build_final_image(kwargs):
     #turn true_dimension_ratio into max number of lines and max chars per line
     print('calculating ideal text image dimensions...')
     #find correct image dimensions by adjusting desired ratio for the difference between width and height of a char
-    true_dimension_ratio = desired_dimension_ratio * font_aspect_ratio
+    true_dimension_ratio = kwargs['output_image_dim_ratio'] * font_aspect_ratio
     ideal_dimentions = tools.calc_ideal_dimentions(true_dimension_ratio, num_chars)
      
     #make list of lines to be output in final image
@@ -122,10 +122,10 @@ def build_final_image(kwargs):
     # print("number of lines:", len(lines))
      
     print('building color_cords from input image...')
-    color_cord_dict = color_cords.get_color_cords(kwargs['input_image_file_path'], cols, font_aspect_ratio, input_image_background_color)
+    color_cord_dict = color_cords.get_color_cords(kwargs['input_image_file_path'], kwargs['image_size'], font_aspect_ratio, input_image_background_color)
      
     print('calculating and adding user defined offset to adjusted_color_cords...')
-    offset_color_cords = offset.offset_color_cords(color_cord_dict, image_position, lines)
+    offset_color_cords = offset.offset_color_cords(color_cord_dict, kwargs['image_position_cords'], lines)
       
     #put it all together and what have you got?  Bippity Boppity BOO!
     print('creating final image...')
