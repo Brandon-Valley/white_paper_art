@@ -41,7 +41,7 @@ def build_final_image(kwargs):
     # why is there a space in front of every line?
      
      
-    input_image_filename = kwargs['input_text_file_path']
+    input_image_filename = kwargs['input_image_file_path']
 #     input_image_filename = 'test_pics/bitcoin2046.png'
     data_text_filename = 'full_paper.txt'
     final_image_filename = 'TEST_OUTPUT.png'

@@ -377,7 +377,7 @@ class Edit_Tab(Tab.Tab):
         def build_img_btn_clk():
             #read the current state of all arguments
             image_kwargs = {'input_text_file_path':         self.input_text_file_path_text_box.get(),
-                            'image_file_path':              self.input_img_file_path_text_box.get(),
+                            'input_image_file_path':              self.input_img_file_path_text_box.get(),
                             'font_name':                    self.font_drop_down.get() + '.ttf',
                             'font_size':                    self.font_size_sbox.get(),
                             'maximize_font_size':           self.max_font_size_sel.get(),
