@@ -25,6 +25,18 @@ def build_img_test(kwargs = TEST):
     
     
 test_kwargs = {}
+
+
+
+
+#TIPS:
+
+#get better resolution with larger font size
+
+# kwargs['output_image_dim_ratio']
+    #2/3:
+    # a a a
+    # a a a
     
 def build_final_image(kwargs):
 #     print(kwargs)#````````````````````````````````````````````````````````````````````````````````````````````````````````
@@ -47,27 +59,10 @@ def build_final_image(kwargs):
     # why is there a space in front of every line?
      
      
-    kwargs['input_image_file_path'] = kwargs['input_image_file_path']
-    kwargs['input_text_file_path'] = kwargs['input_text_file_path']
-    kwargs['output_image_file_path'] = kwargs['output_image_file_path']
+
 
      
-    kwargs['image_size'] = kwargs['image_size']
-     
-    kwargs['font_path'] = kwargs['font_path']
-     
-       
-    kwargs['font_size'] = kwargs['font_size']# get better resolution with larger size  
-     
-     
-    #2/3:
-    # a a a
-    # a a a
-    kwargs['output_image_dim_ratio'] = kwargs['output_image_dim_ratio']
 
-     
-    # 0, 0 = centered
-    kwargs['image_position_cords'] = kwargs['image_position_cords']
 
     #set this to None for no background color separation #there is a reason for this!  this trims the whitespace so that image size can be more consistent!!!!!!!!!!!!
     input_image_background_color = None #(255, 255, 255) #gui not done!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
