@@ -61,7 +61,7 @@ class Advanced_Tab(Tab.Tab):
         
     def input_background_color______widget_setup(self):
 
-        def update_color_display(event = None):
+        def update_color_display_with_selected_color(): #event = None #dont remove until tested to make sure you dont need!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
             #update tuple text box
             self.input_bgnd_clr_tup_tb.configure(state = 'normal')
             self.input_bgnd_clr_tup_tb.delete(0, END)
@@ -70,16 +70,35 @@ class Advanced_Tab(Tab.Tab):
             #update display text box
             active_color = GUI_utils.str_to_tup(self.input_bgnd_clr_lbox.get(ACTIVE))
             GUI_utils.apply_color_change(self.input_bgnd_clr_tup_tb, self.input_bgnd_clr_display_tb, active_color)#default, sets to read only
+            
+            log_current_input_bgnd_clr_vars()
+            print('this is what just got inserted correctly: %s    this is its type: %s' %(self.input_bgnd_clr_lbox.get(ACTIVE), type(self.input_bgnd_clr_lbox.get(ACTIVE))))#```````````````````````````````````````
+
+
+        self.last_known_bgnd_clr_tup = StringVar() #this can probably be made not self!@@!@!!!!!!!!!!!!!!!!! maybe not?????????????????????????????????????
+        def log_current_input_bgnd_clr_vars():
+            print('self.input_bgnd_clr_tup_tb.get(): ', self.input_bgnd_clr_tup_tb.get())#````````````````````````````````````````````````````````
+#             self.last_known_font_size = self.font_size_sbox.get()#`````````````````````````````````````````````````````````````````
+            self.last_known_bgnd_clr_tup = self.input_bgnd_clr_tup_tb.get()
+            print('last_known_bgnd_clr_tup: ', self.last_known_bgnd_clr_tup)#````````````````````````````````````````````````````````
+            print('    type: ', type(self.last_known_bgnd_clr_tup))#````````````````````````````````````````````````````````
+
 
         #trim input background color check button
         def trim_input_bgnd_clr_cbtn_clk():
-            print('cbtn clicked')#``````````````````````````````````````````````````````````````````````````````````````````````````````````````
+            print('cbtn clicked, last_known_bgnd_clr_tup: ', self.last_known_bgnd_clr_tup)#``````````````````````````````````````````````````````````````````````````````````````````````````````````````
             
+            self.input_bgnd_clr_tup_tb.configure( state = 'normal' )
+            self.input_bgnd_clr_tup_tb.delete(0, "end")
             
             if trim_input_bgnd_clr_cbtn_sel.get() == 0:
                 self.input_bgnd_clr_sel_btn.configure( state = 'disabled' )
+                self.input_bgnd_clr_tup_tb.configure( state = 'disabled' )
             else:
                 self.input_bgnd_clr_sel_btn.configure( state = 'normal' )
+                
+                self.input_bgnd_clr_tup_tb.insert(0, self.last_known_bgnd_clr_tup) 
+                self.input_bgnd_clr_tup_tb.configure(state = 'readonly')
                             
 #             self.input_bgnd_clr_lbox.configure( state = 'normal' )
 #             self.input_bgnd_clr_lbox.delete(0, "end")
@@ -96,18 +115,16 @@ class Advanced_Tab(Tab.Tab):
         #input background color list box
         self.input_bgnd_clr_lbl         = Label(self.master, text="Input Background Color: ")
         self.input_bgnd_clr_lbox        = Listbox(self.master, width=COLOR_TUP_TB_WIDTH, height=5)#, font=("Helvetica", 12))
-        self.input_bgnd_clr_sel_btn     = Button(self.master, text="Select", command = update_color_display) 
+        self.input_bgnd_clr_sel_btn     = Button(self.master, text="Select", command = update_color_display_with_selected_color) 
         self.input_bgnd_clr_sbar        = Scrollbar(self.master, orient="vertical", command=self.input_bgnd_clr_lbox.yview)
         
         self.input_bgnd_clr_lbox.config(yscrollcommand=self.input_bgnd_clr_sbar.set)
-        self.input_bgnd_clr_lbox.bind("<Return>",update_color_display)
-        self.input_bgnd_clr_lbox.bind("<Double-Button>",update_color_display)
-        
-        trim_input_bgnd_clr_cbtn_clk()
-        
-        #CAN i REMOVE EVENT?????????????????????????????????????????????????????????????????????????????????????????????????
-        def log_current_input_bgnd_clr_vars():
-            self.last_known_font_size = self.font_size_sbox.get()
+        self.input_bgnd_clr_lbox.bind("<Return>",update_color_display_with_selected_color)
+        self.input_bgnd_clr_lbox.bind("<Double-Button>",update_color_display_with_selected_color)
+    
+    
+
+
 
         #load colors
         for color_num in range(len(TEST_COLOR_LIST)):
@@ -121,7 +138,10 @@ class Advanced_Tab(Tab.Tab):
         self.input_bgnd_clr_tup_tb = Entry(self.master,width=COLOR_TUP_TB_WIDTH, state = 'readonly', justify = 'center')
         self.input_bgnd_clr_display_tb = Entry(self.master,width=COLOR_DISPLAY_TB_WIDTH, state = 'readonly')
         
-        update_color_display()#sets default to first color in the list
+        update_color_display_with_selected_color()#sets default to first color in the list             #can these 2 be put together???????????   VVVVVVVVVVVV ???????????????
+        log_current_input_bgnd_clr_vars()
+        print('here')#````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````
+        trim_input_bgnd_clr_cbtn_clk()
 
 
         

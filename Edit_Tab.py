@@ -71,7 +71,7 @@ class Edit_Tab(Tab.Tab):
         self.location_lbl = Label(self.master, text="Location: ")
 
         #if focus leaves location_text_box while ending in a \, folder_name_text_box should be enabled if not already
-        def enable_folder_name_text_box_if_needed(): #event #dont remove until tested to make sure you dont need!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        def enable_folder_name_text_box_if_needed(event): #event #dont remove until tested to make sure you dont need!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
             if GUI_utils.get_last_path_var(self.location_text_box.get()) == '':
                 self.create_new_folder_cbtn_sel.set(1) 
                 self.update_folder_name_text_box()
