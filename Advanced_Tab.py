@@ -87,18 +87,21 @@ class Advanced_Tab(Tab.Tab):
         #trim input background color check button
         def trim_input_bgnd_clr_cbtn_clk():
             print('cbtn clicked, last_known_bgnd_clr_tup: ', self.last_known_bgnd_clr_tup)#``````````````````````````````````````````````````````````````````````````````````````````````````````````````
-            
-            self.input_bgnd_clr_tup_tb.configure( state = 'normal' )
+            print('    self.input_bgnd_clr_display_tb.state: ', self.input_bgnd_clr_display_tb['state'])#`````````````````````````````````````````````````````
+            self.input_bgnd_clr_tup_tb          .configure( state = 'normal' )
             self.input_bgnd_clr_tup_tb.delete(0, "end")
             
+            self.input_bgnd_clr_display_tb      .configure( state = 'readonly' )
+            
             if trim_input_bgnd_clr_cbtn_sel.get() == 0:
-                self.input_bgnd_clr_sel_btn.configure( state = 'disabled' )
-                self.input_bgnd_clr_tup_tb.configure( state = 'disabled' )
+                self.input_bgnd_clr_sel_btn     .configure( state = 'disabled' )
+                self.input_bgnd_clr_tup_tb      .configure( state = 'disabled' )
+                self.input_bgnd_clr_display_tb  .configure( state = 'disabled' )
             else:
-                self.input_bgnd_clr_sel_btn.configure( state = 'normal' )
+                self.input_bgnd_clr_sel_btn     .configure( state = 'normal' )
                 
-                self.input_bgnd_clr_tup_tb.insert(0, self.last_known_bgnd_clr_tup) 
-                self.input_bgnd_clr_tup_tb.configure(state = 'readonly')
+                active_color = GUI_utils.str_to_tup(self.last_known_bgnd_clr_tup)
+                GUI_utils.apply_color_change(self.input_bgnd_clr_tup_tb, self.input_bgnd_clr_display_tb, active_color)#default, sets to read only
                             
 #             self.input_bgnd_clr_lbox.configure( state = 'normal' )
 #             self.input_bgnd_clr_lbox.delete(0, "end")
