@@ -64,22 +64,29 @@ def get_last_path_var(f_path):
     return split_f_path[-1]
 
     
+# def get_defalt_output_img_file_path(img_file_path):
+    
+    
+    
+    
+    
+    #DO NOT DELETE THIS!!!!   I HAVE NO CLUE WHY I WROTE THIS BUT I MUST HAV HAD A REASON!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 def get_defalt_output_img_file_path(img_file_path):
-    out_img_path = ''
-    
-    splt_path = re.split(r'[\\/]', img_file_path)
-    
-    filename = splt_path.pop()
-    splt_filename = filename.split('.')
-    splt_filename.insert(1, OUTPUT_IMAGE_SUFFIX)
-    
-    for e in splt_path:
-        out_img_path += e
-        
-    for e in splt_filename:
-        out_img_path += e
-        
-    return out_img_path
+     out_img_path = ''
+     
+     splt_path = re.split(r'[\\/]', img_file_path)
+     
+     filename = splt_path.pop()
+     splt_filename = filename.split('.')
+     splt_filename.insert(1, OUTPUT_IMAGE_SUFFIX)
+     
+     for e in splt_path:
+         out_img_path += e
+         
+     for e in splt_filename:
+         out_img_path += e
+         
+     return out_img_path
 
     
     

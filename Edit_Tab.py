@@ -35,6 +35,8 @@ DEFAULT_IMAGE_SIZE = 100 #REALLY need to figure something out for this!!!!!!!!!!
 MAX_IMG_POS_CORD = 999
 MIN_IMG_POS_CORD = -999
 
+DEFAULT_OUTPUT_IMAGE_FILE_NAME = 'output.jpg'
+
 # DEFAULT_NUM_DIM = 1
 # DEFAULT_DIN_DIM = 1
 
@@ -75,8 +77,8 @@ class Edit_Tab(Tab.Tab):
         self.location_text_box.bind('<Expose>', xview_event_handler)#scrolls text to end if needed
         
         
-        #update folder name any time the contents of location_text_box change
-        self.bind_to_edit(self.location_text_box, self.update_folder_name_text_box)
+        #update other widget(s) any time the contents of location_text_box change
+        self.bind_to_edit(self.location_text_box, self.location_text_box_updated)
         
         #update any time focus leaves text box, meant to help make sure that if you leave
         #location_text_box ending in a \, new_folder_text_box will enable itself if disabled
@@ -92,6 +94,11 @@ class Edit_Tab(Tab.Tab):
             
         self.location_browse_btn = Button(self.master, text="Browse...", command = location_browse_btn_clk)
         
+    def location_text_box_updated(self, event = None):
+        self.update_folder_name_text_box()
+        self.update_output_image_file_text_box()
+    
+    #can I remove event param??????????????????????????????????????????????????????????????????????????????????????
     #create new folder check button #should this be put inside something else / somewhere else????????????????????????????
     def update_folder_name_text_box(self, event = None):#changes state and contents of folder name
         self.folder_name_text_box.configure( state = 'normal' )
@@ -107,6 +114,7 @@ class Edit_Tab(Tab.Tab):
         self.folder_name_text_box = Entry(self.master,width=20)
         self.folder_name_lbl = Label(self.master, text="Folder Name: ")
         self.folder_name_text_box = Entry(self.master,width=20)
+        self.bind_to_edit(self.folder_name_text_box, self.update_output_image_file_text_box) 
         
         #create new folder check button
         self.create_new_folder_cbtn_sel = IntVar(value = 0)#value sets default
@@ -283,17 +291,38 @@ class Edit_Tab(Tab.Tab):
         self.high_qual_rad_btn = Radiobutton(self.master,text='Show Low Quality Image (Fast)', value='low', variable = self.quality_selected, command = quality_rad_btn_sel)
         self.low_qual_rad_btn  = Radiobutton(self.master,text='Save High Quality Image (Slow)', value='high', variable = self.quality_selected, command = quality_rad_btn_sel)
 
+    #remove update param after a bit!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    #updates contents of output_img_file_path_text_box when contents of location_text_box change
+    def update_output_image_file_text_box(self, event = None):
+        print('update_output_image_file_text_box() called')#`````````````````````````````````````````````````````````````````````
+        print("test, self.output_image_file_name: ", self.output_image_file_name)#`````````````````````````````````````````````
+        print('self.create_new_folder_cbtn_sel.get(): ', self.create_new_folder_cbtn_sel.get())#`````````````````````````````````````
+#         print('self.folder_name_text_box:', self.folder_name_text_box.get())#`````````````````````````````````````````````````````````
+        self.output_img_file_path_text_box.delete(0, "end")
 
+        NEW_FOLDER_VALID_NEED__MAKE_A_REAL_THING_FOR_THIS = True#make a thing for this!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        if self.create_new_folder_cbtn_sel.get() == 1:# and NEW_FOLDER_VALID_NEED__MAKE_A_REAL_THING_FOR_THIS == True:
+#             print('box is checked')#```````````````````````````````````````````````````````````````````````````````````````````````
+            self.output_img_file_path_text_box.insert(END, self.location_text_box.get() + '\\' + self.folder_name_text_box.get() + '\\' + self.output_image_file_name)
+        else:
+            self.output_img_file_path_text_box.insert(END, self.location_text_box.get() + '\\' + self.output_image_file_name)
+            
    
+   #change to filename not path?????????????????????????????????????????????????????????????????????????????????????
     def output_image_path______widgets_setup(self):
-        print(self.location_text_box.get())#```````````````````````````````````````````````````````````````````````````
+        self.output_image_file_name = StringVar()
+        self.output_image_file_name = DEFAULT_OUTPUT_IMAGE_FILE_NAME
+        
+#         print(self.location_text_box.get())#```````````````````````````````````````````````````````````````````````````
         #output image path text box
-        self.output_img_file_path_lbl = Label(self.master, text="Output Image File: ")
+        self.output_img_file_path_lbl = Label(self.master, text="Output Image File Path: ")
         self.output_img_file_path_text_box = Entry(self.master,width=FILE_PATH_TEXT_BOX_WIDTH)
         self.output_img_file_path_text_box.bind('<Expose>', xview_event_handler)#scrolls text to end if needed
         
-        def set_output_img_txt_box_contents():
-            self.output_img_file_path_text_box.insert(END, GUI_utils.get_defalt_output_img_file_path(self.input_img_file_path_text_box.get())) #default
+        #need??????????????????????????????????????????????????????????????????????????????????????????????????????????
+#         def set_output_img_txt_box_contents():
+#             self.output_img_file_path_text_box.insert(END, self.location_text_box.get() + '\\' + self.output_image_file_name)
+#             #self.output_img_file_path_text_box.insert(END, GUI_utils.get_defalt_output_img_file_path(self.input_img_file_path_text_box.get())) #default
              
         def output_file_path_clk():
 #             print(self.advanced_tab.tb.get())#``````````````````````````````````````````````````````````
@@ -301,7 +330,10 @@ class Edit_Tab(Tab.Tab):
             print('dict_method:', self.tabs['advanced'].tb.get())
             print('pretend to go into directory to get text file path')#`````````````````````````````````````````````````````
             
-        set_output_img_txt_box_contents()
+        #set initial contents of text box
+        self.update_output_image_file_text_box()  
+          
+#         set_output_img_txt_box_contents() #need????????????????????????????????????????????????????????????????????????????????????
         self.output_img_file_path_btn = Button(self.master, text="Browse...", command = output_file_path_clk)
         
   
