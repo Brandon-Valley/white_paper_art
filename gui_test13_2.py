@@ -1,22 +1,27 @@
-# from Tkinter import *
 from tkinter import *
-from tkinter.ttk import *
-from tkinter import filedialog
-
 root = Tk()
+frame = Frame(root)
+pyList = ["Eric", "Terry", "Graham", "Terry", "John", "Carol?", "Michael"]
+arbList = ['ham', 'spam', 'eggs', 'potatos', 'tots', 'home fries']
+pythons = Listbox(root, width=10, height=5, selectmode=EXTENDED, exportselection=0)
+food = Listbox(root, width=10, height=5, selectmode=EXTENDED, exportselection=0)
+def hider():
+    if pythons.selection_includes(4):
+        food.lower(frame)
+    elif pythons.selection_includes(0):
+        food.lift(frame)
+b2 = Button(frame, text="Hide!", command=hider)
+b2.grid(row=2, column=1)
 
-def key(event):
-    print ("pressed", repr(event.char))
+food.grid(row=0, column=1, in_=frame)
+pythons.grid(row=1, column=1, pady=10, in_=frame)
+frame.grid()
 
+for python in pyList:
+        pythons.insert('end', python)
 
-tb = Entry(root,width=20)
-tb2 = Entry(root,width=20)
+for thing in arbList:
+        food.insert('end', thing)
 
-
-tb.bind("<Key>", key)
-
-
-tb.grid(column=2, row=3)
-tb2.grid(column=1, row=4)
 
 root.mainloop()

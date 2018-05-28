@@ -1,47 +1,52 @@
-# from Tkinter import *
-from tkinter import *
-from tkinter.ttk import *
-from tkinter import filedialog
-
-
 import tkinter as tk
- 
-class Demo1:
-    def __init__(self, master):
-        self.master = master
-        
-        self.tb = Entry(master,width=20)
-        self.tb2 = Entry(master,width=20)
 
 
-        def key(event):
-            print ("pressed", repr(event.char))
-#             self.tb2.delete(0, "end")#clear text box
-#             self.tb2.insert(END, self.tb.get() + event.char)
-            self.tb2.insert(END, event.char)
-        
-        def backspace(event):
-    #         print ("pressed", repr(event.char))
-            print("pressed backspace")
-            temp_txt = self.tb2.get()[:-1]
-            self.tb2.delete(0, "end")#clear text box
-            self.tb2.insert(END, temp_txt)        
-        
-        self.tb.bind("<Key>", key)
-        self.tb.bind("<BackSpace>", backspace)
-        
-        
-        self.tb.grid(column=2, row=3)
-        self.tb2.grid(column=1, row=4)
+try:                        # In order to be able to import tkinter for
+    import tkinter as tk    # either in python 2 or in python 3
+except:
+    import Tkinter as tk
 
-        
 
-        
- 
-def main(): 
-    root = tk.Tk()
-    app = Demo1(root)
-    root.mainloop()
- 
+def swap():
+    no_error_label.lift()
+#     error_label.lift()
+#     button2.lift()
+    global is_button1_lifted
+    if is_button1_lifted:
+        button2.lift()
+    else:
+        button1.lift()
+    is_button1_lifted = not is_button1_lifted
+
+
 if __name__ == '__main__':
-    main()
+    root = tk.Tk()
+    is_button1_lifted = False
+    button1 = tk.Button(root, text="Swap with button 2", command=swap)
+    button2 = tk.Button(root, text="Swap with button 1", command=swap)
+    button3 = tk.Button(root, text="b3", command=swap)
+    button1.grid(row=0, column=0)
+    button2.grid(row=0, column=1)
+    button3.grid(row=0, column=3)
+    
+    
+    
+
+    
+    
+    error_label = tk.Label(root, text="error")
+    no_error_label = tk.Label(root, text="no error")
+    error_label.grid(row=1, column=1)
+    no_error_label.grid(row=1, column=1)
+    
+    
+    
+    lift_error_button = tk.Button(root, text="lift error", command=error_label.lift)
+    lower_error_button = tk.Button(root, text="lower error", command=no_error_label.lift)
+    lift_error_button.grid(row=1, column=6)
+    lower_error_button.grid(row=1, column=5)
+
+    
+    
+    
+    root.mainloop()

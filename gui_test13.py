@@ -1,20 +1,26 @@
-# from Tkinter import *
-from tkinter import *
-from tkinter.ttk import *
-from tkinter import filedialog
+import tkinter as tk
 
-root = Tk()
+class SampleApp(tk.Tk):
+    def __init__(self, *args, **kwargs):
+        tk.Tk.__init__(self, *args, **kwargs)
+        self.frame = tk.Frame(self)
+        self.frame.pack(side="top", fill="both", expand=True)
+        self.label = tk.Label(self, text="Hello, world", fg = 'red')
+        button1 = tk.Button(self, text="Click to hide label",
+                           command=self.hide_label)
+        button2 = tk.Button(self, text="Click to show label",
+                            command=self.show_label)
+        self.label.pack(in_=self.frame)
+        button1.pack(in_=self.frame)
+        button2.pack(in_=self.frame)
 
-def key(event):
-    print ("pressed", repr(event.char))
+    def show_label(self, event=None, lable_widget ,color):
+#         self.label.lift(self.frame)
+        print(label_widget.fg)
 
-def callback(event):
-    frame.focus_set()
-    print ("clicked at", event.x, event.y)
+    def hide_label(self, event=None):
+        self.label.lower(self.frame)
 
-frame = Frame(root, width=100, height=100)
-frame.bind("<Key>", key)
-frame.bind("<Button-1>", callback)
-frame.pack()
-
-root.mainloop()
+if __name__ == "__main__":
+    app = SampleApp()
+    app.mainloop()

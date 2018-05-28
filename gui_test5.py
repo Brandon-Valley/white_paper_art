@@ -1,43 +1,34 @@
-from tkinter import *
-
-window = Tk()
+import tkinter as tk
 
 
+try:                        # In order to be able to import tkinter for
+    import tkinter as tk    # either in python 2 or in python 3
+except:
+    import Tkinter as tk
 
 
-frame = Frame(window)
-frame.pack()
+def swap():
+    error_label.lift()
+#     button2.lift()
+    global is_button1_lifted
+    if is_button1_lifted:
+        button2.lift()
+    else:
+        button1.lift()
+    is_button1_lifted = not is_button1_lifted
 
 
-l_lbl = Label(frame, text="L")
-r_lbl = Label(frame, text="R")
-t_lbl = Label(frame, text="T")
-b_lbl = Label(frame, text="B")
-
-
-
-listNodes = Listbox(frame, width=20, height=20, font=("Helvetica", 12))
-# listNodes.pack(side="left", fill="y")
-
-scrollbar = Scrollbar(frame, orient="vertical")
-scrollbar.config(command=listNodes.yview)
-# scrollbar.pack(side="right", fill="y")
-
-listNodes.config(yscrollcommand=scrollbar.set)
-
-for x in range(100):
-    listNodes.insert(END, str(x))
+if __name__ == '__main__':
+    root = tk.Tk()
+    is_button1_lifted = False
+    button1 = tk.Button(root, text="Swap with button 2", command=swap)
+    button2 = tk.Button(root, text="Swap with button 1", command=swap)
+    button1.grid(row=0, column=0)
+    button2.grid(row=0, column=0)
     
-
-
-listNodes.grid(column=1, row=1)
-scrollbar.grid(column=2, row=1, rowspan=1,  sticky=N+S+W)
-
-l_lbl.grid(column=0, row=1)
-r_lbl.grid(column=3, row=1)
-t_lbl.grid(column=1, row=0)
-b_lbl.grid(column=1, row=2)
-
-
-
-window.mainloop()
+    error_label = tk.Label(root, text="error")
+    error_label.grid(row=1, column=1)
+    
+    
+    
+    root.mainloop()
