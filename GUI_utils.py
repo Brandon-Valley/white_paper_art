@@ -238,7 +238,7 @@ def lbox_str_to_tup_list(lbox_str):
 def get_color_or_none(text_box_widget):
     if(text_box_widget['state'] == 'disabled'):
         return None
-    return text_box_widget.get()
+    return str_to_int_tup(text_box_widget.get())
     
     
     

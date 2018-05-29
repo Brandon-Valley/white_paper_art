@@ -17,15 +17,14 @@ COLOR_TUP_TB_WIDTH = 13
 COLOR_DISPLAY_TB_WIDTH = 10
 
 DEFAULT_OUTPUT_IMAGE_BACKGROUND_COLOR = (0, 0, 0)
-DEFAULT_BACKGROUND_TEXT_COLOR = (255, 255, 255)
+DEFAULT_BACKGROUND_TEXT_COLOR = (255, 0, 255)
 
-TEST_COLOR_LIST = [(2,3,4), #need to be able to get rid of this!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1111
+TEST_COLOR_LIST = [(255, 255,255), #need to be able to get rid of this!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1111
                    (44,55,66),
                    (32,76,90),
                    (225,0,0),
                    (0,0,0),
                    (255,0,255),
-                   (255, 255,255),
                    (225,225,0)]
 
 

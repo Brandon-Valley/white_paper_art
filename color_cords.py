@@ -2,6 +2,8 @@ from PIL import Image
 
 import tools
 
+import GUI #just for testing
+
 
 
 def get_color_cords(fileName, cols, aspect_ratio, background_color):   
@@ -67,6 +69,9 @@ def get_color_cords(fileName, cols, aspect_ratio, background_color):
             tile_color = high_key(potential_tile_colors)
             tile_cord = [j, i] 
             
+            if tile_color == (255, 255, 255):
+                print('about to check if this matces background color: ', tile_color)#``````````````````````````````````````````````````````````````````
+                
             if tile_color != background_color:
                 if tile_color in color_cords:
                     color_cords[tile_color].append(tile_cord)
@@ -123,4 +128,5 @@ def majority_color_found(t_colors, half):
     
     
     
-    
+if __name__ == '__main__':
+    GUI.main()   
