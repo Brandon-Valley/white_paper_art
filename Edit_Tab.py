@@ -372,13 +372,6 @@ class Edit_Tab(Tab.Tab):
         
   
     def build_image______widgets_setup(self):     
-#         print("GUI_utils.get_color_or_none(self.tabs['advanced'].input_bgnd_clr_tup_tb): ", GUI_utils.get_color_or_none(self.tabs['advanced'].input_bgnd_clr_tup_tb))#`````````````````
-   
-#         print(type(self.tabs['advanced'].bgnd_text_clr_tup_tb.get()))#```````````````````````````````````````````````````````````````````
-#         
-#         if self.tabs['advanced'].bgnd_text_clr_tup_tb.get() == None:#`````````````````````````````````````````````````````
-#             print('  ITS NONE!!!!!!!!!!!')
-#         print("self.tabs['advanced'].bgnd_text_clr_tup_tb.get(): ", self.tabs['advanced'].bgnd_text_clr_tup_tb.get())#```````````````````````````````````````
         #build image button   
         def build_img_btn_clk():
             #read the current state of all arguments
