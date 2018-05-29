@@ -68,9 +68,6 @@ def get_color_cords(fileName, cols, aspect_ratio, background_color):
             #add most common color in tile to color_cords
             tile_color = high_key(potential_tile_colors)
             tile_cord = [j, i] 
-            
-            if tile_color == (255, 255, 255):
-                print('about to check if this matces background color: ', tile_color)#``````````````````````````````````````````````````````````````````
                 
             if tile_color != background_color:
                 if tile_color in color_cords:
