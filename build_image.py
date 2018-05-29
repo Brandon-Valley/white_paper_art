@@ -64,9 +64,13 @@ def build_final_image(kwargs):
 
      
 
-
+    # make this work for filtering    dont clean this up until filtering works !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     #set this to None for no background color separation #there is a reason for this!  this trims the whitespace so that image size can be more consistent!!!!!!!!!!!!
-    input_image_background_color = None #(255, 255, 255) #gui not done!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    input_image_background_color = kwargs['input_image_background_color'] #(255, 255, 255) #gui not done!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    
+#     print(kwargs['input_image_background_color'])#``````````````````````````````````````````````````````````````````````````````````````````````
+     
+     
      
     #background 
     #replace this bull shit with something to  deal with whitespace

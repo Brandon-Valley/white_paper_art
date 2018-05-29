@@ -17,7 +17,7 @@ FILE_PATH_TEXT_BOX_WIDTH = 80
 
 
 DEFAULT_FONT_NAME = "cour"
-DEFAULT_FONT_SIZE = 44
+DEFAULT_FONT_SIZE = 10
 
 DEFAULT_IMAGE_DIMENSION_RATIO_NUM = 14
 DEFAULT_IMAGE_DIMENSION_RATIO_DIN = 16
@@ -204,7 +204,6 @@ class Edit_Tab(Tab.Tab):
         #record  current font size any time the contents of font_size_sbox change
         self.bind_to_edit(self.font_size_sbox, log_current_font_size)
         
-        
 
         #maximize font size check button
         self.max_font_size_sel = IntVar()
@@ -372,7 +371,14 @@ class Edit_Tab(Tab.Tab):
         self.quality_rad_btn_sel()
         
   
-    def build_image______widgets_setup(self):        
+    def build_image______widgets_setup(self):     
+#         print("GUI_utils.get_color_or_none(self.tabs['advanced'].input_bgnd_clr_tup_tb): ", GUI_utils.get_color_or_none(self.tabs['advanced'].input_bgnd_clr_tup_tb))#`````````````````
+   
+#         print(type(self.tabs['advanced'].bgnd_text_clr_tup_tb.get()))#```````````````````````````````````````````````````````````````````
+#         
+#         if self.tabs['advanced'].bgnd_text_clr_tup_tb.get() == None:#`````````````````````````````````````````````````````
+#             print('  ITS NONE!!!!!!!!!!!')
+#         print("self.tabs['advanced'].bgnd_text_clr_tup_tb.get(): ", self.tabs['advanced'].bgnd_text_clr_tup_tb.get())#```````````````````````````````````````
         #build image button   
         def build_img_btn_clk():
             #read the current state of all arguments
@@ -389,8 +395,9 @@ class Edit_Tab(Tab.Tab):
                             
                             #from Advanced_Tab
                             'final_image_background_color': GUI_utils.str_to_int_tup(self.tabs['advanced'].output_bgnd_clr_tup_tb.get()),
-                            'input_image_background_color': GUI_utils.str_to_int_tup(self.tabs['advanced'].bgnd_text_clr_tup_tb.get()),
-                            'background_text_color':        GUI_utils.str_to_int_tup(self.tabs['advanced'].bgnd_text_clr_tup_tb.get())}  #does this line work???????????????????????????
+                            'input_image_background_color': GUI_utils.get_color_or_none(self.tabs['advanced'].input_bgnd_clr_tup_tb),
+                            'background_text_color':        GUI_utils.str_to_int_tup(self.tabs['advanced'].bgnd_text_clr_tup_tb.get())}
+            
             
             #build final image using arguments
             build_image.build_final_image(image_kwargs)

@@ -59,7 +59,7 @@ class Advanced_Tab(Tab.Tab):
         
     def input_background_color______widget_setup(self):
 
-        def update_color_display_with_selected_color(event = None): #event = None #dont remove until tested to make sure you dont need!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        def update_color_display_with_selected_color(event = None): 
             #update tuple text box
             self.input_bgnd_clr_tup_tb.configure(state = 'normal')
             self.input_bgnd_clr_tup_tb.delete(0, END)
@@ -82,8 +82,10 @@ class Advanced_Tab(Tab.Tab):
         def trim_input_bgnd_clr_cbtn_clk():
             self.input_bgnd_clr_lbox            .configure( state = 'normal' )
             self.input_bgnd_clr_lbox.delete(0, "end")
+            
             self.input_bgnd_clr_tup_tb          .configure( state = 'normal' )
             self.input_bgnd_clr_tup_tb.delete(0, "end")
+            
             self.input_bgnd_clr_display_tb      .configure( state = 'readonly' )
             
             if trim_input_bgnd_clr_cbtn_sel.get() == 0:
