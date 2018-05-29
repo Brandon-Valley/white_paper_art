@@ -246,7 +246,7 @@ class Edit_Tab(Tab.Tab):
         self.match_input_image_dims_cbtn = Checkbutton(self.master, text="Use Input Image Dimensions", variable=use_input_img_dims_cbtn_sel, command = use_input_img_dims_btn_sel)
         
  
-        def log_current_dim_vals(): #event = None #dont remove until tested to make sure you dont need!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        def log_current_dim_vals(event = None):
             last_known_num_val.set(self.output_img_dim_num_sbox.get())
             last_known_din_val.set(self.output_img_dim_din_sbox.get())            
         
@@ -382,7 +382,7 @@ class Edit_Tab(Tab.Tab):
                             'maximize_font_size':           self.max_font_size_sel.get(),
                             'output_image_dim_ratio':       GUI_utils.strs_to_int_ratio( self.output_img_dim_num_sbox.get() , self.output_img_dim_din_sbox.get() ),
                             'image_size':                   int(self.img_size_sbox.get()),
-                            'image_position_cords':         {'x_pos': int(self.x_cord_sbox.get()), 'y_pos': int(self.y_cord_sbox.get())},
+                            'image_position_cords':         {'x_pos': int(self.x_cord_sbox.get()), 'y_pos': - int(self.y_cord_sbox.get())}, #bad code but I'm lazy
                             'quality':                      self.quality_selected.get(),#need???????????????????????????????????????????????????????????????????????
                             'output_image_file_path':       self.output_img_file_path_text_box.get(), 
                             
