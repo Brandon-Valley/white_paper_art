@@ -13,6 +13,8 @@ from tkinter import filedialog
 import tkinter as tk
 from tkinter import ttk
 
+from PIL import Image
+
 
 import fonts
 
@@ -64,8 +66,11 @@ def bool_to_state(bool_int, active_low = True):#need????????????????????????????
 
 
 def get_input_img_dims(img_path):
-    img_dimensions = {'num': 22,
-                      'din': 333}
+    img = Image.open(img_path)
+    width, height = img.size
+    
+    img_dimensions = {'num': height,
+                      'din': width}
     return img_dimensions
 
 
