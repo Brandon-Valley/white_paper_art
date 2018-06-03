@@ -38,13 +38,17 @@ def text_image(lines, color_cords, default_colors, font):
     x = 0
     w_fill, y = draw.textsize(fill, font)
     
+    Image.MAX_IMAGE_PIXELS = 1000000000   #need this here
+    
     line_num = 0
     for line_num in range(len(lines)):
+#         print('here 4 ,!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! font size: ', font.size)#`````````````````````````````````````````````````````````````
         line = lines[line_num]
 #         print(line)#!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         x_draw, x_paste = 0, 0
         
         for letter_num in range(len(line)):
+#             print('here 5 ,!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! font size: ', font.size)#`````````````````````````````````````````````````````````````
             letter = line[letter_num]
             w_full = draw.textsize(fill + letter, font)[0]
             w = w_full - w_fill     # the width of the character on its own
@@ -53,6 +57,7 @@ def text_image(lines, color_cords, default_colors, font):
             cur_char = lines[line_num][letter_num]
             
             for color, cord_list in color_cords.items():
+#                 print('here 6 ,!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! font size: ', font.size)#`````````````````````````````````````````````````````````````
                 if letter_cords in color_cords[color]:
                     char_color = color
                     break
