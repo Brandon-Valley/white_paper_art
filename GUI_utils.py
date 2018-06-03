@@ -108,7 +108,8 @@ def valid_img_filename(filename):
     except:
         return False
     
-    
+
+
     
     
     #DO NOT DELETE THIS!!!!   I HAVE NO CLUE WHY I WROTE THIS BUT I MUST HAV HAD A REASON!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!

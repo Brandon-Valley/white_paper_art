@@ -91,9 +91,8 @@ def build_final_image(kwargs):
      
       
       
-    print('getting font properties...')
-    font = font_tools.make_font(kwargs['font_path'], kwargs['font_size'])#font_tools.load_font(kwargs['font_path'], kwargs['font_size']) 1111111111111111111111111111
-    font_aspect_ratio = font_tools.get_aspect_ratio(font)
+    print('getting font aspect ratio...')
+    font_aspect_ratio = font_tools.get_aspect_ratio(kwargs['font_path'])
      
      
     #read in the text that will be colored to show a picture
@@ -125,6 +124,12 @@ def build_final_image(kwargs):
     print('calculating and adding user defined offset to adjusted_color_cords...')
     offset_color_cords = offset.offset_color_cords(color_cord_dict, kwargs['image_position_cords'], lines)
       
+      
+      
+    print('making font...')
+    font = font_tools.make_font(kwargs['font_path'], kwargs['font_size'], lines)#font_tools.load_font(kwargs['font_path'], kwargs['font_size']) 1111111111111111111111111111  
+      
+    
       
     #put it all together and what have you got?  Bippity Boppity BOO!
     print('creating final image...')

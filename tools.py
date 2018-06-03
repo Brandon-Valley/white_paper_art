@@ -1,6 +1,7 @@
 import math
 from _regex_core import WORD
 
+
 #from twisted.conch.scripts.conch import old
 
 #return the length of the longest element in lines
@@ -102,6 +103,29 @@ def apply_offset(og_color_cords, offset_d):
     return new_c_cords
 
 
+def calc_img_dims(lines, font):
+    img_dims = {}
+    
+    # make the background image based on the combination of font and lines
+    pt2px = lambda pt: int(round(pt * 96.0 / 72))  # convert points to pixels
+    
+    longest_line = find_longest_line(lines)
+    max_line_width = pt2px(font.getsize(longest_line)[0])
+
+#     max_width_line = max(lines, key=lambda s: font.getsize(s)[0])
+    # max height is adjusted down because it's too large visually for spacing
+    test_string = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+    max_height = pt2px(font.getsize(test_string)[1])
+        
+#     max_width = pt2px(font.getsize(max_width_line)[0])#just uncommented!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    height = max_height * len(lines) + 2  # perfect or a little over sized
+    
+    width  = int(round(max_line_width * 3 + 0))  # a little over sized , needs to be exactly this # or cuts off text
+    
+    return (width, height)
+
+
+
 def read_text_file(file_path):
     with open(file_path) as text_file:  # can throw FileNotFoundError
         result = tuple(l.rstrip() for l in text_file.readlines())
@@ -116,6 +140,13 @@ def write_text_file(file_path, line_list):
     # cleanup
     f.close()
     
+
+
     
     
     
+    
+    
+import GUI
+if __name__ == '__main__':
+    GUI.main()    
