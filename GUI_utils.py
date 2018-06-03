@@ -247,7 +247,12 @@ def get_color_or_none(text_box_widget):
     
     
     
-    
+def font_size_or_message(txt_box_widget, msg):  
+    if(txt_box_widget['state'] == 'disabled'):
+        return msg
+    return int(txt_box_widget.get())
+
+
     
     
     

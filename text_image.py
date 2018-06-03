@@ -71,3 +71,13 @@ def text_image(lines, color_cords, default_colors, font):
             x_paste += w
         line_num += 1
     return image2
+
+
+
+
+
+
+
+import GUI
+if __name__ == '__main__':
+    GUI.main()

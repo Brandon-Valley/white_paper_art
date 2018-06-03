@@ -24,7 +24,6 @@ def build_img_test(kwargs = TEST):
     
     
     
-test_kwargs = {}
 
 
 
@@ -81,7 +80,7 @@ def build_final_image(kwargs):
         
     
 
-    
+#     print('font_size:', kwargs['font_size'])#``````````````````````````````````````````````````````````````````````````
      
      
      
@@ -90,8 +89,10 @@ def build_final_image(kwargs):
      
      
      
+      
+      
     print('getting font properties...')
-    font = font_tools.load_font(kwargs['font_path'], kwargs['font_size'])
+    font = font_tools.make_font(kwargs['font_path'], kwargs['font_size'])#font_tools.load_font(kwargs['font_path'], kwargs['font_size']) 1111111111111111111111111111
     font_aspect_ratio = font_tools.get_aspect_ratio(font)
      
      
@@ -101,7 +102,7 @@ def build_final_image(kwargs):
      
     #turn list of lines of data into one big string, use that to get number of chars in data, then split it into words
     print('formatting data into word list...')
-    data_str = tools.format_data(data)
+    data_str  = tools.format_data(data)
     num_chars = len(data_str)
     word_list = data_str.split(' ')
      
@@ -124,6 +125,7 @@ def build_final_image(kwargs):
     print('calculating and adding user defined offset to adjusted_color_cords...')
     offset_color_cords = offset.offset_color_cords(color_cord_dict, kwargs['image_position_cords'], lines)
       
+      
     #put it all together and what have you got?  Bippity Boppity BOO!
     print('creating final image...')
     image = text_image.text_image(lines, offset_color_cords, default_colors, font)#offset_adjusted_
@@ -139,7 +141,7 @@ def build_final_image(kwargs):
     print('done!')
       
       
-# build_final_image('empty')
+
 
 if __name__ == '__main__':
     GUI.main()   

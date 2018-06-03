@@ -42,6 +42,8 @@ INVALID_ENTRY_COLOR = 'red'
 INPUT_TXT_FILE_TYPES = ['.txt']
 INPUT_IMG_FILE_TYPES = ['.png', '.jpg']
 
+MAX_FONT_SIZE_STR = 'MAXIMIZE_FONT_SIZE'
+
 # DEFAULT_NUM_DIM = 1
 # DEFAULT_DIN_DIM = 1
 
@@ -98,7 +100,7 @@ class Edit_Tab(Tab.Tab):
             
         self.location_browse_btn = Button(self.master, text="Browse...", command = location_browse_btn_clk)
         
-    def location_text_box_updated(self): #event = None #dont remove until tested to make sure you dont need!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    def location_text_box_updated(self, event = None): 
         self.update_folder_name_text_box()
         self.update_output_image_file_text_box()
         
@@ -337,7 +339,7 @@ class Edit_Tab(Tab.Tab):
         self.output_img_file_path_text_box = Entry(self.master,width=FILE_PATH_TEXT_BOX_WIDTH)
         self.output_img_file_path_text_box.bind('<Expose>', xview_event_handler)#scrolls text to end if needed
         
-        def update_output_img_file_name(): #event #dont remove until tested to make sure you dont need!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        def update_output_img_file_name(event):
             filename = GUI_utils.get_last_path_var(self.output_img_file_path_text_box.get())
             self.output_image_file_name = filename
 
@@ -378,7 +380,7 @@ class Edit_Tab(Tab.Tab):
             image_kwargs = {'input_text_file_path':         self.input_text_file_path_text_box.get(),
                             'input_image_file_path':        self.input_img_file_path_text_box.get(),
                             'font_path':                    FONTS_PATH + '\\' + self.font_drop_down.get() + '.ttf',
-                            'font_size':                    int(self.font_size_sbox.get()), # = cols = width
+                            'font_size':                    GUI_utils.font_size_or_message(self.font_size_sbox, MAX_FONT_SIZE_STR),#int(self.font_size_sbox.get()), # = cols = width     !!!!!!!!!!!!!!!
                             'maximize_font_size':           self.max_font_size_sel.get(),
                             'output_image_dim_ratio':       GUI_utils.strs_to_int_ratio( self.output_img_dim_num_sbox.get() , self.output_img_dim_din_sbox.get() ),
                             'image_size':                   int(self.img_size_sbox.get()),
