@@ -26,9 +26,13 @@ def text_image(lines, color_cords, default_colors, font):
     img_dims = tools.calc_img_dims(lines, font)
 
     # to get bigger final images, start looking here, by making both image and image2, you cut the max size of the final image in half!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    print('here 0 ,!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! font size: ', font.size)#`````````````````````````````````````````````````````````````
     image = Image.new("RGB", img_dims, default_colors['final_image_background']) # scrap image
+    print('here 1 ,!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! font size: ', font.size)#`````````````````````````````````````````````````````````````
     draw = ImageDraw.Draw(image)
+    print('here 2 ,!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! font size: ', font.size)#`````````````````````````````````````````````````````````````
     image2 = Image.new("RGB", img_dims, default_colors['background_image']) # final image
+    print('here 3 ,!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! font size: ', font.size)#`````````````````````````````````````````````````````````````
     
     fill = " o "
     x = 0

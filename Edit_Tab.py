@@ -23,8 +23,6 @@ DEFAULT_FONT_SIZE = 10
 DEFAULT_IMAGE_DIMENSION_RATIO_NUM = 14
 DEFAULT_IMAGE_DIMENSION_RATIO_DIN = 16
 
-DEFAULT_MAX_FONT_SIZE = 999
-
 MIN_IMAGE_SIZE = 0
 MAX_IMAGE_SIZE = 999
 
@@ -197,7 +195,7 @@ class Edit_Tab(Tab.Tab):
         def log_current_font_size(event = None):
             self.last_known_font_size = self.font_size_sbox.get()
             
-        self.font_size_sbox = Spinbox(self.master, from_ = 0, to = DEFAULT_MAX_FONT_SIZE, width = 5,
+        self.font_size_sbox = Spinbox(self.master, from_ = 0, to = global_constants.MAX_FONT_SIZE, width = 5,
                                        validate = 'key', validatecommand = self.digits_only, command = log_current_font_size)
         
         self.font_size_sbox.delete(0, "end") #gets rid of 0 so the next line makes the default value 40 instead of 400
