@@ -35,6 +35,7 @@ def main(msg = None):
     for tab_name, tab in tab_dict.items():
         tab.tabs = tab_dict
 
+    print('build the image here!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')#`````````````````````````````````````````````
     root.mainloop()
  
 if __name__ == '__main__':

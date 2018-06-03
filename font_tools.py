@@ -98,14 +98,14 @@ def largest_possable_font(font_path, font_size, txt_lines):
 
 #REALLY need to redo / rename / clean up this func~~~~~~~~~~~~`````````````````````````````````````````````````````````````````````````````````
 def make_font(font_path, font_size, text_lines):
-    return largest_possable_font(font_path, font_size, text_lines)
+
     
-#     if font_size == global_constants.MAX_FONT_SIZE_STR:
-#         return largest_possable_font(font_path, font_size, text_lines)
-# #         font_size = 80#```````````````````````````````````````````````````````````````````````````````````````````````````````````
-#         
-#     
-#     return load_font(font_path, font_size)
+    if font_size == global_constants.MAX_FONT_SIZE_STR:
+        return largest_possable_font(font_path, font_size, text_lines)
+#         font_size = 80#```````````````````````````````````````````````````````````````````````````````````````````````````````````
+         
+     
+    return load_font(font_path, font_size)
     
 
 
