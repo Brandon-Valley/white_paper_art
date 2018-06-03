@@ -90,6 +90,22 @@ class Edit_Tab(Tab.Tab):
         self.location_text_box.bind("<FocusOut>", enable_folder_name_text_box_if_needed)
              
         def location_browse_btn_clk():
+            
+            
+            import os
+            import sys
+            import subprocess
+            
+#             import os, sys#```````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````
+# #             os.execl(sys.executable,  [sys.executable, os.path.join(sys.path[0], __file__)] + sys.argv[1:]) # don't pass again the interpreter path.  ``````````````````````````````````````````````````````````````````````
+#             os.execv(sys.executable, [sys.executable, os.path.join(sys.path[0], __file__)] + sys.argv[1:])
+#             
+            
+            os.execl(sys.executable, 'python', __file__, *sys.argv[1:])
+            
+            subprocess.call(["python", os.path.join(sys.path[0], __file__)] + sys.argv[1:])
+
+            
             #get file path and place it in text box
             dir = filedialog.askdirectory()
             self.location_text_box.delete(0, "end")

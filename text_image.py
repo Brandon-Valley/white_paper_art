@@ -1,5 +1,8 @@
 import PIL.ImageFont
 from PIL import Image, ImageDraw
+
+import gc
+
 import tools
 
 
@@ -24,6 +27,9 @@ def text_image(lines, color_cords, default_colors, font):
     
     
     img_dims = tools.calc_img_dims(lines, font)
+    
+    gc.collect()
+
 
     # to get bigger final images, start looking here, by making both image and image2, you cut the max size of the final image in half!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     print('here 0 ,!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! font size: ', font.size)#`````````````````````````````````````````````````````````````

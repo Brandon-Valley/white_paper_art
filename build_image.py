@@ -37,6 +37,7 @@ def build_img_test(kwargs = TEST):
     # a a a
     # a a a
     
+
 def build_final_image(kwargs):
 #     print(kwargs)#````````````````````````````````````````````````````````````````````````````````````````````````````````
     print('kwargs: ')
@@ -129,7 +130,10 @@ def build_final_image(kwargs):
     print('making font...')
     font = font_tools.make_font(kwargs['font_path'], kwargs['font_size'], lines)#font_tools.load_font(kwargs['font_path'], kwargs['font_size']) 1111111111111111111111111111  
       
-    
+    import time #```````````````````````````````````````````````````````````````````````````````````````````````````````````````````VVVVVVVVV`````````````````
+    print('sleeping')#````````````````````````````````````````````````````````````````````````````````````````````````````````````
+#     time.sleep(100)   # delays for 5 seconds. You can Also Use Float Value.
+    print('done sleeping')#`````````````````````````````````````````````````````````````````````````````````````````````````````````
       
     #put it all together and what have you got?  Bippity Boppity BOO!
     print('creating final image...')
@@ -144,7 +148,9 @@ def build_final_image(kwargs):
     image.show()
       
     print('done!')
-      
+    
+
+    build_final_image(kwargs)
       
 
 

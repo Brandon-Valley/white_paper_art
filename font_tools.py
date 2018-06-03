@@ -33,6 +33,8 @@ def font_size_valid(font, txt_lines):
         image_dims  = tools.calc_img_dims(txt_lines, font)
         scrap_image_1 = Image.new("RGB", image_dims, 'white')
         scrap_image_2 = Image.new("RGB", image_dims, 'white')
+        
+        #not sure if these 2 lines do anything   !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         scrap_image_1.close()
         scrap_image_2.close()
         return True
@@ -87,13 +89,15 @@ def largest_possable_font(font_path, font_size, txt_lines):
     
     print('perfect font size: ', cur_font.size)#`````````````````````````````````````````````````````````````````````````````````````````
     
-    return cur_font
-
+#     return cur_font    
+    return load_font(font_path, cur_font.size - 0)#```````````````````````````````````````````````````````````````````````````````````
 
 
 def make_font(font_path, font_size, text_lines):
     if font_size == global_constants.MAX_FONT_SIZE_STR:
         return largest_possable_font(font_path, font_size, text_lines)
+#         font_size = 80#```````````````````````````````````````````````````````````````````````````````````````````````````````````
+        
     
     return load_font(font_path, font_size)
     
