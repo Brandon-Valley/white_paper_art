@@ -18,7 +18,7 @@ FILE_PATH_TEXT_BOX_WIDTH = 80
 
 
 DEFAULT_FONT_NAME = "cour"
-DEFAULT_FONT_SIZE = 10
+DEFAULT_FONT_SIZE = 80
 
 DEFAULT_IMAGE_DIMENSION_RATIO_NUM = 14
 DEFAULT_IMAGE_DIMENSION_RATIO_DIN = 16
@@ -91,7 +91,7 @@ class Edit_Tab(Tab.Tab):
              
         def location_browse_btn_clk():
             
-            
+            #````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````
             import os
             import sys
             import subprocess
@@ -103,7 +103,8 @@ class Edit_Tab(Tab.Tab):
             
             os.execl(sys.executable, 'python', __file__, *sys.argv[1:])
             
-            subprocess.call(["python", os.path.join(sys.path[0], __file__)] + sys.argv[1:])
+#             subprocess.call(["python", os.path.join(sys.path[0], __file__)] + sys.argv[1:])
+            #```````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````
 
             
             #get file path and place it in text box

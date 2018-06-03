@@ -149,8 +149,21 @@ def build_final_image(kwargs):
       
     print('done!')
     
-
-    build_final_image(kwargs)
+    #````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````
+    import os
+    import sys
+    import subprocess
+    
+#             import os, sys#```````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````
+# #             os.execl(sys.executable,  [sys.executable, os.path.join(sys.path[0], __file__)] + sys.argv[1:]) # don't pass again the interpreter path.  ``````````````````````````````````````````````````````````````````````
+#             os.execv(sys.executable, [sys.executable, os.path.join(sys.path[0], __file__)] + sys.argv[1:])
+#             
+    
+    os.execl(sys.executable, 'python', __file__, *sys.argv[1:])
+    
+#             subprocess.call(["python", os.path.join(sys.path[0], __file__)] + sys.argv[1:])
+    #```````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````
+    build_final_image(kwargs)#````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````
       
 
 
