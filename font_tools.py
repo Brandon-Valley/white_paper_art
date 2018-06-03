@@ -37,6 +37,10 @@ def font_size_valid(font, txt_lines):
         #not sure if these 2 lines do anything   !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         scrap_image_1.close()
         scrap_image_2.close()
+        
+#         import gc
+#         gc.collect()#``````````````````````````` get rid of this ^^^^^^^^^^^^^^^^^```````````````````````````````````````````````````````
+#         
         return True
     except:
         return False
@@ -45,7 +49,7 @@ def font_size_valid(font, txt_lines):
 def largest_possable_font(font_path, font_size, txt_lines):
     print('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! ;', txt_lines)#111111111111111111111111111111111111111111111111111111111111111
     
-    #need??????????????????????????????????????????????????????????????????????????????????????????????????????????????
+    #need?????????????????????????????????????????????????????????????????????????????????????????????????????????????? VVVVVVV !????????????????
     num_lines = len(txt_lines)
     longest_txt_line = tools.find_longest_line(txt_lines)
     longest_line_len = len(longest_txt_line)
@@ -92,19 +96,61 @@ def largest_possable_font(font_path, font_size, txt_lines):
 #     return cur_font    
     return load_font(font_path, cur_font.size - 0)#```````````````````````````````````````````````````````````````````````````````````
 
-
+#REALLY need to redo / rename / clean up this func~~~~~~~~~~~~`````````````````````````````````````````````````````````````````````````````````
 def make_font(font_path, font_size, text_lines):
-    if font_size == global_constants.MAX_FONT_SIZE_STR:
-        return largest_possable_font(font_path, font_size, text_lines)
-#         font_size = 80#```````````````````````````````````````````````````````````````````````````````````````````````````````````
-        
+    return largest_possable_font(font_path, font_size, text_lines)
     
-    return load_font(font_path, font_size)
+#     if font_size == global_constants.MAX_FONT_SIZE_STR:
+#         return largest_possable_font(font_path, font_size, text_lines)
+# #         font_size = 80#```````````````````````````````````````````````````````````````````````````````````````````````````````````
+#         
+#     
+#     return load_font(font_path, font_size)
     
 
 
 
 
+
+
+def find_max_font_size(font_path, text_file_path, output_dim_ratio):
+    
+#     return 23#```````````````````````````````````````````````````````````````````````````````````````````````````
+    
+    print('getting font aspect ratio...')
+    font_aspect_ratio = get_aspect_ratio(font_path)
+     
+    #read in the text that will be colored to show a picture
+    print('reading in data text file...') 
+    data = tools.read_text_file(text_file_path)
+     
+    #turn list of lines of data into one big string, use that to get number of chars in data, then split it into words
+    print('formatting data into word list...')
+    data_str  = tools.format_data(data)
+    num_chars = len(data_str)
+    word_list = data_str.split(' ')
+     
+    #turn true_dimension_ratio into max number of lines and max chars per line
+    print('calculating ideal text image dimensions...')
+    #find correct image dimensions by adjusting desired ratio for the difference between width and height of a char
+    true_dimension_ratio = output_dim_ratio * font_aspect_ratio
+    ideal_dimentions = tools.calc_ideal_dimentions(true_dimension_ratio, num_chars)
+     
+#     return 22#``````````````````````````````````````````````````````````````````````````````````````````````
+     
+    #make list of lines to be output in final image
+    print('creating text lines...')
+    lines = tools.make_correct_lines(ideal_dimentions['num_lines'], ideal_dimentions['line_length'], word_list)
+
+#     return 23#``````````````````````````````````````````````````````````````````````````````````````````````
+
+
+    dummy_font_size = global_constants.MAX_FONT_SIZE_STR  #this whole section needs a lot of cleaning!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+#     return 24#``````````````````````````````````````````````````````````````````````````````````````````````
+    font = make_font(font_path, dummy_font_size, lines)
+    print('returning perfect font size')#``````````````````````````````````````````````````````````````````````````````````````
+    return font.size
+#     return 24#``````````````````````````````````````````````````````````````````````````````````````````````
 
 import GUI
 if __name__ == '__main__':

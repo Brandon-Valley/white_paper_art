@@ -11,6 +11,7 @@ import GUI_utils
 import GUI
 import Tab
 import global_constants
+import font_tools
 
 FONTS_PATH = "C:\\Users\\Brandon\\Documents\\Personal Projects\\white_paper_art\\fonts"
 
@@ -90,6 +91,8 @@ class Edit_Tab(Tab.Tab):
         self.location_text_box.bind("<FocusOut>", enable_folder_name_text_box_if_needed)
              
         def location_browse_btn_clk():
+            
+#             GUI_utils.restart
             
             #````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````
             import os
@@ -229,13 +232,26 @@ class Edit_Tab(Tab.Tab):
         
     #maximize font size check button click
     def max_font_size_btn_sel(self):#gets called each time you click the check button, changes state of self.font_size_sbox
-        self.font_size_sbox.configure( state = 'normal' )
-        self.font_size_sbox.delete(0, "end")
         
         if self.max_font_size_sel.get() == 1:
-            self.font_size_sbox.configure( state = 'disabled' )
-        else:
-            self.font_size_sbox.insert(0, self.last_known_font_size)
+            self.font_size_sbox.delete(0, "end")
+             
+            font_path           = FONTS_PATH + '\\' + self.font_drop_down.get() + '.ttf'
+            text_file_path      = self.input_text_file_path_text_box.get()
+            output_dim_ratio    = GUI_utils.strs_to_int_ratio( self.output_img_dim_num_sbox.get() , self.output_img_dim_din_sbox.get() )
+             
+            max_font_size = font_tools.find_max_font_size(font_path, text_file_path, output_dim_ratio)
+            self.font_size_sbox.insert(0, max_font_size)
+            print('back in edit tab in max_font_size_btn_sel!!!!!!!!')#``````````````````````````````````````````````````````````````````````````````````````
+        
+#     DONT DELETE until completely re-done way this works!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+#         self.font_size_sbox.configure( state = 'normal' )
+#         self.font_size_sbox.delete(0, "end")
+#          
+#         if self.max_font_size_sel.get() == 1:
+#             self.font_size_sbox.configure( state = 'disabled' )
+#         else:
+#             self.font_size_sbox.insert(0, self.last_known_font_size)
     
     
     

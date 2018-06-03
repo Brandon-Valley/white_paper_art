@@ -14,7 +14,8 @@ import Edit_Tab
 import Advanced_Tab
 
  
-def main(): 
+def main(msg = None): 
+    print('msg: ', msg)#`````````````````````````````````````````````````````````````````````````````````````````````````````````````````````
     root = Tk()
     
     root.title("Text Image Maker")
