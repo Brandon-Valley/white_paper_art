@@ -5,6 +5,7 @@ import tkinter as tk
 from tkinter import ttk
 
 # import tkinter as tk
+from logger import txt_logger
 
 import build_image
 import GUI_utils
@@ -14,6 +15,14 @@ import global_constants
 import font_tools
 
 FONTS_PATH = "C:\\Users\\Brandon\\Documents\\Personal Projects\\white_paper_art\\fonts"
+
+
+
+FONT_SIZE_KEY = 'font_size'
+
+
+
+
 
 FILE_PATH_TEXT_BOX_WIDTH = 80
 
@@ -42,6 +51,9 @@ INVALID_ENTRY_COLOR = 'red'
 INPUT_TXT_FILE_TYPES = ['.txt']
 INPUT_IMG_FILE_TYPES = ['.png', '.jpg']
 
+BUILD_IMAGE_IMMEDIATELY_KEY = 'build_image_immediately'
+VAR_LOG_FILE_NAME           = 'variables.txt'
+
 
 
 # DEFAULT_NUM_DIM = 1
@@ -50,8 +62,10 @@ INPUT_IMG_FILE_TYPES = ['.png', '.jpg']
 
  
 class Edit_Tab(Tab.Tab):    
-    def __init__(self, master):
-        Tab.Tab.__init__(self, master)
+    def __init__(self, master): #remove = True !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        Tab.Tab.__init__(self, master) 
+    
+        self.set_init_vars(VAR_LOG_FILE_NAME)
     
         #setup widgets
         self.location______widgets_setup()
@@ -67,6 +81,19 @@ class Edit_Tab(Tab.Tab):
         self.build_image______widgets_setup()
         
         self.grid_widgets() 
+        
+        
+    def set_init_vars(self, file_path):
+        try:
+            prev_vars = txt_logger.readVars(file_path)
+            self.init_font_size = prev_vars['font_size']
+            
+            self.init_build_image_immeadiately = prev_vars['build_image_immediately']
+        except:# if prev_vars file does not exist
+            self.init_font_size = DEFAULT_FONT_SIZE
+            
+            self.build_image_immeadiately = False
+        
 
     def location______widgets_setup(self):
         self.l_path = StringVar()
@@ -210,7 +237,7 @@ class Edit_Tab(Tab.Tab):
         self.font_drop_down.current(default_font_index) #set the selected item
     
         #font size spin box
-        self.last_known_font_size = IntVar(value = DEFAULT_FONT_SIZE)
+        self.last_known_font_size = IntVar(value = self.init_font_size)
         
         def log_current_font_size(event = None):
             self.last_known_font_size = self.font_size_sbox.get()
@@ -408,7 +435,14 @@ class Edit_Tab(Tab.Tab):
     def build_image______widgets_setup(self):     
         #build image button   
         def build_img_btn_clk():
-            #temp shitty way of doing things!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            if True: #make this do something!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                self.build_image_immeadiately = True           
+            
+            
+            
+            
+            self.log_all_vars()
+
 
             image_kwargs = self.build_kwargs()
             #build final image using arguments
@@ -421,7 +455,7 @@ class Edit_Tab(Tab.Tab):
         image_kwargs = {'input_text_file_path':         self.input_text_file_path_text_box.get(),
                         'input_image_file_path':        self.input_img_file_path_text_box.get(),
                         'font_path':                    FONTS_PATH + '\\' + self.font_drop_down.get() + '.ttf',
-                        'font_size':                    GUI_utils.font_size_or_message(self.font_size_sbox, global_constants.MAX_FONT_SIZE_STR),#int(self.font_size_sbox.get()), # = cols = width     !!!!!!!!!!!!!!!
+                        FONT_SIZE_KEY:                  GUI_utils.font_size_or_message(self.font_size_sbox, global_constants.MAX_FONT_SIZE_STR),#int(self.font_size_sbox.get()), # = cols = width     !!!!!!!!!!!!!!!
                         'maximize_font_size':           self.max_font_size_sel.get(),
                         'output_image_dim_ratio':       GUI_utils.strs_to_int_ratio( self.output_img_dim_num_sbox.get() , self.output_img_dim_din_sbox.get() ),
                         'image_size':                   int(self.img_size_sbox.get()),
@@ -435,6 +469,18 @@ class Edit_Tab(Tab.Tab):
                         'background_text_color':        GUI_utils.str_to_int_tup(self.tabs['advanced'].bgnd_text_clr_tup_tb.get())}
         return image_kwargs
 
+    def log_all_vars(self):
+        header_order = [FONT_SIZE_KEY, 
+                        BUILD_IMAGE_IMMEDIATELY_KEY]
+        
+        
+        log_dict = {FONT_SIZE_KEY               : self.font_size_sbox.get(),
+                    BUILD_IMAGE_IMMEDIATELY_KEY : str( self.build_image_immeadiately )}
+        
+        txt_logger.logVars(VAR_LOG_FILE_NAME, log_dict, header_order)
+        
+        
+        #oojnojno
 
         #MAYBE USE LABELFRAMES???????????????????????????????????????????????????????????????????????????????????????????????????????????
     

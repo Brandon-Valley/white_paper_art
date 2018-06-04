@@ -6,6 +6,8 @@ from tkinter import filedialog
 import tkinter as tk
 from tkinter import ttk
 
+
+
 import build_image
 import GUI_utils
 
@@ -13,11 +15,14 @@ import GUI_utils
 import Edit_Tab
 import Advanced_Tab
 
+
+
  
-def main(msg = None): 
-    print('msg: ', msg)#`````````````````````````````````````````````````````````````````````````````````````````````````````````````````````
-    root = Tk()
+def main(): 
+#     build_image_immediately = GUI_utils.check_build_image_immediately()#``````````````````````````````````````````````````````````
     
+    
+    root = Tk()
     root.title("Text Image Maker")
 
     tab_control = ttk.Notebook(root)

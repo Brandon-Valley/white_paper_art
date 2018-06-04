@@ -1,0 +1,2 @@
+font_size: 71
+build_image_immediately: True
