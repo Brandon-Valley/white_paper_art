@@ -437,16 +437,16 @@ class Edit_Tab(Tab.Tab):
         def build_img_btn_clk():
             if True: #make this do something!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                 self.build_image_immeadiately = True           
+                self.log_all_vars()
+                GUI_utils.restart()
+            else:
+                self.log_all_vars()
+    
+                image_kwargs = self.build_kwargs()
+                #build final image using arguments
+                build_image.build_final_image(image_kwargs)
             
             
-            
-            
-            self.log_all_vars()
-
-
-            image_kwargs = self.build_kwargs()
-            #build final image using arguments
-            build_image.build_final_image(image_kwargs)
         self.build_img_btn = Button(self.master, text="Build Image", command = build_img_btn_clk)
 
 
@@ -480,7 +480,6 @@ class Edit_Tab(Tab.Tab):
         txt_logger.logVars(VAR_LOG_FILE_NAME, log_dict, header_order)
         
         
-        #oojnojno
 
         #MAYBE USE LABELFRAMES???????????????????????????????????????????????????????????????????????????????????????????????????????????
     
