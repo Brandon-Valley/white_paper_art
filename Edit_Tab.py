@@ -28,7 +28,7 @@ FILE_PATH_TEXT_BOX_WIDTH = 80
 
 
 DEFAULT_FONT_NAME = "cour"
-DEFAULT_FONT_SIZE = 80
+DEFAULT_FONT_SIZE = 79
 
 DEFAULT_IMAGE_DIMENSION_RATIO_NUM = 14
 DEFAULT_IMAGE_DIMENSION_RATIO_DIN = 16
@@ -86,10 +86,13 @@ class Edit_Tab(Tab.Tab):
     def set_init_vars(self, file_path):
         try:
             prev_vars = txt_logger.readVars(file_path)
-            self.init_font_size = prev_vars['font_size']
+            self.init_font_size = prev_vars[FONT_SIZE_KEY]
             
-            self.init_build_image_immeadiately = prev_vars['build_image_immediately']
+            self.init_build_image_immeadiately = prev_vars[BUILD_IMAGE_IMMEDIATELY_KEY]
+            print('OPENED PREV VARS FILE !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')#`````````````````````````````
         except:# if prev_vars file does not exist
+            print('COULD NOT OPEN PREV VARS FILE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')#````````````````````````````
+            
             self.init_font_size = DEFAULT_FONT_SIZE
             
             self.build_image_immeadiately = False
