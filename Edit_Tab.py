@@ -65,7 +65,10 @@ class Edit_Tab(Tab.Tab):
     def __init__(self, master): #remove = True !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         Tab.Tab.__init__(self, master) 
     
+        self.build_image_immeadiately = False
+        
         self.set_init_vars(VAR_LOG_FILE_NAME)
+        print('self.build_image_immeadiately: ', self.build_image_immeadiately)#````````````````````````````````````````````````````````
     
         #setup widgets
         self.location______widgets_setup()
@@ -82,13 +85,18 @@ class Edit_Tab(Tab.Tab):
         
         self.grid_widgets() 
         
+#         if self.build_image_immeadiately == True:
+#             print('BUILDING IMAGE IMEADIATELY RIGHT NOW!!!!!!!!!!!!!!!!!!!!!!!!!')#``````````````````````````````````````````````````````````````````````
+#             image_kwargs = self.build_kwargs()
+#             build_image.build_final_image(image_kwargs)
+        
         
     def set_init_vars(self, file_path):
         try:
             prev_vars = txt_logger.readVars(file_path)
             self.init_font_size = prev_vars[FONT_SIZE_KEY]
             
-            self.init_build_image_immeadiately = prev_vars[BUILD_IMAGE_IMMEDIATELY_KEY]
+            self.build_image_immeadiately = bool( prev_vars[BUILD_IMAGE_IMMEDIATELY_KEY] )
             print('OPENED PREV VARS FILE !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')#`````````````````````````````
         except:# if prev_vars file does not exist
             print('COULD NOT OPEN PREV VARS FILE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')#````````````````````````````

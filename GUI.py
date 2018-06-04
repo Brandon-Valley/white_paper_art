@@ -39,8 +39,13 @@ def main():
     #let all the tabs use each other's member variables
     for tab_name, tab in tab_dict.items():
         tab.tabs = tab_dict
+    
+    if tab_dict['edit'].build_image_immeadiately == True:
+        print('BUILDING IMAGE IMEADIATELY RIGHT NOW')#``````````````````````````````````````````````````````````````````````
+        image_kwargs = tab_dict['edit'].build_kwargs()
+        build_image.build_final_image(image_kwargs)
 
-    print('build the image here!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')#`````````````````````````````````````````````
+#     print('build the image here!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')#`````````````````````````````````````````````
     root.mainloop()
  
 if __name__ == '__main__':
