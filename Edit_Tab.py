@@ -68,7 +68,7 @@ class Edit_Tab(Tab.Tab):
         self.build_image_immeadiately = False
         
         self.set_init_vars(VAR_LOG_FILE_NAME)
-        print('self.build_image_immeadiately: ', self.build_image_immeadiately)#````````````````````````````````````````````````````````
+        print('self.build_image_immeadiately: ', self.build_image_immeadiately, type(self.build_image_immeadiately))#````````````````````````````````````````````````````````
     
         #setup widgets
         self.location______widgets_setup()
@@ -96,7 +96,7 @@ class Edit_Tab(Tab.Tab):
             prev_vars = txt_logger.readVars(file_path)
             self.init_font_size = prev_vars[FONT_SIZE_KEY]
             
-            self.build_image_immeadiately = bool( prev_vars[BUILD_IMAGE_IMMEDIATELY_KEY] )
+            self.build_image_immeadiately = GUI_utils.str_to_bool( prev_vars[BUILD_IMAGE_IMMEDIATELY_KEY] )
             print('OPENED PREV VARS FILE !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')#`````````````````````````````
         except:# if prev_vars file does not exist
             print('COULD NOT OPEN PREV VARS FILE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')#````````````````````````````
@@ -270,8 +270,9 @@ class Edit_Tab(Tab.Tab):
         
     #maximize font size check button click
     def max_font_size_btn_sel(self):#gets called each time you click the check button, changes state of self.font_size_sbox
-        
         if self.max_font_size_sel.get() == 1:
+            self.build_image_immeadiately = True
+            
             self.font_size_sbox.delete(0, "end")
              
             font_path           = FONTS_PATH + '\\' + self.font_drop_down.get() + '.ttf'
@@ -446,8 +447,8 @@ class Edit_Tab(Tab.Tab):
     def build_image______widgets_setup(self):     
         #build image button   
         def build_img_btn_clk():
-            if True: #make this do something!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-                self.build_image_immeadiately = True           
+            if self.build_image_immeadiately == True: #make this do something!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                self.build_image_immeadiately = False 
                 self.log_all_vars()
                 GUI_utils.restart()
             else:

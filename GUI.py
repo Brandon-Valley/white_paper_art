@@ -40,13 +40,16 @@ def main():
     for tab_name, tab in tab_dict.items():
         tab.tabs = tab_dict
     
+    print('in GUI:  self.build_image_immeadiately: ', tab_dict['edit'].build_image_immeadiately, type(tab_dict['edit'].build_image_immeadiately))#````````````````````````````````````````````````````````
+
     if tab_dict['edit'].build_image_immeadiately == True:
-        print('BUILDING IMAGE IMEADIATELY RIGHT NOW')#``````````````````````````````````````````````````````````````````````
+        print('BUILDING IMAGE IMEADIATELY RIGHT NOW!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')#``````````````````````````````````````````````````````````````````````
         image_kwargs = tab_dict['edit'].build_kwargs()
         build_image.build_final_image(image_kwargs)
 
 #     print('build the image here!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')#`````````````````````````````````````````````
     root.mainloop()
+    
  
 if __name__ == '__main__':
     main()

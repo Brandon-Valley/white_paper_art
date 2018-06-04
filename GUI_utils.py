@@ -135,6 +135,14 @@ def valid_img_filename(filename):
         return True
     except:
         return False
+
+def str_to_bool(str):
+    if str == 'True':
+        return True
+    elif str == 'False':
+        return False
+    else:
+        raise exception('ERROR:  in str_to_bool(), invalid input: ', str, type(str))
     
 
 
