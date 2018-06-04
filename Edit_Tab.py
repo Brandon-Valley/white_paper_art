@@ -249,7 +249,7 @@ class Edit_Tab(Tab.Tab):
                                        validate = 'key', validatecommand = self.digits_only, command = log_current_font_size)
         
         self.font_size_sbox.delete(0, "end") #gets rid of 0 so the next line makes the default value 40 instead of 400
-        self.font_size_sbox.insert(0, DEFAULT_FONT_SIZE) #default 
+        self.font_size_sbox.insert(0, self.init_font_size) #default 
         log_current_font_size()
         
         #record  current font size any time the contents of font_size_sbox change
