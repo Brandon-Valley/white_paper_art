@@ -36,10 +36,21 @@ class Demo1:
 #         self.tb2.insert(END, temp_txt)
         self.tb2.insert(END, self.tb2.get())
         
+        
+import time
+def t_print():
+    print('print t1...')
+    time.sleep(1)
+    print('t2')
+        
  
 def main(): 
     root = tk.Tk()
     app = Demo1(root)
+    
+    
+    root.after(54, t_print)  # add_letter will run as soon as the mainloop starts.
+
     root.mainloop()
  
 if __name__ == '__main__':
