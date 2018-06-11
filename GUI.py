@@ -17,6 +17,7 @@ import Advanced_Tab
 
 
 
+
  
 def main(): 
 #     build_image_immediately = GUI_utils.check_build_image_immediately()#``````````````````````````````````````````````````````````
@@ -48,6 +49,17 @@ def main():
         build_image.build_final_image(image_kwargs)
 
 #     print('build the image here!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')#`````````````````````````````````````````````
+    
+    def build_image_immeadiately_if_needed():
+        if True: #make this less dumb!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    #     if tab_dict['edit'].build_image_immeadiately == True:
+            print('BUILDING IMAGE IMEADIATELY RIGHT NOW!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')#``````````````````````````````````````````````````````````````````````
+            image_kwargs = tab_dict['edit'].build_kwargs()
+            build_image.build_final_image(image_kwargs)
+    
+    
+    root.after(500, build_image_immeadiately_if_needed)  # add_letter will run as soon as the mainloop starts.
+    
     root.mainloop()
     
  
