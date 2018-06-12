@@ -51,7 +51,7 @@ INVALID_ENTRY_COLOR = 'red'
 INPUT_TXT_FILE_TYPES = ['.txt']
 INPUT_IMG_FILE_TYPES = ['.png', '.jpg']
 
-BUILD_IMAGE_IMMEDIATELY_KEY = 'build_image_immediately'
+
 
 
 
@@ -96,7 +96,7 @@ class Edit_Tab(Tab.Tab):
             prev_vars = txt_logger.readVars(file_path)
             self.init_font_size = prev_vars[FONT_SIZE_KEY]
             
-            self.build_image_immeadiately = GUI_utils.str_to_bool( prev_vars[BUILD_IMAGE_IMMEDIATELY_KEY] )
+            self.build_image_immeadiately = GUI_utils.str_to_bool( prev_vars[GUI.BUILD_IMAGE_IMMEDIATELY_KEY] )
             print('OPENED PREV VARS FILE !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')#`````````````````````````````
         except:# if prev_vars file does not exist
             print('COULD NOT OPEN PREV VARS FILE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')#````````````````````````````
@@ -486,11 +486,11 @@ class Edit_Tab(Tab.Tab):
     def log_all_vars(self):
         print('loggint all vars!!!!!!!')#``````````````````````````````````````````````````````````````````````````````````````````````````````````````````
         header_order = [FONT_SIZE_KEY, 
-                        BUILD_IMAGE_IMMEDIATELY_KEY]
+                        GUI.BUILD_IMAGE_IMMEDIATELY_KEY]
         
         
         log_dict = {FONT_SIZE_KEY               : self.font_size_sbox.get(),
-                    BUILD_IMAGE_IMMEDIATELY_KEY : str( self.build_image_immeadiately )}
+                    GUI.BUILD_IMAGE_IMMEDIATELY_KEY : str( self.build_image_immeadiately )}
         
         print('loggint all vars: ', log_dict)#``````````````````````````````````````````````````````````````````````````````````````````````````````````````````
         

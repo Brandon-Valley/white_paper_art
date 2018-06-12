@@ -8,9 +8,10 @@ from tkinter import ttk
 
 import threading #need????????????????????????????????????????????????????????????????????????????????
 from   threading import Thread
+from queue import Queue
 
 
-from logger import txt_logger
+# from logger import txt_logger
 
 import build_image
 import GUI_utils
@@ -21,10 +22,10 @@ import Advanced_Tab
 
 
 VAR_LOG_FILE_NAME           = 'variables.txt'
+BUILD_IMAGE_IMMEDIATELY_KEY = 'build_image_immediately'
 
 
-
-def build_gui():
+def build_gui(common_q):    
 #     build_image_immediately = GUI_utils.check_build_image_immediately()#``````````````````````````````````````````````````````````
     
     
@@ -66,6 +67,12 @@ def build_gui():
 #     
 #     
 #     root.after(500, build_image_immeadiately_if_needed)  # add_letter will run as soon as the mainloop starts.
+
+    # this is here to allow the image to be built outside this thread
+    image_kwargs = tab_dict['edit'].build_kwargs()
+    common_q.put(tab_dict['edit'].build_image_immeadiately)
+    common_q.put(image_kwargs)
+
     root.mainloop()
 
 
@@ -78,19 +85,34 @@ def build_gui():
 
 #this whole thing needs to be cleaned up really bad!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 def main(): 
-    Thread(target = build_gui).start()
+    common_queue = Queue()
+#     t1 = Thread(target=producer, args=(q,))
     
-#     # if need to build image immediately, make 2 threads, 1 for the gui,
-#     # and one for building the image, need this so you don't have to wait forever
-#     # for the image to build before getting to see/interact with the gui
-# #     prev_vars = txt_logger.readVars()
-#     
-#     if tab_dict['edit'].build_image_immeadiately == True:
-#         print('more threading needed')#``````````````````````````````````````````````````````````````````````````````````````````````````````
-#         image_kwargs = tab_dict['edit'].build_kwargs()
-#         build_image.build_final_image(image_kwargs)    
-#         
-#         Thread(target = lambda: build_image.build_final_image(image_kwargs)).start()
+    Thread(target = build_gui, args = (common_queue,)).start()
+#     print('after thread1: ', common_queue.get())#````````````````````````````````````````````````````````````````````````````````````````````````
+#     common_queue.task_done()
+#     print('after thread1: ', common_queue.get())#````````````````````````````````````````````````````````````````````````````````````````````````
+
+    
+    
+    # if need to build image immediately, make 2 threads, 1 for the gui,
+    # and one for building the image, need this so you don't have to wait forever
+    # for the image to build before getting to see/interact with the gui
+    
+#     prev_vars = txt_logger.readVars(VAR_LOG_FILE_NAME)#````````````````````````````````````````````````````````````````````````````````````
+      
+    # if build_image_immeadiately == True
+    if common_queue.get() == True:
+        common_queue.task_done()
+        print('more threading needed')#``````````````````````````````````````````````````````````````````````````````````````````````````````
+#         img_kwargs = tab_dict['edit'].build_kwargs()#```````````````````````````````````````````````````````````````````
+#         build_image.build_final_image(common_queue.get()) # image_kwargs  
+#         img_kwargs = common_queue.get() ) #````````````````````````````````````````````````````````````````````````````````` 
+          
+#         Thread(target = build_image.build_final_image, args = common_queue.get()).start() # args = image_kwargs
+
+          
+        Thread(target = lambda: build_image.build_final_image(common_queue.get())).start()
     
     
 

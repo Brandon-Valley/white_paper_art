@@ -1,24 +1,24 @@
-import tkinter as tk
+from queue import Queue
+from threading import Thread
+import time
 
-class Example(tk.Frame):
-    def __init__(self):
+def producer(out_q):
+#     time.sleep(5)
+    out_q.put('hello')
+    out_q.put('hello2')
 
-        tk.Frame.__init__(self)
+def consumer(in_q):
+    h = in_q.get()
+    print(h + ' world!')
+    in_q.task_done()
+    print(in_q.get())
 
-        self.text_entry = tk.Entry(self, show = "*")
-        self.text_entry.pack()
-        self.btn1 = tk.Button(self, text="Toggle asterisk", command = self.toggle)
-        self.btn1.pack()
+q = Queue()
+t1 = Thread(target=producer, args=(q,))
+t2 = Thread(target=consumer, args=(q,))
 
-    def toggle(self):
-        if self.text_entry["show"] == "":
-            self.text_entry["show"] = "*"
+t1.start()
+t2.start()
 
-        else:
-            self.text_entry["show"] = ""
-
-
-if __name__ == "__main__":
-    root=tk.Tk()
-    Example().pack()
-    root.mainloop()
+q.join()
+print('q joined!')
