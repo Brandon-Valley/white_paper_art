@@ -6,6 +6,8 @@ from tkinter import filedialog
 import tkinter as tk
 from tkinter import ttk
 
+import threading
+from threading import Thread
 
 
 import build_image
@@ -18,7 +20,7 @@ import Advanced_Tab
 
 
 
- 
+#this whole thing needs to be cleaned up really bad!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 def main(): 
 #     build_image_immediately = GUI_utils.check_build_image_immediately()#``````````````````````````````````````````````````````````
     
@@ -43,24 +45,40 @@ def main():
     
     print('in GUI:  self.build_image_immeadiately: ', tab_dict['edit'].build_image_immeadiately, type(tab_dict['edit'].build_image_immeadiately))#````````````````````````````````````````````````````````
 
+#     if tab_dict['edit'].build_image_immeadiately == True:
+#         print('BUILDING IMAGE IMEADIATELY RIGHT NOW!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')#``````````````````````````````````````````````````````````````````````
+#         image_kwargs = tab_dict['edit'].build_kwargs()
+#         build_image.build_final_image(image_kwargs)
+# 
+# #     print('build the image here!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')#`````````````````````````````````````````````
+#     
+#     
+#     #why the hell are you doing that??????   why not just make a seperate thread to build the image while you also make the gui??????????? 1!!!!!!!!!!!!!!!!!!!!!!!!!!!
+#     def build_image_immeadiately_if_needed():
+#         if True: #make this less dumb!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+#     #     if tab_dict['edit'].build_image_immeadiately == True:
+#             print('BUILDING IMAGE IMEADIATELY RIGHT NOW!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')#``````````````````````````````````````````````````````````````````````
+#             image_kwargs = tab_dict['edit'].build_kwargs()
+#             build_image.build_final_image(image_kwargs)
+#     
+#     
+#     root.after(500, build_image_immeadiately_if_needed)  # add_letter will run as soon as the mainloop starts.
+    
+    
+    
+    # if need to build image immediately, make 2 threads, 1 for the gui,
+    # and one for building the image, need this so you don't have to wait forever
+    # for the image to build before getting to see/interact with the gui
     if tab_dict['edit'].build_image_immeadiately == True:
-        print('BUILDING IMAGE IMEADIATELY RIGHT NOW!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')#``````````````````````````````````````````````````````````````````````
-        image_kwargs = tab_dict['edit'].build_kwargs()
-        build_image.build_final_image(image_kwargs)
-
-#     print('build the image here!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')#`````````````````````````````````````````````
-    
-    def build_image_immeadiately_if_needed():
-        if True: #make this less dumb!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    #     if tab_dict['edit'].build_image_immeadiately == True:
-            print('BUILDING IMAGE IMEADIATELY RIGHT NOW!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')#``````````````````````````````````````````````````````````````````````
-            image_kwargs = tab_dict['edit'].build_kwargs()
-            build_image.build_final_image(image_kwargs)
-    
-    
-    root.after(500, build_image_immeadiately_if_needed)  # add_letter will run as soon as the mainloop starts.
-    
-    root.mainloop()
+        print('threading needed')#``````````````````````````````````````````````````````````````````````````````````````````````````````
+#         image_kwargs = tab_dict['edit'].build_kwargs()
+#         build_image.build_final_image(image_kwargs)    
+        
+        Thread(target = root.mainloop).start()
+#         Thread(target = lambda: build_image.build_final_image(image_kwargs)).start()
+        
+    else:
+        root.mainloop()
     
  
 if __name__ == '__main__':

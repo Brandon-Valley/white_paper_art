@@ -65,7 +65,7 @@ class Edit_Tab(Tab.Tab):
     def __init__(self, master): #remove = True !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         Tab.Tab.__init__(self, master) 
     
-        self.build_image_immeadiately = False
+#         self.build_image_immeadiately = False#`````````````````````````````````````````````````````````````````````````````````````````````````
         
         self.set_init_vars(VAR_LOG_FILE_NAME)
         print('self.build_image_immeadiately: ', self.build_image_immeadiately, type(self.build_image_immeadiately))#````````````````````````````````````````````````````````
@@ -272,6 +272,7 @@ class Edit_Tab(Tab.Tab):
     def max_font_size_btn_sel(self):#gets called each time you click the check button, changes state of self.font_size_sbox
         if self.max_font_size_sel.get() == 1:
             self.build_image_immeadiately = True
+            print('in max_font_size_btn_sel(self):, self.build_image_immeadiately = ', self.build_image_immeadiately)#````````````````````````````````````````````
             
             self.font_size_sbox.delete(0, "end")
              
@@ -447,8 +448,9 @@ class Edit_Tab(Tab.Tab):
     def build_image______widgets_setup(self):     
         #build image button   
         def build_img_btn_clk():
+            #should change build_image_imediately to build_image_after_restart!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
             if self.build_image_immeadiately == True: #make this do something!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-                self.build_image_immeadiately = False 
+#                 self.build_image_immeadiately = False #```````````````````````````````````````````````````````````````````````````````````````````````
                 self.log_all_vars()
                 GUI_utils.restart()
             else:
@@ -482,12 +484,15 @@ class Edit_Tab(Tab.Tab):
         return image_kwargs
 
     def log_all_vars(self):
+        print('loggint all vars!!!!!!!')#``````````````````````````````````````````````````````````````````````````````````````````````````````````````````
         header_order = [FONT_SIZE_KEY, 
                         BUILD_IMAGE_IMMEDIATELY_KEY]
         
         
         log_dict = {FONT_SIZE_KEY               : self.font_size_sbox.get(),
                     BUILD_IMAGE_IMMEDIATELY_KEY : str( self.build_image_immeadiately )}
+        
+        print('loggint all vars: ', log_dict)#``````````````````````````````````````````````````````````````````````````````````````````````````````````````````
         
         txt_logger.logVars(VAR_LOG_FILE_NAME, log_dict, header_order)
         
