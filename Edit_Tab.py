@@ -52,7 +52,7 @@ INPUT_TXT_FILE_TYPES = ['.txt']
 INPUT_IMG_FILE_TYPES = ['.png', '.jpg']
 
 BUILD_IMAGE_IMMEDIATELY_KEY = 'build_image_immediately'
-VAR_LOG_FILE_NAME           = 'variables.txt'
+
 
 
 
@@ -67,7 +67,7 @@ class Edit_Tab(Tab.Tab):
     
 #         self.build_image_immeadiately = False#`````````````````````````````````````````````````````````````````````````````````````````````````
         
-        self.set_init_vars(VAR_LOG_FILE_NAME)
+        self.set_init_vars(GUI.VAR_LOG_FILE_NAME)
         print('self.build_image_immeadiately: ', self.build_image_immeadiately, type(self.build_image_immeadiately))#````````````````````````````````````````````````````````
     
         #setup widgets
@@ -494,7 +494,7 @@ class Edit_Tab(Tab.Tab):
         
         print('loggint all vars: ', log_dict)#``````````````````````````````````````````````````````````````````````````````````````````````````````````````````
         
-        txt_logger.logVars(VAR_LOG_FILE_NAME, log_dict, header_order)
+        txt_logger.logVars(GUI.VAR_LOG_FILE_NAME, log_dict, header_order)
         
         
 

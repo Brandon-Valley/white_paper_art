@@ -6,9 +6,11 @@ from tkinter import filedialog
 import tkinter as tk
 from tkinter import ttk
 
-import threading
-from threading import Thread
+import threading #need????????????????????????????????????????????????????????????????????????????????
+from   threading import Thread
 
+
+from logger import txt_logger
 
 import build_image
 import GUI_utils
@@ -18,10 +20,11 @@ import Edit_Tab
 import Advanced_Tab
 
 
+VAR_LOG_FILE_NAME           = 'variables.txt'
 
 
-#this whole thing needs to be cleaned up really bad!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-def main(): 
+
+def build_gui():
 #     build_image_immediately = GUI_utils.check_build_image_immediately()#``````````````````````````````````````````````````````````
     
     
@@ -63,22 +66,34 @@ def main():
 #     
 #     
 #     root.after(500, build_image_immeadiately_if_needed)  # add_letter will run as soon as the mainloop starts.
+    root.mainloop()
+
+
+
+
+
+        
+
+
+
+#this whole thing needs to be cleaned up really bad!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+def main(): 
+    Thread(target = build_gui).start()
     
-    
-    
-    # if need to build image immediately, make 2 threads, 1 for the gui,
-    # and one for building the image, need this so you don't have to wait forever
-    # for the image to build before getting to see/interact with the gui
-    if tab_dict['edit'].build_image_immeadiately == True:
-        print('threading needed')#``````````````````````````````````````````````````````````````````````````````````````````````````````
+#     # if need to build image immediately, make 2 threads, 1 for the gui,
+#     # and one for building the image, need this so you don't have to wait forever
+#     # for the image to build before getting to see/interact with the gui
+# #     prev_vars = txt_logger.readVars()
+#     
+#     if tab_dict['edit'].build_image_immeadiately == True:
+#         print('more threading needed')#``````````````````````````````````````````````````````````````````````````````````````````````````````
 #         image_kwargs = tab_dict['edit'].build_kwargs()
 #         build_image.build_final_image(image_kwargs)    
-        
-        Thread(target = root.mainloop).start()
+#         
 #         Thread(target = lambda: build_image.build_final_image(image_kwargs)).start()
-        
-    else:
-        root.mainloop()
+    
+    
+
     
  
 if __name__ == '__main__':
