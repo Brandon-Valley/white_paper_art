@@ -10,6 +10,7 @@ import threading #need??????????????????????????????????????????????????????????
 from   threading import Thread
 from queue import Queue
 
+import time
 
 # from logger import txt_logger
 
@@ -103,6 +104,7 @@ def main():
       
     # if build_image_immeadiately == True
     if common_queue.get() == True:
+        time.sleep(10)#````````````````````````````````````````````````````````````````````````````````````
         common_queue.task_done()
         print('more threading needed')#``````````````````````````````````````````````````````````````````````````````````````````````````````
 #         img_kwargs = tab_dict['edit'].build_kwargs()#```````````````````````````````````````````````````````````````````
