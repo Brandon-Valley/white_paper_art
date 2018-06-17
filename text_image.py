@@ -28,67 +28,97 @@ def text_image(lines, color_cords, default_colors, font):
     
     img_dims = tools.calc_img_dims(lines, font)
     
-    gc.collect()
+#     gc.collect()
 
 
-    # to get bigger final images, start looking here, by making both image and image2, you cut the max size of the final image in half!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    print('here 0 ,!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! font size: ', font.size)#`````````````````````````````````````````````````````````````
-    image = Image.new("RGB", img_dims, default_colors['final_image_background']) # scrap image
-    print('here 1 ,!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! font size: ', font.size)#`````````````````````````````````````````````````````````````
-    draw = ImageDraw.Draw(image)
-    print('here 2 ,!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! font size: ', font.size)#`````````````````````````````````````````````````````````````
-    image2 = Image.new("RGB", img_dims, default_colors['background_image']) # final image
-    print('here 3 ,!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! font size: ', font.size)#`````````````````````````````````````````````````````````````
-    
-    fill = " o "
-    x = 0
-    w_fill, y = draw.textsize(fill, font)
-    
-    Image.MAX_IMAGE_PIXELS = 1000000000   #need this here
-    
-    line_num = 0
-    for line_num in range(len(lines)):
-#         print('here 4 ,!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! font size: ', font.size)#`````````````````````````````````````````````````````````````
-        line = lines[line_num]
-#         print(line)#!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        x_draw, x_paste = 0, 0
+    print("BEFORE ")#`````````````````````````````````````````````````````````````````````````````````````````````````````
+            #`````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````
+    import os
+    import psutil
+    process = psutil.Process(os.getpid())
+    bytes = process.memory_info().rss
+    megabytes = bytes / 1000000
+    gigabytes = megabytes / 1000
+    print('    megabytes: ', megabytes)
+    print('    gigabytes: ', gigabytes)
+    #`11````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````
+
+
+
+
+    try:
+        # to get bigger final images, start looking here, by making both image and image2, you cut the max size of the final image in half!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        print('here 0 ,!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! font size: ', font.size)#`````````````````````````````````````````````````````````````
+        image = Image.new("RGB", img_dims, default_colors['final_image_background']) # scrap image
+        print('here 1 ,!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! font size: ', font.size)#`````````````````````````````````````````````````````````````
+        draw = ImageDraw.Draw(image)
+        print('here 2 ,!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! font size: ', font.size)#`````````````````````````````````````````````````````````````
+        image2 = Image.new("RGB", img_dims, default_colors['background_image']) # final image
+        print('here 3 ,!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! font size: ', font.size)#`````````````````````````````````````````````````````````````
         
-        for letter_num in range(len(line)):
-#             print('here 5 ,!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! font size: ', font.size)#`````````````````````````````````````````````````````````````
-            letter = line[letter_num]
-            w_full = draw.textsize(fill + letter, font)[0]
-            w = w_full - w_fill     # the width of the character on its own
-            
-            letter_cords = [line_num, letter_num]
-            cur_char = lines[line_num][letter_num]
-            
-            for color, cord_list in color_cords.items():
-#                 print('here 6 ,!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! font size: ', font.size)#`````````````````````````````````````````````````````````````
-                if letter_cords in color_cords[color]:
-                    char_color = color
-                    break
-
-            else:
-                char_color = default_colors['default_text']
-    
-            draw.text((x_draw, y * line_num), fill + letter, char_color, font)#font = font
+        fill = " o "
+        x = 0
+        w_fill, y = draw.textsize(fill, font)
         
-            iletter = image.crop((x_draw + w_fill, 0, x_draw + w_full, y * len(lines) ))
+        Image.MAX_IMAGE_PIXELS = 1000000000   #need this here
+        
+        line_num = 0
+        for line_num in range(len(lines)):
+    #         print('here 4 ,!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! font size: ', font.size)#`````````````````````````````````````````````````````````````
+            line = lines[line_num]
+    #         print(line)#!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            x_draw, x_paste = 0, 0
             
-#             iletter.show()#`````````````````````````````````````````````````````````````````````````````````````````````````
-            
-    #         iletter.show()
-    #         sleep(1)
+            for letter_num in range(len(line)):
+    #             print('here 5 ,!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! font size: ', font.size)#`````````````````````````````````````````````````````````````
+                letter = line[letter_num]
+                w_full = draw.textsize(fill + letter, font)[0]
+                w = w_full - w_fill     # the width of the character on its own
+                
+                letter_cords = [line_num, letter_num]
+                cur_char = lines[line_num][letter_num]
+                
+                for color, cord_list in color_cords.items():
+    #                 print('here 6 ,!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! font size: ', font.size)#`````````````````````````````````````````````````````````````
+                    if letter_cords in color_cords[color]:
+                        char_color = color
+                        break
     
-            image2.paste(iletter, (x_paste, 0))
+                else:
+                    char_color = default_colors['default_text']
+        
+                draw.text((x_draw, y * line_num), fill + letter, char_color, font)#font = font
             
-#                 image2.show()#````````````````````````````````````````````````````````````````````````````````````````````
-#             sleep(2)
-#             print('x_paste:', x_paste)#!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-            x_draw += w_full
-            x_paste += w
-        line_num += 1
-    return image2
+                iletter = image.crop((x_draw + w_fill, 0, x_draw + w_full, y * len(lines) ))
+                
+    #             iletter.show()#`````````````````````````````````````````````````````````````````````````````````````````````````
+                
+        #         iletter.show()
+        #         sleep(1)
+        
+                image2.paste(iletter, (x_paste, 0))
+                
+    #                 image2.show()#````````````````````````````````````````````````````````````````````````````````````````````
+    #             sleep(2)
+    #             print('x_paste:', x_paste)#!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                x_draw += w_full
+                x_paste += w
+            line_num += 1
+        return image2
+    
+    except:
+        
+        print("MEM ERROR :(")#`````````````````````````````````````````````````````````````````````````````````````````````````````
+                #`````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````
+        import os
+        import psutil
+        process = psutil.Process(os.getpid())
+        bytes = process.memory_info().rss
+        megabytes = bytes / 1000000
+        gigabytes = megabytes / 1000
+        print('    megabytes: ', megabytes)
+        print('    gigabytes: ', gigabytes)
+        #`11````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````
 
 
 

@@ -462,6 +462,17 @@ class Edit_Tab(Tab.Tab):
             
             
         self.build_img_btn = Button(self.master, text="Build Image", command = build_img_btn_clk)
+        
+        #`````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````
+        import os
+        import psutil
+        process = psutil.Process(os.getpid())
+        bytes = process.memory_info().rss
+        megabytes = bytes / 1000000
+        gigabytes = megabytes / 1000
+        print('megabytes: ', megabytes)
+        print('gigabytes: ', gigabytes)
+        #`11````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````
 
 
     def build_kwargs(self):
