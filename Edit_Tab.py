@@ -13,7 +13,6 @@ import Tab
 import global_constants
 import font_tools
 
-# FONTS_PATH = "C:\\Users\\Brandon\\Documents\\Personal_Projects\\white_paper_art\\fonts" #this part really shouldn't be done in this file
 
 FILE_PATH_TEXT_BOX_WIDTH = 80
 
@@ -236,7 +235,7 @@ class Edit_Tab(Tab.Tab):
         if self.max_font_size_sel.get() == 1:
             self.font_size_sbox.delete(0, "end")
              
-            font_path           = FONTS_PATH + '\\' + self.font_drop_down.get() + '.ttf'
+            font_path           = GUI_utils.build_font_path(self.font_drop_down.get())
             text_file_path      = self.input_text_file_path_text_box.get()
             output_dim_ratio    = GUI_utils.strs_to_int_ratio( self.output_img_dim_num_sbox.get() , self.output_img_dim_din_sbox.get() )
              
@@ -420,7 +419,7 @@ class Edit_Tab(Tab.Tab):
         #read the current state of all arguments
         image_kwargs = {'input_text_file_path':         self.input_text_file_path_text_box.get(),
                         'input_image_file_path':        self.input_img_file_path_text_box.get(),
-                        'font_path':                    GUI_utils.FONTS_PATH + '\\' + self.font_drop_down.get() + '.ttf',
+                        'font_path':                    GUI_utils.build_font_path(self.font_drop_down.get()),
                         'font_size':                    GUI_utils.font_size_or_message(self.font_size_sbox, global_constants.MAX_FONT_SIZE_STR),#int(self.font_size_sbox.get()), # = cols = width     !!!!!!!!!!!!!!!
                         'maximize_font_size':           self.max_font_size_sel.get(),
                         'output_image_dim_ratio':       GUI_utils.strs_to_int_ratio( self.output_img_dim_num_sbox.get() , self.output_img_dim_din_sbox.get() ),

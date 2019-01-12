@@ -53,11 +53,16 @@ def get_font_list():
     
     font_list = []
     for raw_filename in raw_font_filename_list:
-        font_name = raw_filename.split('.')[0]
+#         font_name = raw_filename.split('.')[0]
+        font_name = raw_filename[0:-4]
         font_list.append(font_name)
     
     return font_list
     
+    
+    
+def build_font_path(font_name):
+    return FONTS_PATH + '\\' + font_name + '.ttf'
     
 
 
