@@ -15,8 +15,12 @@ from tkinter import ttk
 
 from PIL import Image
 
+from os import listdir
+from os.path import isfile, join
+ 
+# import fonts
 
-import fonts
+FONTS_PATH = "C:\\Users\\Brandon\\Documents\\Personal_Projects\\white_paper_art\\fonts"
 
 OUTPUT_IMAGE_SUFFIX = '_text_art' #used????????????????????????????????????????????????????????????????????????????????
 
@@ -45,7 +49,16 @@ def get_defalt_file_path(home_dir_path, file_ext_list):
 
 
 def get_font_list():
-    return['font1', 'Consolas', 'cour', "font22222222222222222222222222222222222222222222222222222222"]
+    raw_font_filename_list = [f for f in listdir(FONTS_PATH) if isfile(join(FONTS_PATH, f))]
+    
+    font_list = []
+    for raw_filename in raw_font_filename_list:
+        font_name = raw_filename.split('.')[0]
+        font_list.append(font_name)
+    
+    return font_list
+    
+#     return['unifont-11.0.03', 'Consolas', 'cour', "font22222222222222222222222222222222222222222222222222222222"]#!!!!!!!!!!!!!!!!!!!!!!!
     
 
 

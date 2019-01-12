@@ -1,87 +1,78 @@
- • Common Prefix (CP); with parameters k ∈ N. The chains C1, C2 possessed by two honest parties at the onset of the slots sl1 < sl2
- are such that C dk 1  C2, where C dk 1 denotes the chain obtained by removing the last k blocks from C1, and  denotes the prefix
- relation. • Chain Quality (CQ); with parameters µ ∈ (0, 1] and ` ∈ N. Consider any portion of length at least ` of the chain
- possessed by an honest party at the onset of a round; the ratio of blocks originating from the adversary is at most 1−µ. We call µ
- the chain quality coefficient. • Chain Growth (CG); with parameters τ ∈ (0, 1], s ∈ N. Consider the chains C1, C2 possessed by two
- honest parties at the onset of two slots sl1, sl2 with sl2 at least s slots ahead of sl1. Then it holds that len(C2) − len(C1) ≥ τ ·
- s. We call τ the speed coefficient. Some remarks are in place. Regarding common prefix, we capture a strong notion of common prefix,
- cf. [26]. Regarding chain quality, µ, as a function of the ratio of adversarial parties, satisfies µ(α) ≥ α for protocols of
- interest. In an ideal setting, µ would be 1−α: in this case, the percentage of malicious blocks in any sufficiently long chain
- segment is proportional to the cumulative stake of a set of (malicious) stakeholders. It is worth noting that for bitcoin we have
- µ(α) = (1 − 2α)/(1 − α), and this bound is in fact tight—see [24], which argues this guarantee on chain quality. The same will hold
- true for our protocol construction. As we will show, this will still be sufficient for our incentive mechanism to work properly.
- Finally chain growth concerns the rate at which the chain grows (for honest parties). As in the case of bitcoin, the longest chain
- plays a preferred role in our protocol; this provides an easy guarantee of chain growth. Security Model. We adopt the model
- introduced by [24] for analysing security of blockchain protocols enhanced with an ideal functionality F. We denote by VIEWP,F Π,A,Z
- (λ) the view of party P after the execution of protocol Π with adversary A, environment Z, security parameter κ and access to ideal
- functionality F. Similarly we denote by EXECP,F Π,A,Z (λ) the output of Z. We note that multiple different “functionalities” will be
- encompassed by F. Contrary to [24], our analysis is in the “standard model”, and without a random oracle functionality. The first
- interfaces we incorporate in the ideal functionality used in the protocol are the “diffuse” and “key and transaction” functionality,
- denoted FD+KT and described below. Note that the diffuse functionality is also the mechanism via which we will obtain the
- synchronization of the protocol. Diffuse functionality. The diffuse functionality maintains an incoming string for each party Ui that
- participates. A party, if activated, is allowed at any moment to fetch the contents of its incoming string; one may think of this as
- a mailbox. Additionally, parties can instruct the functionality to diffuse a message, in which case the message will be appended to
- each party’s incoming string. The functionality maintains rounds (slots) and all parties are allowed to diffuse once in a round.
- Rounds do not advance unless all parties have diffused a message. The adversary, when activated, may also interact with the
- functionality and is allowed to read all inboxes and all diffuse requests and deliver messages to the inboxes in any order it
- prefers. At the end of the round, the functionality will ensure that all inboxes contain all messages that have been diffused (but
- not necessarily in the same order they have been requested to be diffused). The current slot index may be requested at any time by
- any party. If a stakeholder does not fetch in a certain slot the messages written to its incoming string, they are flushed. 6 Key and
- Transaction functionality. The key registration functionality is initialized with n users, U1, . . . , Un and their respective stake
- s1, . . . , sn; given such initialization, the functionality will consult with the adversary and will accept a (possibly empty)
- sequence of (Corrupt, U) messages and mark the corresponding users U as corrupt. For the corrupt users without a public-key
- registered the functionality will allow the adversary to set their publickeys while for honest users the functionality will sample
- public/secret-key pairs and record them based on a digital signature algorithm. Public-keys of corrupt users will be marked as such.
- Subsequently, any sequence of the following actions may take place: (i) A user may request to retrieve its public and secret-key
- whereupon the functionality will return it to the user. (ii) The whole directory of public-keys may be required whereupon the
- functionality will return it to the requesting user. (iii) A new user may be requested to be created by a message (Create, U, C) from
- the environment, in which case the functionality will follow the same procedure as before: it will consult the adversary regarding
- the corruption status of U and will set its public and possibly secret-key depending on the corruption status; moreover it will store
- C as the suggested initial state. The functionality will return the public-key back to the environment upon successful completion of
- this interaction. (iv) An existing user may be requested to be corrupted by the adversary via a message (Corrupt, U). A user can only
- be corrupted after a delay of D slots; specifically, after a corruption request is registered the secret-key will be released after D
- slots have passed according to the round counter maintained in the Diffuse component of the functionality. Given the above we will
- assume that the execution of the protocol is with respect to a functionality F that is incorporating the above two functionalities as
- well as possibly additional functionalities to be explained below. Note that a corrupted stakeholder U will relinquish its entire
- state to A; from this point on, the adversary will be activated in place of the stakeholder U. Beyond any restrictions imposed by F,
- the adversary can only corrupt a stakeholder if it is given permission by the environment Z running the protocol execution. The
- permission is in the form of a message (Corrupt, U) which is provided to the adversary by the environment. In summary, regarding
- activations we have the following. • At each slot slj , the environment Z is allowed to activate any subset of stakeholders it
- wishes. Each one of them will possibly produce messages that are to be transmitted to other stakeholders. • The adversary is
- activated at least as the last entity in each slj , (as well as during all adversarial party activations). It is easy to see that the
- model above confers such sweeping power on the adversary that one cannot establish any significant guarantees on protocols of
- interest. It is thus important to restrict the environment suitably (taking into account the details of the protocol) so that we may
- be able to argue security. With foresight, the restrictions we will impose on the environment are as follows. Restrictions imposed on
- the environment. The environment, which is responsible for activating the honest parties in each round, will be subject to the
- following constraints regarding the activation of the honest parties running the protocol. • In each slot there will be at least one
- honest activated party. 7 • There will be a parameter k ∈ Z that will signify the maximum number of slots that an honest shareholder
- can be offline. In case an honest stakeholder is spawned after the beginning of the protocol via (Create, U, C) its initialization
- chain C provided by the environment should match an honest parties’ chain which was active in the previous slot. • In each slot slr,
- and for each active stakeholder Uj there will be a set Sj (r) of public-keys and stake pairs of the form (vki , si) ∈ {0, 1} ∗ × N,
- for j = 1, . . . , nr where nr is the number of users introduced up to that slot that will represent who are the active participants
- in the view of Uj . Public-keys will be marked as “corrupted” if the corresponding stakeholder has been corrupted. We will say the
- adversary is restricted to less than 50% relative stake if it holds that the total stake of the corrupted keys divided by the total
- stake P i si is less than 50% in all possible Sj (r). In case the above is violated an event Bad1/2 becomes true for the given
- execution. We note that the offline restriction stated above is very conservative and our protocol can tolerate much longer offline
- times depending on the way the course of the execution proceeds; nevertheless, for the sake of simplicity, we use the above
- restriction. Finally, we note that in all our proofs, whenever we say that a property Q holds with high probability over all
- executions, we will in fact argue that Q∨Bad1/2 holds with high probability over all executions. This captures the fact that we
- exclude environments and adversaries that trigger Bad1/2 with non-negligible probability. 3 Our Protocol: Overview We first provide a
- general overview of our protocol design approach. The protocol’s specifics depend on a number of parameters as follows: (i) k is the
- number of blocks a certain message should have “on top of it” in order to become part of the immutable history of the ledger, (ii) 
- is the advantage in terms of stake of the honest stakeholders against the adversarial ones; (iii) D is the corruption delay that is
- imposed on the adversary, i.e., an honest stakeholder will be corrupted after D slots when a corrupt message is delivered by the
- adversary during an execution; (iv) L is the lifetime of the system, measured in slots; (v) R is the length of an epoch, measured in
- slots. We present our protocol description in four stages successively improving the adversarial model it can withstand. In all
- stages an “ideal functionality” F D,F LS is available to the participants. The functionality captures the resources that are
- available to the parties as preconditions for the secure operation of the protocol (e.g., the genesis block will be specified by F
- D,F LS ). Stage 1: Static stake; D = L. In the first stage, the trust assumption is static and remains with the initial set of
- stakeholders. There is an initial stake distribution which is hardcoded into the genesis block that includes the public-keys of the
- stakeholders, {(vki , si)} n i=1. Based on our restrictions to the environment, honest majority with advantage  is assumed among
- those initial stakeholders. Specifically, the environment initially will allow the corruption of a number of stakeholders whose
- relative stake represents 1− 2 for some  > 0. The environment allows party corruption by providing tokens of the form (Corrupt, U)
- to the adversary; note that due to the corruption delay imposed in this first stage any further corruptions will be against parties
- that have no stake initially and hence the corruption model is akin to “static corruption.” F D,F LS will subsequently sample ρ which
- will seed a “weighted by stake” stakeholder sampling and in this way lead to the election of a subset of m keys vki1 , . . . , vkim
- to form the committee that will possess honest majority with overwhelming probability in m, (this uses the fact that the relative
- stake possessed by malicious parties is 1− 2 ; a linear dependency of m to  −2 will be imposed at this
+ • Common Prefix (CP); with parameters k ∈ N. The chains C1, C2 possessed by two honest parties at the onset of the slots sl1 < sl2 are such that C dk
+ 1  C2, where C dk 1 denotes the chain obtained by removing the last k blocks from C1, and  denotes the prefix relation. • Chain Quality (CQ); with
+ parameters µ ∈ (0, 1] and ` ∈ N. Consider any portion of length at least ` of the chain possessed by an honest party at the onset of a round; the
+ ratio of blocks originating from the adversary is at most 1−µ. We call µ the chain quality coefficient. • Chain Growth (CG); with parameters τ ∈ (0,
+ 1], s ∈ N. Consider the chains C1, C2 possessed by two honest parties at the onset of two slots sl1, sl2 with sl2 at least s slots ahead of sl1. Then
+ it holds that len(C2) − len(C1) ≥ τ · s. We call τ the speed coefficient. Some remarks are in place. Regarding common prefix, we capture a strong
+ notion of common prefix, cf. [26]. Regarding chain quality, µ, as a function of the ratio of adversarial parties, satisfies µ(α) ≥ α for protocols of
+ interest. In an ideal setting, µ would be 1−α: in this case, the percentage of malicious blocks in any sufficiently long chain segment is
+ proportional to the cumulative stake of a set of (malicious) stakeholders. It is worth noting that for bitcoin we have µ(α) = (1 − 2α)/(1 − α), and
+ this bound is in fact tight—see [24], which argues this guarantee on chain quality. The same will hold true for our protocol construction. As we will
+ show, this will still be sufficient for our incentive mechanism to work properly. Finally chain growth concerns the rate at which the chain grows
+ (for honest parties). As in the case of bitcoin, the longest chain plays a preferred role in our protocol; this provides an easy guarantee of chain
+ growth. Security Model. We adopt the model introduced by [24] for analysing security of blockchain protocols enhanced with an ideal functionality F.
+ We denote by VIEWP,F Π,A,Z (λ) the view of party P after the execution of protocol Π with adversary A, environment Z, security parameter κ and access
+ to ideal functionality F. Similarly we denote by EXECP,F Π,A,Z (λ) the output of Z. We note that multiple different “functionalities” will be
+ encompassed by F. Contrary to [24], our analysis is in the “standard model”, and without a random oracle functionality. The first interfaces we
+ incorporate in the ideal functionality used in the protocol are the “diffuse” and “key and transaction” functionality, denoted FD+KT and described
+ below. Note that the diffuse functionality is also the mechanism via which we will obtain the synchronization of the protocol. Diffuse functionality.
+ The diffuse functionality maintains an incoming string for each party Ui that participates. A party, if activated, is allowed at any moment to fetch
+ the contents of its incoming string; one may think of this as a mailbox. Additionally, parties can instruct the functionality to diffuse a message,
+ in which case the message will be appended to each party’s incoming string. The functionality maintains rounds (slots) and all parties are allowed to
+ diffuse once in a round. Rounds do not advance unless all parties have diffused a message. The adversary, when activated, may also interact with the
+ functionality and is allowed to read all inboxes and all diffuse requests and deliver messages to the inboxes in any order it prefers. At the end of
+ the round, the functionality will ensure that all inboxes contain all messages that have been diffused (but not necessarily in the same order they
+ have been requested to be diffused). The current slot index may be requested at any time by any party. If a stakeholder does not fetch in a certain
+ slot the messages written to its incoming string, they are flushed. 6 Key and Transaction functionality. The key registration functionality is
+ initialized with n users, U1, . . . , Un and their respective stake s1, . . . , sn; given such initialization, the functionality will consult with
+ the adversary and will accept a (possibly empty) sequence of (Corrupt, U) messages and mark the corresponding users U as corrupt. For the corrupt
+ users without a public-key registered the functionality will allow the adversary to set their publickeys while for honest users the functionality
+ will sample public/secret-key pairs and record them based on a digital signature algorithm. Public-keys of corrupt users will be marked as such.
+ Subsequently, any sequence of the following actions may take place: (i) A user may request to retrieve its public and secret-key whereupon the
+ functionality will return it to the user. (ii) The whole directory of public-keys may be required whereupon the functionality will return it to the
+ requesting user. (iii) A new user may be requested to be created by a message (Create, U, C) from the environment, in which case the functionality
+ will follow the same procedure as before: it will consult the adversary regarding the corruption status of U and will set its public and possibly
+ secret-key depending on the corruption status; moreover it will store C as the suggested initial state. The functionality will return the public-key
+ back to the environment upon successful completion of this interaction. (iv) An existing user may be requested to be corrupted by the adversary via a
+ message (Corrupt, U). A user can only be corrupted after a delay of D slots; specifically, after a corruption request is registered the secret-key
+ will be released after D slots have passed according to the round counter maintained in the Diffuse component of the functionality. Given the above
+ we will assume that the execution of the protocol is with respect to a functionality F that is incorporating the above two functionalities as well as
+ possibly additional functionalities to be explained below. Note that a corrupted stakeholder U will relinquish its entire state to A; from this point
+ on, the adversary will be activated in place of the stakeholder U. Beyond any restrictions imposed by F, the adversary can only corrupt a stakeholder
+ if it is given permission by the environment Z running the protocol execution. The permission is in the form of a message (Corrupt, U) which is
+ provided to the adversary by the environment. In summary, regarding activations we have the following. • At each slot slj , the environment Z is
+ allowed to activate any subset of stakeholders it wishes. Each one of them will possibly produce messages that are to be transmitted to other
+ stakeholders. • The adversary is activated at least as the last entity in each slj , (as well as during all adversarial party activations). It is
+ easy to see that the model above confers such sweeping power on the adversary that one cannot establish any significant guarantees on protocols of
+ interest. It is thus important to restrict the environment suitably (taking into account the details of the protocol) so that we may be able to argue
+ security. With foresight, the restrictions we will impose on the environment are as follows. Restrictions imposed on the environment. The
+ environment, which is responsible for activating the honest parties in each round, will be subject to the following constraints regarding the
+ activation of the honest parties running the protocol. • In each slot there will be at least one honest activated party. 7 • There will be a
+ parameter k ∈ Z that will signify the maximum number of slots that an honest shareholder can be offline. In case an honest stakeholder is spawned
+ after the beginning of the protocol via (Create, U, C) its initialization chain C provided by the environment should match an honest parties’ chain
+ which was active in the previous slot. • In each slot slr, and for each active stakeholder Uj there will be a set Sj (r) of public-keys and stake
+ pairs of the form (vki , si) ∈ {0, 1} ∗ × N, for j = 1, . . . , nr where nr is the number of users introduced up to that slot that will represent who
+ are the active participants in the view of Uj . Public-keys will be marked as “corrupted” if the corresponding stakeholder has been corrupted. We
+ will say the adversary is restricted to less than 50% relative stake if it holds that the total stake of the corrupted keys divided by the total
+ stake P i si is less than 50% in all possible Sj (r). In case the above is violated an event Bad1/2 becomes true for the given execution. We note
+ that the offline restriction stated above is very conservative and our protocol can tolerate much longer offline times depending on the way the
+ course of the execution proceeds; nevertheless, for the sake of simplicity, we use the above restriction. Finally, we note that in all our proofs,
+ whenever we say that a property Q holds with high probability over all executions, we will in fact argue that Q∨Bad1/2 holds with high probability
+ over all executions. This captures the fact that we exclude environments and adversaries that trigger Bad1/2 with non-negligible probability. 3 Our
+ Protocol: Overview We first provide a general overview of our protocol design approach. The protocol’s specifics depend on a number of parameters as
+ follows: (i) k is the number of blocks a certain message should have “on top of it” in order to become part of the immutable history of the ledger,
+ (ii)  is the advantage in terms of stake of the honest stakeholders against the adversarial ones; (iii) D is the corruption delay that is imposed on
+ the adversary, i.e., an honest stakeholder will be corrupted after D slots when a corrupt message is delivered by the adversary during an execution;
+ (iv) L is the lifetime of the system, measured in slots; (v) R is the length of an epoch, measured in slots. We present our protocol description in
+ four stages successively improving the adversarial model it can withstand. In all stages an “ideal functionality” F D,F LS is available to the
+ participants. The functionality captures the resources that are available to the parties as preconditions for the secure operation of the protocol
+ (e.g., the genesis block will be specified by F D,F LS ). Stage 1: Static stake; D = L. In the first stage, the trust assumption is static and
+ remains with the initial set of stakeholders. There is an initial stake distribution which is hardcoded into the genesis block that includes the
+ public-keys of the stakeholders, {(vki , si)} n i=1. Based on our restrictions to the environment, honest majority with advantage  is assumed among
+ those initial stakeholders. Specifically, the environment initially will allow the corruption of a number of stakeholders whose relative stake
+ represents 1− 2 for some  > 0. The environment allows party corruption by providing tokens of the form (Corrupt, U) to the adversary; note that due
+ to the corruption delay imposed in this first stage any further corruptions will be against parties that have no stake initially and hence the
+ corruption model is akin to “static corruption.” F D,F LS will subsequently sample ρ which will seed a “weighted by stake” stakeholder sampling and
+ in this way lead to the election of a subset of m keys vki1 , . . . , vkim to form the committee that will possess honest majority with overwhelming
+ probability in m, (this uses the fact that the relative stake possessed by malicious parties is 1− 2 ; a linear dependency of m to  −2 will be
+ imposed at this

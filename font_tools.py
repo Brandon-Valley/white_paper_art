@@ -152,6 +152,16 @@ def find_max_font_size(font_path, text_file_path, output_dim_ratio):
     return font.size
 #     return 24#``````````````````````````````````````````````````````````````````````````````````````````````
 
+
+
+
+
+
+
+
+
+
+
 import GUI
 if __name__ == '__main__':
     GUI.main()   
