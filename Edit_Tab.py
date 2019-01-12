@@ -5,7 +5,6 @@ import tkinter as tk
 from tkinter import ttk
 
 # import tkinter as tk
-from logger import txt_logger
 
 import build_image
 import GUI_utils
@@ -16,19 +15,11 @@ import font_tools
 
 FONTS_PATH = "C:\\Users\\Brandon\\Documents\\Personal Projects\\white_paper_art\\fonts"
 
-
-
-FONT_SIZE_KEY = 'font_size'
-
-
-
-
-
 FILE_PATH_TEXT_BOX_WIDTH = 80
 
 
 DEFAULT_FONT_NAME = "cour"
-DEFAULT_FONT_SIZE = 79
+DEFAULT_FONT_SIZE = 40
 
 DEFAULT_IMAGE_DIMENSION_RATIO_NUM = 14
 DEFAULT_IMAGE_DIMENSION_RATIO_DIN = 16
@@ -53,22 +44,14 @@ INPUT_IMG_FILE_TYPES = ['.png', '.jpg']
 
 
 
-
-
-
 # DEFAULT_NUM_DIM = 1
 # DEFAULT_DIN_DIM = 1
 
 
  
 class Edit_Tab(Tab.Tab):    
-    def __init__(self, master): #remove = True !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        Tab.Tab.__init__(self, master) 
-    
-#         self.build_image_immeadiately = False#`````````````````````````````````````````````````````````````````````````````````````````````````
-        
-        self.set_init_vars(GUI.VAR_LOG_FILE_NAME)
-        print('self.build_image_immeadiately: ', self.build_image_immeadiately, type(self.build_image_immeadiately))#````````````````````````````````````````````````````````
+    def __init__(self, master):
+        Tab.Tab.__init__(self, master)
     
         #setup widgets
         self.location______widgets_setup()
@@ -84,27 +67,6 @@ class Edit_Tab(Tab.Tab):
         self.build_image______widgets_setup()
         
         self.grid_widgets() 
-        
-#         if self.build_image_immeadiately == True:
-#             print('BUILDING IMAGE IMEADIATELY RIGHT NOW!!!!!!!!!!!!!!!!!!!!!!!!!')#``````````````````````````````````````````````````````````````````````
-#             image_kwargs = self.build_kwargs()
-#             build_image.build_final_image(image_kwargs)
-        
-        
-    def set_init_vars(self, file_path):
-        try:
-            prev_vars = txt_logger.readVars(file_path)
-            self.init_font_size = prev_vars[FONT_SIZE_KEY]
-            
-            self.build_image_immeadiately = GUI_utils.str_to_bool( prev_vars[GUI.BUILD_IMAGE_IMMEDIATELY_KEY] )
-            print('OPENED PREV VARS FILE !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')#`````````````````````````````
-        except:# if prev_vars file does not exist
-            print('COULD NOT OPEN PREV VARS FILE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')#````````````````````````````
-            
-            self.init_font_size = DEFAULT_FONT_SIZE
-            
-            self.build_image_immeadiately = False
-        
 
     def location______widgets_setup(self):
         self.l_path = StringVar()
@@ -248,7 +210,7 @@ class Edit_Tab(Tab.Tab):
         self.font_drop_down.current(default_font_index) #set the selected item
     
         #font size spin box
-        self.last_known_font_size = IntVar(value = self.init_font_size)
+        self.last_known_font_size = IntVar(value = DEFAULT_FONT_SIZE)
         
         def log_current_font_size(event = None):
             self.last_known_font_size = self.font_size_sbox.get()
@@ -257,7 +219,7 @@ class Edit_Tab(Tab.Tab):
                                        validate = 'key', validatecommand = self.digits_only, command = log_current_font_size)
         
         self.font_size_sbox.delete(0, "end") #gets rid of 0 so the next line makes the default value 40 instead of 400
-        self.font_size_sbox.insert(0, self.init_font_size) #default 
+        self.font_size_sbox.insert(0, DEFAULT_FONT_SIZE) #default 
         log_current_font_size()
         
         #record  current font size any time the contents of font_size_sbox change
@@ -265,15 +227,13 @@ class Edit_Tab(Tab.Tab):
         
 
         #maximize font size check button
-        self.max_font_size_sel = IntVar(value = 0) #why does changeing this value have no effect???????????????????????????????????????????????????????????????
+        self.max_font_size_sel = IntVar()
         self.max_font_size_cbtn = Checkbutton(self.master, text="Maximize Font Size", variable=self.max_font_size_sel, command = self.max_font_size_btn_sel)
         
     #maximize font size check button click
     def max_font_size_btn_sel(self):#gets called each time you click the check button, changes state of self.font_size_sbox
+        
         if self.max_font_size_sel.get() == 1:
-            self.build_image_immeadiately = True
-            print('in max_font_size_btn_sel(self):, self.build_image_immeadiately = ', self.build_image_immeadiately)#````````````````````````````````````````````
-            
             self.font_size_sbox.delete(0, "end")
              
             font_path           = FONTS_PATH + '\\' + self.font_drop_down.get() + '.ttf'
@@ -448,31 +408,12 @@ class Edit_Tab(Tab.Tab):
     def build_image______widgets_setup(self):     
         #build image button   
         def build_img_btn_clk():
-            #should change build_image_imediately to build_image_after_restart!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-            if self.build_image_immeadiately == True: #make this do something!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-#                 self.build_image_immeadiately = False #```````````````````````````````````````````````````````````````````````````````````````````````
-                self.log_all_vars()
-                GUI_utils.restart()
-            else:
-                self.log_all_vars()
-    
-                image_kwargs = self.build_kwargs()
-                #build final image using arguments
-                build_image.build_final_image(image_kwargs)
-            
-            
+            #temp shitty way of doing things!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+            image_kwargs = self.build_kwargs()
+            #build final image using arguments
+            build_image.build_final_image(image_kwargs)
         self.build_img_btn = Button(self.master, text="Build Image", command = build_img_btn_clk)
-        
-        #`````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````
-        import os
-        import psutil
-        process = psutil.Process(os.getpid())
-        bytes = process.memory_info().rss
-        megabytes = bytes / 1000000
-        gigabytes = megabytes / 1000
-        print('megabytes: ', megabytes)
-        print('gigabytes: ', gigabytes)
-        #`11````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````
 
 
     def build_kwargs(self):
@@ -480,7 +421,7 @@ class Edit_Tab(Tab.Tab):
         image_kwargs = {'input_text_file_path':         self.input_text_file_path_text_box.get(),
                         'input_image_file_path':        self.input_img_file_path_text_box.get(),
                         'font_path':                    FONTS_PATH + '\\' + self.font_drop_down.get() + '.ttf',
-                        FONT_SIZE_KEY:                  GUI_utils.font_size_or_message(self.font_size_sbox, global_constants.MAX_FONT_SIZE_STR),#int(self.font_size_sbox.get()), # = cols = width     !!!!!!!!!!!!!!!
+                        'font_size':                    GUI_utils.font_size_or_message(self.font_size_sbox, global_constants.MAX_FONT_SIZE_STR),#int(self.font_size_sbox.get()), # = cols = width     !!!!!!!!!!!!!!!
                         'maximize_font_size':           self.max_font_size_sel.get(),
                         'output_image_dim_ratio':       GUI_utils.strs_to_int_ratio( self.output_img_dim_num_sbox.get() , self.output_img_dim_din_sbox.get() ),
                         'image_size':                   int(self.img_size_sbox.get()),
@@ -494,20 +435,6 @@ class Edit_Tab(Tab.Tab):
                         'background_text_color':        GUI_utils.str_to_int_tup(self.tabs['advanced'].bgnd_text_clr_tup_tb.get())}
         return image_kwargs
 
-    def log_all_vars(self):
-        print('loggint all vars!!!!!!!')#``````````````````````````````````````````````````````````````````````````````````````````````````````````````````
-        header_order = [FONT_SIZE_KEY, 
-                        GUI.BUILD_IMAGE_IMMEDIATELY_KEY]
-        
-        
-        log_dict = {FONT_SIZE_KEY               : self.font_size_sbox.get(),
-                    GUI.BUILD_IMAGE_IMMEDIATELY_KEY : str( self.build_image_immeadiately )}
-        
-        print('loggint all vars: ', log_dict)#``````````````````````````````````````````````````````````````````````````````````````````````````````````````````
-        
-        txt_logger.logVars(GUI.VAR_LOG_FILE_NAME, log_dict, header_order)
-        
-        
 
         #MAYBE USE LABELFRAMES???????????????????????????????????????????????????????????????????????????????????????????????????????????
     

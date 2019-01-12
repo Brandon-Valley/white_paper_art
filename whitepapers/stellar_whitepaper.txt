@@ -1,0 +1,1217 @@
+The Stellar Consensus Protocol:
+A Federated Model for Internet-level Consensus
+DAVID MAZIERES ` , Stellar Development Foundation
+This paper introduces a new model for consensus called federated Byzantine agreement (FBA). FBA achieves
+robustness through quorum slices—individual trust decisions made by each node that together determine
+system-level quorums. Slices bind the system together much the way individual networks’ peering and transit decisions now unify the Internet.
+We also present the Stellar Consensus Protocol (SCP), a construction for FBA. Like all Byzantine agreement protocols, SCP makes no assumptions about the rational behavior of attackers. Unlike prior Byzantine
+agreement models, which presuppose a unanimously accepted membership list, SCP enjoys open membership that promotes organic network growth. Compared to decentralized proof of-work and proof-of-stake
+schemes, SCP has modest computing and financial requirements, lowering the barrier to entry and potentially opening up financial systems to new participants.
+CCS Concepts: •Security and privacy → Distributed systems security; Security protocols;
+Additional Key Words and Phrases: Byzantine fault tolerance, asynchronous systems
+1. INTRODUCTION
+Financial infrastructure is currently a mess of closed systems. Gaps between these
+systems mean that transaction costs are high [Provost 2013] and money moves slowly
+across political and geographic boundaries [Banning-Lover 2015; CGAP 2008]. This
+friction has curtailed the growth of financial services, leaving billions of people underserved financially [Demirguc-Kunt et al. 2015].
+To solve these problems, we need financial infrastructure that supports the kind of
+organic growth and innovation we’ve seen from the Internet, yet still ensures the integrity of financial transactions. Historically, we have relied on high barriers to entry to
+ensure integrity. We trust established financial institutions and do our best to regulate
+them. But this exclusivity conflicts with the goal of organic growth. Growth demands
+new, innovative participants, who may possess only modest financial and computing
+resources.
+We need a worldwide financial network open to anyone, so that new organizations
+can join and extend financial access to unserved communities. The challenge for such
+a network is ensuring participants record transactions correctly. With a low barrier
+to entry, users won’t trust providers to police themselves. With worldwide reach,
+providers won’t all trust a single entity to operate the network. A compelling alternative is a decentralized system in which participants together ensure integrity by
+agreeing on the validity of one another’s transactions. Such agreement hinges on a
+mechanism for worldwide consensus.
+This paper presents federated Byzantine agreement (FBA), a model suitable for
+worldwide consensus. In FBA, each participant knows of others it considers important. It waits for the vast majority of those others to agree on any transaction before
+considering the transaction settled. In turn, those important participants do not agree
+to the transaction until the participants they consider important agree as well, and so
+on. Eventually, enough of the network accepts a transaction that it becomes infeasible
+for an attacker to roll it back. Only then do any participants consider the transaction
+settled. FBA’s consensus can ensure the integrity of a financial network. Its decentralized control can spur organic growth.
+This paper further presents the Stellar consensus protocol (SCP), a construction for
+FBA. We prove that SCP’s safety is optimal for an asynchronous protocol, in that it
+guarantees agreement under any node-failure scenario that admits such a guarantee.The Stellar Consensus Protocol:
+A Federated Model for Internet-level Consensus
+DAVID MAZIERES ` , Stellar Development Foundation
+This paper introduces a new model for consensus called federated Byzantine agreement (FBA). FBA achieves
+robustness through quorum slices—individual trust decisions made by each node that together determine
+system-level quorums. Slices bind the system together much the way individual networks’ peering and transit decisions now unify the Internet.
+We also present the Stellar Consensus Protocol (SCP), a construction for FBA. Like all Byzantine agreement protocols, SCP makes no assumptions about the rational behavior of attackers. Unlike prior Byzantine
+agreement models, which presuppose a unanimously accepted membership list, SCP enjoys open membership that promotes organic network growth. Compared to decentralized proof of-work and proof-of-stake
+schemes, SCP has modest computing and financial requirements, lowering the barrier to entry and potentially opening up financial systems to new participants.
+CCS Concepts: •Security and privacy → Distributed systems security; Security protocols;
+Additional Key Words and Phrases: Byzantine fault tolerance, asynchronous systems
+1. INTRODUCTION
+Financial infrastructure is currently a mess of closed systems. Gaps between these
+systems mean that transaction costs are high [Provost 2013] and money moves slowly
+across political and geographic boundaries [Banning-Lover 2015; CGAP 2008]. This
+friction has curtailed the growth of financial services, leaving billions of people underserved financially [Demirguc-Kunt et al. 2015].
+To solve these problems, we need financial infrastructure that supports the kind of
+organic growth and innovation we’ve seen from the Internet, yet still ensures the integrity of financial transactions. Historically, we have relied on high barriers to entry to
+ensure integrity. We trust established financial institutions and do our best to regulate
+them. But this exclusivity conflicts with the goal of organic growth. Growth demands
+new, innovative participants, who may possess only modest financial and computing
+resources.
+We need a worldwide financial network open to anyone, so that new organizations
+can join and extend financial access to unserved communities. The challenge for such
+a network is ensuring participants record transactions correctly. With a low barrier
+to entry, users won’t trust providers to police themselves. With worldwide reach,
+providers won’t all trust a single entity to operate the network. A compelling alternative is a decentralized system in which participants together ensure integrity by
+agreeing on the validity of one another’s transactions. Such agreement hinges on a
+mechanism for worldwide consensus.
+This paper presents federated Byzantine agreement (FBA), a model suitable for
+worldwide consensus. In FBA, each participant knows of others it considers important. It waits for the vast majority of those others to agree on any transaction before
+considering the transaction settled. In turn, those important participants do not agree
+to the transaction until the participants they consider important agree as well, and so
+on. Eventually, enough of the network accepts a transaction that it becomes infeasible
+for an attacker to roll it back. Only then do any participants consider the transaction
+settled. FBA’s consensus can ensure the integrity of a financial network. Its decentralized control can spur organic growth.
+This paper further presents the Stellar consensus protocol (SCP), a construction for
+FBA. We prove that SCP’s safety is optimal for an asynchronous protocol, in that it
+guarantees agreement under any node-failure scenario that admits such a guarantee.The Stellar Consensus Protocol:
+A Federated Model for Internet-level Consensus
+DAVID MAZIERES ` , Stellar Development Foundation
+This paper introduces a new model for consensus called federated Byzantine agreement (FBA). FBA achieves
+robustness through quorum slices—individual trust decisions made by each node that together determine
+system-level quorums. Slices bind the system together much the way individual networks’ peering and transit decisions now unify the Internet.
+We also present the Stellar Consensus Protocol (SCP), a construction for FBA. Like all Byzantine agreement protocols, SCP makes no assumptions about the rational behavior of attackers. Unlike prior Byzantine
+agreement models, which presuppose a unanimously accepted membership list, SCP enjoys open membership that promotes organic network growth. Compared to decentralized proof of-work and proof-of-stake
+schemes, SCP has modest computing and financial requirements, lowering the barrier to entry and potentially opening up financial systems to new participants.
+CCS Concepts: •Security and privacy → Distributed systems security; Security protocols;
+Additional Key Words and Phrases: Byzantine fault tolerance, asynchronous systems
+1. INTRODUCTION
+Financial infrastructure is currently a mess of closed systems. Gaps between these
+systems mean that transaction costs are high [Provost 2013] and money moves slowly
+across political and geographic boundaries [Banning-Lover 2015; CGAP 2008]. This
+friction has curtailed the growth of financial services, leaving billions of people underserved financially [Demirguc-Kunt et al. 2015].
+To solve these problems, we need financial infrastructure that supports the kind of
+organic growth and innovation we’ve seen from the Internet, yet still ensures the integrity of financial transactions. Historically, we have relied on high barriers to entry to
+ensure integrity. We trust established financial institutions and do our best to regulate
+them. But this exclusivity conflicts with the goal of organic growth. Growth demands
+new, innovative participants, who may possess only modest financial and computing
+resources.
+We need a worldwide financial network open to anyone, so that new organizations
+can join and extend financial access to unserved communities. The challenge for such
+a network is ensuring participants record transactions correctly. With a low barrier
+to entry, users won’t trust providers to police themselves. With worldwide reach,
+providers won’t all trust a single entity to operate the network. A compelling alternative is a decentralized system in which participants together ensure integrity by
+agreeing on the validity of one another’s transactions. Such agreement hinges on a
+mechanism for worldwide consensus.
+This paper presents federated Byzantine agreement (FBA), a model suitable for
+worldwide consensus. In FBA, each participant knows of others it considers important. It waits for the vast majority of those others to agree on any transaction before
+considering the transaction settled. In turn, those important participants do not agree
+to the transaction until the participants they consider important agree as well, and so
+on. Eventually, enough of the network accepts a transaction that it becomes infeasible
+for an attacker to roll it back. Only then do any participants consider the transaction
+settled. FBA’s consensus can ensure the integrity of a financial network. Its decentralized control can spur organic growth.
+This paper further presents the Stellar consensus protocol (SCP), a construction for
+FBA. We prove that SCP’s safety is optimal for an asynchronous protocol, in that it
+guarantees agreement under any node-failure scenario that admits such a guarantee.The Stellar Consensus Protocol:
+A Federated Model for Internet-level Consensus
+DAVID MAZIERES ` , Stellar Development Foundation
+This paper introduces a new model for consensus called federated Byzantine agreement (FBA). FBA achieves
+robustness through quorum slices—individual trust decisions made by each node that together determine
+system-level quorums. Slices bind the system together much the way individual networks’ peering and transit decisions now unify the Internet.
+We also present the Stellar Consensus Protocol (SCP), a construction for FBA. Like all Byzantine agreement protocols, SCP makes no assumptions about the rational behavior of attackers. Unlike prior Byzantine
+agreement models, which presuppose a unanimously accepted membership list, SCP enjoys open membership that promotes organic network growth. Compared to decentralized proof of-work and proof-of-stake
+schemes, SCP has modest computing and financial requirements, lowering the barrier to entry and potentially opening up financial systems to new participants.
+CCS Concepts: •Security and privacy → Distributed systems security; Security protocols;
+Additional Key Words and Phrases: Byzantine fault tolerance, asynchronous systems
+1. INTRODUCTION
+Financial infrastructure is currently a mess of closed systems. Gaps between these
+systems mean that transaction costs are high [Provost 2013] and money moves slowly
+across political and geographic boundaries [Banning-Lover 2015; CGAP 2008]. This
+friction has curtailed the growth of financial services, leaving billions of people underserved financially [Demirguc-Kunt et al. 2015].
+To solve these problems, we need financial infrastructure that supports the kind of
+organic growth and innovation we’ve seen from the Internet, yet still ensures the integrity of financial transactions. Historically, we have relied on high barriers to entry to
+ensure integrity. We trust established financial institutions and do our best to regulate
+them. But this exclusivity conflicts with the goal of organic growth. Growth demands
+new, innovative participants, who may possess only modest financial and computing
+resources.
+We need a worldwide financial network open to anyone, so that new organizations
+can join and extend financial access to unserved communities. The challenge for such
+a network is ensuring participants record transactions correctly. With a low barrier
+to entry, users won’t trust providers to police themselves. With worldwide reach,
+providers won’t all trust a single entity to operate the network. A compelling alternative is a decentralized system in which participants together ensure integrity by
+agreeing on the validity of one another’s transactions. Such agreement hinges on a
+mechanism for worldwide consensus.
+This paper presents federated Byzantine agreement (FBA), a model suitable for
+worldwide consensus. In FBA, each participant knows of others it considers important. It waits for the vast majority of those others to agree on any transaction before
+considering the transaction settled. In turn, those important participants do not agree
+to the transaction until the participants they consider important agree as well, and so
+on. Eventually, enough of the network accepts a transaction that it becomes infeasible
+for an attacker to roll it back. Only then do any participants consider the transaction
+settled. FBA’s consensus can ensure the integrity of a financial network. Its decentralized control can spur organic growth.
+This paper further presents the Stellar consensus protocol (SCP), a construction for
+FBA. We prove that SCP’s safety is optimal for an asynchronous protocol, in that it
+guarantees agreement under any node-failure scenario that admits such a guarantee.The Stellar Consensus Protocol:
+A Federated Model for Internet-level Consensus
+DAVID MAZIERES ` , Stellar Development Foundation
+This paper introduces a new model for consensus called federated Byzantine agreement (FBA). FBA achieves
+robustness through quorum slices—individual trust decisions made by each node that together determine
+system-level quorums. Slices bind the system together much the way individual networks’ peering and transit decisions now unify the Internet.
+We also present the Stellar Consensus Protocol (SCP), a construction for FBA. Like all Byzantine agreement protocols, SCP makes no assumptions about the rational behavior of attackers. Unlike prior Byzantine
+agreement models, which presuppose a unanimously accepted membership list, SCP enjoys open membership that promotes organic network growth. Compared to decentralized proof of-work and proof-of-stake
+schemes, SCP has modest computing and financial requirements, lowering the barrier to entry and potentially opening up financial systems to new participants.
+CCS Concepts: •Security and privacy → Distributed systems security; Security protocols;
+Additional Key Words and Phrases: Byzantine fault tolerance, asynchronous systems
+1. INTRODUCTION
+Financial infrastructure is currently a mess of closed systems. Gaps between these
+systems mean that transaction costs are high [Provost 2013] and money moves slowly
+across political and geographic boundaries [Banning-Lover 2015; CGAP 2008]. This
+friction has curtailed the growth of financial services, leaving billions of people underserved financially [Demirguc-Kunt et al. 2015].
+To solve these problems, we need financial infrastructure that supports the kind of
+organic growth and innovation we’ve seen from the Internet, yet still ensures the integrity of financial transactions. Historically, we have relied on high barriers to entry to
+ensure integrity. We trust established financial institutions and do our best to regulate
+them. But this exclusivity conflicts with the goal of organic growth. Growth demands
+new, innovative participants, who may possess only modest financial and computing
+resources.
+We need a worldwide financial network open to anyone, so that new organizations
+can join and extend financial access to unserved communities. The challenge for such
+a network is ensuring participants record transactions correctly. With a low barrier
+to entry, users won’t trust providers to police themselves. With worldwide reach,
+providers won’t all trust a single entity to operate the network. A compelling alternative is a decentralized system in which participants together ensure integrity by
+agreeing on the validity of one another’s transactions. Such agreement hinges on a
+mechanism for worldwide consensus.
+This paper presents federated Byzantine agreement (FBA), a model suitable for
+worldwide consensus. In FBA, each participant knows of others it considers important. It waits for the vast majority of those others to agree on any transaction before
+considering the transaction settled. In turn, those important participants do not agree
+to the transaction until the participants they consider important agree as well, and so
+on. Eventually, enough of the network accepts a transaction that it becomes infeasible
+for an attacker to roll it back. Only then do any participants consider the transaction
+settled. FBA’s consensus can ensure the integrity of a financial network. Its decentralized control can spur organic growth.
+This paper further presents the Stellar consensus protocol (SCP), a construction for
+FBA. We prove that SCP’s safety is optimal for an asynchronous protocol, in that it
+guarantees agreement under any node-failure scenario that admits such a guarantee.The Stellar Consensus Protocol:
+A Federated Model for Internet-level Consensus
+DAVID MAZIERES ` , Stellar Development Foundation
+This paper introduces a new model for consensus called federated Byzantine agreement (FBA). FBA achieves
+robustness through quorum slices—individual trust decisions made by each node that together determine
+system-level quorums. Slices bind the system together much the way individual networks’ peering and transit decisions now unify the Internet.
+We also present the Stellar Consensus Protocol (SCP), a construction for FBA. Like all Byzantine agreement protocols, SCP makes no assumptions about the rational behavior of attackers. Unlike prior Byzantine
+agreement models, which presuppose a unanimously accepted membership list, SCP enjoys open membership that promotes organic network growth. Compared to decentralized proof of-work and proof-of-stake
+schemes, SCP has modest computing and financial requirements, lowering the barrier to entry and potentially opening up financial systems to new participants.
+CCS Concepts: •Security and privacy → Distributed systems security; Security protocols;
+Additional Key Words and Phrases: Byzantine fault tolerance, asynchronous systems
+1. INTRODUCTION
+Financial infrastructure is currently a mess of closed systems. Gaps between these
+systems mean that transaction costs are high [Provost 2013] and money moves slowly
+across political and geographic boundaries [Banning-Lover 2015; CGAP 2008]. This
+friction has curtailed the growth of financial services, leaving billions of people underserved financially [Demirguc-Kunt et al. 2015].
+To solve these problems, we need financial infrastructure that supports the kind of
+organic growth and innovation we’ve seen from the Internet, yet still ensures the integrity of financial transactions. Historically, we have relied on high barriers to entry to
+ensure integrity. We trust established financial institutions and do our best to regulate
+them. But this exclusivity conflicts with the goal of organic growth. Growth demands
+new, innovative participants, who may possess only modest financial and computing
+resources.
+We need a worldwide financial network open to anyone, so that new organizations
+can join and extend financial access to unserved communities. The challenge for such
+a network is ensuring participants record transactions correctly. With a low barrier
+to entry, users won’t trust providers to police themselves. With worldwide reach,
+providers won’t all trust a single entity to operate the network. A compelling alternative is a decentralized system in which participants together ensure integrity by
+agreeing on the validity of one another’s transactions. Such agreement hinges on a
+mechanism for worldwide consensus.
+This paper presents federated Byzantine agreement (FBA), a model suitable for
+worldwide consensus. In FBA, each participant knows of others it considers important. It waits for the vast majority of those others to agree on any transaction before
+considering the transaction settled. In turn, those important participants do not agree
+to the transaction until the participants they consider important agree as well, and so
+on. Eventually, enough of the network accepts a transaction that it becomes infeasible
+for an attacker to roll it back. Only then do any participants consider the transaction
+settled. FBA’s consensus can ensure the integrity of a financial network. Its decentralized control can spur organic growth.
+This paper further presents the Stellar consensus protocol (SCP), a construction for
+FBA. We prove that SCP’s safety is optimal for an asynchronous protocol, in that it
+guarantees agreement under any node-failure scenario that admits such a guarantee.The Stellar Consensus Protocol:
+A Federated Model for Internet-level Consensus
+DAVID MAZIERES ` , Stellar Development Foundation
+This paper introduces a new model for consensus called federated Byzantine agreement (FBA). FBA achieves
+robustness through quorum slices—individual trust decisions made by each node that together determine
+system-level quorums. Slices bind the system together much the way individual networks’ peering and transit decisions now unify the Internet.
+We also present the Stellar Consensus Protocol (SCP), a construction for FBA. Like all Byzantine agreement protocols, SCP makes no assumptions about the rational behavior of attackers. Unlike prior Byzantine
+agreement models, which presuppose a unanimously accepted membership list, SCP enjoys open membership that promotes organic network growth. Compared to decentralized proof of-work and proof-of-stake
+schemes, SCP has modest computing and financial requirements, lowering the barrier to entry and potentially opening up financial systems to new participants.
+CCS Concepts: •Security and privacy → Distributed systems security; Security protocols;
+Additional Key Words and Phrases: Byzantine fault tolerance, asynchronous systems
+1. INTRODUCTION
+Financial infrastructure is currently a mess of closed systems. Gaps between these
+systems mean that transaction costs are high [Provost 2013] and money moves slowly
+across political and geographic boundaries [Banning-Lover 2015; CGAP 2008]. This
+friction has curtailed the growth of financial services, leaving billions of people underserved financially [Demirguc-Kunt et al. 2015].
+To solve these problems, we need financial infrastructure that supports the kind of
+organic growth and innovation we’ve seen from the Internet, yet still ensures the integrity of financial transactions. Historically, we have relied on high barriers to entry to
+ensure integrity. We trust established financial institutions and do our best to regulate
+them. But this exclusivity conflicts with the goal of organic growth. Growth demands
+new, innovative participants, who may possess only modest financial and computing
+resources.
+We need a worldwide financial network open to anyone, so that new organizations
+can join and extend financial access to unserved communities. The challenge for such
+a network is ensuring participants record transactions correctly. With a low barrier
+to entry, users won’t trust providers to police themselves. With worldwide reach,
+providers won’t all trust a single entity to operate the network. A compelling alternative is a decentralized system in which participants together ensure integrity by
+agreeing on the validity of one another’s transactions. Such agreement hinges on a
+mechanism for worldwide consensus.
+This paper presents federated Byzantine agreement (FBA), a model suitable for
+worldwide consensus. In FBA, each participant knows of others it considers important. It waits for the vast majority of those others to agree on any transaction before
+considering the transaction settled. In turn, those important participants do not agree
+to the transaction until the participants they consider important agree as well, and so
+on. Eventually, enough of the network accepts a transaction that it becomes infeasible
+for an attacker to roll it back. Only then do any participants consider the transaction
+settled. FBA’s consensus can ensure the integrity of a financial network. Its decentralized control can spur organic growth.
+This paper further presents the Stellar consensus protocol (SCP), a construction for
+FBA. We prove that SCP’s safety is optimal for an asynchronous protocol, in that it
+guarantees agreement under any node-failure scenario that admits such a guarantee.The Stellar Consensus Protocol:
+A Federated Model for Internet-level Consensus
+DAVID MAZIERES ` , Stellar Development Foundation
+This paper introduces a new model for consensus called federated Byzantine agreement (FBA). FBA achieves
+robustness through quorum slices—individual trust decisions made by each node that together determine
+system-level quorums. Slices bind the system together much the way individual networks’ peering and transit decisions now unify the Internet.
+We also present the Stellar Consensus Protocol (SCP), a construction for FBA. Like all Byzantine agreement protocols, SCP makes no assumptions about the rational behavior of attackers. Unlike prior Byzantine
+agreement models, which presuppose a unanimously accepted membership list, SCP enjoys open membership that promotes organic network growth. Compared to decentralized proof of-work and proof-of-stake
+schemes, SCP has modest computing and financial requirements, lowering the barrier to entry and potentially opening up financial systems to new participants.
+CCS Concepts: •Security and privacy → Distributed systems security; Security protocols;
+Additional Key Words and Phrases: Byzantine fault tolerance, asynchronous systems
+1. INTRODUCTION
+Financial infrastructure is currently a mess of closed systems. Gaps between these
+systems mean that transaction costs are high [Provost 2013] and money moves slowly
+across political and geographic boundaries [Banning-Lover 2015; CGAP 2008]. This
+friction has curtailed the growth of financial services, leaving billions of people underserved financially [Demirguc-Kunt et al. 2015].
+To solve these problems, we need financial infrastructure that supports the kind of
+organic growth and innovation we’ve seen from the Internet, yet still ensures the integrity of financial transactions. Historically, we have relied on high barriers to entry to
+ensure integrity. We trust established financial institutions and do our best to regulate
+them. But this exclusivity conflicts with the goal of organic growth. Growth demands
+new, innovative participants, who may possess only modest financial and computing
+resources.
+We need a worldwide financial network open to anyone, so that new organizations
+can join and extend financial access to unserved communities. The challenge for such
+a network is ensuring participants record transactions correctly. With a low barrier
+to entry, users won’t trust providers to police themselves. With worldwide reach,
+providers won’t all trust a single entity to operate the network. A compelling alternative is a decentralized system in which participants together ensure integrity by
+agreeing on the validity of one another’s transactions. Such agreement hinges on a
+mechanism for worldwide consensus.
+This paper presents federated Byzantine agreement (FBA), a model suitable for
+worldwide consensus. In FBA, each participant knows of others it considers important. It waits for the vast majority of those others to agree on any transaction before
+considering the transaction settled. In turn, those important participants do not agree
+to the transaction until the participants they consider important agree as well, and so
+on. Eventually, enough of the network accepts a transaction that it becomes infeasible
+for an attacker to roll it back. Only then do any participants consider the transaction
+settled. FBA’s consensus can ensure the integrity of a financial network. Its decentralized control can spur organic growth.
+This paper further presents the Stellar consensus protocol (SCP), a construction for
+FBA. We prove that SCP’s safety is optimal for an asynchronous protocol, in that it
+guarantees agreement under any node-failure scenario that admits such a guarantee.The Stellar Consensus Protocol:
+A Federated Model for Internet-level Consensus
+DAVID MAZIERES ` , Stellar Development Foundation
+This paper introduces a new model for consensus called federated Byzantine agreement (FBA). FBA achieves
+robustness through quorum slices—individual trust decisions made by each node that together determine
+system-level quorums. Slices bind the system together much the way individual networks’ peering and transit decisions now unify the Internet.
+We also present the Stellar Consensus Protocol (SCP), a construction for FBA. Like all Byzantine agreement protocols, SCP makes no assumptions about the rational behavior of attackers. Unlike prior Byzantine
+agreement models, which presuppose a unanimously accepted membership list, SCP enjoys open membership that promotes organic network growth. Compared to decentralized proof of-work and proof-of-stake
+schemes, SCP has modest computing and financial requirements, lowering the barrier to entry and potentially opening up financial systems to new participants.
+CCS Concepts: •Security and privacy → Distributed systems security; Security protocols;
+Additional Key Words and Phrases: Byzantine fault tolerance, asynchronous systems
+1. INTRODUCTION
+Financial infrastructure is currently a mess of closed systems. Gaps between these
+systems mean that transaction costs are high [Provost 2013] and money moves slowly
+across political and geographic boundaries [Banning-Lover 2015; CGAP 2008]. This
+friction has curtailed the growth of financial services, leaving billions of people underserved financially [Demirguc-Kunt et al. 2015].
+To solve these problems, we need financial infrastructure that supports the kind of
+organic growth and innovation we’ve seen from the Internet, yet still ensures the integrity of financial transactions. Historically, we have relied on high barriers to entry to
+ensure integrity. We trust established financial institutions and do our best to regulate
+them. But this exclusivity conflicts with the goal of organic growth. Growth demands
+new, innovative participants, who may possess only modest financial and computing
+resources.
+We need a worldwide financial network open to anyone, so that new organizations
+can join and extend financial access to unserved communities. The challenge for such
+a network is ensuring participants record transactions correctly. With a low barrier
+to entry, users won’t trust providers to police themselves. With worldwide reach,
+providers won’t all trust a single entity to operate the network. A compelling alternative is a decentralized system in which participants together ensure integrity by
+agreeing on the validity of one another’s transactions. Such agreement hinges on a
+mechanism for worldwide consensus.
+This paper presents federated Byzantine agreement (FBA), a model suitable for
+worldwide consensus. In FBA, each participant knows of others it considers important. It waits for the vast majority of those others to agree on any transaction before
+considering the transaction settled. In turn, those important participants do not agree
+to the transaction until the participants they consider important agree as well, and so
+on. Eventually, enough of the network accepts a transaction that it becomes infeasible
+for an attacker to roll it back. Only then do any participants consider the transaction
+settled. FBA’s consensus can ensure the integrity of a financial network. Its decentralized control can spur organic growth.
+This paper further presents the Stellar consensus protocol (SCP), a construction for
+FBA. We prove that SCP’s safety is optimal for an asynchronous protocol, in that it
+guarantees agreement under any node-failure scenario that admits such a guarantee.The Stellar Consensus Protocol:
+A Federated Model for Internet-level Consensus
+DAVID MAZIERES ` , Stellar Development Foundation
+This paper introduces a new model for consensus called federated Byzantine agreement (FBA). FBA achieves
+robustness through quorum slices—individual trust decisions made by each node that together determine
+system-level quorums. Slices bind the system together much the way individual networks’ peering and transit decisions now unify the Internet.
+We also present the Stellar Consensus Protocol (SCP), a construction for FBA. Like all Byzantine agreement protocols, SCP makes no assumptions about the rational behavior of attackers. Unlike prior Byzantine
+agreement models, which presuppose a unanimously accepted membership list, SCP enjoys open membership that promotes organic network growth. Compared to decentralized proof of-work and proof-of-stake
+schemes, SCP has modest computing and financial requirements, lowering the barrier to entry and potentially opening up financial systems to new participants.
+CCS Concepts: •Security and privacy → Distributed systems security; Security protocols;
+Additional Key Words and Phrases: Byzantine fault tolerance, asynchronous systems
+1. INTRODUCTION
+Financial infrastructure is currently a mess of closed systems. Gaps between these
+systems mean that transaction costs are high [Provost 2013] and money moves slowly
+across political and geographic boundaries [Banning-Lover 2015; CGAP 2008]. This
+friction has curtailed the growth of financial services, leaving billions of people underserved financially [Demirguc-Kunt et al. 2015].
+To solve these problems, we need financial infrastructure that supports the kind of
+organic growth and innovation we’ve seen from the Internet, yet still ensures the integrity of financial transactions. Historically, we have relied on high barriers to entry to
+ensure integrity. We trust established financial institutions and do our best to regulate
+them. But this exclusivity conflicts with the goal of organic growth. Growth demands
+new, innovative participants, who may possess only modest financial and computing
+resources.
+We need a worldwide financial network open to anyone, so that new organizations
+can join and extend financial access to unserved communities. The challenge for such
+a network is ensuring participants record transactions correctly. With a low barrier
+to entry, users won’t trust providers to police themselves. With worldwide reach,
+providers won’t all trust a single entity to operate the network. A compelling alternative is a decentralized system in which participants together ensure integrity by
+agreeing on the validity of one another’s transactions. Such agreement hinges on a
+mechanism for worldwide consensus.
+This paper presents federated Byzantine agreement (FBA), a model suitable for
+worldwide consensus. In FBA, each participant knows of others it considers important. It waits for the vast majority of those others to agree on any transaction before
+considering the transaction settled. In turn, those important participants do not agree
+to the transaction until the participants they consider important agree as well, and so
+on. Eventually, enough of the network accepts a transaction that it becomes infeasible
+for an attacker to roll it back. Only then do any participants consider the transaction
+settled. FBA’s consensus can ensure the integrity of a financial network. Its decentralized control can spur organic growth.
+This paper further presents the Stellar consensus protocol (SCP), a construction for
+FBA. We prove that SCP’s safety is optimal for an asynchronous protocol, in that it
+guarantees agreement under any node-failure scenario that admits such a guarantee.The Stellar Consensus Protocol:
+A Federated Model for Internet-level Consensus
+DAVID MAZIERES ` , Stellar Development Foundation
+This paper introduces a new model for consensus called federated Byzantine agreement (FBA). FBA achieves
+robustness through quorum slices—individual trust decisions made by each node that together determine
+system-level quorums. Slices bind the system together much the way individual networks’ peering and transit decisions now unify the Internet.
+We also present the Stellar Consensus Protocol (SCP), a construction for FBA. Like all Byzantine agreement protocols, SCP makes no assumptions about the rational behavior of attackers. Unlike prior Byzantine
+agreement models, which presuppose a unanimously accepted membership list, SCP enjoys open membership that promotes organic network growth. Compared to decentralized proof of-work and proof-of-stake
+schemes, SCP has modest computing and financial requirements, lowering the barrier to entry and potentially opening up financial systems to new participants.
+CCS Concepts: •Security and privacy → Distributed systems security; Security protocols;
+Additional Key Words and Phrases: Byzantine fault tolerance, asynchronous systems
+1. INTRODUCTION
+Financial infrastructure is currently a mess of closed systems. Gaps between these
+systems mean that transaction costs are high [Provost 2013] and money moves slowly
+across political and geographic boundaries [Banning-Lover 2015; CGAP 2008]. This
+friction has curtailed the growth of financial services, leaving billions of people underserved financially [Demirguc-Kunt et al. 2015].
+To solve these problems, we need financial infrastructure that supports the kind of
+organic growth and innovation we’ve seen from the Internet, yet still ensures the integrity of financial transactions. Historically, we have relied on high barriers to entry to
+ensure integrity. We trust established financial institutions and do our best to regulate
+them. But this exclusivity conflicts with the goal of organic growth. Growth demands
+new, innovative participants, who may possess only modest financial and computing
+resources.
+We need a worldwide financial network open to anyone, so that new organizations
+can join and extend financial access to unserved communities. The challenge for such
+a network is ensuring participants record transactions correctly. With a low barrier
+to entry, users won’t trust providers to police themselves. With worldwide reach,
+providers won’t all trust a single entity to operate the network. A compelling alternative is a decentralized system in which participants together ensure integrity by
+agreeing on the validity of one another’s transactions. Such agreement hinges on a
+mechanism for worldwide consensus.
+This paper presents federated Byzantine agreement (FBA), a model suitable for
+worldwide consensus. In FBA, each participant knows of others it considers important. It waits for the vast majority of those others to agree on any transaction before
+considering the transaction settled. In turn, those important participants do not agree
+to the transaction until the participants they consider important agree as well, and so
+on. Eventually, enough of the network accepts a transaction that it becomes infeasible
+for an attacker to roll it back. Only then do any participants consider the transaction
+settled. FBA’s consensus can ensure the integrity of a financial network. Its decentralized control can spur organic growth.
+This paper further presents the Stellar consensus protocol (SCP), a construction for
+FBA. We prove that SCP’s safety is optimal for an asynchronous protocol, in that it
+guarantees agreement under any node-failure scenario that admits such a guarantee.The Stellar Consensus Protocol:
+A Federated Model for Internet-level Consensus
+DAVID MAZIERES ` , Stellar Development Foundation
+This paper introduces a new model for consensus called federated Byzantine agreement (FBA). FBA achieves
+robustness through quorum slices—individual trust decisions made by each node that together determine
+system-level quorums. Slices bind the system together much the way individual networks’ peering and transit decisions now unify the Internet.
+We also present the Stellar Consensus Protocol (SCP), a construction for FBA. Like all Byzantine agreement protocols, SCP makes no assumptions about the rational behavior of attackers. Unlike prior Byzantine
+agreement models, which presuppose a unanimously accepted membership list, SCP enjoys open membership that promotes organic network growth. Compared to decentralized proof of-work and proof-of-stake
+schemes, SCP has modest computing and financial requirements, lowering the barrier to entry and potentially opening up financial systems to new participants.
+CCS Concepts: •Security and privacy → Distributed systems security; Security protocols;
+Additional Key Words and Phrases: Byzantine fault tolerance, asynchronous systems
+1. INTRODUCTION
+Financial infrastructure is currently a mess of closed systems. Gaps between these
+systems mean that transaction costs are high [Provost 2013] and money moves slowly
+across political and geographic boundaries [Banning-Lover 2015; CGAP 2008]. This
+friction has curtailed the growth of financial services, leaving billions of people underserved financially [Demirguc-Kunt et al. 2015].
+To solve these problems, we need financial infrastructure that supports the kind of
+organic growth and innovation we’ve seen from the Internet, yet still ensures the integrity of financial transactions. Historically, we have relied on high barriers to entry to
+ensure integrity. We trust established financial institutions and do our best to regulate
+them. But this exclusivity conflicts with the goal of organic growth. Growth demands
+new, innovative participants, who may possess only modest financial and computing
+resources.
+We need a worldwide financial network open to anyone, so that new organizations
+can join and extend financial access to unserved communities. The challenge for such
+a network is ensuring participants record transactions correctly. With a low barrier
+to entry, users won’t trust providers to police themselves. With worldwide reach,
+providers won’t all trust a single entity to operate the network. A compelling alternative is a decentralized system in which participants together ensure integrity by
+agreeing on the validity of one another’s transactions. Such agreement hinges on a
+mechanism for worldwide consensus.
+This paper presents federated Byzantine agreement (FBA), a model suitable for
+worldwide consensus. In FBA, each participant knows of others it considers important. It waits for the vast majority of those others to agree on any transaction before
+considering the transaction settled. In turn, those important participants do not agree
+to the transaction until the participants they consider important agree as well, and so
+on. Eventually, enough of the network accepts a transaction that it becomes infeasible
+for an attacker to roll it back. Only then do any participants consider the transaction
+settled. FBA’s consensus can ensure the integrity of a financial network. Its decentralized control can spur organic growth.
+This paper further presents the Stellar consensus protocol (SCP), a construction for
+FBA. We prove that SCP’s safety is optimal for an asynchronous protocol, in that it
+guarantees agreement under any node-failure scenario that admits such a guarantee.The Stellar Consensus Protocol:
+A Federated Model for Internet-level Consensus
+DAVID MAZIERES ` , Stellar Development Foundation
+This paper introduces a new model for consensus called federated Byzantine agreement (FBA). FBA achieves
+robustness through quorum slices—individual trust decisions made by each node that together determine
+system-level quorums. Slices bind the system together much the way individual networks’ peering and transit decisions now unify the Internet.
+We also present the Stellar Consensus Protocol (SCP), a construction for FBA. Like all Byzantine agreement protocols, SCP makes no assumptions about the rational behavior of attackers. Unlike prior Byzantine
+agreement models, which presuppose a unanimously accepted membership list, SCP enjoys open membership that promotes organic network growth. Compared to decentralized proof of-work and proof-of-stake
+schemes, SCP has modest computing and financial requirements, lowering the barrier to entry and potentially opening up financial systems to new participants.
+CCS Concepts: •Security and privacy → Distributed systems security; Security protocols;
+Additional Key Words and Phrases: Byzantine fault tolerance, asynchronous systems
+1. INTRODUCTION
+Financial infrastructure is currently a mess of closed systems. Gaps between these
+systems mean that transaction costs are high [Provost 2013] and money moves slowly
+across political and geographic boundaries [Banning-Lover 2015; CGAP 2008]. This
+friction has curtailed the growth of financial services, leaving billions of people underserved financially [Demirguc-Kunt et al. 2015].
+To solve these problems, we need financial infrastructure that supports the kind of
+organic growth and innovation we’ve seen from the Internet, yet still ensures the integrity of financial transactions. Historically, we have relied on high barriers to entry to
+ensure integrity. We trust established financial institutions and do our best to regulate
+them. But this exclusivity conflicts with the goal of organic growth. Growth demands
+new, innovative participants, who may possess only modest financial and computing
+resources.
+We need a worldwide financial network open to anyone, so that new organizations
+can join and extend financial access to unserved communities. The challenge for such
+a network is ensuring participants record transactions correctly. With a low barrier
+to entry, users won’t trust providers to police themselves. With worldwide reach,
+providers won’t all trust a single entity to operate the network. A compelling alternative is a decentralized system in which participants together ensure integrity by
+agreeing on the validity of one another’s transactions. Such agreement hinges on a
+mechanism for worldwide consensus.
+This paper presents federated Byzantine agreement (FBA), a model suitable for
+worldwide consensus. In FBA, each participant knows of others it considers important. It waits for the vast majority of those others to agree on any transaction before
+considering the transaction settled. In turn, those important participants do not agree
+to the transaction until the participants they consider important agree as well, and so
+on. Eventually, enough of the network accepts a transaction that it becomes infeasible
+for an attacker to roll it back. Only then do any participants consider the transaction
+settled. FBA’s consensus can ensure the integrity of a financial network. Its decentralized control can spur organic growth.
+This paper further presents the Stellar consensus protocol (SCP), a construction for
+FBA. We prove that SCP’s safety is optimal for an asynchronous protocol, in that it
+guarantees agreement under any node-failure scenario that admits such a guarantee.The Stellar Consensus Protocol:
+A Federated Model for Internet-level Consensus
+DAVID MAZIERES ` , Stellar Development Foundation
+This paper introduces a new model for consensus called federated Byzantine agreement (FBA). FBA achieves
+robustness through quorum slices—individual trust decisions made by each node that together determine
+system-level quorums. Slices bind the system together much the way individual networks’ peering and transit decisions now unify the Internet.
+We also present the Stellar Consensus Protocol (SCP), a construction for FBA. Like all Byzantine agreement protocols, SCP makes no assumptions about the rational behavior of attackers. Unlike prior Byzantine
+agreement models, which presuppose a unanimously accepted membership list, SCP enjoys open membership that promotes organic network growth. Compared to decentralized proof of-work and proof-of-stake
+schemes, SCP has modest computing and financial requirements, lowering the barrier to entry and potentially opening up financial systems to new participants.
+CCS Concepts: •Security and privacy → Distributed systems security; Security protocols;
+Additional Key Words and Phrases: Byzantine fault tolerance, asynchronous systems
+1. INTRODUCTION
+Financial infrastructure is currently a mess of closed systems. Gaps between these
+systems mean that transaction costs are high [Provost 2013] and money moves slowly
+across political and geographic boundaries [Banning-Lover 2015; CGAP 2008]. This
+friction has curtailed the growth of financial services, leaving billions of people underserved financially [Demirguc-Kunt et al. 2015].
+To solve these problems, we need financial infrastructure that supports the kind of
+organic growth and innovation we’ve seen from the Internet, yet still ensures the integrity of financial transactions. Historically, we have relied on high barriers to entry to
+ensure integrity. We trust established financial institutions and do our best to regulate
+them. But this exclusivity conflicts with the goal of organic growth. Growth demands
+new, innovative participants, who may possess only modest financial and computing
+resources.
+We need a worldwide financial network open to anyone, so that new organizations
+can join and extend financial access to unserved communities. The challenge for such
+a network is ensuring participants record transactions correctly. With a low barrier
+to entry, users won’t trust providers to police themselves. With worldwide reach,
+providers won’t all trust a single entity to operate the network. A compelling alternative is a decentralized system in which participants together ensure integrity by
+agreeing on the validity of one another’s transactions. Such agreement hinges on a
+mechanism for worldwide consensus.
+This paper presents federated Byzantine agreement (FBA), a model suitable for
+worldwide consensus. In FBA, each participant knows of others it considers important. It waits for the vast majority of those others to agree on any transaction before
+considering the transaction settled. In turn, those important participants do not agree
+to the transaction until the participants they consider important agree as well, and so
+on. Eventually, enough of the network accepts a transaction that it becomes infeasible
+for an attacker to roll it back. Only then do any participants consider the transaction
+settled. FBA’s consensus can ensure the integrity of a financial network. Its decentralized control can spur organic growth.
+This paper further presents the Stellar consensus protocol (SCP), a construction for
+FBA. We prove that SCP’s safety is optimal for an asynchronous protocol, in that it
+guarantees agreement under any node-failure scenario that admits such a guarantee.The Stellar Consensus Protocol:
+A Federated Model for Internet-level Consensus
+DAVID MAZIERES ` , Stellar Development Foundation
+This paper introduces a new model for consensus called federated Byzantine agreement (FBA). FBA achieves
+robustness through quorum slices—individual trust decisions made by each node that together determine
+system-level quorums. Slices bind the system together much the way individual networks’ peering and transit decisions now unify the Internet.
+We also present the Stellar Consensus Protocol (SCP), a construction for FBA. Like all Byzantine agreement protocols, SCP makes no assumptions about the rational behavior of attackers. Unlike prior Byzantine
+agreement models, which presuppose a unanimously accepted membership list, SCP enjoys open membership that promotes organic network growth. Compared to decentralized proof of-work and proof-of-stake
+schemes, SCP has modest computing and financial requirements, lowering the barrier to entry and potentially opening up financial systems to new participants.
+CCS Concepts: •Security and privacy → Distributed systems security; Security protocols;
+Additional Key Words and Phrases: Byzantine fault tolerance, asynchronous systems
+1. INTRODUCTION
+Financial infrastructure is currently a mess of closed systems. Gaps between these
+systems mean that transaction costs are high [Provost 2013] and money moves slowly
+across political and geographic boundaries [Banning-Lover 2015; CGAP 2008]. This
+friction has curtailed the growth of financial services, leaving billions of people underserved financially [Demirguc-Kunt et al. 2015].
+To solve these problems, we need financial infrastructure that supports the kind of
+organic growth and innovation we’ve seen from the Internet, yet still ensures the integrity of financial transactions. Historically, we have relied on high barriers to entry to
+ensure integrity. We trust established financial institutions and do our best to regulate
+them. But this exclusivity conflicts with the goal of organic growth. Growth demands
+new, innovative participants, who may possess only modest financial and computing
+resources.
+We need a worldwide financial network open to anyone, so that new organizations
+can join and extend financial access to unserved communities. The challenge for such
+a network is ensuring participants record transactions correctly. With a low barrier
+to entry, users won’t trust providers to police themselves. With worldwide reach,
+providers won’t all trust a single entity to operate the network. A compelling alternative is a decentralized system in which participants together ensure integrity by
+agreeing on the validity of one another’s transactions. Such agreement hinges on a
+mechanism for worldwide consensus.
+This paper presents federated Byzantine agreement (FBA), a model suitable for
+worldwide consensus. In FBA, each participant knows of others it considers important. It waits for the vast majority of those others to agree on any transaction before
+considering the transaction settled. In turn, those important participants do not agree
+to the transaction until the participants they consider important agree as well, and so
+on. Eventually, enough of the network accepts a transaction that it becomes infeasible
+for an attacker to roll it back. Only then do any participants consider the transaction
+settled. FBA’s consensus can ensure the integrity of a financial network. Its decentralized control can spur organic growth.
+This paper further presents the Stellar consensus protocol (SCP), a construction for
+FBA. We prove that SCP’s safety is optimal for an asynchronous protocol, in that it
+guarantees agreement under any node-failure scenario that admits such a guarantee.The Stellar Consensus Protocol:
+A Federated Model for Internet-level Consensus
+DAVID MAZIERES ` , Stellar Development Foundation
+This paper introduces a new model for consensus called federated Byzantine agreement (FBA). FBA achieves
+robustness through quorum slices—individual trust decisions made by each node that together determine
+system-level quorums. Slices bind the system together much the way individual networks’ peering and transit decisions now unify the Internet.
+We also present the Stellar Consensus Protocol (SCP), a construction for FBA. Like all Byzantine agreement protocols, SCP makes no assumptions about the rational behavior of attackers. Unlike prior Byzantine
+agreement models, which presuppose a unanimously accepted membership list, SCP enjoys open membership that promotes organic network growth. Compared to decentralized proof of-work and proof-of-stake
+schemes, SCP has modest computing and financial requirements, lowering the barrier to entry and potentially opening up financial systems to new participants.
+CCS Concepts: •Security and privacy → Distributed systems security; Security protocols;
+Additional Key Words and Phrases: Byzantine fault tolerance, asynchronous systems
+1. INTRODUCTION
+Financial infrastructure is currently a mess of closed systems. Gaps between these
+systems mean that transaction costs are high [Provost 2013] and money moves slowly
+across political and geographic boundaries [Banning-Lover 2015; CGAP 2008]. This
+friction has curtailed the growth of financial services, leaving billions of people underserved financially [Demirguc-Kunt et al. 2015].
+To solve these problems, we need financial infrastructure that supports the kind of
+organic growth and innovation we’ve seen from the Internet, yet still ensures the integrity of financial transactions. Historically, we have relied on high barriers to entry to
+ensure integrity. We trust established financial institutions and do our best to regulate
+them. But this exclusivity conflicts with the goal of organic growth. Growth demands
+new, innovative participants, who may possess only modest financial and computing
+resources.
+We need a worldwide financial network open to anyone, so that new organizations
+can join and extend financial access to unserved communities. The challenge for such
+a network is ensuring participants record transactions correctly. With a low barrier
+to entry, users won’t trust providers to police themselves. With worldwide reach,
+providers won’t all trust a single entity to operate the network. A compelling alternative is a decentralized system in which participants together ensure integrity by
+agreeing on the validity of one another’s transactions. Such agreement hinges on a
+mechanism for worldwide consensus.
+This paper presents federated Byzantine agreement (FBA), a model suitable for
+worldwide consensus. In FBA, each participant knows of others it considers important. It waits for the vast majority of those others to agree on any transaction before
+considering the transaction settled. In turn, those important participants do not agree
+to the transaction until the participants they consider important agree as well, and so
+on. Eventually, enough of the network accepts a transaction that it becomes infeasible
+for an attacker to roll it back. Only then do any participants consider the transaction
+settled. FBA’s consensus can ensure the integrity of a financial network. Its decentralized control can spur organic growth.
+This paper further presents the Stellar consensus protocol (SCP), a construction for
+FBA. We prove that SCP’s safety is optimal for an asynchronous protocol, in that it
+guarantees agreement under any node-failure scenario that admits such a guarantee.The Stellar Consensus Protocol:
+A Federated Model for Internet-level Consensus
+DAVID MAZIERES ` , Stellar Development Foundation
+This paper introduces a new model for consensus called federated Byzantine agreement (FBA). FBA achieves
+robustness through quorum slices—individual trust decisions made by each node that together determine
+system-level quorums. Slices bind the system together much the way individual networks’ peering and transit decisions now unify the Internet.
+We also present the Stellar Consensus Protocol (SCP), a construction for FBA. Like all Byzantine agreement protocols, SCP makes no assumptions about the rational behavior of attackers. Unlike prior Byzantine
+agreement models, which presuppose a unanimously accepted membership list, SCP enjoys open membership that promotes organic network growth. Compared to decentralized proof of-work and proof-of-stake
+schemes, SCP has modest computing and financial requirements, lowering the barrier to entry and potentially opening up financial systems to new participants.
+CCS Concepts: •Security and privacy → Distributed systems security; Security protocols;
+Additional Key Words and Phrases: Byzantine fault tolerance, asynchronous systems
+1. INTRODUCTION
+Financial infrastructure is currently a mess of closed systems. Gaps between these
+systems mean that transaction costs are high [Provost 2013] and money moves slowly
+across political and geographic boundaries [Banning-Lover 2015; CGAP 2008]. This
+friction has curtailed the growth of financial services, leaving billions of people underserved financially [Demirguc-Kunt et al. 2015].
+To solve these problems, we need financial infrastructure that supports the kind of
+organic growth and innovation we’ve seen from the Internet, yet still ensures the integrity of financial transactions. Historically, we have relied on high barriers to entry to
+ensure integrity. We trust established financial institutions and do our best to regulate
+them. But this exclusivity conflicts with the goal of organic growth. Growth demands
+new, innovative participants, who may possess only modest financial and computing
+resources.
+We need a worldwide financial network open to anyone, so that new organizations
+can join and extend financial access to unserved communities. The challenge for such
+a network is ensuring participants record transactions correctly. With a low barrier
+to entry, users won’t trust providers to police themselves. With worldwide reach,
+providers won’t all trust a single entity to operate the network. A compelling alternative is a decentralized system in which participants together ensure integrity by
+agreeing on the validity of one another’s transactions. Such agreement hinges on a
+mechanism for worldwide consensus.
+This paper presents federated Byzantine agreement (FBA), a model suitable for
+worldwide consensus. In FBA, each participant knows of others it considers important. It waits for the vast majority of those others to agree on any transaction before
+considering the transaction settled. In turn, those important participants do not agree
+to the transaction until the participants they consider important agree as well, and so
+on. Eventually, enough of the network accepts a transaction that it becomes infeasible
+for an attacker to roll it back. Only then do any participants consider the transaction
+settled. FBA’s consensus can ensure the integrity of a financial network. Its decentralized control can spur organic growth.
+This paper further presents the Stellar consensus protocol (SCP), a construction for
+FBA. We prove that SCP’s safety is optimal for an asynchronous protocol, in that it
+guarantees agreement under any node-failure scenario that admits such a guarantee.The Stellar Consensus Protocol:
+A Federated Model for Internet-level Consensus
+DAVID MAZIERES ` , Stellar Development Foundation
+This paper introduces a new model for consensus called federated Byzantine agreement (FBA). FBA achieves
+robustness through quorum slices—individual trust decisions made by each node that together determine
+system-level quorums. Slices bind the system together much the way individual networks’ peering and transit decisions now unify the Internet.
+We also present the Stellar Consensus Protocol (SCP), a construction for FBA. Like all Byzantine agreement protocols, SCP makes no assumptions about the rational behavior of attackers. Unlike prior Byzantine
+agreement models, which presuppose a unanimously accepted membership list, SCP enjoys open membership that promotes organic network growth. Compared to decentralized proof of-work and proof-of-stake
+schemes, SCP has modest computing and financial requirements, lowering the barrier to entry and potentially opening up financial systems to new participants.
+CCS Concepts: •Security and privacy → Distributed systems security; Security protocols;
+Additional Key Words and Phrases: Byzantine fault tolerance, asynchronous systems
+1. INTRODUCTION
+Financial infrastructure is currently a mess of closed systems. Gaps between these
+systems mean that transaction costs are high [Provost 2013] and money moves slowly
+across political and geographic boundaries [Banning-Lover 2015; CGAP 2008]. This
+friction has curtailed the growth of financial services, leaving billions of people underserved financially [Demirguc-Kunt et al. 2015].
+To solve these problems, we need financial infrastructure that supports the kind of
+organic growth and innovation we’ve seen from the Internet, yet still ensures the integrity of financial transactions. Historically, we have relied on high barriers to entry to
+ensure integrity. We trust established financial institutions and do our best to regulate
+them. But this exclusivity conflicts with the goal of organic growth. Growth demands
+new, innovative participants, who may possess only modest financial and computing
+resources.
+We need a worldwide financial network open to anyone, so that new organizations
+can join and extend financial access to unserved communities. The challenge for such
+a network is ensuring participants record transactions correctly. With a low barrier
+to entry, users won’t trust providers to police themselves. With worldwide reach,
+providers won’t all trust a single entity to operate the network. A compelling alternative is a decentralized system in which participants together ensure integrity by
+agreeing on the validity of one another’s transactions. Such agreement hinges on a
+mechanism for worldwide consensus.
+This paper presents federated Byzantine agreement (FBA), a model suitable for
+worldwide consensus. In FBA, each participant knows of others it considers important. It waits for the vast majority of those others to agree on any transaction before
+considering the transaction settled. In turn, those important participants do not agree
+to the transaction until the participants they consider important agree as well, and so
+on. Eventually, enough of the network accepts a transaction that it becomes infeasible
+for an attacker to roll it back. Only then do any participants consider the transaction
+settled. FBA’s consensus can ensure the integrity of a financial network. Its decentralized control can spur organic growth.
+This paper further presents the Stellar consensus protocol (SCP), a construction for
+FBA. We prove that SCP’s safety is optimal for an asynchronous protocol, in that it
+guarantees agreement under any node-failure scenario that admits such a guarantee.The Stellar Consensus Protocol:
+A Federated Model for Internet-level Consensus
+DAVID MAZIERES ` , Stellar Development Foundation
+This paper introduces a new model for consensus called federated Byzantine agreement (FBA). FBA achieves
+robustness through quorum slices—individual trust decisions made by each node that together determine
+system-level quorums. Slices bind the system together much the way individual networks’ peering and transit decisions now unify the Internet.
+We also present the Stellar Consensus Protocol (SCP), a construction for FBA. Like all Byzantine agreement protocols, SCP makes no assumptions about the rational behavior of attackers. Unlike prior Byzantine
+agreement models, which presuppose a unanimously accepted membership list, SCP enjoys open membership that promotes organic network growth. Compared to decentralized proof of-work and proof-of-stake
+schemes, SCP has modest computing and financial requirements, lowering the barrier to entry and potentially opening up financial systems to new participants.
+CCS Concepts: •Security and privacy → Distributed systems security; Security protocols;
+Additional Key Words and Phrases: Byzantine fault tolerance, asynchronous systems
+1. INTRODUCTION
+Financial infrastructure is currently a mess of closed systems. Gaps between these
+systems mean that transaction costs are high [Provost 2013] and money moves slowly
+across political and geographic boundaries [Banning-Lover 2015; CGAP 2008]. This
+friction has curtailed the growth of financial services, leaving billions of people underserved financially [Demirguc-Kunt et al. 2015].
+To solve these problems, we need financial infrastructure that supports the kind of
+organic growth and innovation we’ve seen from the Internet, yet still ensures the integrity of financial transactions. Historically, we have relied on high barriers to entry to
+ensure integrity. We trust established financial institutions and do our best to regulate
+them. But this exclusivity conflicts with the goal of organic growth. Growth demands
+new, innovative participants, who may possess only modest financial and computing
+resources.
+We need a worldwide financial network open to anyone, so that new organizations
+can join and extend financial access to unserved communities. The challenge for such
+a network is ensuring participants record transactions correctly. With a low barrier
+to entry, users won’t trust providers to police themselves. With worldwide reach,
+providers won’t all trust a single entity to operate the network. A compelling alternative is a decentralized system in which participants together ensure integrity by
+agreeing on the validity of one another’s transactions. Such agreement hinges on a
+mechanism for worldwide consensus.
+This paper presents federated Byzantine agreement (FBA), a model suitable for
+worldwide consensus. In FBA, each participant knows of others it considers important. It waits for the vast majority of those others to agree on any transaction before
+considering the transaction settled. In turn, those important participants do not agree
+to the transaction until the participants they consider important agree as well, and so
+on. Eventually, enough of the network accepts a transaction that it becomes infeasible
+for an attacker to roll it back. Only then do any participants consider the transaction
+settled. FBA’s consensus can ensure the integrity of a financial network. Its decentralized control can spur organic growth.
+This paper further presents the Stellar consensus protocol (SCP), a construction for
+FBA. We prove that SCP’s safety is optimal for an asynchronous protocol, in that it
+guarantees agreement under any node-failure scenario that admits such a guarantee.The Stellar Consensus Protocol:
+A Federated Model for Internet-level Consensus
+DAVID MAZIERES ` , Stellar Development Foundation
+This paper introduces a new model for consensus called federated Byzantine agreement (FBA). FBA achieves
+robustness through quorum slices—individual trust decisions made by each node that together determine
+system-level quorums. Slices bind the system together much the way individual networks’ peering and transit decisions now unify the Internet.
+We also present the Stellar Consensus Protocol (SCP), a construction for FBA. Like all Byzantine agreement protocols, SCP makes no assumptions about the rational behavior of attackers. Unlike prior Byzantine
+agreement models, which presuppose a unanimously accepted membership list, SCP enjoys open membership that promotes organic network growth. Compared to decentralized proof of-work and proof-of-stake
+schemes, SCP has modest computing and financial requirements, lowering the barrier to entry and potentially opening up financial systems to new participants.
+CCS Concepts: •Security and privacy → Distributed systems security; Security protocols;
+Additional Key Words and Phrases: Byzantine fault tolerance, asynchronous systems
+1. INTRODUCTION
+Financial infrastructure is currently a mess of closed systems. Gaps between these
+systems mean that transaction costs are high [Provost 2013] and money moves slowly
+across political and geographic boundaries [Banning-Lover 2015; CGAP 2008]. This
+friction has curtailed the growth of financial services, leaving billions of people underserved financially [Demirguc-Kunt et al. 2015].
+To solve these problems, we need financial infrastructure that supports the kind of
+organic growth and innovation we’ve seen from the Internet, yet still ensures the integrity of financial transactions. Historically, we have relied on high barriers to entry to
+ensure integrity. We trust established financial institutions and do our best to regulate
+them. But this exclusivity conflicts with the goal of organic growth. Growth demands
+new, innovative participants, who may possess only modest financial and computing
+resources.
+We need a worldwide financial network open to anyone, so that new organizations
+can join and extend financial access to unserved communities. The challenge for such
+a network is ensuring participants record transactions correctly. With a low barrier
+to entry, users won’t trust providers to police themselves. With worldwide reach,
+providers won’t all trust a single entity to operate the network. A compelling alternative is a decentralized system in which participants together ensure integrity by
+agreeing on the validity of one another’s transactions. Such agreement hinges on a
+mechanism for worldwide consensus.
+This paper presents federated Byzantine agreement (FBA), a model suitable for
+worldwide consensus. In FBA, each participant knows of others it considers important. It waits for the vast majority of those others to agree on any transaction before
+considering the transaction settled. In turn, those important participants do not agree
+to the transaction until the participants they consider important agree as well, and so
+on. Eventually, enough of the network accepts a transaction that it becomes infeasible
+for an attacker to roll it back. Only then do any participants consider the transaction
+settled. FBA’s consensus can ensure the integrity of a financial network. Its decentralized control can spur organic growth.
+This paper further presents the Stellar consensus protocol (SCP), a construction for
+FBA. We prove that SCP’s safety is optimal for an asynchronous protocol, in that it
+guarantees agreement under any node-failure scenario that admits such a guarantee.The Stellar Consensus Protocol:
+A Federated Model for Internet-level Consensus
+DAVID MAZIERES ` , Stellar Development Foundation
+This paper introduces a new model for consensus called federated Byzantine agreement (FBA). FBA achieves
+robustness through quorum slices—individual trust decisions made by each node that together determine
+system-level quorums. Slices bind the system together much the way individual networks’ peering and transit decisions now unify the Internet.
+We also present the Stellar Consensus Protocol (SCP), a construction for FBA. Like all Byzantine agreement protocols, SCP makes no assumptions about the rational behavior of attackers. Unlike prior Byzantine
+agreement models, which presuppose a unanimously accepted membership list, SCP enjoys open membership that promotes organic network growth. Compared to decentralized proof of-work and proof-of-stake
+schemes, SCP has modest computing and financial requirements, lowering the barrier to entry and potentially opening up financial systems to new participants.
+CCS Concepts: •Security and privacy → Distributed systems security; Security protocols;
+Additional Key Words and Phrases: Byzantine fault tolerance, asynchronous systems
+1. INTRODUCTION
+Financial infrastructure is currently a mess of closed systems. Gaps between these
+systems mean that transaction costs are high [Provost 2013] and money moves slowly
+across political and geographic boundaries [Banning-Lover 2015; CGAP 2008]. This
+friction has curtailed the growth of financial services, leaving billions of people underserved financially [Demirguc-Kunt et al. 2015].
+To solve these problems, we need financial infrastructure that supports the kind of
+organic growth and innovation we’ve seen from the Internet, yet still ensures the integrity of financial transactions. Historically, we have relied on high barriers to entry to
+ensure integrity. We trust established financial institutions and do our best to regulate
+them. But this exclusivity conflicts with the goal of organic growth. Growth demands
+new, innovative participants, who may possess only modest financial and computing
+resources.
+We need a worldwide financial network open to anyone, so that new organizations
+can join and extend financial access to unserved communities. The challenge for such
+a network is ensuring participants record transactions correctly. With a low barrier
+to entry, users won’t trust providers to police themselves. With worldwide reach,
+providers won’t all trust a single entity to operate the network. A compelling alternative is a decentralized system in which participants together ensure integrity by
+agreeing on the validity of one another’s transactions. Such agreement hinges on a
+mechanism for worldwide consensus.
+This paper presents federated Byzantine agreement (FBA), a model suitable for
+worldwide consensus. In FBA, each participant knows of others it considers important. It waits for the vast majority of those others to agree on any transaction before
+considering the transaction settled. In turn, those important participants do not agree
+to the transaction until the participants they consider important agree as well, and so
+on. Eventually, enough of the network accepts a transaction that it becomes infeasible
+for an attacker to roll it back. Only then do any participants consider the transaction
+settled. FBA’s consensus can ensure the integrity of a financial network. Its decentralized control can spur organic growth.
+This paper further presents the Stellar consensus protocol (SCP), a construction for
+FBA. We prove that SCP’s safety is optimal for an asynchronous protocol, in that it
+guarantees agreement under any node-failure scenario that admits such a guarantee.The Stellar Consensus Protocol:
+A Federated Model for Internet-level Consensus
+DAVID MAZIERES ` , Stellar Development Foundation
+This paper introduces a new model for consensus called federated Byzantine agreement (FBA). FBA achieves
+robustness through quorum slices—individual trust decisions made by each node that together determine
+system-level quorums. Slices bind the system together much the way individual networks’ peering and transit decisions now unify the Internet.
+We also present the Stellar Consensus Protocol (SCP), a construction for FBA. Like all Byzantine agreement protocols, SCP makes no assumptions about the rational behavior of attackers. Unlike prior Byzantine
+agreement models, which presuppose a unanimously accepted membership list, SCP enjoys open membership that promotes organic network growth. Compared to decentralized proof of-work and proof-of-stake
+schemes, SCP has modest computing and financial requirements, lowering the barrier to entry and potentially opening up financial systems to new participants.
+CCS Concepts: •Security and privacy → Distributed systems security; Security protocols;
+Additional Key Words and Phrases: Byzantine fault tolerance, asynchronous systems
+1. INTRODUCTION
+Financial infrastructure is currently a mess of closed systems. Gaps between these
+systems mean that transaction costs are high [Provost 2013] and money moves slowly
+across political and geographic boundaries [Banning-Lover 2015; CGAP 2008]. This
+friction has curtailed the growth of financial services, leaving billions of people underserved financially [Demirguc-Kunt et al. 2015].
+To solve these problems, we need financial infrastructure that supports the kind of
+organic growth and innovation we’ve seen from the Internet, yet still ensures the integrity of financial transactions. Historically, we have relied on high barriers to entry to
+ensure integrity. We trust established financial institutions and do our best to regulate
+them. But this exclusivity conflicts with the goal of organic growth. Growth demands
+new, innovative participants, who may possess only modest financial and computing
+resources.
+We need a worldwide financial network open to anyone, so that new organizations
+can join and extend financial access to unserved communities. The challenge for such
+a network is ensuring participants record transactions correctly. With a low barrier
+to entry, users won’t trust providers to police themselves. With worldwide reach,
+providers won’t all trust a single entity to operate the network. A compelling alternative is a decentralized system in which participants together ensure integrity by
+agreeing on the validity of one another’s transactions. Such agreement hinges on a
+mechanism for worldwide consensus.
+This paper presents federated Byzantine agreement (FBA), a model suitable for
+worldwide consensus. In FBA, each participant knows of others it considers important. It waits for the vast majority of those others to agree on any transaction before
+considering the transaction settled. In turn, those important participants do not agree
+to the transaction until the participants they consider important agree as well, and so
+on. Eventually, enough of the network accepts a transaction that it becomes infeasible
+for an attacker to roll it back. Only then do any participants consider the transaction
+settled. FBA’s consensus can ensure the integrity of a financial network. Its decentralized control can spur organic growth.
+This paper further presents the Stellar consensus protocol (SCP), a construction for
+FBA. We prove that SCP’s safety is optimal for an asynchronous protocol, in that it
+guarantees agreement under any node-failure scenario that admits such a guarantee.The Stellar Consensus Protocol:
+A Federated Model for Internet-level Consensus
+DAVID MAZIERES ` , Stellar Development Foundation
+This paper introduces a new model for consensus called federated Byzantine agreement (FBA). FBA achieves
+robustness through quorum slices—individual trust decisions made by each node that together determine
+system-level quorums. Slices bind the system together much the way individual networks’ peering and transit decisions now unify the Internet.
+We also present the Stellar Consensus Protocol (SCP), a construction for FBA. Like all Byzantine agreement protocols, SCP makes no assumptions about the rational behavior of attackers. Unlike prior Byzantine
+agreement models, which presuppose a unanimously accepted membership list, SCP enjoys open membership that promotes organic network growth. Compared to decentralized proof of-work and proof-of-stake
+schemes, SCP has modest computing and financial requirements, lowering the barrier to entry and potentially opening up financial systems to new participants.
+CCS Concepts: •Security and privacy → Distributed systems security; Security protocols;
+Additional Key Words and Phrases: Byzantine fault tolerance, asynchronous systems
+1. INTRODUCTION
+Financial infrastructure is currently a mess of closed systems. Gaps between these
+systems mean that transaction costs are high [Provost 2013] and money moves slowly
+across political and geographic boundaries [Banning-Lover 2015; CGAP 2008]. This
+friction has curtailed the growth of financial services, leaving billions of people underserved financially [Demirguc-Kunt et al. 2015].
+To solve these problems, we need financial infrastructure that supports the kind of
+organic growth and innovation we’ve seen from the Internet, yet still ensures the integrity of financial transactions. Historically, we have relied on high barriers to entry to
+ensure integrity. We trust established financial institutions and do our best to regulate
+them. But this exclusivity conflicts with the goal of organic growth. Growth demands
+new, innovative participants, who may possess only modest financial and computing
+resources.
+We need a worldwide financial network open to anyone, so that new organizations
+can join and extend financial access to unserved communities. The challenge for such
+a network is ensuring participants record transactions correctly. With a low barrier
+to entry, users won’t trust providers to police themselves. With worldwide reach,
+providers won’t all trust a single entity to operate the network. A compelling alternative is a decentralized system in which participants together ensure integrity by
+agreeing on the validity of one another’s transactions. Such agreement hinges on a
+mechanism for worldwide consensus.
+This paper presents federated Byzantine agreement (FBA), a model suitable for
+worldwide consensus. In FBA, each participant knows of others it considers important. It waits for the vast majority of those others to agree on any transaction before
+considering the transaction settled. In turn, those important participants do not agree
+to the transaction until the participants they consider important agree as well, and so
+on. Eventually, enough of the network accepts a transaction that it becomes infeasible
+for an attacker to roll it back. Only then do any participants consider the transaction
+settled. FBA’s consensus can ensure the integrity of a financial network. Its decentralized control can spur organic growth.
+This paper further presents the Stellar consensus protocol (SCP), a construction for
+FBA. We prove that SCP’s safety is optimal for an asynchronous protocol, in that it
+guarantees agreement under any node-failure scenario that admits such a guarantee.The Stellar Consensus Protocol:
+A Federated Model for Internet-level Consensus
+DAVID MAZIERES ` , Stellar Development Foundation
+This paper introduces a new model for consensus called federated Byzantine agreement (FBA). FBA achieves
+robustness through quorum slices—individual trust decisions made by each node that together determine
+system-level quorums. Slices bind the system together much the way individual networks’ peering and transit decisions now unify the Internet.
+We also present the Stellar Consensus Protocol (SCP), a construction for FBA. Like all Byzantine agreement protocols, SCP makes no assumptions about the rational behavior of attackers. Unlike prior Byzantine
+agreement models, which presuppose a unanimously accepted membership list, SCP enjoys open membership that promotes organic network growth. Compared to decentralized proof of-work and proof-of-stake
+schemes, SCP has modest computing and financial requirements, lowering the barrier to entry and potentially opening up financial systems to new participants.
+CCS Concepts: •Security and privacy → Distributed systems security; Security protocols;
+Additional Key Words and Phrases: Byzantine fault tolerance, asynchronous systems
+1. INTRODUCTION
+Financial infrastructure is currently a mess of closed systems. Gaps between these
+systems mean that transaction costs are high [Provost 2013] and money moves slowly
+across political and geographic boundaries [Banning-Lover 2015; CGAP 2008]. This
+friction has curtailed the growth of financial services, leaving billions of people underserved financially [Demirguc-Kunt et al. 2015].
+To solve these problems, we need financial infrastructure that supports the kind of
+organic growth and innovation we’ve seen from the Internet, yet still ensures the integrity of financial transactions. Historically, we have relied on high barriers to entry to
+ensure integrity. We trust established financial institutions and do our best to regulate
+them. But this exclusivity conflicts with the goal of organic growth. Growth demands
+new, innovative participants, who may possess only modest financial and computing
+resources.
+We need a worldwide financial network open to anyone, so that new organizations
+can join and extend financial access to unserved communities. The challenge for such
+a network is ensuring participants record transactions correctly. With a low barrier
+to entry, users won’t trust providers to police themselves. With worldwide reach,
+providers won’t all trust a single entity to operate the network. A compelling alternative is a decentralized system in which participants together ensure integrity by
+agreeing on the validity of one another’s transactions. Such agreement hinges on a
+mechanism for worldwide consensus.
+This paper presents federated Byzantine agreement (FBA), a model suitable for
+worldwide consensus. In FBA, each participant knows of others it considers important. It waits for the vast majority of those others to agree on any transaction before
+considering the transaction settled. In turn, those important participants do not agree
+to the transaction until the participants they consider important agree as well, and so
+on. Eventually, enough of the network accepts a transaction that it becomes infeasible
+for an attacker to roll it back. Only then do any participants consider the transaction
+settled. FBA’s consensus can ensure the integrity of a financial network. Its decentralized control can spur organic growth.
+This paper further presents the Stellar consensus protocol (SCP), a construction for
+FBA. We prove that SCP’s safety is optimal for an asynchronous protocol, in that it
+guarantees agreement under any node-failure scenario that admits such a guarantee.The Stellar Consensus Protocol:
+A Federated Model for Internet-level Consensus
+DAVID MAZIERES ` , Stellar Development Foundation
+This paper introduces a new model for consensus called federated Byzantine agreement (FBA). FBA achieves
+robustness through quorum slices—individual trust decisions made by each node that together determine
+system-level quorums. Slices bind the system together much the way individual networks’ peering and transit decisions now unify the Internet.
+We also present the Stellar Consensus Protocol (SCP), a construction for FBA. Like all Byzantine agreement protocols, SCP makes no assumptions about the rational behavior of attackers. Unlike prior Byzantine
+agreement models, which presuppose a unanimously accepted membership list, SCP enjoys open membership that promotes organic network growth. Compared to decentralized proof of-work and proof-of-stake
+schemes, SCP has modest computing and financial requirements, lowering the barrier to entry and potentially opening up financial systems to new participants.
+CCS Concepts: •Security and privacy → Distributed systems security; Security protocols;
+Additional Key Words and Phrases: Byzantine fault tolerance, asynchronous systems
+1. INTRODUCTION
+Financial infrastructure is currently a mess of closed systems. Gaps between these
+systems mean that transaction costs are high [Provost 2013] and money moves slowly
+across political and geographic boundaries [Banning-Lover 2015; CGAP 2008]. This
+friction has curtailed the growth of financial services, leaving billions of people underserved financially [Demirguc-Kunt et al. 2015].
+To solve these problems, we need financial infrastructure that supports the kind of
+organic growth and innovation we’ve seen from the Internet, yet still ensures the integrity of financial transactions. Historically, we have relied on high barriers to entry to
+ensure integrity. We trust established financial institutions and do our best to regulate
+them. But this exclusivity conflicts with the goal of organic growth. Growth demands
+new, innovative participants, who may possess only modest financial and computing
+resources.
+We need a worldwide financial network open to anyone, so that new organizations
+can join and extend financial access to unserved communities. The challenge for such
+a network is ensuring participants record transactions correctly. With a low barrier
+to entry, users won’t trust providers to police themselves. With worldwide reach,
+providers won’t all trust a single entity to operate the network. A compelling alternative is a decentralized system in which participants together ensure integrity by
+agreeing on the validity of one another’s transactions. Such agreement hinges on a
+mechanism for worldwide consensus.
+This paper presents federated Byzantine agreement (FBA), a model suitable for
+worldwide consensus. In FBA, each participant knows of others it considers important. It waits for the vast majority of those others to agree on any transaction before
+considering the transaction settled. In turn, those important participants do not agree
+to the transaction until the participants they consider important agree as well, and so
+on. Eventually, enough of the network accepts a transaction that it becomes infeasible
+for an attacker to roll it back. Only then do any participants consider the transaction
+settled. FBA’s consensus can ensure the integrity of a financial network. Its decentralized control can spur organic growth.
+This paper further presents the Stellar consensus protocol (SCP), a construction for
+FBA. We prove that SCP’s safety is optimal for an asynchronous protocol, in that it
+guarantees agreement under any node-failure scenario that admits such a guarantee.The Stellar Consensus Protocol:
+A Federated Model for Internet-level Consensus
+DAVID MAZIERES ` , Stellar Development Foundation
+This paper introduces a new model for consensus called federated Byzantine agreement (FBA). FBA achieves
+robustness through quorum slices—individual trust decisions made by each node that together determine
+system-level quorums. Slices bind the system together much the way individual networks’ peering and transit decisions now unify the Internet.
+We also present the Stellar Consensus Protocol (SCP), a construction for FBA. Like all Byzantine agreement protocols, SCP makes no assumptions about the rational behavior of attackers. Unlike prior Byzantine
+agreement models, which presuppose a unanimously accepted membership list, SCP enjoys open membership that promotes organic network growth. Compared to decentralized proof of-work and proof-of-stake
+schemes, SCP has modest computing and financial requirements, lowering the barrier to entry and potentially opening up financial systems to new participants.
+CCS Concepts: •Security and privacy → Distributed systems security; Security protocols;
+Additional Key Words and Phrases: Byzantine fault tolerance, asynchronous systems
+1. INTRODUCTION
+Financial infrastructure is currently a mess of closed systems. Gaps between these
+systems mean that transaction costs are high [Provost 2013] and money moves slowly
+across political and geographic boundaries [Banning-Lover 2015; CGAP 2008]. This
+friction has curtailed the growth of financial services, leaving billions of people underserved financially [Demirguc-Kunt et al. 2015].
+To solve these problems, we need financial infrastructure that supports the kind of
+organic growth and innovation we’ve seen from the Internet, yet still ensures the integrity of financial transactions. Historically, we have relied on high barriers to entry to
+ensure integrity. We trust established financial institutions and do our best to regulate
+them. But this exclusivity conflicts with the goal of organic growth. Growth demands
+new, innovative participants, who may possess only modest financial and computing
+resources.
+We need a worldwide financial network open to anyone, so that new organizations
+can join and extend financial access to unserved communities. The challenge for such
+a network is ensuring participants record transactions correctly. With a low barrier
+to entry, users won’t trust providers to police themselves. With worldwide reach,
+providers won’t all trust a single entity to operate the network. A compelling alternative is a decentralized system in which participants together ensure integrity by
+agreeing on the validity of one another’s transactions. Such agreement hinges on a
+mechanism for worldwide consensus.
+This paper presents federated Byzantine agreement (FBA), a model suitable for
+worldwide consensus. In FBA, each participant knows of others it considers important. It waits for the vast majority of those others to agree on any transaction before
+considering the transaction settled. In turn, those important participants do not agree
+to the transaction until the participants they consider important agree as well, and so
+on. Eventually, enough of the network accepts a transaction that it becomes infeasible
+for an attacker to roll it back. Only then do any participants consider the transaction
+settled. FBA’s consensus can ensure the integrity of a financial network. Its decentralized control can spur organic growth.
+This paper further presents the Stellar consensus protocol (SCP), a construction for
+FBA. We prove that SCP’s safety is optimal for an asynchronous protocol, in that it
+guarantees agreement under any node-failure scenario that admits such a guarantee.The Stellar Consensus Protocol:
+A Federated Model for Internet-level Consensus
+DAVID MAZIERES ` , Stellar Development Foundation
+This paper introduces a new model for consensus called federated Byzantine agreement (FBA). FBA achieves
+robustness through quorum slices—individual trust decisions made by each node that together determine
+system-level quorums. Slices bind the system together much the way individual networks’ peering and transit decisions now unify the Internet.
+We also present the Stellar Consensus Protocol (SCP), a construction for FBA. Like all Byzantine agreement protocols, SCP makes no assumptions about the rational behavior of attackers. Unlike prior Byzantine
+agreement models, which presuppose a unanimously accepted membership list, SCP enjoys open membership that promotes organic network growth. Compared to decentralized proof of-work and proof-of-stake
+schemes, SCP has modest computing and financial requirements, lowering the barrier to entry and potentially opening up financial systems to new participants.
+CCS Concepts: •Security and privacy → Distributed systems security; Security protocols;
+Additional Key Words and Phrases: Byzantine fault tolerance, asynchronous systems
+1. INTRODUCTION
+Financial infrastructure is currently a mess of closed systems. Gaps between these
+systems mean that transaction costs are high [Provost 2013] and money moves slowly
+across political and geographic boundaries [Banning-Lover 2015; CGAP 2008]. This
+friction has curtailed the growth of financial services, leaving billions of people underserved financially [Demirguc-Kunt et al. 2015].
+To solve these problems, we need financial infrastructure that supports the kind of
+organic growth and innovation we’ve seen from the Internet, yet still ensures the integrity of financial transactions. Historically, we have relied on high barriers to entry to
+ensure integrity. We trust established financial institutions and do our best to regulate
+them. But this exclusivity conflicts with the goal of organic growth. Growth demands
+new, innovative participants, who may possess only modest financial and computing
+resources.
+We need a worldwide financial network open to anyone, so that new organizations
+can join and extend financial access to unserved communities. The challenge for such
+a network is ensuring participants record transactions correctly. With a low barrier
+to entry, users won’t trust providers to police themselves. With worldwide reach,
+providers won’t all trust a single entity to operate the network. A compelling alternative is a decentralized system in which participants together ensure integrity by
+agreeing on the validity of one another’s transactions. Such agreement hinges on a
+mechanism for worldwide consensus.
+This paper presents federated Byzantine agreement (FBA), a model suitable for
+worldwide consensus. In FBA, each participant knows of others it considers important. It waits for the vast majority of those others to agree on any transaction before
+considering the transaction settled. In turn, those important participants do not agree
+to the transaction until the participants they consider important agree as well, and so
+on. Eventually, enough of the network accepts a transaction that it becomes infeasible
+for an attacker to roll it back. Only then do any participants consider the transaction
+settled. FBA’s consensus can ensure the integrity of a financial network. Its decentralized control can spur organic growth.
+This paper further presents the Stellar consensus protocol (SCP), a construction for
+FBA. We prove that SCP’s safety is optimal for an asynchronous protocol, in that it
+guarantees agreement under any node-failure scenario that admits such a guarantee.The Stellar Consensus Protocol:
+A Federated Model for Internet-level Consensus
+DAVID MAZIERES ` , Stellar Development Foundation
+This paper introduces a new model for consensus called federated Byzantine agreement (FBA). FBA achieves
+robustness through quorum slices—individual trust decisions made by each node that together determine
+system-level quorums. Slices bind the system together much the way individual networks’ peering and transit decisions now unify the Internet.
+We also present the Stellar Consensus Protocol (SCP), a construction for FBA. Like all Byzantine agreement protocols, SCP makes no assumptions about the rational behavior of attackers. Unlike prior Byzantine
+agreement models, which presuppose a unanimously accepted membership list, SCP enjoys open membership that promotes organic network growth. Compared to decentralized proof of-work and proof-of-stake
+schemes, SCP has modest computing and financial requirements, lowering the barrier to entry and potentially opening up financial systems to new participants.
+CCS Concepts: •Security and privacy → Distributed systems security; Security protocols;
+Additional Key Words and Phrases: Byzantine fault tolerance, asynchronous systems
+1. INTRODUCTION
+Financial infrastructure is currently a mess of closed systems. Gaps between these
+systems mean that transaction costs are high [Provost 2013] and money moves slowly
+across political and geographic boundaries [Banning-Lover 2015; CGAP 2008]. This
+friction has curtailed the growth of financial services, leaving billions of people underserved financially [Demirguc-Kunt et al. 2015].
+To solve these problems, we need financial infrastructure that supports the kind of
+organic growth and innovation we’ve seen from the Internet, yet still ensures the integrity of financial transactions. Historically, we have relied on high barriers to entry to
+ensure integrity. We trust established financial institutions and do our best to regulate
+them. But this exclusivity conflicts with the goal of organic growth. Growth demands
+new, innovative participants, who may possess only modest financial and computing
+resources.
+We need a worldwide financial network open to anyone, so that new organizations
+can join and extend financial access to unserved communities. The challenge for such
+a network is ensuring participants record transactions correctly. With a low barrier
+to entry, users won’t trust providers to police themselves. With worldwide reach,
+providers won’t all trust a single entity to operate the network. A compelling alternative is a decentralized system in which participants together ensure integrity by
+agreeing on the validity of one another’s transactions. Such agreement hinges on a
+mechanism for worldwide consensus.
+This paper presents federated Byzantine agreement (FBA), a model suitable for
+worldwide consensus. In FBA, each participant knows of others it considers important. It waits for the vast majority of those others to agree on any transaction before
+considering the transaction settled. In turn, those important participants do not agree
+to the transaction until the participants they consider important agree as well, and so
+on. Eventually, enough of the network accepts a transaction that it becomes infeasible
+for an attacker to roll it back. Only then do any participants consider the transaction
+settled. FBA’s consensus can ensure the integrity of a financial network. Its decentralized control can spur organic growth.
+This paper further presents the Stellar consensus protocol (SCP), a construction for
+FBA. We prove that SCP’s safety is optimal for an asynchronous protocol, in that it
+guarantees agreement under any node-failure scenario that admits such a guarantee.The Stellar Consensus Protocol:
+A Federated Model for Internet-level Consensus
+DAVID MAZIERES ` , Stellar Development Foundation
+This paper introduces a new model for consensus called federated Byzantine agreement (FBA). FBA achieves
+robustness through quorum slices—individual trust decisions made by each node that together determine
+system-level quorums. Slices bind the system together much the way individual networks’ peering and transit decisions now unify the Internet.
+We also present the Stellar Consensus Protocol (SCP), a construction for FBA. Like all Byzantine agreement protocols, SCP makes no assumptions about the rational behavior of attackers. Unlike prior Byzantine
+agreement models, which presuppose a unanimously accepted membership list, SCP enjoys open membership that promotes organic network growth. Compared to decentralized proof of-work and proof-of-stake
+schemes, SCP has modest computing and financial requirements, lowering the barrier to entry and potentially opening up financial systems to new participants.
+CCS Concepts: •Security and privacy → Distributed systems security; Security protocols;
+Additional Key Words and Phrases: Byzantine fault tolerance, asynchronous systems
+1. INTRODUCTION
+Financial infrastructure is currently a mess of closed systems. Gaps between these
+systems mean that transaction costs are high [Provost 2013] and money moves slowly
+across political and geographic boundaries [Banning-Lover 2015; CGAP 2008]. This
+friction has curtailed the growth of financial services, leaving billions of people underserved financially [Demirguc-Kunt et al. 2015].
+To solve these problems, we need financial infrastructure that supports the kind of
+organic growth and innovation we’ve seen from the Internet, yet still ensures the integrity of financial transactions. Historically, we have relied on high barriers to entry to
+ensure integrity. We trust established financial institutions and do our best to regulate
+them. But this exclusivity conflicts with the goal of organic growth. Growth demands
+new, innovative participants, who may possess only modest financial and computing
+resources.
+We need a worldwide financial network open to anyone, so that new organizations
+can join and extend financial access to unserved communities. The challenge for such
+a network is ensuring participants record transactions correctly. With a low barrier
+to entry, users won’t trust providers to police themselves. With worldwide reach,
+providers won’t all trust a single entity to operate the network. A compelling alternative is a decentralized system in which participants together ensure integrity by
+agreeing on the validity of one another’s transactions. Such agreement hinges on a
+mechanism for worldwide consensus.
+This paper presents federated Byzantine agreement (FBA), a model suitable for
+worldwide consensus. In FBA, each participant knows of others it considers important. It waits for the vast majority of those others to agree on any transaction before
+considering the transaction settled. In turn, those important participants do not agree
+to the transaction until the participants they consider important agree as well, and so
+on. Eventually, enough of the network accepts a transaction that it becomes infeasible
+for an attacker to roll it back. Only then do any participants consider the transaction
+settled. FBA’s consensus can ensure the integrity of a financial network. Its decentralized control can spur organic growth.
+This paper further presents the Stellar consensus protocol (SCP), a construction for
+FBA. We prove that SCP’s safety is optimal for an asynchronous protocol, in that it
+guarantees agreement under any node-failure scenario that admits such a guarantee.The Stellar Consensus Protocol:
+A Federated Model for Internet-level Consensus
+DAVID MAZIERES ` , Stellar Development Foundation
+This paper introduces a new model for consensus called federated Byzantine agreement (FBA). FBA achieves
+robustness through quorum slices—individual trust decisions made by each node that together determine
+system-level quorums. Slices bind the system together much the way individual networks’ peering and transit decisions now unify the Internet.
+We also present the Stellar Consensus Protocol (SCP), a construction for FBA. Like all Byzantine agreement protocols, SCP makes no assumptions about the rational behavior of attackers. Unlike prior Byzantine
+agreement models, which presuppose a unanimously accepted membership list, SCP enjoys open membership that promotes organic network growth. Compared to decentralized proof of-work and proof-of-stake
+schemes, SCP has modest computing and financial requirements, lowering the barrier to entry and potentially opening up financial systems to new participants.
+CCS Concepts: •Security and privacy → Distributed systems security; Security protocols;
+Additional Key Words and Phrases: Byzantine fault tolerance, asynchronous systems
+1. INTRODUCTION
+Financial infrastructure is currently a mess of closed systems. Gaps between these
+systems mean that transaction costs are high [Provost 2013] and money moves slowly
+across political and geographic boundaries [Banning-Lover 2015; CGAP 2008]. This
+friction has curtailed the growth of financial services, leaving billions of people underserved financially [Demirguc-Kunt et al. 2015].
+To solve these problems, we need financial infrastructure that supports the kind of
+organic growth and innovation we’ve seen from the Internet, yet still ensures the integrity of financial transactions. Historically, we have relied on high barriers to entry to
+ensure integrity. We trust established financial institutions and do our best to regulate
+them. But this exclusivity conflicts with the goal of organic growth. Growth demands
+new, innovative participants, who may possess only modest financial and computing
+resources.
+We need a worldwide financial network open to anyone, so that new organizations
+can join and extend financial access to unserved communities. The challenge for such
+a network is ensuring participants record transactions correctly. With a low barrier
+to entry, users won’t trust providers to police themselves. With worldwide reach,
+providers won’t all trust a single entity to operate the network. A compelling alternative is a decentralized system in which participants together ensure integrity by
+agreeing on the validity of one another’s transactions. Such agreement hinges on a
+mechanism for worldwide consensus.
+This paper presents federated Byzantine agreement (FBA), a model suitable for
+worldwide consensus. In FBA, each participant knows of others it considers important. It waits for the vast majority of those others to agree on any transaction before
+considering the transaction settled. In turn, those important participants do not agree
+to the transaction until the participants they consider important agree as well, and so
+on. Eventually, enough of the network accepts a transaction that it becomes infeasible
+for an attacker to roll it back. Only then do any participants consider the transaction
+settled. FBA’s consensus can ensure the integrity of a financial network. Its decentralized control can spur organic growth.
+This paper further presents the Stellar consensus protocol (SCP), a construction for
+FBA. We prove that SCP’s safety is optimal for an asynchronous protocol, in that it
+guarantees agreement under any node-failure scenario that admits such a guarantee.The Stellar Consensus Protocol:
+A Federated Model for Internet-level Consensus
+DAVID MAZIERES ` , Stellar Development Foundation
+This paper introduces a new model for consensus called federated Byzantine agreement (FBA). FBA achieves
+robustness through quorum slices—individual trust decisions made by each node that together determine
+system-level quorums. Slices bind the system together much the way individual networks’ peering and transit decisions now unify the Internet.
+We also present the Stellar Consensus Protocol (SCP), a construction for FBA. Like all Byzantine agreement protocols, SCP makes no assumptions about the rational behavior of attackers. Unlike prior Byzantine
+agreement models, which presuppose a unanimously accepted membership list, SCP enjoys open membership that promotes organic network growth. Compared to decentralized proof of-work and proof-of-stake
+schemes, SCP has modest computing and financial requirements, lowering the barrier to entry and potentially opening up financial systems to new participants.
+CCS Concepts: •Security and privacy → Distributed systems security; Security protocols;
+Additional Key Words and Phrases: Byzantine fault tolerance, asynchronous systems
+1. INTRODUCTION
+Financial infrastructure is currently a mess of closed systems. Gaps between these
+systems mean that transaction costs are high [Provost 2013] and money moves slowly
+across political and geographic boundaries [Banning-Lover 2015; CGAP 2008]. This
+friction has curtailed the growth of financial services, leaving billions of people underserved financially [Demirguc-Kunt et al. 2015].
+To solve these problems, we need financial infrastructure that supports the kind of
+organic growth and innovation we’ve seen from the Internet, yet still ensures the integrity of financial transactions. Historically, we have relied on high barriers to entry to
+ensure integrity. We trust established financial institutions and do our best to regulate
+them. But this exclusivity conflicts with the goal of organic growth. Growth demands
+new, innovative participants, who may possess only modest financial and computing
+resources.
+We need a worldwide financial network open to anyone, so that new organizations
+can join and extend financial access to unserved communities. The challenge for such
+a network is ensuring participants record transactions correctly. With a low barrier
+to entry, users won’t trust providers to police themselves. With worldwide reach,
+providers won’t all trust a single entity to operate the network. A compelling alternative is a decentralized system in which participants together ensure integrity by
+agreeing on the validity of one another’s transactions. Such agreement hinges on a
+mechanism for worldwide consensus.
+This paper presents federated Byzantine agreement (FBA), a model suitable for
+worldwide consensus. In FBA, each participant knows of others it considers important. It waits for the vast majority of those others to agree on any transaction before
+considering the transaction settled. In turn, those important participants do not agree
+to the transaction until the participants they consider important agree as well, and so
+on. Eventually, enough of the network accepts a transaction that it becomes infeasible
+for an attacker to roll it back. Only then do any participants consider the transaction
+settled. FBA’s consensus can ensure the integrity of a financial network. Its decentralized control can spur organic growth.
+This paper further presents the Stellar consensus protocol (SCP), a construction for
+FBA. We prove that SCP’s safety is optimal for an asynchronous protocol, in that it
+guarantees agreement under any node-failure scenario that admits such a guarantee.The Stellar Consensus Protocol:
+A Federated Model for Internet-level Consensus
+DAVID MAZIERES ` , Stellar Development Foundation
+This paper introduces a new model for consensus called federated Byzantine agreement (FBA). FBA achieves
+robustness through quorum slices—individual trust decisions made by each node that together determine
+system-level quorums. Slices bind the system together much the way individual networks’ peering and transit decisions now unify the Internet.
+We also present the Stellar Consensus Protocol (SCP), a construction for FBA. Like all Byzantine agreement protocols, SCP makes no assumptions about the rational behavior of attackers. Unlike prior Byzantine
+agreement models, which presuppose a unanimously accepted membership list, SCP enjoys open membership that promotes organic network growth. Compared to decentralized proof of-work and proof-of-stake
+schemes, SCP has modest computing and financial requirements, lowering the barrier to entry and potentially opening up financial systems to new participants.
+CCS Concepts: •Security and privacy → Distributed systems security; Security protocols;
+Additional Key Words and Phrases: Byzantine fault tolerance, asynchronous systems
+1. INTRODUCTION
+Financial infrastructure is currently a mess of closed systems. Gaps between these
+systems mean that transaction costs are high [Provost 2013] and money moves slowly
+across political and geographic boundaries [Banning-Lover 2015; CGAP 2008]. This
+friction has curtailed the growth of financial services, leaving billions of people underserved financially [Demirguc-Kunt et al. 2015].
+To solve these problems, we need financial infrastructure that supports the kind of
+organic growth and innovation we’ve seen from the Internet, yet still ensures the integrity of financial transactions. Historically, we have relied on high barriers to entry to
+ensure integrity. We trust established financial institutions and do our best to regulate
+them. But this exclusivity conflicts with the goal of organic growth. Growth demands
+new, innovative participants, who may possess only modest financial and computing
+resources.
+We need a worldwide financial network open to anyone, so that new organizations
+can join and extend financial access to unserved communities. The challenge for such
+a network is ensuring participants record transactions correctly. With a low barrier
+to entry, users won’t trust providers to police themselves. With worldwide reach,
+providers won’t all trust a single entity to operate the network. A compelling alternative is a decentralized system in which participants together ensure integrity by
+agreeing on the validity of one another’s transactions. Such agreement hinges on a
+mechanism for worldwide consensus.
+This paper presents federated Byzantine agreement (FBA), a model suitable for
+worldwide consensus. In FBA, each participant knows of others it considers important. It waits for the vast majority of those others to agree on any transaction before
+considering the transaction settled. In turn, those important participants do not agree
+to the transaction until the participants they consider important agree as well, and so
+on. Eventually, enough of the network accepts a transaction that it becomes infeasible
+for an attacker to roll it back. Only then do any participants consider the transaction
+settled. FBA’s consensus can ensure the integrity of a financial network. Its decentralized control can spur organic growth.
+This paper further presents the Stellar consensus protocol (SCP), a construction for
+FBA. We prove that SCP’s safety is optimal for an asynchronous protocol, in that it
+guarantees agreement under any node-failure scenario that admits such a guarantee.

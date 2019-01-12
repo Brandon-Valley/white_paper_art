@@ -15,40 +15,12 @@ from tkinter import ttk
 
 from PIL import Image
 
-from logger import txt_logger
+
 import fonts
 
 OUTPUT_IMAGE_SUFFIX = '_text_art' #used????????????????????????????????????????????????????????????????????????????????
 
 LBOX_STR_DELIM = '_'
-
-
-
-
-#GUI
-
-# def check_build_image_immediately():
-#     var_dict = txt_logger.readVars(VAR_LOG_FILE_NAME, True)
-
-
-
-def restart():
-        #````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````
-    import os
-    import sys
-    import subprocess
-     
-#             import os, sys#```````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````
-# #             os.execl(sys.executable,  [sys.executable, os.path.join(sys.path[0], __file__)] + sys.argv[1:]) # don't pass again the interpreter path.  ``````````````````````````````````````````````````````````````````````
-#             os.execv(sys.executable, [sys.executable, os.path.join(sys.path[0], __file__)] + sys.argv[1:])
-#             
-     
-    os.execl(sys.executable, 'python', __file__, *sys.argv[1:])
-     
-#             subprocess.call(["python", os.path.join(sys.path[0], __file__)] + sys.argv[1:])
-    #```````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````
-#     build_final_image(kwargs)#```
-
 
 def get_current_dir_path():
     import os 
@@ -135,14 +107,6 @@ def valid_img_filename(filename):
         return True
     except:
         return False
-
-def str_to_bool(str):
-    if str == 'True':
-        return True
-    elif str == 'False':
-        return False
-    else:
-        raise exception('ERROR:  in str_to_bool(), invalid input: ', str, type(str))
     
 
 
