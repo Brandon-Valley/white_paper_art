@@ -6,7 +6,10 @@ import gc
 import tools
 
 
-def text_image(lines, color_cords, default_colors, font):    
+def text_image(lines, color_cords, default_colors, font):   
+    print('writeing txt file for linse! this is a test REMOVE THIS ACTION in text_image!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!') #!!!!!!!!!!!
+    tools.write_text_file("test_lines.txt", lines)#!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+     
 #     # make the background image based on the combination of font and lines
 #     pt2px = lambda pt: int(round(pt * 96.0 / 72))  # convert points to pixels
 #     

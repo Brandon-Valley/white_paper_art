@@ -127,13 +127,13 @@ def calc_img_dims(lines, font):
 
 
 def read_text_file(file_path):
-    with open(file_path) as text_file:  # can throw FileNotFoundError
+    with open(file_path, 'r', encoding='utf-8') as text_file:  # can throw FileNotFoundError
         result = tuple(l.rstrip() for l in text_file.readlines())
         return result
     
 #just for testing
 def write_text_file(file_path, line_list):
-    f = open(file_path, 'w')
+    f = open(file_path, 'w', encoding='utf-8')
     # write to file
     for line in line_list:
         f.write(line + '\n')

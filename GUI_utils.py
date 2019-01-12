@@ -45,7 +45,7 @@ def get_defalt_file_path(home_dir_path, file_ext_list):
 
 
 def get_font_list():
-    return['font1', 'font2', 'cour', "font22222222222222222222222222222222222222222222222222222222"]
+    return['font1', 'Consolas', 'cour', "font22222222222222222222222222222222222222222222222222222222"]
     
 
 

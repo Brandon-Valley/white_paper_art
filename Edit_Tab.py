@@ -13,7 +13,7 @@ import Tab
 import global_constants
 import font_tools
 
-FONTS_PATH = "C:\\Users\\Brandon\\Documents\\Personal Projects\\white_paper_art\\fonts"
+FONTS_PATH = "C:\\Users\\Brandon\\Documents\\Personal_Projects\\white_paper_art\\fonts" #this part really shouldn't be done in this file
 
 FILE_PATH_TEXT_BOX_WIDTH = 80
 

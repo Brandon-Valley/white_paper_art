@@ -128,6 +128,7 @@ def build_final_image(kwargs):
       
       
     print('making font...')
+    print('FONT PATH REMOVE THIS @@@@!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!:  ', kwargs['font_path'])#!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     font = font_tools.make_font(kwargs['font_path'], kwargs['font_size'], lines)#font_tools.load_font(kwargs['font_path'], kwargs['font_size']) 1111111111111111111111111111  
       
     import time #```````````````````````````````````````````````````````````````````````````````````````````````````````````````````VVVVVVVVV`````````````````
