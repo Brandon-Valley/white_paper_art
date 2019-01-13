@@ -1,0 +1,21 @@
+Ouroboros: A Provably Secure Proof-of-Stake Blockchain Protocol
+Aggelos Kiayias∗ Alexander Russell† Bernardo David‡ Roman Oliynykov§
+August 21, 2017
+Abstract
+We present “Ouroboros”, the first blockchain protocol based on proof of stake with rigorous security guarantees. We establish security properties for the protocol comparable to
+those achieved by the bitcoin blockchain protocol. As the protocol provides a “proof of stake”
+blockchain discipline, it offers qualitative efficiency advantages over blockchains based on proof
+of physical resources (e.g., proof of work). We also present a novel reward mechanism for incentivizing Proof of Stake protocols and we prove that, given this mechanism, honest behavior
+is an approximate Nash equilibrium, thus neutralizing attacks such as selfish mining. We also
+present initial evidence of the practicality of our protocol in real world settings by providing
+experimental results on transaction confirmation and processing.
+1 Introduction
+A primary consideration regarding the operation of blockchain protocols based on proof of work
+(PoW)—such as bitcoin [30]—is the energy required for their execution. At the time of this writing, generating a single block on the bitcoin blockchain requires a number of hashing operations
+exceeding 260, which results in striking energy demands. Indeed, early calculations indicated that
+the energy requirements of the protocol were comparable to that of a small country [32].
+This state of affairs has motivated the investigation of alternative blockchain protocols that
+would obviate the need for proof of work by substituting it with another, more energy efficient,
+mechanism that can provide similar guarantees. It is important to point out that the proof of work
+mechanism of bitcoin facilitates a type of randomized “leader election” process that elects one of
+the miners to issue the next block. Furthermore, provided that all miners follow the protocol, this
