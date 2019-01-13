@@ -2,8 +2,13 @@ import PIL.ImageFont
 from PIL import Image, ImageDraw
 from tkinter import font
 
+from fontTools.ttLib import TTFont
+
 import tools
 import global_constants
+
+
+FONTS_PATH = "C:\\Users\\Brandon\\Documents\\Personal_Projects\\white_paper_art\\fonts"
 
 
 def load_font(font_path = None, size = 40):
@@ -156,6 +161,13 @@ def find_max_font_size(font_path, text_file_path, output_dim_ratio):
 
 
 
+
+def char_in_font(unicode_char):
+    for cmap in FONTS_PATH['cmap'].tables:
+        if cmap.isUnicode():
+            if ord(unicode_char) in cmap.cmap:
+                return True
+    return False
 
 
 

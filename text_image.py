@@ -7,8 +7,7 @@ import tools
 
 
 def text_image(lines, color_cords, default_colors, font):   
-    print('writeing txt file for linse! this is a test REMOVE THIS ACTION in text_image!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!') #!!!!!!!!!!!
-    tools.write_text_file("test_lines.txt", lines)#!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
      
 #     # make the background image based on the combination of font and lines
 #     pt2px = lambda pt: int(round(pt * 96.0 / 72))  # convert points to pixels
@@ -29,20 +28,25 @@ def text_image(lines, color_cords, default_colors, font):
 #     width = int(round(max_line_width * 3 + 0))  # a little oversized , needs to be exactly this # or cuts off text
     
     
+    iletter_dim_list = []#!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    
+    
     img_dims = tools.calc_img_dims(lines, font)
     
     gc.collect()
 
 
-    # to get bigger final images, start looking here, by making both image and image2, you cut the max size of the final image in half!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    print('here 0 ,!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! font size: ', font.size)#`````````````````````````````````````````````````````````````
+    # to get bigger final images, start looking here, by making both image and image2, you cut the max size of the final image in half!
+
+
+#     print('here 0 ,!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! font size: ', font.size)#`````````````````````````````````````````````````````````````
     image = Image.new("RGB", img_dims, default_colors['final_image_background']) # scrap image
-    print('here 1 ,!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! font size: ', font.size)#`````````````````````````````````````````````````````````````
+#     print('here 1 ,!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! font size: ', font.size)#`````````````````````````````````````````````````````````````
     draw = ImageDraw.Draw(image)
-    print('here 2 ,!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! font size: ', font.size)#`````````````````````````````````````````````````````````````
+#     print('here 2 ,!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! font size: ', font.size)#`````````````````````````````````````````````````````````````
     image2 = Image.new("RGB", img_dims, default_colors['background_image']) # final image
-    print('here 3 ,!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! font size: ', font.size)#`````````````````````````````````````````````````````````````
-    
+#     print('here 3 ,!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! font size: ', font.size)#`````````````````````````````````````````````````````````````
+     
     fill = " o "
     x = 0
     w_fill, y = draw.textsize(fill, font)
@@ -51,13 +55,10 @@ def text_image(lines, color_cords, default_colors, font):
     
     line_num = 0
     for line_num in range(len(lines)):
-#         print('here 4 ,!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! font size: ', font.size)#`````````````````````````````````````````````````````````````
         line = lines[line_num]
-#         print(line)#!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         x_draw, x_paste = 0, 0
         
         for letter_num in range(len(line)):
-#             print('here 5 ,!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! font size: ', font.size)#`````````````````````````````````````````````````````````````
             letter = line[letter_num]
             w_full = draw.textsize(fill + letter, font)[0]
             w = w_full - w_fill     # the width of the character on its own
@@ -66,17 +67,21 @@ def text_image(lines, color_cords, default_colors, font):
             cur_char = lines[line_num][letter_num]
             
             for color, cord_list in color_cords.items():
-#                 print('here 6 ,!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! font size: ', font.size)#`````````````````````````````````````````````````````````````
                 if letter_cords in color_cords[color]:
                     char_color = color
                     break
 
-            else:
-                char_color = default_colors['default_text']
+                else: #this was tabbed one to the left forever and nothing bad happened so it probably does nothing
+                    char_color = default_colors['default_text']
     
             draw.text((x_draw, y * line_num), fill + letter, char_color, font)#font = font
         
             iletter = image.crop((x_draw + w_fill, 0, x_draw + w_full, y * len(lines) ))
+            
+            #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~``````````````````````````````````````````````````````
+            iletter_dims = (iletter.width, iletter.height )
+            if iletter_dims not in iletter_dim_list:
+                iletter_dim_list.append(iletter_dims)
             
 #             iletter.show()#`````````````````````````````````````````````````````````````````````````````````````````````````
             
@@ -91,6 +96,9 @@ def text_image(lines, color_cords, default_colors, font):
             x_draw += w_full
             x_paste += w
         line_num += 1
+        
+    print('iletter_dim_list:  ', iletter_dim_list) #```````````````````````````````````````````````````````````````````````````
+        
     return image2
 
 

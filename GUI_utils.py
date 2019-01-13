@@ -19,8 +19,9 @@ from os import listdir
 from os.path import isfile, join
  
 # import fonts
+import font_tools
 
-FONTS_PATH = "C:\\Users\\Brandon\\Documents\\Personal_Projects\\white_paper_art\\fonts"
+
 
 OUTPUT_IMAGE_SUFFIX = '_text_art' #used????????????????????????????????????????????????????????????????????????????????
 
@@ -49,7 +50,7 @@ def get_defalt_file_path(home_dir_path, file_ext_list):
 
 
 def get_font_list():
-    raw_font_filename_list = [f for f in listdir(FONTS_PATH) if isfile(join(FONTS_PATH, f))]
+    raw_font_filename_list = [f for f in listdir(font_tools.FONTS_PATH) if isfile(join(font_tools.FONTS_PATH, f))]
     
     font_list = []
     for raw_filename in raw_font_filename_list:
@@ -62,7 +63,7 @@ def get_font_list():
     
     
 def build_font_path(font_name):
-    return FONTS_PATH + '\\' + font_name + '.ttf'
+    return font_tools.FONTS_PATH + '\\' + font_name + '.ttf'
     
 
 

@@ -1,3 +1,27 @@
+• Common Prefix (CP); with parameters k ∈ N. The chains C1, C2 possessed by two
+honest parties at the onset of the slots sl1 < sl2 are such that C
+dk
+1  C2, where C
+dk
+1 denotes
+the chain obtained by removing the last k blocks from C1, and  denotes the prefix relation.
+• Chain Quality (CQ); with parameters µ ∈ (0, 1] and ` ∈ N. Consider any portion of
+length at least ` of the chain possessed by an honest party at the onset of a round; the ratio of
+blocks originating from the adversary is at most 1−µ. We call µ the chain quality coefficient.
+• Chain Growth (CG); with parameters τ ∈ (0, 1], s ∈ N. Consider the chains C1, C2
+possessed by two honest parties at the onset of two slots sl1, sl2 with sl2 at least s slots ahead
+of sl1. Then it holds that len(C2) − len(C1) ≥ τ · s. We call τ the speed coefficien
+t the model introduced by [24] for analysing security of blockchain
+protocols enhanced with an ideal functionality F. We denote by VIEWP,F
+Π,A,Z
+(λ) the view of party
+P after the execution of protocol Π with adversary A, environment Z, security parameter κ and
+access to ideal functionality F. Similarly we denote by EXECP,F
+Π,A,Z
+(λ) the output of Z.
+We note that multiple different “functionalities” will be encompassed by F. Contrary to [24],
+our analysis is in the “standard model”, and without a random oracle functionality. The first interfaces we incorporate in the ideal functionality used in the protocol are the “diffuse” and “key and
+transaction” functionality, denoted FD+KT a
 delegation mechanism can enable stakeholders to delegate their “voting rights”, i.e., the right
 of participating in the committees running the leader selection protocol in each epoch. As in
 liquid democracy, (a.k.a. delegative democracy [23]), stakeholders have the ability to revoke their

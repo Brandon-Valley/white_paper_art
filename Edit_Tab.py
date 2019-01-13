@@ -335,13 +335,13 @@ class Edit_Tab(Tab.Tab):
         self.output_img_file_path_text_box.delete(0, "end")
         
         if  self.quality_selected.get() == 'low':
-            self.max_font_size_sel.set(0)
-            self.max_font_size_btn_sel()
+#             self.max_font_size_sel.set(0)
+#             self.max_font_size_btn_sel()
             self.output_img_file_path_text_box.configure( state = 'disabled' )
             self.output_img_file_path_browse_btn.configure( state = 'disabled' )
         elif self.quality_selected.get() == 'high':
-            self.max_font_size_sel.set(1)
-            self.max_font_size_btn_sel()
+#             self.max_font_size_sel.set(1)
+#             self.max_font_size_btn_sel()
             self.update_output_image_file_text_box()
 
     def quality______widgets_setup(self):
