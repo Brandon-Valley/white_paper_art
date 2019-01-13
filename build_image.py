@@ -120,7 +120,7 @@ def build_final_image(kwargs):
     
     print('building unknown char list, MAKE SEPERATE BUTTON FO THIS STUFF!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! ') #`````````````````````````````````````
     unknown_char_list = font_tools.build_unknown_char_list(lines, kwargs['font_path'])
-    print('  unknown char list:  ', unknown_char_list, len(unknown_char_list))
+    print('  unknown char list:  ', len(unknown_char_list))
     
      
     print('building color_cords from input image...')

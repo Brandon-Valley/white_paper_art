@@ -1,3 +1,12 @@
+•τ∈
+s.3
+C
+dk
+1 
+t ∨Bad1/2
+s is 1−
+2
+; a 
 • Common Prefix (CP); with parameters k ∈ N. The chains C1, C2 possessed by two
 honest parties at the onset of the slots sl1 < sl2 are such that C
 dk
@@ -7,6 +16,7 @@ dk
 the chain obtained by removing the last k blocks from C1, and  denotes the prefix relation.
 • Chain Quality (CQ); with parameters µ ∈ (0, 1] and ` ∈ N. Consider any portion of
 length at least ` of the chain possessed by an honest party at the onset of a round; the ratio of
+• τ ∈ 
 blocks originating from the adversary is at most 1−µ. We call µ the chain quality coefficient.
 • Chain Growth (CG); with parameters τ ∈ (0, 1], s ∈ N. Consider the chains C1, C2
 possessed by two honest parties at the onset of two slots sl1, sl2 with sl2 at least s slots ahead
