@@ -162,14 +162,36 @@ def find_max_font_size(font_path, text_file_path, output_dim_ratio):
 
 
 
-def char_in_font(unicode_char):
-    for cmap in FONTS_PATH['cmap'].tables:
+def char_in_font(unicode_char, font):
+    
+    for cmap in font['cmap'].tables:
         if cmap.isUnicode():
             if ord(unicode_char) in cmap.cmap:
                 return True
+            
+    if unicode_char == '\u2208': #end of txt file
+        return True
+    
     return False
 
 
+def build_unknown_char_list(lines, font_path):
+    unknown_char_list = []
+    
+    font = TTFont(font_path)
+    
+    
+#     line_num = 1#```````````````````````````````````````````````````````````````````````````````````````````````
+    for line in lines:
+#         print('checking line: ', line_num)
+#         line_num+=1
+        
+        for char in line:
+            if (char_in_font(char, font) == False) and (char not in unknown_char_list):
+                print('unknown found')#````````````````````````````````````````````````````````````````````````````````````````
+                unknown_char_list.append(char)
+    return unknown_char_list
+                
 
 
 

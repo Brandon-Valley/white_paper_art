@@ -116,7 +116,12 @@ def build_final_image(kwargs):
     #make list of lines to be output in final image
     print('creating text lines...')
     lines = tools.make_correct_lines(ideal_dimentions['num_lines'], ideal_dimentions['line_length'], word_list)
-    # print("number of lines:", len(lines))
+#     print("number of lines:", len(lines))
+    
+    print('building unknown char list, MAKE SEPERATE BUTTON FO THIS STUFF!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! ') #`````````````````````````````````````
+    unknown_char_list = font_tools.build_unknown_char_list(lines, kwargs['font_path'])
+    print('  unknown char list:  ', unknown_char_list, len(unknown_char_list))
+    
      
     print('building color_cords from input image...')
     color_cord_dict = color_cords.get_color_cords(kwargs['input_image_file_path'], kwargs['image_size'], font_aspect_ratio, input_image_background_color)
@@ -128,7 +133,6 @@ def build_final_image(kwargs):
       
       
     print('making font...')
-    print('FONT PATH REMOVE THIS @@@@!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!:  ', kwargs['font_path'])#!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     font = font_tools.make_font(kwargs['font_path'], kwargs['font_size'], lines)#font_tools.load_font(kwargs['font_path'], kwargs['font_size']) 1111111111111111111111111111  
       
     import time #```````````````````````````````````````````````````````````````````````````````````````````````````````````````````VVVVVVVVV`````````````````
