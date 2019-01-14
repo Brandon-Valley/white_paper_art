@@ -37,27 +37,29 @@ def char_2_unicode(char):
 
 
 def char_ex_insert(char_unicode):
-    return string('{' + char_unicode + '}')
+    return str('{' + char_unicode + '}')
 
 
 
-def build_unknown_char_example(char_num, input_lines_t, font):
-#     example = ''
-#     
-#     example = input_lines_t[line_num][0:char_num]
-#     start_line_num = line_num
-#     start_char_num = char_num
-#     start_char_spread = 0
-#     
-#     while start_char_spread < UNKNOWN_CHAR_EXAMPLE_SPREAD and line_num > 0:
-#         while start_char_num > 0:
-#             start_char_num =- 1
-#             start_char_spread += 1
-    pass
+def build_unknown_char_example(char_num, input_str, font):
+    start_char_num = 0
+    end_char_num   = -1
+     
+    if char_num > UNKNOWN_CHAR_EXAMPLE_SPREAD:
+        start_char_num = char_num - UNKNOWN_CHAR_EXAMPLE_SPREAD
+         
+    if char_num + UNKNOWN_CHAR_EXAMPLE_SPREAD < len(input_str):
+        end_char_num = char_num + UNKNOWN_CHAR_EXAMPLE_SPREAD
+         
+    example = ''    
+    for char in input_str[start_char_num : end_char_num]:
+        if char_in_font(char, font):
+            example += char
+        else:
+            unknown_char_unicode = char_2_unicode(char)
+            example += char_ex_insert(unknown_char_unicode)
+    return example        
 
-
-    
-    
 
 
 #builds dict list used to make unknown char csv
@@ -66,18 +68,20 @@ def build_unknown_char_dl(input_lines_t, font_path):
     
     font = TTFont(font_path)
     input_str = tools.format_data(input_lines_t)
-    print('here')
+    
+#     print(len(input_str))#```````````````````````````````````````````````````````````````````````````````````````````
+#     print(len(input_lines_t[0]))
     
     #add to unknown_char_dl when find a new char that is unknown to the font
-    for line_num, line in enumerate( input_lines_t ):
-        for char_num, char in line:
-            if char_in_font(char, font) == False and new_unkown_char(char_2_unicode(char), unknown_char_dl) == True:
-                    
-                    unknown_char_dl.append({'correct_char'         : None,
-                                            'unknown_char_unicode' : char_2_unicode(char),
-                                            '#_occurrences'        : 1,
-                                            'example'              : build_unknown_char_example(char_2_unicode(char_num, input_lines_t, font))})
-                    print(unknown_char_dl)
+
+    for char_num, char in enumerate(input_str):
+        if char_in_font(char, font) == False and new_unkown_char(char_2_unicode(char), unknown_char_dl) == True:
+                
+                unknown_char_dl.append({'correct_char'         : None,
+                                        'unknown_char_unicode' : char_2_unicode(char),
+                                        '#_occurrences'        : 1,
+                                        'example'              : build_unknown_char_example(char_num, input_str, font)})
+#                 print(unknown_char_dl)
                     
     return unknown_char_dl
                     

@@ -1,32 +1,17 @@
-correct_char,#_occurrences,unknown_char_unicode,example
-,7,0x2208,0
-,3,0x16,0
-,1,0x2228,5
-,9,0x2217,1
-,36,0x2208,162
-,3,0x16,191
-,1,0x2228,292
-,27,0xf,297
-,3,0x1c,343
-,2,0x222a,533
-,7,0x223c,668
-,1,0x10,759
-,1,0x11,761
-,1,0x2203,806
-,1,0x21d2,1096
-,14,0x2217,1
-,51,0x2208,162
-,3,0x16,191
-,1,0x2228,292
-,41,0xf,297
-,3,0x1c,343
-,5,0x222a,533
-,7,0x223c,668
-,1,0x10,759
-,1,0x11,761
-,1,0x2203,806
-,1,0x21d2,1096
-,1,0x2282,1243
-,67,0x9,1320
-,1,0x2295,1327
-,1,0x22a5,1328
+#_occurrences,unknown_char_unicode,correct_char,example
+14,0x2217,,ocol Aggelos Kiayias{0x2217} Alexander Russell†
+51,0x2208,,"xed by an integer r {0x2208} {1, 2, . . .}, and"
+3,0x16,,"re such that C dk 1 {0x16} C2, where C dk 1 d"
+1,0x2228,,in fact argue that Q{0x2228}Bad1/2 holds with h
+41,0xf,,"of the ledger, (ii) {0xf} is the advantage i"
+3,0x1c,,"d of R slots, D = R {0x1c} L. The central ide"
+5,0x222a,,ongest chain from C {0x222a} {C}. Ties are brok
+7,0x223c,,"th, and height; the {0x223c} relation). A path "
+1,0x10,,"= µ(F) = max t16{0x223c}t2 {0x10} min{reach(t1),reac"
+1,0x11,,"each(t1),reach(t2)} {0x11} . We remark that t"
+1,0x2203,," for each k > 0, Pr[{0x2203}t, Yt = k] = α k , "
+1,0x21d2,,"pecifically, h < β ={0x21d2} d(h) ≤ min(length("
+1,0x2282,,sition 4.22. Let A0 {0x2282} A denote the set o
+67,0x9,,rcumvent Bad1/2. 5.2{0x9}Simulating a Truste
+1,0x2295,,"mpute output u = u1 {0x2295} u2. Note, however,"
+1,0x22a5,,e shares are set to {0x22a5} and considered cor

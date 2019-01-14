@@ -83,15 +83,23 @@ def make_lines(line_length, word_list):
 def format_data(data):
     formatted_data = ''
     
-    try:
-        for data_line in data:
+    for data_line in data:
+        if len(data_line) > 0:
             if data_line[0] == ' ' or formatted_data == '':
                 formatted_data += data_line
             else:
                 formatted_data += ' ' + data_line
-        return formatted_data
-    except:
-        raise Exception('ERROR  You probably have some extra lines of spaces in your data text file')
+    return formatted_data
+    
+#     try:
+#         for data_line in data:
+#             if data_line[0] == ' ' or formatted_data == '':
+#                 formatted_data += data_line
+#             else:
+#                 formatted_data += ' ' + data_line
+#         return formatted_data
+#     except:
+#         raise Exception('ERROR  You probably have some extra lines of spaces in your data text file')
 
 
 def apply_offset(og_color_cords, offset_d):

@@ -188,7 +188,7 @@ def build_unknown_char_list(lines, font_path):
         
         for char in line:
             if (char_in_font(char, font) == False) and (char not in unknown_char_list):
-                print('unknown found')#````````````````````````````````````````````````````````````````````````````````````````
+#                 print('unknown found')#````````````````````````````````````````````````````````````````````````````````````````
                 unknown_char_list.append(char)
     return unknown_char_list
                 
