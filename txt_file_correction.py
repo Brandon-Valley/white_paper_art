@@ -81,7 +81,6 @@ def build_unknown_char_dl(input_lines_t, font_path):
                                         'unknown_char_unicode' : char_2_unicode(char),
                                         '#_occurrences'        : 1,
                                         'example'              : build_unknown_char_example(char_num, input_str, font)})
-#                 print(unknown_char_dl)
                     
     return unknown_char_dl
                     
