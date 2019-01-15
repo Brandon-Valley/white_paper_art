@@ -87,7 +87,7 @@ def build_unknown_char_dl(input_lines_t, font_path):
                 
                     
 
-def build_unknown_char_csv(input_txt_file_path, font_path):
+def build_unknown_chars_csv(input_txt_file_path, font_path):
     input_lines_t = tools.read_text_file(input_txt_file_path)
     
     unknown_char_dl = build_unknown_char_dl(input_lines_t, font_path)
@@ -109,7 +109,7 @@ etest_txt_file_path = "C:\\Users\\Brandon\\Documents\\Personal_Projects\\white_p
     
     
     
-build_unknown_char_csv(test_txt_file_path, test_font_path)
+build_unknown_chars_csv(test_txt_file_path, test_font_path)
 
 print('done!')
 
