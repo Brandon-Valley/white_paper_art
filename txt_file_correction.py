@@ -92,7 +92,8 @@ def build_unknown_char_csv(input_txt_file_path, font_path):
 #     print(input_lines_t)#```````````````````````````````````````````````````````````````````````````````````````````````````````
     unknown_char_dl = build_unknown_char_dl(input_lines_t, font_path)
 #     print('len dl: ', len(unknown_char_dl))#````````````````````````````````````````````````````````````````````````````
-    logger.logList(unknown_char_dl, UNKNOWN_CHAR_CSV_FILENAME, WANT_UNKOWN_CHAR_CSV_BACKUP)
+    header_order_list = ['correct_char', 'unknown_char_unicode', '#_occurrences', 'example']
+    logger.logList(unknown_char_dl, UNKNOWN_CHAR_CSV_FILENAME, WANT_UNKOWN_CHAR_CSV_BACKUP, header_order_list, 'overwrite')
     
     
 

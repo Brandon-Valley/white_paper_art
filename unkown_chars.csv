@@ -1,33 +1,17 @@
-correct_char,example,#_occurrences,unknown_char_unicode
-,ocol Aggelos Kiayias{0x2217} Alexander Russell†,14,0x2217
-,"xed by an integer r {0x2208} {1, 2, . . .}, and",51,0x2208
-,"re such that C dk 1 {0x16} C2, where C dk 1 d",3,0x16
-,in fact argue that Q{0x2228}Bad1/2 holds with h,1,0x2228
-,"of the ledger, (ii) {0xf} is the advantage i",41,0xf
-,"d of R slots, D = R {0x1c} L. The central ide",3,0x1c
-,ongest chain from C {0x222a} {C}. Ties are brok,5,0x222a
-,"th, and height; the {0x223c} relation). A path ",7,0x223c
-,"= µ(F) = max t16{0x223c}t2 {0x10} min{reach(t1),reac",1,0x10
-,"each(t1),reach(t2)} {0x11} . We remark that t",1,0x11
-," for each k > 0, Pr[{0x2203}t, Yt = k] = α k , ",1,0x2203
-,"pecifically, h < β ={0x21d2} d(h) ≤ min(length(",1,0x21d2
-,sition 4.22. Let A0 {0x2282} A denote the set o,1,0x2282
-,rcumvent Bad1/2. 5.2{0x9}Simulating a Truste,67,0x9
-,"mpute output u = u1 {0x2295} u2. Note, however,",1,0x2295
-,e shares are set to {0x22a5} and considered cor,1,0x22a5
-,ocol Aggelos Kiayias{0x2217} Alexander Russell†,14,0x2217
-,"xed by an integer r {0x2208} {1, 2, . . .}, and",51,0x2208
-,"re such that C dk 1 {0x16} C2, where C dk 1 d",3,0x16
-,in fact argue that Q{0x2228}Bad1/2 holds with h,1,0x2228
-,"of the ledger, (ii) {0xf} is the advantage i",41,0xf
-,"d of R slots, D = R {0x1c} L. The central ide",3,0x1c
-,ongest chain from C {0x222a} {C}. Ties are brok,5,0x222a
-,"th, and height; the {0x223c} relation). A path ",7,0x223c
-,"= µ(F) = max t16{0x223c}t2 {0x10} min{reach(t1),reac",1,0x10
-,"each(t1),reach(t2)} {0x11} . We remark that t",1,0x11
-," for each k > 0, Pr[{0x2203}t, Yt = k] = α k , ",1,0x2203
-,"pecifically, h < β ={0x21d2} d(h) ≤ min(length(",1,0x21d2
-,sition 4.22. Let A0 {0x2282} A denote the set o,1,0x2282
-,rcumvent Bad1/2. 5.2{0x9}Simulating a Truste,67,0x9
-,"mpute output u = u1 {0x2295} u2. Note, however,",1,0x2295
-,e shares are set to {0x22a5} and considered cor,1,0x22a5
+correct_char,unknown_char_unicode,#_occurrences,example
+,0x2217,14,ocol Aggelos Kiayias{0x2217} Alexander Russell†
+,0x2208,51,"xed by an integer r {0x2208} {1, 2, . . .}, and"
+,0x16,3,"re such that C dk 1 {0x16} C2, where C dk 1 d"
+,0x2228,1,in fact argue that Q{0x2228}Bad1/2 holds with h
+,0xf,41,"of the ledger, (ii) {0xf} is the advantage i"
+,0x1c,3,"d of R slots, D = R {0x1c} L. The central ide"
+,0x222a,5,ongest chain from C {0x222a} {C}. Ties are brok
+,0x223c,7,"th, and height; the {0x223c} relation). A path "
+,0x10,1,"= µ(F) = max t16{0x223c}t2 {0x10} min{reach(t1),reac"
+,0x11,1,"each(t1),reach(t2)} {0x11} . We remark that t"
+,0x2203,1," for each k > 0, Pr[{0x2203}t, Yt = k] = α k , "
+,0x21d2,1,"pecifically, h < β ={0x21d2} d(h) ≤ min(length("
+,0x2282,1,sition 4.22. Let A0 {0x2282} A denote the set o
+,0x9,67,rcumvent Bad1/2. 5.2{0x9}Simulating a Truste
+,0x2295,1,"mpute output u = u1 {0x2295} u2. Note, however,"
+,0x22a5,1,e shares are set to {0x22a5} and considered cor
