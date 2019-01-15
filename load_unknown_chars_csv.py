@@ -23,14 +23,6 @@ def find_new_corrected_chars(corrected_chars_dl, unknown_chars_dl):
             unknown_char_d.pop('#_occurrences')
             new_corrected_chars_dl.append(unknown_char_d)
     return new_corrected_chars_dl
-
-
-# def add_corrected_chars(corrected_chars_dl, unknown_chars_dl):
-#     for unknown_char_d in unknown_chars_dl:
-#         if char_already_corrected(unknown_char_d['unknown_char_unicode'], corrected_chars_dl) == False:
-#             unknown_char_d.pop('#_occurrences')
-#             corrected_chars_dl.append(unknown_char_d)
-#     return corrected_chars_dl
     
 
 
@@ -54,9 +46,7 @@ def load_unknown_chars_csv(unknown_chars_csv_path, corrected_chars_csv_path):
     else:
         og_corrected_chars_dl = []
         
-#     final_corrected_chars_dl = add_corrected_chars(og_corrected_chars_dl, unknown_chars_dl) #```````````````````````````````````````````
     new_corrected_chars_dl = find_new_corrected_chars(og_corrected_chars_dl, unknown_chars_dl)
-#     print(new_corrected_chars_dl)#```````````````````````````````````````````````````````````````````````````````````````````````````
     
     header_order_list = ['correct_char', 'unknown_char_unicode', 'example']
     
