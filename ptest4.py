@@ -7,5 +7,7 @@ print(type(a) is list)
 print('a' in a.keys())
 
 
-x = logger.readCSV('ononoln.csv')
-print(x)
+s = 'hshdjenrfhrn'
+s[2] = 'o'
+print(s)
+
