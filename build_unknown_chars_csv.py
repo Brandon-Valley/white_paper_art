@@ -27,8 +27,7 @@ def new_unkown_char(unknown_char_unicode, unknown_char_dl):
     return True
 
 
-def char_2_unicode(char):
-    return hex(ord(char))
+
 
 
 def char_ex_insert(char_unicode):
@@ -51,7 +50,7 @@ def build_unknown_char_example(char_num, input_str, font):
         if tools.char_in_font(char, font):
             example += char
         else:
-            unknown_char_unicode = char_2_unicode(char)
+            unknown_char_unicode = tools.char_2_unicode(char)
             example += char_ex_insert(unknown_char_unicode)
     return example        
 
@@ -70,10 +69,10 @@ def build_unknown_char_dl(input_lines_t, font_path):
     #add to unknown_char_dl when find a new char that is unknown to the font
 
     for char_num, char in enumerate(input_str):
-        if tools.char_in_font(char, font) == False and new_unkown_char(char_2_unicode(char), unknown_char_dl) == True:
+        if tools.char_in_font(char, font) == False and new_unkown_char(tools.char_2_unicode(char), unknown_char_dl) == True:
                 
                 unknown_char_dl.append({'correct_char'         : None,
-                                        'unknown_char_unicode' : char_2_unicode(char),
+                                        'unknown_char_unicode' : tools.char_2_unicode(char),
                                         '#_occurrences'        : 1,
                                         'example'              : build_unknown_char_example(char_num, input_str, font)})
                     

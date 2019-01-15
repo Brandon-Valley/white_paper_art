@@ -141,6 +141,9 @@ def char_in_font(unicode_char, font):
     return False
 
 
+def char_2_unicode(char):
+    return hex(ord(char))
+
 
 def read_text_file(file_path):
     with open(file_path, 'r', encoding='utf-8') as text_file:  # can throw FileNotFoundError

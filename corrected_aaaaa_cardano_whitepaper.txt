@@ -1,5 +1,5 @@
 Ouroboros: A Provably Secure Proof-of-Stake Blockchain Protocol
-Aggelos Kiayias Alexander Russell† Bernardo David‡ Roman Oliynykov§
+Aggelos KiayiasQ Alexander Russell† Bernardo David‡ Roman Oliynykov§
 August 21, 2017
 Abstract
 We present “Ouroboros”, the first blockchain protocol based on proof of stake with rigorous security guarantees. We establish security properties for the protocol comparable to
@@ -160,7 +160,7 @@ Time, slots, and synchrony. We consider a setting where time is divided into dis
 called slots. A ledger, described in more detail below, associates with each time slot (at most) one
 ledger block. Players are equipped with (roughly synchronized) clocks that indicate the current
 slot. This will permit them to carry out a distributed protocol intending to collectively assign a
-block to this current slot. In general, each slot slr is indexed by an integer r  {1, 2, . . .}, and we
+block to this current slot. In general, each slot slr is indexed by an integer r w {1, 2, . . .}, and we
 assume that the real time window that corresponds to each slot has the following properties.
 • The current slot is determined by a publicly-known and monotonically increasing function of
 current time.
@@ -186,17 +186,17 @@ all nodes, if queried and responding honestly, will report the transaction as st
 In [26, 35] it was shown that persistence and liveness can be derived from the following three
 elementary properties provided that protocol Π derives the ledger from a data structure in the form
 of a blockchain.
-• Common Prefix (CP); with parameters k  N. The chains C1, C2 possessed by two
+• Common Prefix (CP); with parameters k w N. The chains C1, C2 possessed by two
 honest parties at the onset of the slots sl1 < sl2 are such that C
 dk
-1  C2, where C
+1 e C2, where C
 dk
 1 denotes
-the chain obtained by removing the last k blocks from C1, and  denotes the prefix relation.
-• Chain Quality (CQ); with parameters µ  (0, 1] and `  N. Consider any portion of
+the chain obtained by removing the last k blocks from C1, and e denotes the prefix relation.
+• Chain Quality (CQ); with parameters µ w (0, 1] and ` w N. Consider any portion of
 length at least ` of the chain possessed by an honest party at the onset of a round; the ratio of
 blocks originating from the adversary is at most 1−µ. We call µ the chain quality coefficient.
-• Chain Growth (CG); with parameters τ  (0, 1], s  N. Consider the chains C1, C2
+• Chain Growth (CG); with parameters τ w (0, 1], s w N. Consider the chains C1, C2
 possessed by two honest parties at the onset of two slots sl1, sl2 with sl2 at least s slots ahead
 of sl1. Then it holds that len(C2) − len(C1) ≥ τ · s. We call τ the speed coefficient.
 Some remarks are in place. Regarding common prefix, we capture a strong notion of common
@@ -269,14 +269,14 @@ to argue security. With foresight, the restrictions we will impose on the enviro
 Restrictions imposed on the environment. The environment, which is responsible for activating the honest parties in each round, will be subject to the following constraints regarding the
 activation of the honest parties running the protocol.
 • In each slot there will be at least one honest activated party.
-• There will be a parameter k  Z that will signify the maximum number of slots that an honest
+• There will be a parameter k w Z that will signify the maximum number of slots that an honest
 shareholder can be offline. In case an honest stakeholder is spawned after the beginning of
 the protocol via (Create, U, C) its initialization chain C provided by the environment should
 match an honest parties’ chain which was active in the previous slot.
 • In each slot slr, and for each active stakeholder Uj there will be a set Sj (r) of public-keys
 and stake pairs of the form (vki
-, si)  {0, 1}
- × N, for j = 1, . . . , nr where nr is the number
+, si) w {0, 1}
+Q × N, for j = 1, . . . , nr where nr is the number
 of users introduced up to that slot that will represent who are the active participants in the
 view of Uj . Public-keys will be marked as “corrupted” if the corresponding stakeholder has
 been corrupted. We will say the adversary is restricted to less than 50% relative stake if it
@@ -290,12 +290,12 @@ We note that the offline restriction stated above is very conservative and our p
 tolerate much longer offline times depending on the way the course of the execution proceeds;
 nevertheless, for the sake of simplicity, we use the above restriction. Finally, we note that in all our
 proofs, whenever we say that a property Q holds with high probability over all executions, we will
-in fact argue that QBad1/2 holds with high probability over all executions. This captures the fact
+in fact argue that QrBad1/2 holds with high probability over all executions. This captures the fact
 that we exclude environments and adversaries that trigger Bad1/2 with non-negligible probability.
 3 Our Protocol: Overview
 We first provide a general overview of our protocol design approach. The protocol’s specifics depend
 on a number of parameters as follows: (i) k is the number of blocks a certain message should have
-“on top of it” in order to become part of the immutable history of the ledger, (ii)  is the advantage
+“on top of it” in order to become part of the immutable history of the ledger, (ii) t is the advantage
 in terms of stake of the honest stakeholders against the adversarial ones; (iii) D is the corruption
 delay that is imposed on the adversary, i.e., an honest stakeholder will be corrupted after D slots
 when a corrupt message is delivered by the adversary during an execution; (iv) L is the lifetime of
@@ -314,11 +314,11 @@ into the genesis block that includes the public-keys of the stakeholders, {(vki
 , si)}
 n
 i=1. Based on
-our restrictions to the environment, honest majority with advantage  is assumed among those
+our restrictions to the environment, honest majority with advantage t is assumed among those
 initial stakeholders. Specifically, the environment initially will allow the corruption of a number
-of stakeholders whose relative stake represents 1−
+of stakeholders whose relative stake represents 1−t
 2
-for some  > 0. The environment allows party
+for some t > 0. The environment allows party
 corruption by providing tokens of the form (Corrupt, U) to the adversary; note that due to the
 corruption delay imposed in this first stage any further corruptions will be against parties that
 have no stake initially and hence the corruption model is akin to “static corruption.” F
@@ -328,9 +328,9 @@ subsequently sample ρ which will seed a “weighted by stake” stakeholder sam
 lead to the election of a subset of m keys vki1
 , . . . , vkim to form the committee that will possess
 honest majority with overwhelming probability in m, (this uses the fact that the relative stake
-possessed by malicious parties is 1−
+possessed by malicious parties is 1−t
 2
-; a linear dependency of m to 
+; a linear dependency of m to t
 −2 will be imposed at this
 stage). In more detail, the committee will be selected implicitly by appointing a stakeholder with
 probability proportional to its stake to each one of the L slots. Subsequently, stakeholders will
@@ -341,7 +341,7 @@ that a fork can be maintained over a sequence of n slots drops exponentially wit
 n, cf.
 Theorem 4.13 against general adversaries. An even more favorable analysis can be made against
 covert adversaries, i.e., adversaries that prefer to remain “under the radar” cf. Theorem 4.23.
-Stage 2: Dynamic state with a beacon, epoch period of R slots, D = R  L. The central
+Stage 2: Dynamic state with a beacon, epoch period of R slots, D = R y L. The central
 idea for the extension of the lifetime of the above protocol is to consider the sequential composition
 of several invocations of it. We detail a way to do that, under the assumption that a trusted beacon
 emits a uniformly random string in regular intervals. More specifically, the beacon, during slots
@@ -365,19 +365,19 @@ and supply its own (adversarially created) public-key instead. As before, the en
 request transactions between accounts from stakeholders and it can also generate transactions in
 collaboration with the adversary on behalf of the corrupted accounts. Recall that our assumption
 is that at any slot, in the view of any honest player, the stakeholder distribution satisfies honest
-majority with advantage  (note that different honest players might perceive a different stakeholder
+majority with advantage t (note that different honest players might perceive a different stakeholder
 distribution in a certain slot). Furthermore, the stake can shift by at most σ statistical distance
 over a certain number of slots. The statistical distance here will be measured considering the underlying distribution to be the weighted-by-stake sampler and how it changes over the specified
 time interval. The security proof can be seen as an induction in the number of epochs L/R with
 the base case supplied by the proof of the static stake protocol. In the end we will argue that in this
-setting, a 1−
+setting, a 1−t
 2 − σ bound in adversarial stake is sufficient for security of a single draw (and observe
 that the size of committee, m, now should be selected to overcome also an additive term of size
 ln(L/R) given that the lifetime of the systems includes such a number of successive epochs). The
 corruption delay remains at D = R which can be selected arbitrarily smaller than L, thus enabling
 the adversary to perform adaptive corruptions as long as this is not instantaneous.
 Stage 3: Dynamic state without a beacon, epoch period of R slots, R = Θ(k) and delay
-D  (R, 2R)  L. In the third stage, we remove the dependency to the beacon, by introducing
+D w (R, 2R) y L. In the third stage, we remove the dependency to the beacon, by introducing
 a secure multiparty protocol with “guaranteed output delivery” that simulates it. In this way, we
 can obtain the long-livedness of the protocol as described in the stage 2 design but only under
 the assumption of the stage 1 design, i.e., the mere availability of an initial random string and
@@ -437,14 +437,14 @@ Definition 4.1 (Genesis Block). The genesis block B0 contains the list of stakeh
 by their public-keys, their respective stakes (vk1, s1), . . . ,(vkn, sn) and auxiliary information ρ.
 With foresight we note that the auxiliary information ρ will be used to seed the slot leader
 election process.
-Definition 4.2 (State). A state is a string st  {0, 1}
+Definition 4.2 (State). A state is a string st w {0, 1}
 λ
 .
-Definition 4.3 (Block). A block B generated at a slot sli  {sl1, . . . , slR} contains the current
-state st  {0, 1}
+Definition 4.3 (Block). A block B generated at a slot sli w {sl1, . . . , slR} contains the current
+state st w {0, 1}
 λ
-, data d  {0, 1}
-
+, data d w {0, 1}
+Q
 , the slot number sli and a signature σ = Signski
 (st, d, sli)
 computed under ski corresponding to the stakeholder Ui generating the block.
@@ -458,14 +458,14 @@ dk
 the chain
 resulting from removal of the k rightmost blocks of C. If k ≥ len(C) we define C
 dk = ε. We let
-C1  C2 indicate that the chain C1 is a prefix of the chain C2.
+C1 e C2 indicate that the chain C1 is a prefix of the chain C2.
 Definition 4.5 (Epoch). An epoch is a set of R adjacent slots S = {sl1, . . . , slR}.
 (The value R is a parameter of the protocol we analyze in this section.)
 Definition 4.6 (Adversarial Stake Ratio). Let UA be the set of stakeholders controlled by an
 adversary A. Then the adversarial stake ratio is defined as
 α =
 P
-jUA
+jwUA
 sj
 Pn
 i=1 si
@@ -483,8 +483,8 @@ LS , defined in Figure 1. This functionality is parameterized by the list
 {(vk1, s1), . . . ,(vkn, sn)} assigning to each stakeholder its respective stake, a distribution D that
 provides auxiliary information ρ and a leader selection function F defined below.
 Definition 4.7 (Leader Selection Process). A leader selection process with respect to stakeholder
-distribution S = {(vk1, s1), . . . ,(vkn, sn)}, (D, F) is a pair consisting of a distribution and a deterministic function such that, when ρ ← D it holds that for all slj  {sl1, . . . , slR}, F(S, ρ, slj )
-outputs Ui  {U1, . . . , Un} with probability
+distribution S = {(vk1, s1), . . . ,(vkn, sn)}, (D, F) is a pair consisting of a distribution and a deterministic function such that, when ρ ← D it holds that for all slj w {sl1, . . . , slR}, F(S, ρ, slj )
+outputs Ui w {U1, . . . , Un} with probability
 pi =
 si
 Pn
@@ -531,7 +531,7 @@ The protocol relies on a maxvalidS(C, C) function that chooses a chain given the
 C and a set of valid chains C that are available in the network. In the static case we analyze the
 simple “longest chain” rule. (In the dynamic case the rule is parameterized by a common chain
 length; see Section 5.)
-Function maxvalid(C, C): Returns the longest chain from C  {C}. Ties are broken in
+Function maxvalid(C, C): Returns the longest chain from C u {C}. Ties are broken in
 favor of C, if it has maximum length, or arbitrarily otherwise.
 4.2 Security Analysis of an Ideal Protocol
 As a first step of the security analysis of πSPoS, we will introduce an idealized protocol πiSPoS and
@@ -595,12 +595,12 @@ a particular window of slots of length n—have been assigned to adversarial sta
 strings have this interpretation we refer to them as characteristic strings.
 Definition 4.9 (Characteristic String). Fix an execution with genesis block B0, adversary A, and
 environment Z. Let S = {sli+1, . . . , sli+n} denote a sequence of slots of length |S| = n. The
-characteristic string w  {0, 1}
+characteristic string w w {0, 1}
 n of S is defined so that wk = 1 if and only if the adversary controls
-the slot leader of slot sli+k. For such a characteristic string w  {0, 1}
- we say that the index i is
+the slot leader of slot sli+k. For such a characteristic string w w {0, 1}
+Q we say that the index i is
 adversarial if wi = 1 and honest otherwise.
-We start with some intuition on our approach to analyze the protocol. Let w  {0, 1}
+We start with some intuition on our approach to analyze the protocol. Let w w {0, 1}
 n be a
 characteristic string for a sequence of slots S. Consider two observers that (i.) go offline immediately
 prior to the commencement of S, (ii.) have the same view C0 of the current chain prior to the
@@ -620,8 +620,8 @@ that strings that permit such “forkings” are quite rare—indeed, we show th
 2
 −Ω(√
 n)
-so long as the fraction of adversarial slots is 1/2 − .
-To reason about such “forkings” of a characteristic string w  {0, 1}
+so long as the fraction of adversarial slots is 1/2 − t.
+To reason about such “forkings” of a characteristic string w w {0, 1}
 n
 , we define below a formal
 notion of “fork” that captures the relationship between the chains broadcast by honest slot leaders
@@ -646,16 +646,16 @@ chains.
 Forks and forkable strings. We define, below, the basic combinatorial structures we use to
 reason about the possible views observed by honest players during a protocol execution with this
 characteristic string.
-Definition 4.10 (Fork). Let w  {0, 1}
+Definition 4.10 (Fork). Let w w {0, 1}
 n and let H = {i | wi = 0} denote the set of honest indices.
 A fork for the string w is a directed, rooted tree F = (V, E) with a labeling ` : V → {0, 1, . . . , n} so
 that
 • each edge of F is directed away from the root;
-• the root r  V is given the label `(r) = 0;
+• the root r w V is given the label `(r) = 0;
 • the labels along any directed path in the tree are strictly increasing;
-• each honest index i  H is the label of exactly one vertex of F;
+• each honest index i w H is the label of exactly one vertex of F;
 • the function d : H → {1, . . . , n}, defined so that d(i) is the depth in F of the unique vertex v
-for which `(v) = i, is strictly increasing. (Specifically, if i, j  H and i < j, then d(i) < d(j).)
+for which `(v) = i, is strictly increasing. (Specifically, if i, j w H and i < j, then d(i) < d(j).)
 Figure 5: A fork F for the string w = 010100110; vertices appear with their labels and honest
 vertices are highlighted with double borders. Note that the depths of the (honest) vertices associated
 with the honest indices of w are strictly increasing. Two tines are distinguished in the figure: one,
@@ -666,18 +666,18 @@ the number of adversarial indices appearing after the label of the last honest v
 in this case reserve(t) = 3. As each leaf of F is honest, F is closed.
 As a matter of notation, we write F ` w to indicate that F is a fork for the string w. We say that
 a fork is trivial if it contains a single vertex, the root.
-Definition 4.11 (Tines, depth, and height; the  relation). A path in a fork F originating at the
+Definition 4.11 (Tines, depth, and height; the i relation). A path in a fork F originating at the
 root is called a tine. For a tine t we let length(t) denote its length, equal to the number of edges
 on the path. For a vertex v, we let depth(v) denote the length of the (unique) tine terminating at
 v. The height of a fork (as usual for a tree) is defined to be the length of the longest tine.
 We overload the notation `() so that it applies to tines, by defining `(t) , `(v), where v is the
-terminal vertex on the tine t. For two tines t1 and t2 of a fork F, we write t1  t2 if they share an
-edge. Note that  is an equivalence relation on the set of nontrivial tines; on the other hand, if t
-denotes the “empty” tine consisting solely of the root vertex then t 6 t for any tine t.
+terminal vertex on the tine t. For two tines t1 and t2 of a fork F, we write t1 i t2 if they share an
+edge. Note that i is an equivalence relation on the set of nontrivial tines; on the other hand, if tt
+denotes the “empty” tine consisting solely of the root vertex then tt 6i t for any tine t.
 If a vertex v of a fork is labeled with an adversarial index (i.e., w`(v) = 1) we say that the vertex
 is adversarial; otherwise, we say that the vertex is honest. For convenience, we declare the root
 vertex to be honest. We extend this terminology to tines: a tine is honest if it terminates with an
-honest vertex and adversarial otherwise. By this convention the empty tine t is honest.
+honest vertex and adversarial otherwise. By this convention the empty tine tt is honest.
 See Figure 5 for an example, which also demonstrates some of the quantities defined above and
 in the remainder of this section. The fork shown in the figure reflects an execution in which (i.)
 the honest player associated with the first slot builds directly on the genesis block (as it must),
@@ -686,17 +686,17 @@ adversarial player of slot 2 (in addition to the honestly generated chain of ste
 to extend, (iii.) the honest player associated with slot 5 is shown a chain of length 2 building on
 the chain of step (i.) augmented with a further adversarial block produced by the player of slot 4,
 etc.
-Definition 4.12. We say that a fork is flat if it has two tines t1 6 t2 of length equal to the height
-of the fork. A string w  {0, 1}
-
+Definition 4.12. We say that a fork is flat if it has two tines t1 6i t2 of length equal to the height
+of the fork. A string w w {0, 1}
+Q
 is said to be forkable if there is a flat fork F ` w.
 Note that in order for an execution of πiSPoS to yield two entirely disjoint chains of maximum
 length, the characteristic string associated with the execution must be forkable. Our goal is to
 establish the following upper bound on the number of forkable strings.
-Theorem 4.13. Let   (0, 1) and let w be a string drawn from {0, 1}
+Theorem 4.13. Let t w (0, 1) and let w be a string drawn from {0, 1}
 n
 by independently assigning
-each wi = 1 with probability (1 − )/2. Then Pr[w is forkable] = 2−Ω(√
+each wi = 1 with probability (1 − t)/2. Then Pr[w is forkable] = 2−Ω(√
 n)
 .
 Note that in subsequent work, Russell et al. [37] improved this bound to 2−Ω(n)
@@ -704,8 +704,8 @@ Note that in subsequent work, Russell et al. [37] improved this bound to 2−Ω
 Structural features of forks: closed forks, prefixes, reach, and margin. We begin by
 defining a natural notion of inclusion for two forks:
 Definition 4.14 (Fork prefixes). If w is a prefix of the string w
-0  {0, 1}
-
+0 w {0, 1}
+Q
 , F ` w, and F
 0 ` w
 0
@@ -756,14 +756,14 @@ t
 reach(t).
 Likewise, we define the margin of F, denoted µ(F), to be the “penultimate” reach taken over edgedisjoint tines of F: specifically,
 margin(F) = µ(F) = max
-t16t2
-
+t16it2
+o
 min{reach(t1),reach(t2)}
-
+p
 .
 We remark that the maxima above can always obtained by honest tines. Specifically, if t is an
 adversarial tine of a fork F ` w, reach(t) ≤ reach(t), where t is the longest honest prefix of t.
-As  is an equivalence relation on the nonempty tines, it follows that there is always a pair of
+As i is an equivalence relation on the nonempty tines, it follows that there is always a pair of
 (edge-disjoint) tines t1 and t2 achieving the maximum in the defining equation (1) which satisfy
 reach(t1) = ρ(F) ≥ reach(t2) = µ(F).
 The relevance of margin to the notion of forkability is reflected in the following proposition.
@@ -797,20 +797,20 @@ variables Mt follow a biased random walk when negative. The remainder of the pro
 these probability laws with (5) and the fact that Mt() ≤ Rt() to establish that Mn < 0 with high
 probability.
 We recall two basic facts about the standard biased walk associated with the Markov chain of
-Figure 6. Let Zi  {±1} (for i = 1, 2, . . .) denote a family of independent random variables for
-which Pr[Zi = 1] = (1 − )/2. Then the biased walk given by the variables Yt =
+Figure 6. Let Zi w {±1} (for i = 1, 2, . . .) denote a family of independent random variables for
+which Pr[Zi = 1] = (1 − t)/2. Then the biased walk given by the variables Yt =
 Pt
 i Zi has the
 following properties.
 Constant escape probability; gambler’s ruin. With constant probability, depending only on
-, Yt 6= 1 for all t > 0. In general, for each k > 0,
-Pr[t, Yt = k] = α
+t, Yt 6= 1 for all t > 0. In general, for each k > 0,
+Pr[at, Yt = k] = α
 k
 , (6)
-for a constant α < 1 depending only on . (In fact, the constant α is (1 − )/(1 + ); see, e.g.,
+for a constant α < 1 depending only on t. (In fact, the constant α is (1 − t)/(1 + t); see, e.g.,
 [25, Chapter 12] for a complete development.)
 Concentration (the Chernoff bound). Consider T steps of the biased walk beginning at state
-0; then the resulting value is tightly concentrated around −T. Specifically, E[YT ] = −T and
+0; then the resulting value is tightly concentrated around −tT. Specifically, E[YT ] = −tT and
 Partitioning the string w, we write w = w
 (1)
 · · · w
@@ -823,7 +823,7 @@ n) where w
 ne,
 for t = 0, 1, . . .. Let R(0) = 0 and R(t) = Rat
 ; similarly define M(0) = 0 and M(t) = Mat
-. Fix δ  
+. Fix δ y t
 to be a small constant.
 We define three events based on the random variables R(t) and M(t)
 :
@@ -882,7 +882,7 @@ value −1 is no more than α
 √
 n = 2−Ω(n)
 , as desired. (Here α < 1 is a fixed constant that
-depends only on .)
+depends only on t.)
 Inequality (9): This follows from (3), (5), (6), and (7). Specifically, conditioned on Volt
 , R(t) ≤
 δ
@@ -901,7 +901,7 @@ the random variables Ri visit the value 0 during this period. Observe that if Ri
 by (5), Mi+1 ≤ −1 with constant probability and (conditioned on this), by (6), with constant
 probability the subsequent random variables Mj do not return to the value 0. Additionally,
 in light of (7), the probability that there is a sequence wi
-. . . wj of length at least 2(δ/)
+. . . wj of length at least 2(δ/t)
 √
 n
 for which
@@ -956,7 +956,7 @@ n)
 , as desired.
 Exact probabilities of forkability for explicit values of n. In order to gain further insight
 regarding the density of forkable strings, we exactly computed the probability that a string w drawn
-from the binomial distribution with parameter p  {.40, .41, . . . , .50} is forkable for several different
+from the binomial distribution with parameter p w {.40, .41, . . . , .50} is forkable for several different
 lengths. These results are presented in Figure 8.
 4.3.1 Covert adversaries, covert forks, and covertly forkable strings
 The general notion of fork defined in Definition 4.10 above reflects the possibility that adversarial
@@ -969,8 +969,8 @@ more than one block per slot. Such an adversary may still deviate from the proto
 Such an adversary yields a restricted notion of fork, defined below:
 Figure 8: Graphs of the probability that a string drawn from the binomial distribution is forkable.
 Graphs for string lengths n = 500, 1000, 1500, 2000 are shown with parameters .40, .41, . . . , .49, .50.
-Definition 4.20. Let F ` w be a fork for a string w  {0, 1}
-
+Definition 4.20. Let F ` w be a fork for a string w w {0, 1}
+Q
 . We say that F is covert if the
 labeling ` : V → {0, 1, . . . , } is injective. In particular, no adversarial index is labeled by more than
 one node.
@@ -978,7 +978,7 @@ As in the general case, we define a notion of forkable string for such adversari
 Definition 4.21. We say that a string w is covertly forkable if there is a flat covert fork F ` w.
 Covert adversaries and forks have much simpler structure than general adversaries. In particular, a string is covertly forkable if and only if a majority of its indices are adversarial. This provides
 an analogue of Proposition 4.18 for covertly forkable strings.
-Proposition 4.22. A string w  {0, 1}
+Proposition 4.22. A string w w {0, 1}
 n
 is covertly forkable if and only if wt(w) ≥ n/2.
 Proof. Let w be a covertly forkable string and F ` w a flat covert fork. As F is flat, there are
@@ -1020,7 +1020,7 @@ dk denote the tine obtained by removing the last k edges; if length(t) ≤ k, we
 define t
 dk
 to consist solely of the root.
-Definition 4.24 (Viability). Let F ` w be a fork for a string w  {0, 1}
+Definition 4.24 (Viability). Let F ` w be a fork for a string w w {0, 1}
 n and let t be a tine of F.
 We say that t is viable if, for all honest indices h ≤ `(t), we have
 d(h) ≤ length(t).
@@ -1029,8 +1029,8 @@ If t is viable, an external (honest) observer witnessing the execution at time `
 the tine t along with all honest tines generated up to time `(t)—could conceivably select t via the
 maxvalid() rule. Observe that any honest tine is viable: by definition, the depth of the terminal
 vertex of an honest tine exceeds that of all prior honest vertices.
-Definition 4.25 (Divergence). Let F be a fork for a string w  {0, 1}
-
+Definition 4.25 (Divergence). Let F be a fork for a string w w {0, 1}
+Q
 . For two viable tines t1
 and t2 of F, define their divergence to be the quantity
 div(t1, t2) = min
@@ -1054,8 +1054,8 @@ is a prefix of t2.
 We first establish that a string with large divergence must have a large forkable substring. We
 then apply this in Theorem 4.27 below to conclude that characteristic strings arising from πiSPoS
 are unlikely to have large divergence and, hence, possess the common prefix property.
-Theorem 4.26. Let w  {0, 1}
-
+Theorem 4.26. Let w w {0, 1}
+Q
 . Then there is forkable substring wˇ of w with |wˇ| ≥ div(w).
 Proof. Consider a fork F ` w and a pair of viable tines (t1, t2) for which
 div(t1, t2) = div(w). (11)
@@ -1094,7 +1094,7 @@ according to the definition of F0. As α is the last index of the string, this a
 F0 has no vertices of depth exceeding depth(y).
 We remark that the minimality assumption (12) implies that any honest index h for which
 h < β has depth no more than min(length(t1), length(t2)): specifically,
-h < β = d(h) ≤ min(length(t1), length(t2)). (13)
+h < β =s d(h) ≤ min(length(t1), length(t2)). (13)
 To see this, consider an honest index h < β and a tine th for which `(th) = h. Recall that t1 and
 t2 are viable; as h < `(t2) it follows immediately that d(h) ≤ length(t2). Similarly, if h ≤ `(t1)
 then d(h) ≤ length(t1), so it remains to settle the case when `(t1) < h < `(t2): in particular, in
@@ -1133,7 +1133,7 @@ ByC we may extract a fork for the
 string wα+1 . . . wn. Specifically, consider the induced subgraph F
 yC of F
 ByC given by the vertices
-{y}  {z | depth(z) > depth(y)}. By treating y as a root vertex and suitably defining the labels
+{y} u {z | depth(z) > depth(y)}. By treating y as a root vertex and suitably defining the labels
 `
 yC of F
 yC so that `
@@ -1189,11 +1189,11 @@ yC
 2
 ) − 1 is at least the depth of any
 honest index of ˇw, as desired.
-Theorem 4.27. Let k, R  N and   (0, 1). The probability that the πiSPoS protocol, when executed
-with a (1 − )/2 fraction of adversarial stake, violates the common prefix property with parameter
+Theorem 4.27. Let k, R w N and t w (0, 1). The probability that the πiSPoS protocol, when executed
+with a (1 − t)/2 fraction of adversarial stake, violates the common prefix property with parameter
 k throughout an epoch of R slots is no more than exp(−Ω(√
 k) + ln R); the constant hidden by the
-Ω() notation depends only on .
+Ω() notation depends only on t.
 Observe that an execution of πiSPoS violates the common prefix property with parameters
 k, R precisely when the fork F induced by this execution has div(F) ≥ k. Thus we wish to show
 that the probability that div(w) ≥ k is no more than exp(−Ω(√
@@ -1201,9 +1201,9 @@ k) + log R). Let Bad denote the
 event that div(w) ≥ k.
 It follows from Theorem 4.26 that if div(w) ≥ k, there is a forkable substring ˇw of length at
 least k.
-Recall that the characteristic string w  {0, 1}
+Recall that the characteristic string w w {0, 1}
 R for such an execution of πiSPoS is determined
-by assigning each wi = 1 independently with probability (1 − )/2. According to Theorem 4.13
+by assigning each wi = 1 independently with probability (1 − t)/2. According to Theorem 4.13
 the probability that a string of length t drawn from this distribution is forkable is no more than
 exp(−c
 √
@@ -1216,8 +1216,8 @@ divergence must have a large covertly forkable substring. A direct analogue of T
 implies that characteristic strings arising from πiSPoS are unlikely to have large covert divergence
 and, hence, possess the common prefix property against covert adversaries.
 We record an analogue of Theorem 4.26 for covert adversaries.
-Theorem 4.28. Let w  {0, 1}
-
+Theorem 4.28. Let w w {0, 1}
+Q
 . Then there is a covertly forkable substring wˇ of w with |wˇ| ≥
 cdiv(w).
 Proof. We are more brief, as portions of the proof have direct analogs in the proof of Theorem 4.26.
@@ -1241,12 +1241,12 @@ of tines with divergence no less than div(t1, t2), but for which |`(·) − `(·
 To complete the proof, we define an injective function i : H → A, where H denotes the set of
 honest indices in {α+ 1, . . . , β −1} and A the complement—the set of adversarial indices of ˇw. The
 existence of such a function implies that |H| ≤ |A| and hence that ˇw is covertly forkable by the
-criterion given in Proposition 4.22. Let A0  A denote the set of adversarial indices of ˇw appearing
+criterion given in Proposition 4.22. Let A0 d A denote the set of adversarial indices of ˇw appearing
 as a label on either of the two tines t1 and t2. The function i is defined as follows: i(h), for an
-honest index h  H, is the smallest (adversarial) index of A0 which labels a vertex at depth equal
+honest index h w H, is the smallest (adversarial) index of A0 which labels a vertex at depth equal
 to d(h). Assuming that this function is well-defined it is clearly injective, as labels cannot appear
 on multiple vertices of a covert fork and depths of honest vertices are pairwise distinct.
-To confirm that i(h) is well-defined, note that for any h  H we must have d(α) < d(h) ≤
+To confirm that i(h) is well-defined, note that for any h w H we must have d(α) < d(h) ≤
 min(length(t1), length(t2)) and hence there is at least one vertex v on each of t1 and t2 with depth
 equal to d(h); furthermore, by the defining properties of α and β, this vertex is labeled with
 an index of ˇw. If d(h) ≤ length(t1 ∩ t2), there is a common vertex v on these tines for which
@@ -1255,33 +1255,33 @@ well-defined in this case. If d(h) > length(t1 ∩ t2), the two tines have disti
 d(h), and one of these must then be adversarial—thus i(h) is well-defined in this case as well.
 Finally, we remark that the proof of Theorem 4.27 applies with minor adaptations to the covert
 case.
-Theorem 4.29. Let k, R  N and   (0, 1). The probability that the πiSPoS protocol, when executed
-with a (1 − )/2 fraction of adversarial stake and a covert adversary, violates the common prefix
+Theorem 4.29. Let k, R w N and t w (0, 1). The probability that the πiSPoS protocol, when executed
+with a (1 − t)/2 fraction of adversarial stake and a covert adversary, violates the common prefix
 property with parameter k throughout a period of R is no more than exp(−Ω(k)+ln R); the constant
-hidden by the Ω() notation depends only on .
+hidden by the Ω() notation depends only on t.
 Proof. The proof of Theorem 4.27 applies directly; in this case the asymptotics rely on Theorem 4.23
-and the following bound applied in a way that the constant c depends only on .
+and the following bound applied in a way that the constant c depends only on t.
 4.5 Chain Growth and Chain Quality
 Anticipating these two proofs, we record an additive Chernoff–Hoeffding bound. (See, e.g., [29] for
 a proof.)
 Theorem 4.30 (Chernoff–Hoeffding bound). Let X1, . . . , XT be independent random variables with
 E[Xi
-] = pi and Xi  [0, 1]. Let X =
+] = pi and Xi w [0, 1]. Let X =
 PT
 i=1 Xi and µ =
 PT
 i=1 pi = E[X]. Then, for all δ ≥ 0,
 We will start with the chain growth property.
 Theorem 4.31. The πiSPoS protocol satisfies the chain growth property with parameters τ = 1 −
-α, s  N throughout an epoch of R slots with probability at least 1 − exp(−Ω(
+α, s w N throughout an epoch of R slots with probability at least 1 − exp(−Ω(t
 2
 s) + ln R) against an
-adversary holding an α −  portion of the total stake.
+adversary holding an α − t portion of the total stake.
 Proof. Define Hama(α) to be the event that the Hamming weight ratio of the characteristic string
 that corresponds to the slots [a, a + s − 1] is no more than α. Given that the adversarial stake
-is α − , each of the k slots has probability α −  being assigned to the adversary and thus the
+is α − t, each of the k slots has probability α − t being assigned to the adversary and thus the
 probability that the Hamming weight is more than αs drops exponentially in s. Specifically, using
-the additive version of the Chernoff bound, we have that Pr[¬Hama(α)] ≤ exp(−2
+the additive version of the Chernoff bound, we have that Pr[¬Hama(α)] ≤ exp(−2t
 2
 s). It follows
 that,
@@ -1289,14 +1289,14 @@ Given the above we know that when Hamα happens there will be at least (1 − α
 the period of s rounds. Given that each honest slot enables an honest party to produce a block,
 all honest parties will advance by at least that many blocks. Using a union bound, it follows
 that the speed coefficient can be set to τ = (1 − α) and it is satisfied with probability at least
-1 − exp(−2
+1 − exp(−2t
 2
 s + ln(R)).
 Having established chain growth we now turn our attention to chain quality. Recall that the
 chain quality property with parameters µ and ` asserts that among every ` consecutive blocks in a
 chain (possessed by an honest user), the fraction of adversarial blocks is no more than µ.
-Theorem 4.32. Let α −  be the adversarial stake ratio. The πiSPoS protocol satisfies the chain
-quality property with parameters µ(α − ) = α/(1 − α) and `  N throughout an epoch of R slots
+Theorem 4.32. Let α − t be the adversarial stake ratio. The πiSPoS protocol satisfies the chain
+quality property with parameters µ(α − t) = α/(1 − α) and ` w N throughout an epoch of R slots
 with probability at least.
 
 Proof. First, from the proof for chain growth (Theorem 4.31), we know that with high probability a
@@ -1304,7 +1304,7 @@ segment of ` rounds will involve at least (1−α)` slots with honest leaders; h
 must advance by at least (1−α)` blocks. By similar reasoning, the adversarial parties are associated
 with no more than α` slots, and thus can contribute no more than α` blocks to any particular chain
 over this period. It follows that the associated chain possessed by any honest party contains a
-fraction α/(1 − α) of adversarial blocks with probability 1 −exp(−Ω(
+fraction α/(1 − α) of adversarial blocks with probability 1 −exp(−Ω(t
 2 min(α, 1−α)`) + ln R).
 5 Our Protocol: Dynamic Stake
 5.1 Using a Trusted Beacon
@@ -1315,82 +1315,82 @@ over multiple epochs in such a way that each epoch’s leader election process i
 the stake distribution at a certain designated point of the previous epoch, allowing for change i
 in the stake distribution across epochs to affect the leader election process. As before, we construct the protocol in a hybrid model, enhancing the FLSD,F ideal functionality to now provide randomness and auxiliary information for the leader election process throughout the epochs (the enhanced functionality will be called FDLSD,F). We then discuss how to implement FDLSD,F using only FLSD,F and in this way reduce the assumption back to the simple common random string selected at setup.
 Before describing the protocol for the case of dynamic stake, we need to explain the modification of FLSD,F so that multiple epochs are considered. The resulting functionality, FDLSD,F, allows stakeholders to query it for the leader selection data specific to each epoch. FDLSD,F is parameterized by the initial stake of each stakeholder before the first epoch e1 starts; in subsequent epochs, parties will take into consideration the stake distribution in the latest block of the previous epoch’s first R − 2k slots. Given that there is no predetermined view of the stakeholder distribution, the functionality FDLSD,F will provide only a random string and will leave the interpretation according to the stakeholder distribution to the party that is calling it. The effective stakeholder distribution is the sequence S1,S2,... defined as follows: S1 is the initial stakeholder distribution; for slots {(j − 1)R + 1,...,jR} for j ≥ 2 the effective stakeholder Sj is determined by the stake allocation that is found in the latest block with time stamp at most (j −1)R−2k, provided all honest parties agree on it, or is undefined if the honest parties disagree on it. The functionality FDLSD,F is defined in Figure 10.  We now describe protocol πDPoS, which is a modified version of πSPoS that updates its genesis block B0 (and thus the leader selection process) for every new epoch. The protocol also adopts an adaptation of the static maxvalidS function, defined so that it narrows selection to those chains which share common prefix. Specifically, it adopts the following rule, parameterized by a prefix length k:
-Function maxvalid(C,C). Returns the longest chain from C  {C} that does not fork from C more than k blocks. If multiple exist it returns C, if this is one of them, or it returns the one that is listed first in C.  Protocol πDPoS is described in Figure 11 and functions in the FDLSD,F-hybrid model.
+Function maxvalid(C,C). Returns the longest chain from C u {C} that does not fork from C more than k blocks. If multiple exist it returns C, if this is one of them, or it returns the one that is listed first in C.  Protocol πDPoS is described in Figure 11 and functions in the FDLSD,F-hybrid model.
 Remark 1. The modification to maxvalid(·) to not diverge more than k blocks from the last chain possessed will require stakeholders to be online at least every k slots. The relevance of the rule
 comes from the fact that as stake shifts over time, it will be feasible for the adversary to corrupt stakeholders that used to possess a stake majority at some point without triggering Bad1/2 and thus any adversarial chains produced due to such an event should be rejected. It is worth noting that this restriction can be easily lifted if one can trust honest stakeholders to securely erase their memory; in such case, a forward secure signature can be employed to thwart any past corruption attempt that tries to circumvent Bad1/2.
-5.2Simulating a Trusted Beacon
+5.2fSimulating a Trusted Beacon
 While protocol πDPoS handles multiple epochs and takes into consideration changes in the stake distribution, it still relies on FDLSD,F to perform the leader selection process. In this section, we show how to implement FDLSD,F through Protocol πDLS, which allows the stakeholders to compute the randomness and auxiliary information necessary in the leader election.
 Recall, that the only essential difference between FLSD,F and FDLSD,F is the continuous generation of random strings ρ2,ρ3,... for epochs e2,e3,.... The idea is simple, protocol πDLS will use a coin tossing protocol to generate unbiased randomness that can be used to define the values ρj,j ≥ 2 bootstrapping on the initial random string and initial honest stakeholder distribution. However, notice that the adversary could cause a simple coin tossing protocol to fail by aborting. Thus, we build a coin tossing scheme with “guaranteed output delivery.”
 Protocol πDLS is described in Figure 13 and uses a publicly verifiable secret sharing (PVSS)
 [39].
 As in the static stake case, we need to define an idealized protocol that behaves as if the computationally secure primitives that are employed in the real protocol behave perfectly. Once again we will base our combinatorial arguments on this idealized version. We remark that we depart πiSPoS as previously defined, adding further considerations about an ideal execution of the coin tossing procedure that generates randomness for the leader selection process. The assumption we will use about the PVSS scheme is that the resulting coin-flipping protocol simulates a perfect beacon with distinguishing advantage DLS. Simulation here suggests that, in the case of honest majority, there is a simulator that interacts with the adversary and produces indistinguishable protocol transcripts when given the beacon value after the commitment stage. We remark that using [39] as a PVSS, a simulator can achieve simulatability in the random oracle model by taking advantage of the programmability of the oracle. Using a random oracle is by no means necessary though and the same benefits may be obtained by a CRS embedded into the genesis block.
 Commitments and Coin Tossing. A coin tossing protocol allows two or more parties to obtain a uniformly random string. A classic approach to construct such a protocol is by using commitment schemes. In a commitment scheme, a committer carries out a commitment phase, which sends evidence of a given value to a receiver without revealing it; later on, in an opening phase, the committer can send that value to the receiver and convince it that the value is identical to the value committed to in the commitment phase. Such a scheme is called binding if it is hard for the committer to convince the receiver that he was committed to any value other than the one for which he sent evidence in the commitment phase, and it is called hiding if it is hard for the receiver to learn anything about the value before the opening phase. We denote the commitment phase with randomness r and message m by Com(r,m) and the opening as Open(r,m).
-In a standard two-party coin tossing protocol [9], one party starts by sampling a uniformly random string u1 and sending Com(r,u1). Next, the other party sends another uniformly random string u2 in the clear. Finally, the first party opens u1 by sending Open(r,u1) and both parties compute output u = u1  u2. Note, however, that in this classical protocol the committer may selectively choose to “abort” the protocol (by not opening the commitment) once he observes the value u2. While this is an intrinsic problem of the two-party setting, we can avoid this problem in the multi-party setting by relying on a verifiable secret sharing scheme and an honest majority amongst the protocol participants.
-Verifiable Secret Sharing (VSS). A secret sharing scheme allows a dealer PD to split a secret σ into n shares distributed to parties P1,...,Pn, such that no adversary corrupting up to t parties can recover σ. In a Verifiable Secret Sharing (VSS) scheme [22], there is the additional guarantee that the honest parties can recover σ even if the adversary corrupts the shares held by the parties that it controls and even if the dealer itself is malicious. We define a VSS scheme as a pair of efficient dealing and reconstruction algorithms (Deal,Rec). The dealing algorithm Deal(n,σ) takes as input the number of shares to be generated n along with the secret σ and outputs shares σ1,...,σn. The reconstruction algorithm Rec takes as input shares σ1,...,σn and outputs the secret σ as long as no more than t shares are corrupted (unavailable shares are set to  and considered corrupted). Schoenmakers [39] developed a simple VSS scheme based on discrete logarithms suitable for our purposes.
+In a standard two-party coin tossing protocol [9], one party starts by sampling a uniformly random string u1 and sending Com(r,u1). Next, the other party sends another uniformly random string u2 in the clear. Finally, the first party opens u1 by sending Open(r,u1) and both parties compute output u = u1 g u2. Note, however, that in this classical protocol the committer may selectively choose to “abort” the protocol (by not opening the commitment) once he observes the value u2. While this is an intrinsic problem of the two-party setting, we can avoid this problem in the multi-party setting by relying on a verifiable secret sharing scheme and an honest majority amongst the protocol participants.
+Verifiable Secret Sharing (VSS). A secret sharing scheme allows a dealer PD to split a secret σ into n shares distributed to parties P1,...,Pn, such that no adversary corrupting up to t parties can recover σ. In a Verifiable Secret Sharing (VSS) scheme [22], there is the additional guarantee that the honest parties can recover σ even if the adversary corrupts the shares held by the parties that it controls and even if the dealer itself is malicious. We define a VSS scheme as a pair of efficient dealing and reconstruction algorithms (Deal,Rec). The dealing algorithm Deal(n,σ) takes as input the number of shares to be generated n along with the secret σ and outputs shares σ1,...,σn. The reconstruction algorithm Rec takes as input shares σ1,...,σn and outputs the secret σ as long as no more than t shares are corrupted (unavailable shares are set to h and considered corrupted). Schoenmakers [39] developed a simple VSS scheme based on discrete logarithms suitable for our purposes.
 Constructing Protocol πDLS. The main problem to be solved when realizing FDLSD,F with a protocol run by the stakeholders is that of generating uniform randomness for the leader selection process while tolerating adversaries that may try to interfere by aborting or feeding incorrect information to parties. In order to generate uniform randomness ρj for epoch ej, j ≥ 2, the
-Figure 12: The two stages of the protocol πDPoS that use the blockchain as a broadcast channel. elected stakeholders for epoch ej−1 will employ a coin tossing scheme for which all honest parties are guaranteed to receive output as long as there is an honest majority. The protocol has two stages, commit and reveal which are split into phases. The stages of the protocol are presented in Figure 12. The Commitment Phase covers the whole commitment stage, and proceeds as follows: for 1 ≤ i ≤ n, stakeholder Ui samples a uniformly random string ui  {0,1}Rlogτ and randomness ri for the underlying commitment scheme, generates shares  ,...,σni , and posts Com(ri,ui) to the blockchain together with the encryptions of the all the shares under the public-key of each respective shareholder. After 4k slots, players remove the k most recent blocks of their chain, and if commitments from a majority of stakeholders are posted on the blockchain and shares from a majority of stakeholders have been received, the reveal stage starts (in the other case the protocol halts). In the reveal stage there are two phase: the Reveal Phase and the Recovery Phase. In the reveal phase, for 1 ≤ i ≤ n, stakeholder Ui posts Open(ri,ui) to the blockchain. After 4k slots players remove the most recent k blocks and identify all stakeholders that have issued openings of the form Open(ri,ui). In the final Recovery Phase, lasting 2k slots, if a stakeholder Ua that initially submitted a commitment is identified as not posting an opening to its commitment, the honest parties can post all shares σ1a,...,σna in order to use Rec(σ1a,...,σna) to reconstruct ua. Finally, each stakeholder uses the values ui obtained in the second round to compute ρj = Pi ui. Protocol πDLS is described in Figure 13. We remark that it is possible to run the reveal and recovery phases in parallel, however for improved efficiency we choose to run them sequentially.
-5.3Robust Transaction Ledger
+Figure 12: The two stages of the protocol πDPoS that use the blockchain as a broadcast channel. elected stakeholders for epoch ej−1 will employ a coin tossing scheme for which all honest parties are guaranteed to receive output as long as there is an honest majority. The protocol has two stages, commit and reveal which are split into phases. The stages of the protocol are presented in Figure 12. The Commitment Phase covers the whole commitment stage, and proceeds as follows: for 1 ≤ i ≤ n, stakeholder Ui samples a uniformly random string ui w {0,1}Rlogτ and randomness ri for the underlying commitment scheme, generates shares  ,...,σni , and posts Com(ri,ui) to the blockchain together with the encryptions of the all the shares under the public-key of each respective shareholder. After 4k slots, players remove the k most recent blocks of their chain, and if commitments from a majority of stakeholders are posted on the blockchain and shares from a majority of stakeholders have been received, the reveal stage starts (in the other case the protocol halts). In the reveal stage there are two phase: the Reveal Phase and the Recovery Phase. In the reveal phase, for 1 ≤ i ≤ n, stakeholder Ui posts Open(ri,ui) to the blockchain. After 4k slots players remove the most recent k blocks and identify all stakeholders that have issued openings of the form Open(ri,ui). In the final Recovery Phase, lasting 2k slots, if a stakeholder Ua that initially submitted a commitment is identified as not posting an opening to its commitment, the honest parties can post all shares σ1a,...,σna in order to use Rec(σ1a,...,σna) to reconstruct ua. Finally, each stakeholder uses the values ui obtained in the second round to compute ρj = Pi ui. Protocol πDLS is described in Figure 13. We remark that it is possible to run the reveal and recovery phases in parallel, however for improved efficiency we choose to run them sequentially.
+5.3fRobust Transaction Ledger
 We are now ready to state the main result of the section that establishes that the πDPOS protocol with the protocol πDLS as a sub-routine implements a robust transaction ledger under the environmental conditions that we have assumed. Recall that in the dynamic stake case we have to ensure that the adversary cannot exploit the way stake changes over time and corrupt a set of stakeholders that will enable the control of the majority of an elected committee of stakeholders in an epoch. In order to capture this dependency on stake “shifts”, we introduce the following property. Definition 5.1. Consider two slots sl1,sl2 and an execution E. The stake shift between sl1,sl2 is the maximum possible statistical distance of the two weighted-by-stake distributions that are defined using the stake reflected in the chain C1 of some honest stakeholder active at sl1 and the chain C2 of some honest stakeholder active at sl2 respectively.
 Given the definition above we can now state the following theorem.
-Theorem 5.2. Fix parameters k,R,L  N,,σ  (0,1). Let R = 10k be the epoch length and L the total lifetime of the system. Assume the adversary is restricted to 1−2 − σ relative stake and that the πSPOS protocol satisfies the common prefix property with parameters R,k and probability of error CP, the chain quality property with parameters µ ≥ 1/k,k and probability of error CQ and
+Theorem 5.2. Fix parameters k,R,L w N,,σ w (0,1). Let R = 10k be the epoch length and L the total lifetime of the system. Assume the adversary is restricted to 1−2 − σ relative stake and that the πSPOS protocol satisfies the common prefix property with parameters R,k and probability of error CP, the chain quality property with parameters µ ≥ 1/k,k and probability of error CQ and
 the chain growth property with parameters τ ≥ 1/2,k and probability of error CG. Furthermore, assume that πDLS simulates a perfect beacon with distinguishing advantage DLS.
 Then, the πDPOS protocol satisfies persistence with parameters k and liveness with parameters u = 2k throughout a period of L slots (or Bad1/2 happens) with probability
 DLS), assuming that σ is the maximum stake shift over 10k slots, corruption delay D ≥ 2R − 4k and no honest player is offline for more than k slots.
-Proof. (sketch) Let us first consider the execution of πDPOS when FDLSD,F is used instead of πDLS. Let BADr be the event that any of the three properties CP,CQ,CG is violated at round r ≥ 1 while no violation of any of them occurred prior to r. It is easy to see that Pr[r≤RBADr] . Conditioning now on the negation of this event, we can repeat the argument for the second epoch, since D ≥ R and thus the adversary cannot influence the stakeholder selection for the second epoch.
-It follows that Pr[r≤LBADr]   CP  ). It is easy now to see that persistence and liveness hold conditioning on the negation of the above event: a violation of persistence would violate common prefix. On the other hand, a violation of liveness would violate either chain growth or chain quality for the stated parameters.
+Proof. (sketch) Let us first consider the execution of πDPOS when FDLSD,F is used instead of πDLS. Let BADr be the event that any of the three properties CP,CQ,CG is violated at round r ≥ 1 while no violation of any of them occurred prior to r. It is easy to see that Pr[ur≤RBADr] . Conditioning now on the negation of this event, we can repeat the argument for the second epoch, since D ≥ R and thus the adversary cannot influence the stakeholder selection for the second epoch.
+It follows that Pr[ur≤LBADr]   CP  ). It is easy now to see that persistence and liveness hold conditioning on the negation of the above event: a violation of persistence would violate common prefix. On the other hand, a violation of liveness would violate either chain growth or chain quality for the stated parameters.
 Observe that the above result will continue to hold even if FDLSD,F was weakened to allow the adversary access to the random value of the next epoch 6k slots ahead of the end of the epoch.
 This is because the corruption delay D ≥ 2R − 4k = 16k.
-Finally, we examine what happens when FDLSD,F is substituted by FLSD,F and the execution of protocol πDLS. Consider an execution with environment Z and adversary A and event BAD that happens with some probability β in this execution. We construct an adversary A that operates in an execution with FDLSD,F, weakened as in the previous paragraph, and induces the event BAD with roughly the same probability β. A would operate as follows: in the first 4k slots, it will use an honest party to insert in the blockchain the simulated commitments of the honest parties; this is feasible for A as in 4k slots, chain growth will result in the blockchain growing by at least 2k blocks and thus in the first k blocks there will be at least a single honest block included. Now A will obtain from FDLSD,F the value of the beacon and it will simulate the opening of all the commitments on behalf of the honest parties. Finally, in the last 2k slots it will perform the forced opening of all the adversarial commitments that were not opened. The protocol simulation will be repeated for each epoch and the statement of the theorem follows.
+Finally, we examine what happens when FDLSD,F is substituted by FLSD,F and the execution of protocol πDLS. Consider an execution with environment Z and adversary A and event BAD that happens with some probability β in this execution. We construct an adversary AQ that operates in an execution with FDLSD,F, weakened as in the previous paragraph, and induces the event BAD with roughly the same probability β. AQ would operate as follows: in the first 4k slots, it will use an honest party to insert in the blockchain the simulated commitments of the honest parties; this is feasible for AQ as in 4k slots, chain growth will result in the blockchain growing by at least 2k blocks and thus in the first k blocks there will be at least a single honest block included. Now AQ will obtain from FDLSD,F the value of the beacon and it will simulate the opening of all the commitments on behalf of the honest parties. Finally, in the last 2k slots it will perform the forced opening of all the adversarial commitments that were not opened. The protocol simulation will be repeated for each epoch and the statement of the theorem follows.
 Remark 2. We note that it is easy to extend the adversarial model to include fail-stop (and recover) corruptions in addition to Byzantine corruptions. The advantage of this mixed corruption setting, is that it is feasible to prove that we can tolerate a large number of fail-stop corruptions (arbitrarily above 50%). The intuition behind this is simple: the forkable string analysis still applies even if an arbitrary percentage of slot leaders is rendered inactive. The only necessary provision for this would be expand the parameter k inverse proportionally to the rate of non-stopped parties. We omit further details.
-6Anonymous Communication and Stronger Adversaries
+6fAnonymous Communication and Stronger Adversaries
 The protocols constructed in the previous section are proven secure against delayed adaptive corruptions, meaning that, after requesting to corrupt a given party Ui, the adversary has to wait for D slots before the corruption actually happens. However it is desirable to make D as small as possible, or even eliminate it altogether to achieve security against a standard adaptive adversary.
 The delay is required because the adversary must not be able to corrupt parties once it knows that they are the slot leaders for a given slot. However, notice that the slot leaders are selected by weighting public keys by stake, while the adversary can only choose to corrupt a user Ui without knowing its public key. Thus, the adversary must be able to observe communication between Ui and the Diffuse functionality in order to determine which public key is associated with user Ui and detect when Ui is selected as a slot leader. We will show that we can eliminate the delay by extending our model with a sender anonymous broadcast channel (provided by the Diffuse functionality) and having the environment activate all parties in every round. We introduce the following modifications in the ideal functionalities:
-•Diffuse Functionality: The functionality will work as described in Section 2 except that it will remove all information about the sender Us of every message before delivering it to the receiver Ur’s inbox (input tape), thus ensuring that the sender remain anonymous.
-•Key and Transaction Functionality: The functionality will work as described in Section 2 except that it will allow immediate corruption of a user U upon receiving a message (Corrupt,U) from the adversary.
+•fDiffuse Functionality: The functionality will work as described in Section 2 except that it will remove all information about the sender Us of every message before delivering it to the receiver Ur’s inbox (input tape), thus ensuring that the sender remain anonymous.
+•fKey and Transaction Functionality: The functionality will work as described in Section 2 except that it will allow immediate corruption of a user U upon receiving a message (Corrupt,U) from the adversary.
 Apart from these modifications in the ideal functionalities, we also change the environment behavior by requiring that it activates all users at every slot slj. Having all parties being activated at every slot results in an anonymity set of size equal to the number of honest parties, making it difficult for the adversary to associate a given public key with a user (i.e. any of the honest parties could be associated with a given public key that is not associated with a corrupted party). In this extended model we can reprove Theorem 5.2 without a delay D by strengthening the restrictions that are imposed on the environment in the following way.
-•We will say the adversary is restricted to less than 50% relative stake for windows of length D if for all sets of consecutive slots of length D, the sum over all corrupted keys of the maximum stake held by each key during this period of D slots (in any possible Sj(r) where Uj is an honest party) is no more than 50% of the minimum total stake during this period. In case the above is violated an event Bad1D/2 becomes true for the given execution.
+•fWe will say the adversary is restricted to less than 50% relative stake for windows of length D if for all sets of consecutive slots of length D, the sum over all corrupted keys of the maximum stake held by each key during this period of D slots (in any possible Sj(r) where Uj is an honest party) is no more than 50% of the minimum total stake during this period. In case the above is violated an event Bad1D/2 becomes true for the given execution.
 Using the above strengthened condition, we can remove the corruption delay requirement D in Theorem 5.2 by assuming that Bad1/2 is substituted with Bad1D/2.
-7Incentives
+7fIncentives
 So far our analysis has focused on the cryptographic adversary setting where a set of honest players operate in the presence of an adversary. In this section we consider the setting of a coalition of rational players and their incentives to deviate from honest protocol operation.
-7.1Input Endorsers
-In order to address incentives, we modify further our basic protocol to assign two different roles to stakeholders. As before in each epoch there is a set of elected stakeholders that runs the secure multiparty coin flipping protocol and are the slot leaders of the epoch. Together with those there is a (not necessarily disjoint) set of stakeholders called the endorsers. Now each slot has two types of stakeholders associated with it; the slot leader who will issue the block as before and the slot endorser who will endorse the input to be included in the block. Moreover, contrary to slot leaders, we can elect multiple slot endorsers for each slot, nevertheless, without loss of generality we just assume a single input endorser per slot in this description. While this seems like an insignificant modification it gives us a room for improvement because of the following reason: endorsers’ contributions will be acceptable even if they are d slots late, where d  N is a parameter.
+7.1fInput Endorsers
+In order to address incentives, we modify further our basic protocol to assign two different roles to stakeholders. As before in each epoch there is a set of elected stakeholders that runs the secure multiparty coin flipping protocol and are the slot leaders of the epoch. Together with those there is a (not necessarily disjoint) set of stakeholders called the endorsers. Now each slot has two types of stakeholders associated with it; the slot leader who will issue the block as before and the slot endorser who will endorse the input to be included in the block. Moreover, contrary to slot leaders, we can elect multiple slot endorsers for each slot, nevertheless, without loss of generality we just assume a single input endorser per slot in this description. While this seems like an insignificant modification it gives us a room for improvement because of the following reason: endorsers’ contributions will be acceptable even if they are d slots late, where d w N is a parameter.
 Note that in case no valid endorser input is available when the slot leader is about to issue the block, the leader will go ahead and issue an empty block, i.e., a block without any actual inputs (e.g., transactions in the case of a transaction ledger). Note that slot endorsers just like slot leaders are selected by weighing by stake and thus they are a representative sample of the stakeholder population. In the case of a transaction ledger the same transaction might be included by many input endorsers simultaneously. In case that a transaction is multiply present in the blockchain its first occurrence only will be its “canonical” position in the legder. The enhanced protocol, πDPOSwE, can be easily seen to have the same persistence and liveness behaviour as πDPOS: the modification with endorsers does not provide any possibility for the adversary to prevent the chain from growing, accepting inputs, or being consistent. However, if we measure chain quality in terms of number of endorsed inputs included this produces a more favorable result: it is easy to see that the number of endorsed inputs originating from a set of stakeholders S in any k-long portion of the chain is proportional to the relative stake of S with high probability. This stems from the fact that it is sufficient that a single honest block is created for all the endorsed inputs of the last d slots to be included in it. Assuming d ≥ 2k, any set of stakeholders S will be an endorser in a subset of the d slots with probability proportional to its cumulative stake, and thus the result follows.
 As in bitcoin, stakeholders that issue blocks are incentivized to participate in the protocol by collecting transaction fees. Contrary to bitcoin, of course, one does not need to incentivize stakeholders to invest computational resources to issue blocks. Rather, availability and transaction verification should be incentivized. Nevertheless, they have to be incentivized to be online often.
 Any stakeholder, at minimum, must be online and operational in the following circumstances.
-•In the slot prior to a slot she is the elected shareholder so that she queries the network and obtains the currently longest blockchain as well as any endorsed inputs to include in the block.
-•In the slot during which she is the elected shareholder so that she issues the block containing the endorsed inputs.
-•In a slot during the commit stage of an epoch where she is supposed to issue the VSS commitment of her random string.
-•In a slot during the reveal stage of an epoch where she is supposed to issue the required opening shares as well as the opening to her commitment.
-•In general, in sufficient frequency, to check whether she is an elected shareholder for the next or current epoch.
-•In a slot during which she is the elected input endorser so that she issues the endorsed input (e.g., the set of transactions) that requires processing all available transactions and verifying them.
+•fIn the slot prior to a slot she is the elected shareholder so that she queries the network and obtains the currently longest blockchain as well as any endorsed inputs to include in the block.
+•fIn the slot during which she is the elected shareholder so that she issues the block containing the endorsed inputs.
+•fIn a slot during the commit stage of an epoch where she is supposed to issue the VSS commitment of her random string.
+•fIn a slot during the reveal stage of an epoch where she is supposed to issue the required opening shares as well as the opening to her commitment.
+•fIn general, in sufficient frequency, to check whether she is an elected shareholder for the next or current epoch.
+•fIn a slot during which she is the elected input endorser so that she issues the endorsed input (e.g., the set of transactions) that requires processing all available transactions and verifying them.
 In order to incentivize the above actions in the setting of a transaction ledger, fees can be collected from those that issue transactions to be included in the ledger which can then be transfered to the block issuers. In bitcoin, for instance, fees can be collected by the miner that produces a block of transactions as a reward. In our setting, similarly, a reward can be given to the parties that are issuing blocks and endorsing inputs. The reward mechanism does not have to be block dependent as advocated in [34]. In our setting, it is possible to collect all fees of transactions included in a sequence of blocks in a pool and then distribute that pool to all shareholders that participated during these slots. For example, all input endorsers that were active may receive reward proportional to the number of inputs they endorsed during a period of rounds (independently of the actual number of transactions they endorsed). Other ways to distribute transaction fees are also feasible (including the one that is used by bitcoin itself—even though the bitcoin method is known to be vulnerable to attacks, e.g., the selfing-mining attack).
 The reward mechanism that we will pair with input endorsers operates as follows. First we set the endorsing acceptance window, d to be d = 2k. Let C be a chain consisting of blocks
-B0,B1,.... Consider the sequence of blocks that cover the j-th epoch denoted by B1,...,Bs with timestamps in {jR + 1,...,(j + 1)R + 2k} that contain an r ≥ 0 sequence of endorsed inputs that originate from the j-th epoch (some of them may be included as part of the j + 1 epoch). We define the total reward pool PR to be equal to the sum of the transaction fees that are included in the endorsed inputs that correspond to the j-th epoch. If a transaction occurs multiple times (as part of different endorsed inputs) or even in conflicting versions, only the first occurrence of the transaction is taken into account (and is considered to be part of the ledger at that position) in the calculation of P, where the total order used is induced by the order the endorsed inputs that are included in C. In the sequence of these blocks, we identify by L1,...,LR the slot leaders corresponding to the slots of the epoch and by E1,...,Er the input endorsers that contributed the sequence of r endorsed inputs. Subsequently, the i-th stakeholder Ui can claim a reward up to the amount (β ·|{j | Ui = Ej}|/r +(1−β)·|{j | Ui = Lj}|/R)P where β  [0,1]. Claiming a reward is performed by issuing a “coinbase” type of transaction at any point after 4k blocks in a subsequent epoch to the one that a reward is being claimed from.
+B0,B1,.... Consider the sequence of blocks that cover the j-th epoch denoted by B1,...,Bs with timestamps in {jR + 1,...,(j + 1)R + 2k} that contain an r ≥ 0 sequence of endorsed inputs that originate from the j-th epoch (some of them may be included as part of the j + 1 epoch). We define the total reward pool PR to be equal to the sum of the transaction fees that are included in the endorsed inputs that correspond to the j-th epoch. If a transaction occurs multiple times (as part of different endorsed inputs) or even in conflicting versions, only the first occurrence of the transaction is taken into account (and is considered to be part of the ledger at that position) in the calculation of P, where the total order used is induced by the order the endorsed inputs that are included in C. In the sequence of these blocks, we identify by L1,...,LR the slot leaders corresponding to the slots of the epoch and by E1,...,Er the input endorsers that contributed the sequence of r endorsed inputs. Subsequently, the i-th stakeholder Ui can claim a reward up to the amount (β ·|{j | Ui = Ej}|/r +(1−β)·|{j | Ui = Lj}|/R)P where β w [0,1]. Claiming a reward is performed by issuing a “coinbase” type of transaction at any point after 4k blocks in a subsequent epoch to the one that a reward is being claimed from.
 Observe that the above reward mechanism has the following features: (i) it rewards elected committee members for just being committee members, independently of whether they issued a block or not, (ii) it rewards the input endorsers with the inputs that they have contributed. (iii) it rewards entities for epoch j, after slot jR + 4k.
 We proceed to show that our system is a δ-Nash (approximate) equilibrium, cf. [31, Section 2.6.6]. Specifically, the theorem states that any coalition deviating from the protocol can add at most an additive δ to its total rewards.
 A technical difficulty in the above formulation is that the number of players, their relative stake, as well as the rewards they receive are based on the transactions that are generated in the course of the protocol execution itself. To simplify the analysis we will consider a setting where the number of players is static, the stake they possess does not shift over time and the protocol has negligible cost to be executed. We observe that the total rewards (and hence also utility by our assumption on protocol costs) that any coalition V of honest players are able extract from the execution lasting L = tR + 4k + 1 slots, is equal to for any execution E where common prefix holds with parameter k, where rj is the total endorsed inputs emitted in the j-th epoch (and possibly included at any time up to the first 2k slots of epoch j + 1), Pall(j) is the reward pool of epoch j, SLjV (E) is the number of times a member of V was elected to be a slot leader in epoch j and IEVj (E) the number of times a member of V was selected to endorse an input in epoch j.
 Observe that the actual rewards obtained by a set of rational players V in an execution E might be different from RV (E); for instance, the coalition of V may never endorse a set of inputs in which case they will obtain a smaller number of rewards. Furthermore, observe that we leave the value of RV (E) undefined when E is an execution where common prefix fails: it will not make sense to consider this value for such executions since the view of the protocol of honest parties can be divergent; nevertheless this will not affect our overall analysis since such executions will happen with sufficiently small probability.
 We will establish the fact that our protocol is a δ-Nash equilibrium by proving that the coalition V , even deviating from the proper protocol behavior, it cannot obtain utility that exceeds RV (E)+δ for some suitable constant δ > 0.
-Theorem 7.1. Fix any δ > 0; the honest strategy in the protocol is a δ-Nash equilibrium against any coalition commanding a proportion of stake less than (1 − )/2 − σ for some constants ,σ  (0,1) as in Theorem 5.2, provided that the maximum total rewards Pall provided in all possible protocol executions is bounded by a polynomial in λ, while CQ + CP + CG + DLS is negligible in λ.
+Theorem 7.1. Fix any δ > 0; the honest strategy in the protocol is a δ-Nash equilibrium against any coalition commanding a proportion of stake less than (1 − )/2 − σ for some constants ,σ w (0,1) as in Theorem 5.2, provided that the maximum total rewards Pall provided in all possible protocol executions is bounded by a polynomial in λ, while CQ + CP + CG + DLS is negligible in λ.
 Proof sketch. Consider a coalition of rational players V restricted as in the statement of the theorem, that engages in a protocol execution together with a number of other players that follow the protocol faithfully for a total number of L epochs. We will show that any deviation from the protocol will not result in substantially higher rewards for V . Observe that based on Theorem 5.2, no matter the strategy of V , with probability 1 − (L/R)(CQ + CP + CG) the protocol will enable all users to obtain the rewards they are entitled to as slot leaders and input endorsers. The latter stems from the following. First, from persistence and liveness, at least one honest block will be included every k blocks and hence, in each epoch, all input endorsers that follow the protocol will have the opportunity to act as input endorsers as many times they were elected to be. Second, the rewards received will be proportional to the times each party is an input endorser and issued a block successfully as well as equal to the number of times it is a slot leader. We observe that except with probability (L/R)(CQ+CP+CG) the utility received by coalition V is equal to RV . It follows that player V has expected utility at most E PAll, where PAll is the maximum amount of rewards produced in the lifetime of all possible executions. The result follows by the assumption in the statement of the theorem since (L/R)( .
 Remark 3. In the above theorem, for simplicity, we assumed that protocol costs are not affecting the final utility (in essence this means that protocol costs are assumed to be negligible). Nevertheless, it is straightforward to extend the proof to cover a setting where a negative term is introduced in the payoff function for each player proportional to the number of times inputs are endorsed and the number of messages transmitted for the MPC protocol. The proof would be resilient to these modifications because endorsed inputs and MPC protocol messages cannot be stifled by the adversary and hence the reward function can be designed with suitable weights for such actions that offsets their cost. Still note that the rewards provided are assumed to be “flat” for both slots and endorsed inputs and thus the costs would also have to be flat. We leave for future work the investigation of a more refined setting where costs and rewards are proportional to the actual computational steps needed to verify transactions and issue blocks.
 Remark 4. The reward function described, only considers the number of times an entity was an input endorser without considering the amount of work that was put to verify the given transactions. Furthermore it is not sensitive to whether a slot leader issued a block or not in its assigned time slot. We next provide some context behind these choices. First suppose that slot leaders do not receive a reward when they do not issue a block. It is easy to see that when all parties follow the protocol the parties will receive the proportion from the reward pool that is associated to block issuance roughly proportional to their stake. Nevertheless, a malicious coalition can easily increase the ratio of these rewards by performing a block withholding attack (in this case this would amount to a selfish mining attack). Given that this happens with non-negligible probability a straightforward definition of RV (E) that respects this assignment is vulnerable to attack and hence a δ-Nash equilibrium theorem cannot be shown. Next, we consider the case of extending the reward function so that input endorsers that are rewarded based on the transactions they verify (as opposed to the flat reward we considered in the above theorem). Special care is necessary to design this function. Indeed the straightforward way to implement it, which is if the first input endorser to verify a transaction that is part of the pool can make a higher claim for its fee, then there is a strategy for an adversary to deviate from the protocol and improve its ratio of rewards: perform block withholding and/or endorsed input censorship to remove endorsed inputs from the blockchain that originate to honest parties. Then include the removed transactions in endorsed input that will be transmitted in the last possible opportunity. As before, given the attack, the natural way to define RV (E) is susceptible to it and hence a δ-Nash equilibrium theorem cannot be shown.
 A possible direction for ameliorating the problem raised in Remark 4 above, is to share the transaction fee between all the input endorsers that endorsed it. This suggests the following modification to the protocol: whenever you are an input endorser you should attempt to include all transactions that you have collected for a sequence of k slots and retransmit your endorsed input in case it is removed from the main chain. We leave the analysis of such class of reward mechanisms for future work.
-8Stake Delegation
+8fStake Delegation
 As discussed in the previous section, stakeholders must be online in order to generate blocks when they are selected as slot leaders. However, this might be unattractive to stakeholders with a small stake in the system. Moreover, requiring that a majority of elected stakeholders participate in the coin tossing protocol for refreshing randomness introduces a strain on the on the stakeholders and the network, since it might require broadcasting and storing a large number of commitments and shares.
 We mitigate these issues by providing a method for reducing the size of the group of stakeholders that engage in the coin tossing protocol. Instead of the elected stakeholders directly forming the committee that will run coin tossing, a group of delegates will act on their behalf. In more detail, we put forth a delegation scheme, whereby stakeholders will authorize other entities, called delegates, who may be stakeholders themselves, to represent them in the coin tossing protocol. A delegate may participate in the protocol only if it represents a certain number of stakeholders whose aggregate stake exceeds a given threshold. Such a participation threshold ensures that a “fragmentation” attack, that aims to increase the delegate population in order to hurt the performance of the protocol, cannot incur a large penalty as it is capable to force the size of the committee that runs the protocol to be small (it is worth noting that the delegation mechanism is similar to mining pools in proof-of-work blockchain protocols).
-8.1Minimum Committee Size
+8.1fMinimum Committee Size
 To appreciate the benefits of delegation, recall that in the basic protocol (πDPoS) a committee member selected by weighing by stake is honest with probability 1/2 +  (this being the fraction of the stake held by honest players). Thus, the number of honest players selected by k invocations of weighing by stake is a binomial distribution. We are interested in the probability of a malicious majority, which can be directly controlled by a Chernoff bound.  Consider the case that  = 0.05; then we have the bound exp(−0.00138 · k) which provides an error of 1/1000 as long as k ≥ 5000. Similarly, in the case  = 0.1, we have the bound exp(−0.00625k) which provides the same error for k ≥ 1100.
 We observe that in order to withstand a significant number of epochs, say 215 (which, if we equate a period with one day, will be 88 years), and require error probability 2−40, we need that k ≥ 32648.
 In cases where the wealth in the system is not concentrated among a small set of stakeholders the above choice is bound to create a very large committee. (Of course, the maximum size of the committee is k.)
-8.2Delegation Scheme.
+8.2fDelegation Scheme.
 The concept of delegation is simple: any stakeholder can allow a delegate to generate blocks on her behalf. In the context of our protocol, where a slot leader signs the block it generates for a certain slot, such a scheme can be implemented in a straightforward way based on proxy signatures [10].
 A stakeholder can transfer the right to generate blocks by creating a proxy signing key that allows the delegate to sign messages of the form (st,d,slj) (i.e., the format of messages signed in Protocol πDPoS to authenticate a block). In order to limit the delegate’s block generation power to a certain range of epochs/slots, the stakeholder can limit the proxy signing key’s valid message space to strings ending with a slot number slj within a specific range of values. The delegate can use a proxy signing key from a given stakeholder to simply run Protocol πDPoS on her behalf, signing the blocks this stakeholder was elected to generate with the proxy signing key. This simple scheme is secure due to the Verifiability and Prevention of Misuse properties of proxy signature schemes, which ensure that any stakeholder can verify that a proxy signing key was actually issued by a specific stakeholder to a specific delegate and that the delegate can only use these keys to sign messages inside the key’s valid message space, respectively. We remark that while proxy signatures can be described as a high level generic primitive, it is easy to construct such schemes from standard digital signature schemes through delegation-by-proxy as shown in [10]. In this construction, a stakeholder signs a certificate specifying the delegates identity (e.g., its public key) and the valid message space. Later on, the delegate can sign messages within the valid message space by providing signatures for these messages under its own public key along with the signed certificate. As an added advantage, proxy signature schemes can also be built from aggregate signatures in such a way that signatures generated under a proxy signing key have essentially the same size as regular signatures [10].
 An important consideration in the above setting is the fact that a stakeholder may want to withdraw her support to a stakeholder prior to its proxy signing key expiration. Observe that proxy signing keys can be uniquely identified and thus they may be revoked by a certificate revocation list within the blockchain.
-8.2.1Eligibility threshold
+8.2.1fEligibility threshold
 Delegation as described above can ameliorate fragmentation that may occur in the stake distribution. Nevertheless, this does not prevent a malicious stakeholder from dividing its stake to multiple accounts and, by refraining from delegation, induce a very large committee size. To address this, as mentioned above, a threshold T, say 1%, may be applied. This means that any delegate representing less a fraction less than T of the total stake is automatically barred from being a committee member. This can be facilitated by redistributing the voting rights of delegates representing less than T to other delegates in a deterministic fashion (e.g., starting from those with the highest stake and breaking ties according to lexicographic order). Suppose that a committee has been formed,
 C1,...,Cm, from a total of k draws of weighing by stake. Each committee member will hold ki such votes where Pmi=1 ki = k. Based on the eligibility threshold above it follows that m ≤ T−1 (the maximum value is the case when all stake is distributed in T−1 delegates each holding T of the stake).
-9Attacks Discussion
+9fAttacks Discussion
 We next discuss a number of practical attacks and indicate how they are reflected by our modeling and mitigated.
 Double spending attacks In a double spending attack, the adversary wishes to revert a transaction that is confirmed by the network. The objective of the attack is to issue a transaction, e.g., a payment from an adversarial account holder to a victim recipient, have the transaction confirmed and then revert the transaction by, e.g., including in the ledger a second conflicting transaction. Such an attack is not feasible under the conditions of Theorem 5.2. Indeed, persistence ensures that once the transaction is confirmed by an honest player, all other honest players from that point on will never disagree regarding this transaction. Thus it will be impossible to bring the system to a state where the confirmed transaction is invalidated (assuming all preconditions of the theorem hold). See the next section for an experimental discussion about double spending.
 Grinding attacks In stake grinding attacks, the adversary tries to influence the slot leader selection process to improve its chances of being selected to generate blocks (which can be used to perform other attacks such as double spending). Basically, when generating a block that is taken as input by the slot leader selection process, the adversary first tests several possible block headers and content in order to find the one that gives it the best chance of being selected as a slot leader again in the future. While this attack affects PoS based cryptocurrencies that collect randomness for the slot leader selection process from raw data in the blockchain itself (i.e. from block headers and content), our protocol uses a standard coin tossing protocol that is proven to generate unbiased uniform randomness as discussed in Section 5.2. We show that an adversary cannot influence the randomness generated in Figure 13, which is guaranteed to be uniformly random, thus guaranteeing that slot leaders are selected with probability proportional to their stake.
@@ -1403,65 +1403,65 @@ Long-range attacks An attacker who wishes to double spend at a later point in ti
 Nothing at stake attacks The “nothing at stake” problem refers in general to attacks against PoS blockchain systems that are facilitated by shareholders continuing simultaneously multiple blockchains exploiting the fact that little computational effort is needed to build a PoS blockchain. Provided that stakeholders are frequently online, nothing at stake is taken care of by our analysis of forkable strings (even if the adversary brute-forces all possible strategies to fork the evolving blockchain in the near future, there is none that is viable), and our chain selection rule that instructs players to ignore very deep forks that deviate from the block they received the last time they were online. It is also worth noting that, contrary to PoW-based blockchains, in our protocol it is infeasible to have a fork generated in earnest by two shareholders. This is because slots are uniquely assigned and thus at any given moment there is a single uniquely identified shareholder that is elected to advance the blockchain. Players following the longest chain rule will adopt the newly minted block (unless the adversary presents at that moment an alternative blockchain using older blocks). It is remarked in [13] that the “tragedy of commons” might lead stakeholders in some PoS based schemes to adhere to attacks because they do not have the power to deter attacks by themselves and would incur financial losses even if they did not join the attack. This would lead rational stakeholders to accept small bribes in alternative currencies that might at least obtain some financial gain. However, in the incentive structure of Ouroboros, slot leaders and endorsers who could potentially join an attack would receive rewards in both the main and the adversarial chain, resulting in those stakeholders not achieving higher profits by joining the attack.
 Past majority attacks As stake moves our assumption is that only the current majority of stakeholders is honest. This means that past account keys (which potentially do not hold any stake at present) may be compromised. This leads to a potential vulnerability for any PoS system since a set of malicious shareholders from the past can build an alternative blockchain exploiting such old accounts and the fact that it is effortless to build such a blockchain. In light of Theorem 5.2 such attack can only occur against shareholders who are not frequently online to observe the evolution of the system or in case the stake shifts are higher than what is anticipated by the preconditions of the theorem. This can be seen a special instance of the nothing at stake problem, where the attacker no longer owns any stake in the system and is thus free from any financial losses when conducting the attack.
 Selfish-mining In this type of attack, an attacker withholds blocks and releases them strategically attempting to drop honestly generated blocks from the main chain. In this way the attacker reduces chain growth and increases the relative ratio of adversarially generated blocks. In conventional reward schemes, as that of bitcoin, this has serious implications as it enables the attacker to obtain a higher rate of rewards compared to the rewards it would be receiving in case it was following the honest strategy. Using our reward mechanism however, selfish mining attacks are neutralized. The intuition behind this, is that input endorsers, who are the entities that receive rewards proportionally to their contributions, cannot be stifled because of block withholding: any input endorser can have its contribution accepted for a sufficiently long period of time after its endorsement took place, thus ensuring it will be incorporated into the blockchain (due to sufficient chain quality and chain growth). Given that input endorsers’ contributions are (approximately) proportional to their stake this ensures that reward distribution cannot be affected substantially by block withholding.
-10Experimental Results
+10fExperimental Results
 We have implemented a prototype instantiation of Ouroboros in Haskell as well as in the Rustbased Parity Ethereum client in order to evaluate its concrete performance. More specifically, we have implemented Protocol πDPoS using Protocol πDLS to generate leader selection parameters (i.e., generating fresh randomness for the weighed stake sampling procedure). For this instantiation, we use the PVSS scheme of [39] implemented over the elliptic curve secp256r1. This PVSS scheme’s share verification information includes a commitment to the secret, which is also used as the commitment specified in protocol πDLS; this eliminates the need for a separate commitment to be generated and stored in the blockchain. In order to obtain better efficiency, the final output ρ of Protocol πDLS is a uniformly random binary string of 32 bytes. This string is then used as a seed for a PRG (ChaCha in our implementation, [8]) and stretched into R random labels of logτ bits corresponding to each slot in an epoch. The weighing by stake leader selection process is then implemented by using the random binary string associated to each epoch to perform the sequence of coin-flips for selecting a stakeholder. The signature scheme used for signing blocks is ECDSA, also implemented over curve secp256r1.
-10.1Transaction Confirmation Time Under Optimal Network Conditions
+10.1fTransaction Confirmation Time Under Optimal Network Conditions
 We first examine the time required for confirming a transaction in a setting where the network is not under substantial load and transactions are processed as they appear.
 Figure 14: Transaction confirmation times in minutes that achieve assurance 99.9% against a hypothetical double spending attack with different levels of adversarial power for Bitcoin and Ouroboros (both covert and general adversaries).
 In Fig. 14 we lay out a comparison in terms of transaction confirmation time between Bitcoin and Ouroboros showing how much a verifier has to wait to be sure that the best possible  doublespending attack succeeds with probability less than 0.1%. In the case of Bitcoin, we consider a double-spending attacker that commands a certain percentage of total hashing power and wishes to revert a transaction. The attacker attempts to double-spend via a block-witholding attack as described in the same paper (the attacker mines a private fork and releases it when it is long enough). In the case of Ouroboros we consider a double spending attacker that attempts to brute force the space of all possible forks for the current slot leader distribution in a certain segment of the protocol and commands a certain percentage of the total stake. We consider both the covert and the general adversarial setting for Ouroboros.
 In all of the scenarios, we measure the number of minutes that one has to wait in order to achieve probability of double spending less than 0.1%. In Fig. 15 we present a graph that illustrates the speedup graphically.
 We note that the above measurements compare our Ouroboros implementation with Bitcoin in the way the two systems are parameterized (with 10 minute block production rate for Bitcoin and 20 second slots for Ouroboros, a conservative parameter selection). Exploring alternative parameterizations for Bitcoin (such as making the proof-of-work easier) can speed up the transaction processing, nevertheless this cannot be done without carefully measuring the impact on overall security.
-10.2Absolute Performance of Ouroboros
+10.2fAbsolute Performance of Ouroboros
 We implemented Ouroboros as an instance of the Rust-based Ethereum Parity client.9 Subsequently, experiments were run using Amazon’s Elastic Compute Cloud (EC2) ‘c4.2xlarge‘ instances in the ‘us-east-1‘ region with a smaller “runner” instance responsible for coordinating each of the “worker” instances.
 Each experiment consists of several steps:
 Figure 15: Ouroboros vs. Bitcoin speedup of transaction confirmation time against a hypothetical double spending attacker for assurance level 99.9%. Ouroboros is at least 10 to 5 times faster for regular adversaries and 16 to 10 times faster for covert adversaries.
-1.Each worker instance builds a clean Docker image containing a specific revision of our fork of the Parity software  containing the Ouroboros proof-of-concept changes based on the Parity 1.6.8 release.
-2.Each worker instance is started in an “isolated” mode where none of the nodes talk to each other. During this period, a Parity account is recovered on each node and a start time for the network is established.
-3.Each worker instance is restarted in a production mode that allows communication between the nodes and transactions to be mined.
-4.A single worker instance is informed about all the other nodes. All nodes become aware of all other nodes via Parity’s peer-to-peer discovery methods.
-5.Each worker instance has a number of transactions generated and ingested.
+1.fEach worker instance builds a clean Docker image containing a specific revision of our fork of the Parity software  containing the Ouroboros proof-of-concept changes based on the Parity 1.6.8 release.
+2.fEach worker instance is started in an “isolated” mode where none of the nodes talk to each other. During this period, a Parity account is recovered on each node and a start time for the network is established.
+3.fEach worker instance is restarted in a production mode that allows communication between the nodes and transactions to be mined.
+4.fA single worker instance is informed about all the other nodes. All nodes become aware of all other nodes via Parity’s peer-to-peer discovery methods.
+5.fEach worker instance has a number of transactions generated and ingested.
 In each experiment, 650,000 total transactions are generated between the participating nodes who shared stake equally. The amount transferred in any given transaction is small enough to avoid any account running out of funds. Each instance generates all the transactions using a hardcoded shared random seed, then keeps the transactions originating from the local user account. 20 transactions are saved in a single JSON file, ready to be directly passed to the Parity RPC endpoint using the ‘curl‘ command line tool. During ingestion, a single file of 20 transactions is ingested and one second is spent idle between each file to avoid overwhelming the instances with too many requests.
 Various setups were tested, focusing on adjusting the Ouroboros slot duration and the number of participating nodes. 10, 20, 30, and 40 nodes were tested, ultimately limited by the number of
 instances allowed in a single EC2 region. Slot durations of 5, 10, and 20 seconds were also tested. Variance between experiments was small. In Figure 16 we present the case of 40 nodes and slot length of 5 seconds that exhibits a median value of 257.6 transaction per second.
-11Acknowledgements
+11fAcknowledgements
 We thank Ioannis Konstantinou who contributed in a preliminary version of our protocol. We thank Lars Bru¨njes, Duncan Coutts, Kawin Worrasangasilpa for comments on previous drafts of the article. We thank Peter Gaˇzi for comments on previous drafts of the article and assisting us to generalize Theorem 4.26 to viable forks. We thank George Agapov for the prototype implementation of our protocol in Haskell and Jake Goulding for the Parity based implementation.
 References
-[1]Noga Alon and Joel Spencer. The Probabilistic Method. Wiley, 3rd edition, 2008.
-[2]Giuseppe Ateniese, Ilario Bonacina, Antonio Faonio, and Nicola Galesi. Proofs of space: When space is of the essence. In Michel Abdalla and Roberto De Prisco, editors, Security and Cryptography for Networks - 9th International Conference, SCN 2014, Amalfi, Italy, September 3-5, 2014. Proceedings, volume 8642 of Lecture Notes in Computer Science, pages 538–557. Springer, 2014.
-[3]Yonatan Aumann and Yehuda Lindell. Security against covert adversaries: Efficient protocols for realistic adversaries. J. Cryptology, 23(2):281–343, 2010.
-[4]Iddo Bentov, Ariel Gabizon, and Alex Mizrahi. Cryptocurrencies without proof of work. CoRR, abs/1406.5694, 2014.
-[5]Iddo Bentov, Charles Lee, Alex Mizrahi, and Meni Rosenfeld. Proof of activity: Extending bitcoin’s proof of work via proof of stake [extended abstract]y. SIGMETRICS Performance Evaluation Review, 42(3):34–37, 2014.
-[6]Iddo Bentov, Rafael Pass, and Elaine Shi. The sleepy model of consensus. IACR Cryptology ePrint Archive, 2016:918, 2016.
-[7]Iddo Bentov, Rafael Pass, and Elaine Shi. Snow white: Provably secure proofs of stake. IACR Cryptology ePrint Archive, 2016:919, 2016.
-[8]Daniel J. Bernstein. Chacha, a variant of salsa20. In SASC: The State of the Art of Stream Ciphers., 2008.
-[9]Manuel Blum. Coin flipping by telephone. In Allen Gersho, editor, Advances in Cryptology: A Report on CRYPTO 81, CRYPTO 81, IEEE Workshop on Communications Security, Santa Barbara, California, USA, August 24-26, 1981., pages 11–15. U. C. Santa Barbara, Dept. of Elec. and Computer Eng., ECE Report No 82-04, 1981.
-[10]Alexandra Boldyreva, Adriana Palacio, and Bogdan Warinschi. Secure proxy signature schemes for delegation of signing rights. J. Cryptology, 25(1):57–115, 2012.
-[11]Joseph Bonneau. Why buy when you can rent? - bribery attacks on bitcoin-style consensus. In Jeremy Clark, Sarah Meiklejohn, Peter Y. A. Ryan, Dan S. Wallach, Michael Brenner, and Kurt Rohloff, editors, Financial Cryptography and Data Security - FC 2016 International Workshops, BITCOIN, VOTING, and WAHC, Christ Church, Barbados, February 26, 2016, Revised Selected Papers, volume 9604 of Lecture Notes in Computer Science, pages 19–26. Springer, 2016.
-[12]Vitalik Buterin. Long-range attacks: The serious problem with adaptive proof of work. https://blog.ethereum.org/2014/05/15/long-range-attacks-the-serious-problem-withadaptive-proof-of-work/, 2014.
-[13]Vitalik Buterin. Proof of stake faq. https://github.com/ethereum/wiki/wiki/Proof-of-StakeFAQ, 2016.
-[14]Ran Canetti. Universally composable signature, certification, and authentication. In 17th IEEE Computer Security Foundations Workshop, (CSFW-17 2004), 28-30 June 2004, Pacific Grove, CA, USA, page 219. IEEE Computer Society, 2004.
-[15]David Chaum. Untraceable electronic mail, return addresses, and digital pseudonyms. Commun. ACM, 24(2):84–88, 1981.
-[16]David Chaum. The dining cryptographers problem: Unconditional sender and recipient untraceability. J. Cryptology, 1(1):65–75, 1988.
-[17]George Danezis and Sarah Meiklejohn. Centrally banked cryptocurrencies. In 23nd Annual Network and Distributed System Security Symposium, NDSS 2016, San Diego, California, USA, February 21-24, 2016. The Internet Society, 2016.
-[18]Bernardo Machado David, Peter Gazi, Aggelos Kiayias, and Alexander Russell. Ouroboros praos: An adaptively-secure, semi-synchronous proof-of-stake protocol. IACR Cryptology ePrint Archive, 2017:573, 2017.
-[19]Cynthia Dwork, Nancy A. Lynch, and Larry J. Stockmeyer. Consensus in the presence of partial synchrony. J. ACM, 35(2):288–323, 1988.
-[20]Stefan Dziembowski, Sebastian Faust, Vladimir Kolmogorov, and Krzysztof Pietrzak. Proofs of space. In Rosario Gennaro and Matthew Robshaw, editors, Advances in Cryptology - CRYPTO 2015 - 35th Annual Cryptology Conference, Santa Barbara, CA, USA, August 16-20, 2015, Proceedings, Part II, volume 9216 of Lecture Notes in Computer Science, pages 585–605. Springer, 2015.
-[21]Ittay Eyal and Emin Gun Sirer. Majority is not enough: Bitcoin mining is vulnerable. In Angelos D. Keromytis, editor, Financial Cryptography, volume 7397 of Lecture Notes in Computer Science. Springer, 2014.
-[22]Paul Feldman. A practical scheme for non-interactive verifiable secret sharing. In 28th Annual Symposium on Foundations of Computer Science, Los Angeles, California, USA, 27-29 October 1987, pages 427–437. IEEE Computer Society, 1987.
-[23]Bryan Ford. Delegative democracy. http://www.brynosaurus.com/deleg/deleg.pdf, 2002.
-[24]Juan A. Garay, Aggelos Kiayias, and Nikos Leonardos. The bitcoin backbone protocol: Analysis and applications. In Elisabeth Oswald and Marc Fischlin, editors, Advances in Cryptology - EUROCRYPT 2015 - 34th Annual International Conference on the Theory and Applications of Cryptographic Techniques, Sofia, Bulgaria, April 26-30, 2015, Proceedings, Part II, volume 9057 of Lecture Notes in Computer Science, pages 281–310. Springer, 2015.
-[25]Charles M Grinstead and J Laurie Snell. Introduction to Probability. American Mathematical Society, 2nd edition, 1997.
-[26]Aggelos Kiayias and Giorgos Panagiotakos. Speed-security tradeoffs in blockchain protocols. Cryptology ePrint Archive, Report 2015/1019, 2015. http://eprint.iacr.org/2015/1019.
-[27]Silvio Micali. ALGORAND: the efficient and democratic ledger. CoRR, abs/1607.01341, 2016.
-[28]Tal Moran and Ilan Orlov. Proofs of space-time and rational proofs of storage. Cryptology ePrint Archive, Report 2016/035, 2016. http://eprint.iacr.org/2016/035.
-[29]Rajeev Motwani and Prabhakar Raghavan. Randomized Algorithms. Cambridge University Press, New York, NY, USA, 1995.
-[30]Satoshi Nakamoto. Bitcoin: A peer-to-peer electronic cash system. http://bitcoin.org/bitcoin.pdf, 2008.
-[31]Noam Nisan, Tim Roughgarden, Eva Tardos, and Vijay V. Vazirani. Algorithmic Game Theory. Cambridge University Press, New York, NY, USA, 2007.
-[32]Karl J. O’Dwyer and David Malone. Bitcoin mining and its energy footprint. ISSC 2014 / CIICT 2014, Limerick, June 26–27, 2014.
-[33]Sunoo Park, Krzysztof Pietrzak, Albert Kwon, Jo¨el Alwen, Georg Fuchsbauer, and Peter Gazi. Spacemint: A cryptocurrency based on proofs of space. IACR Cryptology ePrint Archive, 2015:528, 2015.
-[34]Rafael Pass. Cryptography and game theory. Securty and Cryptography for Networks, 2016, invited talk., 2016.
-[35]Rafael Pass, Lior Seeman, and Abhi Shelat. Analysis of the blockchain protocol in asynchronous networks. IACR Cryptology ePrint Archive, 2016:454, 2016.
-[36]Rafael Pass and Elaine Shi. Fruitchains: A fair blockchain. IACR Cryptology ePrint Archive, 2016:916, 2016.
-[37]Alexander Russell, Cristopher Moore, Aggelos Kiayias, and Saad Quader. Forkable strings are rare. Cryptology ePrint Archive, Report 2017/241, March 2017. http://eprint.iacr.org/ 2017/241.
-[38]Ayelet Sapirshtein, Yonatan Sompolinsky, and Aviv Zohar. Optimal selfish mining strategies in bitcoin. CoRR, abs/1507.06183, 2015.
-[39]Berry Schoenmakers. A simple publicly verifiable secret sharing scheme and its application to electronic voting. In Michael J. Wiener, editor, Advances in Cryptology - CRYPTO ’99, 19th Annual International Cryptology Conference, Santa Barbara, California, USA, August 15-19, 1999, Proceedings, volume 1666 of Lecture Notes in Computer Science, pages 148–164. Springer, 1999.
+[1]fNoga Alon and Joel Spencer. The Probabilistic Method. Wiley, 3rd edition, 2008.
+[2]fGiuseppe Ateniese, Ilario Bonacina, Antonio Faonio, and Nicola Galesi. Proofs of space: When space is of the essence. In Michel Abdalla and Roberto De Prisco, editors, Security and Cryptography for Networks - 9th International Conference, SCN 2014, Amalfi, Italy, September 3-5, 2014. Proceedings, volume 8642 of Lecture Notes in Computer Science, pages 538–557. Springer, 2014.
+[3]fYonatan Aumann and Yehuda Lindell. Security against covert adversaries: Efficient protocols for realistic adversaries. J. Cryptology, 23(2):281–343, 2010.
+[4]fIddo Bentov, Ariel Gabizon, and Alex Mizrahi. Cryptocurrencies without proof of work. CoRR, abs/1406.5694, 2014.
+[5]fIddo Bentov, Charles Lee, Alex Mizrahi, and Meni Rosenfeld. Proof of activity: Extending bitcoin’s proof of work via proof of stake [extended abstract]y. SIGMETRICS Performance Evaluation Review, 42(3):34–37, 2014.
+[6]fIddo Bentov, Rafael Pass, and Elaine Shi. The sleepy model of consensus. IACR Cryptology ePrint Archive, 2016:918, 2016.
+[7]fIddo Bentov, Rafael Pass, and Elaine Shi. Snow white: Provably secure proofs of stake. IACR Cryptology ePrint Archive, 2016:919, 2016.
+[8]fDaniel J. Bernstein. Chacha, a variant of salsa20. In SASC: The State of the Art of Stream Ciphers., 2008.
+[9]fManuel Blum. Coin flipping by telephone. In Allen Gersho, editor, Advances in Cryptology: A Report on CRYPTO 81, CRYPTO 81, IEEE Workshop on Communications Security, Santa Barbara, California, USA, August 24-26, 1981., pages 11–15. U. C. Santa Barbara, Dept. of Elec. and Computer Eng., ECE Report No 82-04, 1981.
+[10]fAlexandra Boldyreva, Adriana Palacio, and Bogdan Warinschi. Secure proxy signature schemes for delegation of signing rights. J. Cryptology, 25(1):57–115, 2012.
+[11]fJoseph Bonneau. Why buy when you can rent? - bribery attacks on bitcoin-style consensus. In Jeremy Clark, Sarah Meiklejohn, Peter Y. A. Ryan, Dan S. Wallach, Michael Brenner, and Kurt Rohloff, editors, Financial Cryptography and Data Security - FC 2016 International Workshops, BITCOIN, VOTING, and WAHC, Christ Church, Barbados, February 26, 2016, Revised Selected Papers, volume 9604 of Lecture Notes in Computer Science, pages 19–26. Springer, 2016.
+[12]fVitalik Buterin. Long-range attacks: The serious problem with adaptive proof of work. https://blog.ethereum.org/2014/05/15/long-range-attacks-the-serious-problem-withadaptive-proof-of-work/, 2014.
+[13]fVitalik Buterin. Proof of stake faq. https://github.com/ethereum/wiki/wiki/Proof-of-StakeFAQ, 2016.
+[14]fRan Canetti. Universally composable signature, certification, and authentication. In 17th IEEE Computer Security Foundations Workshop, (CSFW-17 2004), 28-30 June 2004, Pacific Grove, CA, USA, page 219. IEEE Computer Society, 2004.
+[15]fDavid Chaum. Untraceable electronic mail, return addresses, and digital pseudonyms. Commun. ACM, 24(2):84–88, 1981.
+[16]fDavid Chaum. The dining cryptographers problem: Unconditional sender and recipient untraceability. J. Cryptology, 1(1):65–75, 1988.
+[17]fGeorge Danezis and Sarah Meiklejohn. Centrally banked cryptocurrencies. In 23nd Annual Network and Distributed System Security Symposium, NDSS 2016, San Diego, California, USA, February 21-24, 2016. The Internet Society, 2016.
+[18]fBernardo Machado David, Peter Gazi, Aggelos Kiayias, and Alexander Russell. Ouroboros praos: An adaptively-secure, semi-synchronous proof-of-stake protocol. IACR Cryptology ePrint Archive, 2017:573, 2017.
+[19]fCynthia Dwork, Nancy A. Lynch, and Larry J. Stockmeyer. Consensus in the presence of partial synchrony. J. ACM, 35(2):288–323, 1988.
+[20]fStefan Dziembowski, Sebastian Faust, Vladimir Kolmogorov, and Krzysztof Pietrzak. Proofs of space. In Rosario Gennaro and Matthew Robshaw, editors, Advances in Cryptology - CRYPTO 2015 - 35th Annual Cryptology Conference, Santa Barbara, CA, USA, August 16-20, 2015, Proceedings, Part II, volume 9216 of Lecture Notes in Computer Science, pages 585–605. Springer, 2015.
+[21]fIttay Eyal and Emin Gun Sirer. Majority is not enough: Bitcoin mining is vulnerable. In Angelos D. Keromytis, editor, Financial Cryptography, volume 7397 of Lecture Notes in Computer Science. Springer, 2014.
+[22]fPaul Feldman. A practical scheme for non-interactive verifiable secret sharing. In 28th Annual Symposium on Foundations of Computer Science, Los Angeles, California, USA, 27-29 October 1987, pages 427–437. IEEE Computer Society, 1987.
+[23]fBryan Ford. Delegative democracy. http://www.brynosaurus.com/deleg/deleg.pdf, 2002.
+[24]fJuan A. Garay, Aggelos Kiayias, and Nikos Leonardos. The bitcoin backbone protocol: Analysis and applications. In Elisabeth Oswald and Marc Fischlin, editors, Advances in Cryptology - EUROCRYPT 2015 - 34th Annual International Conference on the Theory and Applications of Cryptographic Techniques, Sofia, Bulgaria, April 26-30, 2015, Proceedings, Part II, volume 9057 of Lecture Notes in Computer Science, pages 281–310. Springer, 2015.
+[25]fCharles M Grinstead and J Laurie Snell. Introduction to Probability. American Mathematical Society, 2nd edition, 1997.
+[26]fAggelos Kiayias and Giorgos Panagiotakos. Speed-security tradeoffs in blockchain protocols. Cryptology ePrint Archive, Report 2015/1019, 2015. http://eprint.iacr.org/2015/1019.
+[27]fSilvio Micali. ALGORAND: the efficient and democratic ledger. CoRR, abs/1607.01341, 2016.
+[28]fTal Moran and Ilan Orlov. Proofs of space-time and rational proofs of storage. Cryptology ePrint Archive, Report 2016/035, 2016. http://eprint.iacr.org/2016/035.
+[29]fRajeev Motwani and Prabhakar Raghavan. Randomized Algorithms. Cambridge University Press, New York, NY, USA, 1995.
+[30]fSatoshi Nakamoto. Bitcoin: A peer-to-peer electronic cash system. http://bitcoin.org/bitcoin.pdf, 2008.
+[31]fNoam Nisan, Tim Roughgarden, Eva Tardos, and Vijay V. Vazirani. Algorithmic Game Theory. Cambridge University Press, New York, NY, USA, 2007.
+[32]fKarl J. O’Dwyer and David Malone. Bitcoin mining and its energy footprint. ISSC 2014 / CIICT 2014, Limerick, June 26–27, 2014.
+[33]fSunoo Park, Krzysztof Pietrzak, Albert Kwon, Jo¨el Alwen, Georg Fuchsbauer, and Peter Gazi. Spacemint: A cryptocurrency based on proofs of space. IACR Cryptology ePrint Archive, 2015:528, 2015.
+[34]fRafael Pass. Cryptography and game theory. Securty and Cryptography for Networks, 2016, invited talk., 2016.
+[35]fRafael Pass, Lior Seeman, and Abhi Shelat. Analysis of the blockchain protocol in asynchronous networks. IACR Cryptology ePrint Archive, 2016:454, 2016.
+[36]fRafael Pass and Elaine Shi. Fruitchains: A fair blockchain. IACR Cryptology ePrint Archive, 2016:916, 2016.
+[37]fAlexander Russell, Cristopher Moore, Aggelos Kiayias, and Saad Quader. Forkable strings are rare. Cryptology ePrint Archive, Report 2017/241, March 2017. http://eprint.iacr.org/ 2017/241.
+[38]fAyelet Sapirshtein, Yonatan Sompolinsky, and Aviv Zohar. Optimal selfish mining strategies in bitcoin. CoRR, abs/1507.06183, 2015.
+[39]fBerry Schoenmakers. A simple publicly verifiable secret sharing scheme and its application to electronic voting. In Michael J. Wiener, editor, Advances in Cryptology - CRYPTO ’99, 19th Annual International Cryptology Conference, Santa Barbara, California, USA, August 15-19, 1999, Proceedings, volume 1666 of Lecture Notes in Computer Science, pages 148–164. Springer, 1999.
