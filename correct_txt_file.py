@@ -21,7 +21,6 @@ def correct_txt_file(input_txt_file_path, output_txt_file_path, corrected_chars_
     
     corrected_chars_dl = logger.readCSV(corrected_chars_csv_path)
     unknown_char_equiv_d = build_unknown_char_equiv_d(corrected_chars_dl)
-    print(unknown_char_equiv_d)#```````````````````````````````````````````````````````````````````````````````
     
     for input_line in input_lines_t:
         new_corrected_line = ''
