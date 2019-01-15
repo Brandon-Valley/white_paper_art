@@ -70,7 +70,7 @@ def build_final_image(kwargs):
      
     #background 
     #replace this bull shit with something to  deal with whitespace
-    default_colors = {'background_image':        (255,255,255),#white
+    default_colors = {'background_image':        (100,100,100),#(255,255,255),#white
                       'final_image_background':  kwargs['final_image_background_color'],
                       'default_text':            kwargs['background_text_color']}
 
@@ -120,7 +120,7 @@ def build_final_image(kwargs):
     
     print('building unknown char list, MAKE SEPERATE BUTTON FO THIS STUFF!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! ') #`````````````````````````````````````
     unknown_char_list = font_tools.build_unknown_char_list(lines, kwargs['font_path'])
-    print('  unknown char list:  ', len(unknown_char_list))
+#     print('  unknown char list:  ', len(unknown_char_list))
     
      
     print('building color_cords from input image...')

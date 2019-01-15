@@ -127,6 +127,7 @@ def calc_img_dims(lines, font):
         
 #     max_width = pt2px(font.getsize(max_width_line)[0])#just uncommented!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     height = max_height * len(lines) + 2  # perfect or a little over sized
+#     print('height: ', height) #``````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````
     
     width  = int(round(max_line_width * 3 + 0))  # a little over sized , needs to be exactly this # or cuts off text
     

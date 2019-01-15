@@ -18,7 +18,7 @@ FILE_PATH_TEXT_BOX_WIDTH = 80
 
 
 DEFAULT_FONT_NAME = "cour"
-DEFAULT_FONT_SIZE = 40
+DEFAULT_FONT_SIZE = 15
 
 DEFAULT_IMAGE_DIMENSION_RATIO_NUM = 14
 DEFAULT_IMAGE_DIMENSION_RATIO_DIN = 16
@@ -40,6 +40,8 @@ INVALID_ENTRY_COLOR = 'red'
 
 INPUT_TXT_FILE_TYPES = ['.txt']
 INPUT_IMG_FILE_TYPES = ['.png', '.jpg']
+
+DEFAULT_QUALITY_SETTING = 'high' #high or low
 
 
 
@@ -347,7 +349,7 @@ class Edit_Tab(Tab.Tab):
     def quality______widgets_setup(self):
         #quality radio buttons
         self.quality_selected  = StringVar()
-        self.quality_selected.set("low") #default
+        self.quality_selected.set(DEFAULT_QUALITY_SETTING) #default
         self.high_qual_rad_btn = Radiobutton(self.master,text='Show Low Quality Image (Fast)', value='low', variable = self.quality_selected, command = self.quality_rad_btn_sel)
         self.low_qual_rad_btn  = Radiobutton(self.master,text='Save High Quality Image (Slow)', value='high', variable = self.quality_selected, command = self.quality_rad_btn_sel)
 
