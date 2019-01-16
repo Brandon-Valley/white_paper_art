@@ -51,9 +51,9 @@ def text_image(lines, color_cords, default_colors, font):
 #     image2.show()#````````````````````````````````````````````````````````````````````````````````````````````
      
      
-    fill = " o "
+#     fill = " o "
     x = 0
-    w_fill, y = draw.textsize(fill, font)
+    w_fill, y = draw.textsize("A", font)
     
     Image.MAX_IMAGE_PIXELS = 1000000000   #need this here
     
@@ -64,8 +64,8 @@ def text_image(lines, color_cords, default_colors, font):
         
         for letter_num in range(len(line)):
             letter = line[letter_num]
-            w_full = draw.textsize(fill + letter, font)[0]
-            w = w_full - w_fill     # the width of the character on its own
+            w_full = draw.textsize(letter, font)[0]
+            w = w_full# - w_fill     # the width of the character on its own
             
             letter_cords = [line_num, letter_num]
             cur_char = lines[line_num][letter_num]
@@ -78,10 +78,10 @@ def text_image(lines, color_cords, default_colors, font):
                 else: #this was tabbed one to the left forever and nothing bad happened so it probably does nothing
                     char_color = default_colors['default_text']
     
-            draw.text((x_draw, y * line_num), fill + letter, char_color, font)#font = font
+            draw.text((x_draw, y * line_num), letter, char_color, font)#font = font
         
-            iletter = image.crop((x_draw + w_fill, 0, x_draw + w_full, y * len(lines) ))
-            image.show()#````````````````````````````````````````````````````````````````````````````````````````````
+            iletter = image.crop((x_draw, 0, x_draw + w_full, y * len(lines) ))
+#             image.show()#````````````````````````````````````````````````````````````````````````````````````````````
             #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~``````````````````````````````````````````````````````
             iletter_dims = (iletter.width, iletter.height )
             if iletter_dims not in iletter_dim_list:
