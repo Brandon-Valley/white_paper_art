@@ -37,15 +37,19 @@ def text_image(lines, color_cords, default_colors, font):
 
 
     # to get bigger final images, start looking here, by making both image and image2, you cut the max size of the final image in half!
-
+    print('image dims: ', img_dims)#```````````````````````````````````````````````````````````````````````````````````````````````````````````
 
 #     print('here 0 ,!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! font size: ', font.size)#`````````````````````````````````````````````````````````````
     image = Image.new("RGB", img_dims, default_colors['final_image_background']) # scrap image
+#     image.show()#````````````````````````````````````````````````````````````````````````````````````````````
+
 #     print('here 1 ,!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! font size: ', font.size)#`````````````````````````````````````````````````````````````
     draw = ImageDraw.Draw(image)
 #     print('here 2 ,!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! font size: ', font.size)#`````````````````````````````````````````````````````````````
-    image2 = Image.new("RGB", img_dims, default_colors['background_image']) # final image
+    image2 = Image.new("RGB", (1719, 1693), default_colors['background_image']) # final image
 #     print('here 3 ,!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! font size: ', font.size)#`````````````````````````````````````````````````````````````
+#     image2.show()#````````````````````````````````````````````````````````````````````````````````````````````
+     
      
     fill = " o "
     x = 0
@@ -77,7 +81,7 @@ def text_image(lines, color_cords, default_colors, font):
             draw.text((x_draw, y * line_num), fill + letter, char_color, font)#font = font
         
             iletter = image.crop((x_draw + w_fill, 0, x_draw + w_full, y * len(lines) ))
-            
+            image.show()#````````````````````````````````````````````````````````````````````````````````````````````
             #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~``````````````````````````````````````````````````````
             iletter_dims = (iletter.width, iletter.height )
             if iletter_dims not in iletter_dim_list:
@@ -90,7 +94,7 @@ def text_image(lines, color_cords, default_colors, font):
     
             image2.paste(iletter, (x_paste, 0))
             
-#                 image2.show()#````````````````````````````````````````````````````````````````````````````````````````````
+
 #             sleep(2)
 #             print('x_paste:', x_paste)#!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
             x_draw += w_full
