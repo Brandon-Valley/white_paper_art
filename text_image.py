@@ -53,7 +53,7 @@ def text_image(lines, color_cords, default_colors, font):
      
 #     fill = " o "
     x = 0
-    w_fill, y = draw.textsize("A", font)
+    letter_w, letter_h = draw.textsize("A", font)
     
     Image.MAX_IMAGE_PIXELS = 1000000000   #need this here
     
@@ -78,9 +78,9 @@ def text_image(lines, color_cords, default_colors, font):
                 else: #this was tabbed one to the left forever and nothing bad happened so it probably does nothing
                     char_color = default_colors['default_text']
     
-            draw.text((x_draw, y * line_num), letter, char_color, font)#font = font
+            draw.text((x_draw, letter_h * line_num), letter, char_color, font)#font = font
         
-            iletter = image.crop((x_draw, 0, x_draw + w_full, y * len(lines) ))
+            iletter = image.crop((x_draw, 0, x_draw + w_full, letter_h * len(lines) ))
 #             image.show()#````````````````````````````````````````````````````````````````````````````````````````````
             #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~``````````````````````````````````````````````````````
             iletter_dims = (iletter.width, iletter.height )
