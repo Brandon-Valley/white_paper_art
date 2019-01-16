@@ -64,8 +64,8 @@ def text_image(lines, color_cords, default_colors, font):
         
         for letter_num in range(len(line)):
             letter = line[letter_num]
-            w_full = draw.textsize(letter, font)[0]
-            w = w_full# - w_fill     # the width of the character on its own
+#             w_full = draw.textsize(letter, font)[0]
+#             w = w_full# - w_fill     # the width of the character on its own
             
             letter_cords = [line_num, letter_num]
             cur_char = lines[line_num][letter_num]
@@ -80,7 +80,7 @@ def text_image(lines, color_cords, default_colors, font):
     
             draw.text((x_draw, letter_h * line_num), letter, char_color, font)#font = font
         
-            iletter = image.crop((x_draw, 0, x_draw + w_full, letter_h * len(lines) ))
+            iletter = image.crop((x_draw, 0, x_draw + letter_w, letter_h * len(lines) ))
 #             image.show()#````````````````````````````````````````````````````````````````````````````````````````````
             #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~``````````````````````````````````````````````````````
             iletter_dims = (iletter.width, iletter.height )
@@ -97,8 +97,8 @@ def text_image(lines, color_cords, default_colors, font):
 
 #             sleep(2)
 #             print('x_paste:', x_paste)#!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-            x_draw += w_full
-            x_paste += w
+            x_draw += letter_w
+            x_paste += letter_w
         line_num += 1
         
     print('iletter_dim_list:  ', iletter_dim_list) #```````````````````````````````````````````````````````````````````````````
