@@ -46,12 +46,11 @@ def text_image(lines, color_cords, default_colors, font):
 #     print('here 1 ,!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! font size: ', font.size)#`````````````````````````````````````````````````````````````
     draw = ImageDraw.Draw(image)
 #     print('here 2 ,!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! font size: ', font.size)#`````````````````````````````````````````````````````````````
-    image2 = Image.new("RGB", (1719, 1693), default_colors['background_image']) # final image
+#     image2 = Image.new("RGB", (1719, 1693), default_colors['background_image']) # final image
 #     print('here 3 ,!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! font size: ', font.size)#`````````````````````````````````````````````````````````````
 #     image2.show()#````````````````````````````````````````````````````````````````````````````````````````````
      
      
-#     fill = " o "
     x = 0
     letter_w, letter_h = draw.textsize("A", font)
     
@@ -64,8 +63,6 @@ def text_image(lines, color_cords, default_colors, font):
         
         for letter_num in range(len(line)):
             letter = line[letter_num]
-#             w_full = draw.textsize(letter, font)[0]
-#             w = w_full# - w_fill     # the width of the character on its own
             
             letter_cords = [line_num, letter_num]
             cur_char = lines[line_num][letter_num]
@@ -80,30 +77,28 @@ def text_image(lines, color_cords, default_colors, font):
     
             draw.text((x_draw, letter_h * line_num), letter, char_color, font)#font = font
         
-            iletter = image.crop((x_draw, 0, x_draw + letter_w, letter_h * len(lines) ))
-#             image.show()#````````````````````````````````````````````````````````````````````````````````````````````
-            #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~``````````````````````````````````````````````````````
-            iletter_dims = (iletter.width, iletter.height )
-            if iletter_dims not in iletter_dim_list:
-                iletter_dim_list.append(iletter_dims)
+#             iletter = image.crop((x_draw, 0, x_draw + letter_w, letter_h * len(lines) ))
+
+#             iletter_dims = (iletter.width, iletter.height )
+#             if iletter_dims not in iletter_dim_list:
+#                 iletter_dim_list.append(iletter_dims)
             
 #             iletter.show()#`````````````````````````````````````````````````````````````````````````````````````````````````
             
     #         iletter.show()
     #         sleep(1)
     
-            image2.paste(iletter, (x_paste, 0))
+#             image2.paste(iletter, (x_paste, 0))
             
 
 #             sleep(2)
-#             print('x_paste:', x_paste)#!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
             x_draw += letter_w
             x_paste += letter_w
         line_num += 1
         
-    print('iletter_dim_list:  ', iletter_dim_list) #```````````````````````````````````````````````````````````````````````````
-        
-    return image2
+#     print('iletter_dim_list:  ', iletter_dim_list) #```````````````````````````````````````````````````````````````````````````
+
+    return image
 
 
 

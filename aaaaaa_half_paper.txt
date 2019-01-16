@@ -142,6 +142,3 @@ outputs: one for the payment, and one returning the change, if any, back to the 
 It should be noted that fan-out, where a transaction depends on several transactions, and those
 transactions depend on many more, is not a problem here. There is never the need to extract a
 complete standalone copy of a transaction's history.
-                                                                                          
-                                                                                          
-                                                                                                                                                                                        
