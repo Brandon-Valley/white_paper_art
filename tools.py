@@ -122,11 +122,11 @@ def calc_img_dims(lines, font):
 
 #     max_width_line = max(lines, key=lambda s: font.getsize(s)[0])
     # max height is adjusted down because it's too large visually for spacing
-    test_string = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+    test_string = 'a' #if I use this string instead, it adds like 10 blank lines to end of pic, no clue why:  'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
     max_height = (font.getsize(test_string)[1])
         
 #     max_width = pt2px(font.getsize(max_width_line)[0])#just uncommented!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    height = ( max_height * len(lines) ) + 0  # perfect or a little over sized
+    height = ( max_height * len(lines) ) + 5  # perfect or a little over sized
 #     print('height: ', height) #``````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````
     
     width  = int(round(max_line_width + 1 + 0))  # a little over sized , needs to be exactly this # or cuts off text

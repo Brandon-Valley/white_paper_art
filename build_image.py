@@ -116,7 +116,10 @@ def build_final_image(kwargs):
     #make list of lines to be output in final image
     print('creating text lines...')
     lines = tools.make_correct_lines(ideal_dimentions['num_lines'], ideal_dimentions['line_length'], word_list)
-#     print("number of lines:", len(lines))
+    print('lines: ' , lines)#````````````````````````````````````````````````````````````````````````````````````````````````````````````````
+    print("number of lines:", len(lines))#````````````````````````````````````````````````````````````````````````````````````````````````````````
+    tools.write_text_file('TEST_LINES_TXT.txt', lines)#```````````````````````````````````````````````````````````````````````````````````````````
+    
     
     print('building unknown char list, MAKE SEPERATE BUTTON FO THIS STUFF!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! ') #`````````````````````````````````````
     unknown_char_list = font_tools.build_unknown_char_list(lines, kwargs['font_path'])
