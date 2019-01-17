@@ -73,7 +73,7 @@ def build_final_image(kwargs):
 
     # make this work for filtering    dont clean this up until filtering works !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     #set this to None for no background color separation #there is a reason for this!  this trims the whitespace so that image size can be more consistent!!!!!!!!!!!!
-    input_image_background_color = kwargs['input_image_background_color'] #(255, 255, 255) #gui not done!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+#     input_image_background_color = kwargs['input_image_background_color'] #(255, 255, 255) #gui not done!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
      
     #background 
     #replace this bull shit with something to  deal with whitespace
@@ -134,11 +134,12 @@ def build_final_image(kwargs):
     
      
     print('building color_cords from input image...')
-    color_cord_dict = color_cords.get_color_cords(kwargs['input_image_file_path'], kwargs['image_size'], font_aspect_ratio, input_image_background_color)
+    color_cord_dict = color_cords.get_color_cords(kwargs['input_image_file_path'], kwargs['image_size'], font_aspect_ratio, 
+                                                  kwargs['input_image_background_color'], kwargs['background_text_color'])
 #     print('color_cords: ', color_cord_dict)#`````````````````````````````````````````````````````````````````````````````````````````````````````````````````
      
     print('calculating and adding user defined offset to adjusted_color_cords...')
-    offset_color_cords = offset.offset_color_cords(color_cord_dict, kwargs['image_position_cords'], lines)
+    offset_color_cords = offset.offset_color_cords(color_cord_dict, kwargs['image_position_cords'], lines, kwargs['background_text_color'])
       
       
       

@@ -11,12 +11,9 @@ def text_image(lines, color_cords, default_colors, font):
     
     gc.collect()
 
-
     image = Image.new("RGB", img_dims, default_colors['final_image_background']) # scrap image
-
     draw = ImageDraw.Draw(image)
 
-     
      
     x = 0
     letter_w, letter_h = draw.textsize("A", font)
@@ -26,13 +23,13 @@ def text_image(lines, color_cords, default_colors, font):
     line_num = 0
     for line_num in range(len(lines)):
         line = lines[line_num]
-        x_draw, x_paste = 0, 0
+        x_draw = 0
         
         for letter_num in range(len(line)):
             letter = line[letter_num]
             
             letter_cords = [line_num, letter_num]
-            cur_char = lines[line_num][letter_num]
+#             cur_char = lines[line_num][letter_num]
             
             for color, cord_list in color_cords.items():
                 if letter_cords in color_cords[color]:
@@ -45,7 +42,7 @@ def text_image(lines, color_cords, default_colors, font):
             draw.text((x_draw, letter_h * line_num), letter, char_color, font)#font = font
 
             x_draw += letter_w
-            x_paste += letter_w
+#             x_paste += letter_w
         line_num += 1
         
 
