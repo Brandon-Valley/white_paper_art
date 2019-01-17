@@ -6,7 +6,10 @@ import gc
 import tools
 
 
-def text_image(lines, color_cords, default_colors, font):       
+def text_image(lines, color_cords, default_colors, font):      
+    print('len lines: ', len(lines))#``````````````````````````````````````````````````````````````````````````````````````````````````
+    print('len color cords: ', len(color_cords))#```````````````````````````````````````````````````````````````````````````````````
+     
     img_dims = tools.calc_img_dims(lines, font)
     
     gc.collect()
@@ -30,14 +33,16 @@ def text_image(lines, color_cords, default_colors, font):
             
             letter_cords = [line_num, letter_num]
 #             cur_char = lines[line_num][letter_num]
-            
-            for color, cord_list in color_cords.items():
-                if letter_cords in color_cords[color]:
-                    char_color = color
-                    break
 
-                else: #this was tabbed one to the left forever and nothing bad happened so it probably does nothing
-                    char_color = default_colors['default_text']
+            char_color = color_cords[line_num][letter_num]
+            
+#             for color, cord_list in color_cords.items():
+#                 if letter_cords in color_cords[color]:
+#                     char_color = color
+#                     break
+# 
+#                 else: #this was tabbed one to the left forever and nothing bad happened so it probably does nothing
+#                     char_color = default_colors['default_text']
     
             draw.text((x_draw, letter_h * line_num), letter, char_color, font)#font = font
 

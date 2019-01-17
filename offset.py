@@ -22,6 +22,8 @@ def offset_color_cords(original_color_cords, img_pos, lines, background_text_col
             else:
                 char_color = original_color_cords[line_num - offset_dict['y_offset']][offset_dict['x_offset'] - char_num]
                 new_color_cords_line.append(char_color)
+        new_color_cords.append(new_color_cords_line)
+        
     
 #     left_background_text_color_list = make_color_list(background_text_color, offset_dict['x_offset'])
 #     for line_cord_list in new_color_cords:
