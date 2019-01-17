@@ -14,13 +14,15 @@ def offset_color_cords(original_color_cords, img_pos, lines, background_text_col
         print('line_num: ', line_num)#`````````````````````````````````````````````````````````````````````````````
         new_color_cords_line = []
         for char_num in range(len(line)):
+            print('  char_num: ', char_num)#````````````````````````````````````````````````````````````````````````````
             if (line_num < offset_dict['y_offset'] or
                line_num > offset_dict['y_offset'] + og_c_cords_len - 1 or
                char_num < offset_dict['x_offset'] or
                char_num > offset_dict['x_offset'] + len(original_color_cords[line_num - offset_dict['y_offset']])):
                 new_color_cords_line.append(background_text_color)
             else:
-                char_color = original_color_cords[line_num - offset_dict['y_offset']][offset_dict['x_offset'] - char_num]
+                print('len of this line in og color cords: ',len(original_color_cords[line_num - offset_dict['y_offset']] ))#```````````````````````````
+                char_color = original_color_cords[line_num - offset_dict['y_offset']][char_num - offset_dict['x_offset'] - 1]
                 new_color_cords_line.append(char_color)
         new_color_cords.append(new_color_cords_line)
         
