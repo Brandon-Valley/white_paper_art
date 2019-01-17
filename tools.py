@@ -91,24 +91,7 @@ def format_data(data):
                 formatted_data += ' ' + data_line
     return formatted_data
     
-#     try:
-#         for data_line in data:
-#             if data_line[0] == ' ' or formatted_data == '':
-#                 formatted_data += data_line
-#             else:
-#                 formatted_data += ' ' + data_line
-#         return formatted_data
-#     except:
-#         raise Exception('ERROR  You probably have some extra lines of spaces in your data text file')
 
-
-# def apply_offset(og_color_cords, offset_d, background_text_color):
-#     new_c_cords = og_color_cords
-#     for color, new_c_cord_list in new_c_cords.items():
-#         for new_c_cord in new_c_cord_list:
-#             new_c_cord[0] += offset_d['y_offset']
-#             new_c_cord[1] += offset_d['x_offset']
-#     return new_c_cords
 
 
 def calc_img_dims(lines, font):

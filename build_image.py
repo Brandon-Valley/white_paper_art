@@ -134,12 +134,12 @@ def build_final_image(kwargs):
     
      
     print('building color_cords from input image...')
-    color_cord_dict = color_cords.get_color_cords(kwargs['input_image_file_path'], kwargs['image_size'], font_aspect_ratio, 
+    og_color_cords = color_cords.get_color_cords(kwargs['input_image_file_path'], kwargs['image_size'], font_aspect_ratio, 
                                                   kwargs['input_image_background_color'], kwargs['background_text_color'])
-#     print('color_cords: ', color_cord_dict)#`````````````````````````````````````````````````````````````````````````````````````````````````````````````````
+#     print('og_color_cords: ', og_color_cords)#`````````````````````````````````````````````````````````````````````````````````````````````````````````````````
      
     print('calculating and adding user defined offset to adjusted_color_cords...')
-    offset_color_cords = offset.offset_color_cords(color_cord_dict, kwargs['image_position_cords'], lines, kwargs['background_text_color'])
+    offset_color_cords = offset.offset_color_cords(og_color_cords, kwargs['image_position_cords'], lines, kwargs['background_text_color'])
       
       
       
