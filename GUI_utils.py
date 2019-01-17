@@ -20,6 +20,7 @@ from os.path import isfile, join
  
 # import fonts
 import font_tools
+import tools
 
 
 
@@ -298,7 +299,7 @@ def find_final_img_char_width(kwargs):
 #     print('creating text lines...')
     lines = tools.make_correct_lines(ideal_dimentions['num_lines'], ideal_dimentions['line_length'], word_list)
     
-    return tools.find_longest_line(lines)
+    return len(tools.find_longest_line(lines))
 
     
     
