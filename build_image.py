@@ -1,3 +1,5 @@
+import time as timer
+
 import tools
 import text_image
 import color_cords
@@ -39,6 +41,11 @@ def build_img_test(kwargs = TEST):
     
 
 def build_final_image(kwargs):
+
+    start_time = timer.time()
+
+
+    
 #     print(kwargs)#````````````````````````````````````````````````````````````````````````````````````````````````````````
     print('kwargs: ')
     
@@ -70,7 +77,7 @@ def build_final_image(kwargs):
      
     #background 
     #replace this bull shit with something to  deal with whitespace
-    default_colors = {'background_image':        (100,100,100),#(255,255,255),#white
+    default_colors = {#'background_image':        (100,100,100),#(255,255,255),#white
                       'final_image_background':  kwargs['final_image_background_color'],
                       'default_text':            kwargs['background_text_color']}
 
@@ -154,6 +161,9 @@ def build_final_image(kwargs):
       
     print('showing low-resolution image...')
     image.show()
+    
+    end_time = timer.time()
+    print('Time elapsed: ', end_time - start_time)
       
     print('done!')
     

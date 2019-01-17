@@ -307,9 +307,39 @@ class Edit_Tab(Tab.Tab):
     
     
     def image_size______widgets_setup(self):
+        def scale_img_size_btn_clk():
+            kwargs = self.build_kwargs()
+            longest_line_width = GUI_utils.find_final_img_char_width(kwargs)
+            
+            print('getting font aspect ratio...')
+            font_aspect_ratio = font_tools.get_aspect_ratio(kwargs['font_path'])
+             
+             
+            #read in the text that will be colored to show a picture
+            print('reading in data text file...') 
+            data = tools.read_text_file(kwargs['input_text_file_path'])
+             
+            #turn list of lines of data into one big string, use that to get number of chars in data, then split it into words
+            print('formatting data into word list...')
+            data_str  = tools.format_data(data)
+            num_chars = len(data_str)
+            word_list = data_str.split(' ')
+             
+             
+            #turn true_dimension_ratio into max number of lines and max chars per line
+            print('calculating ideal text image dimensions...')
+            #find correct image dimensions by adjusting desired ratio for the difference between width and height of a char
+            true_dimension_ratio = kwargs['output_image_dim_ratio'] * font_aspect_ratio
+            ideal_dimentions = tools.calc_ideal_dimentions(true_dimension_ratio, num_chars)
+             
+            #make list of lines to be output in final image
+            print('creating text lines...')
+            lines = tools.make_correct_lines(ideal_dimentions['num_lines'], ideal_dimentions['line_length'], word_list)
+        
         #image size spin box
         self.img_size_lbl  = Label(self.master, text="Image Size:")
         self.img_size_sbox = Spinbox(self.master, from_ = MIN_IMAGE_SIZE, to = MAX_IMAGE_SIZE, width = 5, validate='key', validatecommand=self.digits_only)
+        self.scale_img_size_btn = Button(self.master, text="Scale Image Size", command = scale_img_size_btn_clk)
         self.img_size_sbox.delete(0, "end") #gets rid of 0 so the next line makes the default value 40 instead of 400
         self.img_size_sbox.insert(0, DEFAULT_IMAGE_SIZE) #default 
     
