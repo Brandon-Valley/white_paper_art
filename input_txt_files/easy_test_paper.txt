@@ -1,0 +1,4 @@
+transaction confirmation time is from 10 to 16 times faster than that of bitcoin, depending on the
+adversarial hashing power; for general adversaries confirmation time is from 5 to 10 times faster.
+Moreover, our concrete analysis of double-spending attacks relies on our combinatorial analysis of
+forkable and covertly forkable strings and applies to a much broader class of adversarial behavior
