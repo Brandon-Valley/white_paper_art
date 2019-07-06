@@ -4,6 +4,17 @@ import PIL.ImageOps
 import numpy as np
 
 
+
+
+def edit_img_by_path(func, args, in_img_path, out_img_path):
+    img = Image.open(in_img_path)
+    if args == None:        
+        output_img = func(img)
+    else:
+        output_img = func(img, *args)
+    output_img.save(out_img_path)
+
+
 # vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
 #
 # Uses Direct PIL import
@@ -38,18 +49,12 @@ def make_solid_color_img(dims, color, out_file_path):
   
 def invert_colors(img):
     return PIL.ImageOps.invert(img)
-    
-def invert_colors_by_path(input_img_path, output_img_path):
-    image = Image.open(input_img_path)
-    inverted_image = invert_colors(image)
-    inverted_image.save(output_img_path)
-    
 
 
     
 # vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
 #
-# Simple Tools
+# Pixel Color Grid Tools
 #
 # vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
     
@@ -72,11 +77,7 @@ def get_pixel_color_grid(input_img):
     return pixel_color_grid
 
 
-# vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
-#
-# Pixel Color Grid Tools
-#
-# vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
+
 
 def make_img_from_pixel_color_grid(pixel_color_grid):
     w = len(pixel_color_grid)
@@ -119,7 +120,29 @@ def rotate_pixel_color_grid(in_grid, degrees):
     return new_pcg
     
  
+# vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
+#
+# Simple Tools
+#
+# vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
 
+# def add_border(input_img_path, output_img_path, border, color=0):
+#     img = Image.open(input_img_path)
+#  
+#     if isinstance(border, int) or isinstance(border, tuple):
+#         bimg = ImageOps.expand(img, border=border, fill=color)
+#     else:
+#         raise RuntimeError('Border is not an integer or tuple!')
+#  
+#     bimg.save(output_img_path)
+
+
+# border can be an int (for adding same border to all sides) or tuple
+def add_border(img, border, color=0):
+    if isinstance(border, int) or isinstance(border, tuple):
+        return PIL.ImageOps.expand(img, border=border, fill=color)
+    else:
+        raise RuntimeError('Border is not an integer or tuple!')
 
 
 # vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
@@ -129,16 +152,13 @@ def rotate_pixel_color_grid(in_grid, degrees):
 # vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
 
 
-# trims pic inward from each side until at lease one pixel in the row/col is not the same color as the original border
-# not very efficient -- because of rotate_pixel_color_grid
+    # trims pic inward from each side until at lease one pixel in the row/col is not the same color as the original border
 def trim_border(input_img_path, output_img_path):
     rgba_in_img = open_img(input_img_path) 
     in_img = rgba_in_img.convert('RGB')
     
     pixel_color_grid = get_pixel_color_grid(in_img)
     border_color = pixel_color_grid[0][0]
-    
-     
 
     top_crop     = get_row_num_of_first_color_diff(pixel_color_grid, border_color)
     left_crop    = get_row_num_of_first_color_diff(rotate_pixel_color_grid(pixel_color_grid , 90), border_color)
@@ -148,10 +168,48 @@ def trim_border(input_img_path, output_img_path):
     cropped_img = crop_from_each_side(in_img, (left_crop, top_crop, right_crop, bottom_crop))
     cropped_img.save(output_img_path)
     
+# # will only use all_sides_num_pixels if all other num_pixels == 0
+# def add_boarder(img, all_sides_num_pixels = 0, left_num_pixels = 0, top_num_pixels = 0, right_num_pixels = 0, bottom_num_pixels = 0):
+#     # set num_pixels for all sides if only all_sides_num_pixels given
+#     if  left_num_pixels   == 0 and \
+#         top_num_pixels    == 0 and \
+#         right_num_pixels  == 0 and \
+#         bottom_num_pixels == 0:
+#             left_num_pixels   = all_sides_num_pixels
+#             top_num_pixels    = all_sides_num_pixels
+#             right_num_pixels  = all_sides_num_pixels
+#             bottom_num_pixels = all_sides_num_pixels
+# 
+#         pcg = get_pix
+
+
+# vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
+#
+# By_Path Wrappers
+#
+# vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
+
+def add_border_by_path(in_img_path, out_img_path, border, color=0):
+    edit_img_by_path(add_border, [border, color], in_img_path, out_img_path)
     
+def invert_colors_by_path(in_img_path, out_img_path):
+    edit_img_by_path(invert_colors, None, in_img_path, out_img_path)
+
+
+
+
+
     
 if __name__ == '__main__':
     print('in pil_utils main...')
+#     in_img_path = "C:\\Users\\Brandon\\Documents\\Personal_Projects\\white_paper_art_big_data\\white_paper_graphs\\pordh4hewmc01.jpg"
+#     out_img_path = "C:\\Users\\Brandon\\Documents\\Personal_Projects\\white_paper_art_big_data\\white_paper_graphs\\pordh4hewmc01_border.jpg"
+#     add_border_by_path(in_img_path, out_img_path, 200, (33,33,33))
+    
+    
+    
+    
+    
 #     input_path = "..\\white_paper_graphs\\btc_graph.jpg"#'../example_pics/big_black_a.jpg'
 #     output_path = '../example_pics/trimmed_green_triangle.jpg'
 #     
