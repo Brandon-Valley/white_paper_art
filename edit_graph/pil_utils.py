@@ -1,4 +1,6 @@
 from PIL import Image
+import PIL.ImageOps 
+
 import numpy as np
 
 
@@ -33,6 +35,17 @@ def make_solid_color_img(dims, color, out_file_path):
     img = Image.new('RGB', dims, color)
     img.save(out_file_path)
     
+  
+def invert_colors(img):
+    return PIL.ImageOps.invert(img)
+    
+def invert_colors_by_path(input_img_path, output_img_path):
+    image = Image.open(input_img_path)
+    inverted_image = invert_colors(image)
+    inverted_image.save(output_img_path)
+    
+
+
     
 # vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
 #
@@ -139,11 +152,11 @@ def trim_border(input_img_path, output_img_path):
     
 if __name__ == '__main__':
     print('in pil_utils main...')
-    input_path = "..\\white_paper_graphs\\btc_graph.jpg"#'../example_pics/big_black_a.jpg'
-    output_path = '../example_pics/trimmed_green_triangle.jpg'
-    
-    trim_border(input_path, output_path)
-    show_img_from_path(output_path)
+#     input_path = "..\\white_paper_graphs\\btc_graph.jpg"#'../example_pics/big_black_a.jpg'
+#     output_path = '../example_pics/trimmed_green_triangle.jpg'
+#     
+#     trim_border(input_path, output_path)
+#     show_img_from_path(output_path)
 
 #     pcg = get_pixel_color_grid_from_path(input_path)
 #     show_pixel_color_grid_as_img(pcg)
@@ -154,7 +167,7 @@ if __name__ == '__main__':
 #     pcg3 = rotate_pixel_color_grid(pcg, 180)
 #     show_pixel_color_grid_as_img(pcg3)
 
-
+    invert_colors_by_path("C:\\Users\\Brandon\\Documents\\Personal_Projects\\white_paper_art_big_data\\white_paper_graphs\\btc_g.JPG","C:\\Users\\Brandon\\Documents\\Personal_Projects\\white_paper_art_big_data\\white_paper_graphs\\btc_graph_inverted.JPG")
 
 
 

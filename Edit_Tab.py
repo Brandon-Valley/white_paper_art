@@ -18,7 +18,7 @@ from gui_vars import gui_vars_handler
 FILE_PATH_TEXT_BOX_WIDTH = 80
 
 
-DEFAULT_FONT_NAME = "cour"
+DEFAULT_FONT_NAME = "LiberationMono-Bold"
 DEFAULT_FONT_SIZE = 15
 
 DEFAULT_IMAGE_DIMENSION_RATIO_NUM = 14
