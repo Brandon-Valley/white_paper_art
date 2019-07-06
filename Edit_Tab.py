@@ -12,6 +12,7 @@ import GUI
 import Tab
 import global_constants
 import font_tools
+from gui_vars import gui_vars_handler
 
 
 FILE_PATH_TEXT_BOX_WIDTH = 80
@@ -34,7 +35,8 @@ DEFAULT_IMAGE_SIZE = 100 #REALLY need to figure something out for this!!!!!!!!!!
 MAX_IMG_POS_CORD = 999
 MIN_IMG_POS_CORD = -999
 
-DEFAULT_OUTPUT_IMAGE_FILE_NAME = 'output.jpg'
+DEFAULT_OUTPUT_IMAGE_FILE_NAME = 'output.jpg'#gui_vars_handler.get_var('working_imgs_dir_path') + '\\output.jpg'
+DEFAULT_LOCATION = gui_vars_handler.get_var('working_dir_path')
 
 INVALID_ENTRY_COLOR = 'red'
 
@@ -80,7 +82,7 @@ class Edit_Tab(Tab.Tab):
                 self.update_folder_name_text_box()
 #                 
         self.location_text_box = Entry(self.master,width=FILE_PATH_TEXT_BOX_WIDTH)
-        self.location_text_box.insert(END, GUI_utils.get_current_dir_path()) #default
+        self.location_text_box.insert(END, DEFAULT_LOCATION) #default
         
         self.location_text_box.bind('<Expose>', xview_event_handler)#scrolls text to end if needed
         
@@ -170,6 +172,7 @@ class Edit_Tab(Tab.Tab):
         self.input_text_file_path_lbl = Label(self.master, text="Text File Input Path: ")
         self.input_text_file_path_text_box = Entry(self.master,width=FILE_PATH_TEXT_BOX_WIDTH)
         self.input_text_file_path_text_box.insert(END, GUI_utils.get_defalt_file_path(self.location_text_box.get(), INPUT_TXT_FILE_TYPES)) #default
+#         self.input_text_file_path_text_box.insert(END, GUI_utils.get_defalt_file_path(gui_vars_handler.get_var("input_txt_files_dir_path"), INPUT_TXT_FILE_TYPES)) #default
              
         def input_text_file_path_clk():
             file = filedialog.askopenfilename(filetypes = (("Text files","*.txt"),("all files","*.*")))

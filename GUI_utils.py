@@ -41,9 +41,9 @@ def get_current_dir_path():
 
 def get_defalt_file_path(home_dir_path, file_ext_list):
     valid_filenames = get_matching_filenames_list(home_dir_path, file_ext_list)
-    
-#     print('valid_filenames: ',valid_filenames)#`````````````````````````````````````````````````````````````````````````````````````
-#     print(type(valid_filenames))#``````````````````````````````````````````````````````````````````````````````````````````````````
+#     print('in gui_utils, home_path: ', home_dir_path)#```````````````````````````````````````````````````````````````````````````````
+#     print('in gui_utils:  valid_filenames: ',valid_filenames)#`````````````````````````````````````````````````````````````````````````````````````
+#     print('in_gui_utils: ',  type(valid_filenames))#``````````````````````````````````````````````````````````````````````````````````````````````````
     if len(valid_filenames) != 0:
         return home_dir_path + '\\' + valid_filenames[0]
     else:
@@ -151,6 +151,17 @@ def get_defalt_output_img_file_path(img_file_path):
 
     
 def get_matching_filenames_list(path, file_extention_list):
+#     def _absoluteFilePaths(directory):
+#         file_paths = []
+#         for dirpath,_,filenames in os.walk(directory):
+#             for f in filenames:
+#                 file_paths.append( os.path.abspath(os.path.join(dirpath, f)))
+#         return file_paths
+# 
+#     print('in gui_utils, _absoluteFilePaths(path):  ', _absoluteFilePaths(path))#```````````````````````````````````
+#     print('in gui_utils, (path):  ', path)#```````````````````````````````````
+#     
+    
     filename_list = []
     for file_extention in file_extention_list:
         try:

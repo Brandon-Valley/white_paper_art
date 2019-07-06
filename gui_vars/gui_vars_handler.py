@@ -1,14 +1,20 @@
-import json_logger
+
 import os
+import sys
+sys.path.append(os.path.dirname(os.path.abspath(__file__))) # so you can import json_logger when running from gui
+
+import json_logger
+
 
 # assumes dir sturcture like this:"
 # some_dir
 #  |
-#  |-- vid_m_comp
-#  |   |-- project_vars_handler.py
-#  |   |-- project_vars.json
+#  |-- white_paper_art
+#  |   |-- gui_vars
+#  |       |-- gui_vars_handler.py
+#  |       |-- gui_vars.json
 #  |  
-#  |-- vid_m_comp_big_data  
+#  |-- white_paper_art_big_data  
 
 
 GUI_VARS_DIR_PATH = os.path.dirname(os.path.abspath(__file__))
@@ -43,6 +49,6 @@ def get_var(key):
 
 
 
-
-print(get_var("input_txt_files_dir_path"))
+if __name__ == '__main__':
+    print(get_var("input_txt_files_dir_path"))
 

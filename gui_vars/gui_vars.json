@@ -1,3 +1,4 @@
 {
-  "input_txt_files_dir_path":"<WHITE_PAPER_ART_BIG_DATA_PATH>\\input_txt_files"
+  "input_txt_files_dir_path":"<WHITE_PAPER_ART_BIG_DATA_PATH>\\input_txt_files",
+  "working_dir_path":"<WHITE_PAPER_ART_BIG_DATA_PATH>\\working"
 }
