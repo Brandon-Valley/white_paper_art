@@ -29,7 +29,7 @@ TEST_COLOR_LIST = [(255, 255,255), #need to be able to get rid of this!!!!!!!!!!
 
 
 class Advanced_Tab(Tab.Tab):
-    def __init__(self, master):
+    def __init__(self, master, tab_control=None):
         Tab.Tab.__init__(self, master)
         
         self.output_background_color______widget_setup()

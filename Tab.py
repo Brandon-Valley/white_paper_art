@@ -1,7 +1,10 @@
 from tkinter import END
 from tkinter import filedialog
 
+from widget_groups import File_System_Browse_Widget_Group
+
 import GUI #only need for testing
+
 
 
 
@@ -53,26 +56,37 @@ class Tab():
         if str_list != None:
             for str in str_list:
                 list_box_widget.insert(END, str)
-    
-    def path_tb_browse_btn_clk(self, path_txt_box_widget, browse_for, file_type = None):
-        #get file path and place it in text box
-        
-        if browse_for == 'file':
-            if file_type == None:
-                file_system_item = filedialog.askopenfilename()
 
-            else:
-                file_system_item = filedialog.askopenfilename(filetypes = (("Images", "*" + file_type), ("All files", "*")))#filetypes = (("Images", '*.png|*.jpg'), ("All files", "*")))#"*" + file_types   #,("Template files", '*.jpg'), 
-        elif browse_for == 'dir':
-            file_system_item = filedialog.askdirectory()
-        else:
-            raise Exception('ERROR:  In Tab.py, in path_tb_browse_btn_clk, invalid value for browse_for: ', browse_for)
-        path_txt_box_widget.delete(0, "end")
-        path_txt_box_widget.insert(END, file_system_item)
+# DONT DELETE UNTIL YOU KNOW IT WONT BE NEEDED EVER AGAIN !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+#     def path_tb_browse_btn_clk(self, path_txt_box_widget, browse_for, file_type = None):
+#         #get file path and place it in text box
+#         
+#         if browse_for == 'file':
+#             if file_type == None:
+#                 file_system_item = filedialog.askopenfilename()
+# 
+#             else:
+#                 file_system_item = filedialog.askopenfilename(filetypes = (("Images", "*" + file_type), ("All files", "*")))#filetypes = (("Images", '*.png|*.jpg'), ("All files", "*")))#"*" + file_types   #,("Template files", '*.jpg'), 
+#         elif browse_for == 'dir':
+#             file_system_item = filedialog.askdirectory()
+#         else:
+#             raise Exception('ERROR:  In Tab.py, in path_tb_browse_btn_clk, invalid value for browse_for: ', browse_for)
+#         path_txt_box_widget.delete(0, "end")
+#         path_txt_box_widget.insert(END, file_system_item)
+#         
+# #         output_path_text_box_updated()
         
-#         output_path_text_box_updated()
         
+    def File_System_Browse_Widget_Group(self,master,
+                                             lbl_txt, 
+                                             tb_width = None, 
+                                             browse_for = 'dir',  # 'dir' or 'file'
+                                             file_type = None,    # '.jpg', '.mp4', ect...
+                                             init_path = None, 
+                                             tb_edit_func = None,
+                                             browse_btn_txt = 'Browse...'):
         
+        return File_System_Browse_Widget_Group.File_System_Browse_Widget_Group(master, lbl_txt, tb_width, browse_for, file_type, init_path, tb_edit_func, browse_btn_txt)
         
         
         

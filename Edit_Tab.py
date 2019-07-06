@@ -53,7 +53,7 @@ DEFAULT_QUALITY_SETTING = 'high' #high or low
 
  
 class Edit_Tab(Tab.Tab):    
-    def __init__(self, master):
+    def __init__(self, master, tab_control=None):
         Tab.Tab.__init__(self, master)
     
         #setup widgets
