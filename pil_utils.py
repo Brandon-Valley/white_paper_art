@@ -1,4 +1,7 @@
 from PIL import Image
+from PIL import ImageDraw
+
+import PIL.ImageFont
 import PIL.ImageOps 
 
 import numpy as np
@@ -6,13 +9,7 @@ import numpy as np
 
 
 
-def edit_img_by_path(func, args, in_img_path, out_img_path):
-    img = Image.open(in_img_path)
-    if args == None:        
-        output_img = func(img)
-    else:
-        output_img = func(img, *args)
-    output_img.save(out_img_path)
+
 
 
 # vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
@@ -126,17 +123,6 @@ def rotate_pixel_color_grid(in_grid, degrees):
 #
 # vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
 
-# def add_border(input_img_path, output_img_path, border, color=0):
-#     img = Image.open(input_img_path)
-#  
-#     if isinstance(border, int) or isinstance(border, tuple):
-#         bimg = ImageOps.expand(img, border=border, fill=color)
-#     else:
-#         raise RuntimeError('Border is not an integer or tuple!')
-#  
-#     bimg.save(output_img_path)
-
-
 # border can be an int (for adding same border to all sides) or tuple
 def add_border(img, border, color=0):
     if isinstance(border, int) or isinstance(border, tuple):
@@ -168,19 +154,35 @@ def trim_border(input_img_path, output_img_path):
     cropped_img = crop_from_each_side(in_img, (left_crop, top_crop, right_crop, bottom_crop))
     cropped_img.save(output_img_path)
     
-# # will only use all_sides_num_pixels if all other num_pixels == 0
-# def add_boarder(img, all_sides_num_pixels = 0, left_num_pixels = 0, top_num_pixels = 0, right_num_pixels = 0, bottom_num_pixels = 0):
-#     # set num_pixels for all sides if only all_sides_num_pixels given
-#     if  left_num_pixels   == 0 and \
-#         top_num_pixels    == 0 and \
-#         right_num_pixels  == 0 and \
-#         bottom_num_pixels == 0:
-#             left_num_pixels   = all_sides_num_pixels
-#             top_num_pixels    = all_sides_num_pixels
-#             right_num_pixels  = all_sides_num_pixels
-#             bottom_num_pixels = all_sides_num_pixels
+
+
+def simple_monospace_write_txt_on_img(img, lines, font, txt_color):
+    draw = ImageDraw.Draw(img)
+
+#     x = 0
+    letter_w, letter_h = draw.textsize("A", font)
+    
+    Image.MAX_IMAGE_PIXELS = 1000000000   #need this here
+    
+    line_num = 0
+    for line_num in range(len(lines)):
+        line = lines[line_num]
+        x_draw = 0
+        
+        for letter_num in range(len(line)):
+            letter = line[letter_num]
+#             
+#             letter_cords = [line_num, letter_num]
 # 
-#         pcg = get_pix
+#             char_color = color_cords[line_num][letter_num]
+#     
+            draw.text((x_draw, letter_h * line_num), letter, txt_color, font)
+
+            x_draw += letter_w
+        line_num += 1
+        
+
+    return img
 
 
 # vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
@@ -189,11 +191,24 @@ def trim_border(input_img_path, output_img_path):
 #
 # vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
 
+def edit_img_by_path(func, args, in_img_path, out_img_path):
+    img = Image.open(in_img_path)
+    if args == None:        
+        output_img = func(img)
+    else:
+        output_img = func(img, *args)
+    output_img.save(out_img_path)
+    
+    
+
 def add_border_by_path(in_img_path, out_img_path, border, color=0):
     edit_img_by_path(add_border, [border, color], in_img_path, out_img_path)
     
 def invert_colors_by_path(in_img_path, out_img_path):
     edit_img_by_path(invert_colors, None, in_img_path, out_img_path)
+    
+def simple_monospace_write_txt_on_img_by_path(in_img_path, out_img_path, lines, font, txt_color):
+    edit_img_by_path(simple_monospace_write_txt_on_img, [lines, font, txt_color], in_img_path, out_img_path)
 
 
 
@@ -202,10 +217,16 @@ def invert_colors_by_path(in_img_path, out_img_path):
     
 if __name__ == '__main__':
     print('in pil_utils main...')
-#     in_img_path = "C:\\Users\\Brandon\\Documents\\Personal_Projects\\white_paper_art_big_data\\white_paper_graphs\\pordh4hewmc01.jpg"
-#     out_img_path = "C:\\Users\\Brandon\\Documents\\Personal_Projects\\white_paper_art_big_data\\white_paper_graphs\\pordh4hewmc01_border.jpg"
+    in_img_path = "C:\\Users\\Brandon\\Documents\\Personal_Projects\\white_paper_art_big_data\\white_paper_graphs\\pordh4hewmc01.jpg"
+    out_img_path = "C:\\Users\\Brandon\\Documents\\Personal_Projects\\white_paper_art_big_data\\white_paper_graphs\\pordh4hewmc01_border.jpg"
 #     add_border_by_path(in_img_path, out_img_path, 200, (33,33,33))
     
+    import font_tools
+    font = font_tools.load_font()
+    lines = ['test line', 'line 222222222222222222']
+    txt_color = 'yellow'
+    simple_monospace_write_txt_on_img_by_path(in_img_path, out_img_path, lines, font, txt_color)
+    show_img_from_path(out_img_path)
     
     
     

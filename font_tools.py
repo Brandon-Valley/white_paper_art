@@ -14,7 +14,7 @@ FONTS_PATH = "C:\\Users\\Brandon\\Documents\\Personal_Projects\\white_paper_art\
 def load_font(font_path = None, size = 40):
     try:
         font = PIL.ImageFont.truetype(font_path, size)
-    except IOError:
+    except (IOError, AttributeError):
         font = PIL.ImageFont.load_default()
         print('Could not use chosen font. Using default.')
     return font
