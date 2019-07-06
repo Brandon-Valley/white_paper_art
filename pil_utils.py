@@ -158,10 +158,7 @@ def trim_border(input_img_path, output_img_path):
 
 def simple_monospace_write_txt_on_img(img, lines, font, txt_color):
     draw = ImageDraw.Draw(img)
-
-#     x = 0
-    letter_w, letter_h = draw.textsize("A", font)
-    
+    letter_w, letter_h = draw.textsize("A", font) 
     Image.MAX_IMAGE_PIXELS = 1000000000   #need this here
     
     line_num = 0
@@ -171,17 +168,10 @@ def simple_monospace_write_txt_on_img(img, lines, font, txt_color):
         
         for letter_num in range(len(line)):
             letter = line[letter_num]
-#             
-#             letter_cords = [line_num, letter_num]
-# 
-#             char_color = color_cords[line_num][letter_num]
-#     
             draw.text((x_draw, letter_h * line_num), letter, txt_color, font)
-
             x_draw += letter_w
-        line_num += 1
-        
-
+        line_num += 10.
+        3
     return img
 
 
