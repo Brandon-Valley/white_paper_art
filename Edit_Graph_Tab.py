@@ -30,10 +30,10 @@ class Edit_Graph_Tab(Tab.Tab):
     def paths_____widget_setup(self):
         self.paths_lf = LabelFrame(self.master, text = " Input / Output Paths: ")
         
-        self.in_path_browse_wg  = self.File_System_Browse_Widget_Group(self.paths_lf, 'Input Path', BROWSE_TB_WIDTH, 'file', 
-                                                                       None, DEFAULT_IN_PATH, focus_tb_after_browse=False)
-        self.out_path_browse_wg = self.File_System_Browse_Widget_Group(self.paths_lf, 'Output Path', BROWSE_TB_WIDTH, 'dir', 
-                                                                       None, DEFAULT_OUT_PATH, focus_tb_after_browse=True)
+        self.in_path_browse_wg  = self.File_System_Browse_WG(self.paths_lf, 'Input Path', BROWSE_TB_WIDTH, 'file', 
+                                                             None, DEFAULT_IN_PATH, focus_tb_after_browse=False)
+        self.out_path_browse_wg = self.File_System_Browse_WG(self.paths_lf, 'Output Path', BROWSE_TB_WIDTH, 'dir', 
+                                                             None, DEFAULT_OUT_PATH, focus_tb_after_browse=True)
         
     def title_____widget_setup(self):
         self.title_lf = LabelFrame(self.master, text = " Graph Title: ")

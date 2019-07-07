@@ -1,7 +1,7 @@
 from tkinter import END
 from tkinter import filedialog
 
-from widget_groups import File_System_Browse_Widget_Group
+from widget_groups import File_System_Browse_WG
 
 import GUI #only need for testing
 
@@ -77,17 +77,18 @@ class Tab():
 # #         output_path_text_box_updated()
         
         
-    def File_System_Browse_Widget_Group(self,master,
-                                             lbl_txt, 
-                                             tb_width = None, 
-                                             browse_for = 'dir',  # 'dir' or 'file'
-                                             file_type = None,    # '.jpg', '.mp4', ect...
-                                             init_path = None, 
-                                             focus_tb_after_browse = False,
-                                             tb_edit_func = None,
-                                             browse_btn_txt = 'Browse...'):
+    def File_System_Browse_WG(   self,
+                                 master,
+                                 lbl_txt, 
+                                 tb_width = None, 
+                                 browse_for = 'dir',  # 'dir' or 'file'
+                                 file_type = None,    # '.jpg', '.mp4', ect...
+                                 init_path = None, 
+                                 focus_tb_after_browse = False,
+                                 tb_edit_func = None,
+                                 browse_btn_txt = 'Browse...'):
         
-        return File_System_Browse_Widget_Group.File_System_Browse_Widget_Group(master, lbl_txt, tb_width, browse_for, file_type, init_path, focus_tb_after_browse, tb_edit_func, browse_btn_txt)
+        return File_System_Browse_WG.File_System_Browse_WG(master, lbl_txt, tb_width, browse_for, file_type, init_path, focus_tb_after_browse, tb_edit_func, browse_btn_txt)
         
         
         
