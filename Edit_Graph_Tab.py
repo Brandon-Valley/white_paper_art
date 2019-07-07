@@ -22,6 +22,7 @@ class Edit_Graph_Tab(Tab.Tab):
         Tab.Tab.__init__(self, master)
 
         self.paths_____widget_setup()
+        self.title_____widget_setup()
 
         self.grid_widgets()
         
@@ -34,6 +35,14 @@ class Edit_Graph_Tab(Tab.Tab):
         self.out_path_browse_wg = self.File_System_Browse_Widget_Group(self.paths_lf, 'Output Path', BROWSE_TB_WIDTH, 'dir', 
                                                                        None, DEFAULT_OUT_PATH, focus_tb_after_browse=True)
         
+    def title_____widget_setup(self):
+        self.title_lf = LabelFrame(self.master, text = " Graph Title: ")
+        
+        # title text box and label
+        self.title_tb_lbl = Label(self.title_lf, text="Title: ")
+        self.title_tb = Entry(self.title_lf)
+
+        
     def grid_widgets(self):
 #         self.master.grid_columnconfigure(3, weight=1)
   
@@ -45,6 +54,13 @@ class Edit_Graph_Tab(Tab.Tab):
         self.out_path_browse_wg.lbl.grid(column=1, row=2)
         self.out_path_browse_wg.tb .grid(column=2, row=2)
         self.out_path_browse_wg.btn.grid(column=3, row=2)
+        
+        # title 
+        self.title_lf              .grid(column=1, row=2, sticky='NSW', padx=5, pady=5, ipadx=5, ipady=5)
+        self.title_tb_lbl          .grid(column=1, row=1)
+        self.title_tb              .grid(column=2, row=1)
+
+
 
         
 
