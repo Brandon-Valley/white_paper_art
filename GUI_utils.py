@@ -21,7 +21,7 @@ from os.path import isfile, join
 # import fonts
 import font_tools
 import tools
-
+import pil_utils
 
 
 OUTPUT_IMAGE_SUFFIX = '_text_art' #used????????????????????????????????????????????????????????????????????????????????
@@ -314,10 +314,59 @@ def find_final_img_char_width(kwargs):
 
     
     
+GRAPH_TITLE_VERT_SPACE = 5
+def edit_graph(in_img_path, out_img_path, title, font_name, font_size, invert_colors):
+    img = pil_utils.open_img(in_img_path)
+
+    if invert_colors == True:
+        img = pil_utils.invert_colors(img)
+    
+    border_color = pil_utils.pixel_color(img, 0, 0)
+    
+    img = pil_utils.trim_border(img)
+    
+    # build font
+    font_path = build_font_path(font_name)
+    font = font_tools.load_font(font_path, font_size)
+    
+    # add enough space at the top to write title
+    title_w, title_h = font_tools.text_dims(title, font)
+    border_dims = (0, GRAPH_TITLE_VERT_SPACE + title_h, 0, 0)
+    img = pil_utils.add_border(img, border_dims, border_color)
+    
+    print(font.size)
+#     print(font_path)#```````````````````````````````````````````````````````````````````````````````````````````````````````````
+    
+    
+    
+    
+    
+    img.show()
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     
 import GUI
 if __name__ == '__main__':
+    in_img_path = "C:\\Users\\Brandon\\Documents\\Personal_Projects\\white_paper_art_big_data\\white_paper_graphs\\btc_g.JPG"
+    out_img_path = "C:\\Users\\Brandon\\Documents\\Personal_Projects\\white_paper_art_big_data\\white_paper_graphs\\btc_graph_edit.JPG"
+    title = 'Transactions:'
+    font_name = "LiberationMono-Bold"
+    font_size = 40
+    invert_colors = True
+    
+    edit_graph(in_img_path, out_img_path, title, font_name, font_size, invert_colors)
 #     print(str_to_tup("(222,4e,599)"))
 #     change_color(3,5)
-    GUI.main()
+#     GUI.main()

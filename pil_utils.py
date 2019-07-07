@@ -123,6 +123,10 @@ def rotate_pixel_color_grid(in_grid, degrees):
 #
 # vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
 
+def pixel_color(img, x, y):
+    pcg = get_pixel_color_grid(img)
+    return pcg[y][x]
+
 # border can be an int (for adding same border to all sides) or tuple
 def add_border(img, border, color=0):
     if isinstance(border, int) or isinstance(border, tuple):
@@ -139,9 +143,8 @@ def add_border(img, border, color=0):
 
 
     # trims pic inward from each side until at lease one pixel in the row/col is not the same color as the original border
-def trim_border(input_img_path, output_img_path):
-    rgba_in_img = open_img(input_img_path) 
-    in_img = rgba_in_img.convert('RGB')
+def trim_border(img):
+    in_img = img.convert('RGB')
     
     pixel_color_grid = get_pixel_color_grid(in_img)
     border_color = pixel_color_grid[0][0]
@@ -151,8 +154,8 @@ def trim_border(input_img_path, output_img_path):
     bottom_crop  = get_row_num_of_first_color_diff(rotate_pixel_color_grid(pixel_color_grid , 180), border_color)
     right_crop   = get_row_num_of_first_color_diff(rotate_pixel_color_grid(pixel_color_grid , 270), border_color)
      
-    cropped_img = crop_from_each_side(in_img, (left_crop, top_crop, right_crop, bottom_crop))
-    cropped_img.save(output_img_path)
+    return crop_from_each_side(in_img, (left_crop, top_crop, right_crop, bottom_crop))
+
     
 
 
@@ -171,7 +174,7 @@ def simple_monospace_write_txt_on_img(img, lines, font, txt_color):
             draw.text((x_draw, letter_h * line_num), letter, txt_color, font)
             x_draw += letter_w
         line_num += 10.
-        3
+        
     return img
 
 

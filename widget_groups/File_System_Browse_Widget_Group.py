@@ -17,6 +17,7 @@ class File_System_Browse_Widget_Group():
                  browse_for = 'dir',  # 'dir' or 'file'
                  file_type = None,    # '.jpg', '.mp4', ect...
                  init_path = None, 
+                 focus_tb_after_browse = False,
                  tb_edit_func = None,
                  browse_btn_txt = 'Browse...'):
         self.lbl = Label(master, text = lbl_txt)
@@ -29,6 +30,9 @@ class File_System_Browse_Widget_Group():
             self.tb.insert(END, init_path) #default
             
         self.tb.bind('<Expose>', xview_event_handler)#scrolls text to end if needed
+        self.tb.bind('<Enter>' , xview_event_handler)#scrolls text to end if needed
+        self.tb.bind('<Leave>' , xview_event_handler)#scrolls text to end if needed
+        self.tb.bind('<FocusIn>' , xview_event_handler)#scrolls text to end if needed
         
         if tb_edit_func != None:
             self.bind_to_edit(self.tb, tb_edit_func)
@@ -38,6 +42,9 @@ class File_System_Browse_Widget_Group():
             self.path_tb_browse_btn_clk(self.tb, browse_for, file_type)
             if tb_edit_func != None:
                 tb_edit_func()
+            
+            if focus_tb_after_browse == True:
+                self.tb.focus()
             
         self.btn = Button(master, text=browse_btn_txt, command = browse_btn_clk)        
         

@@ -83,10 +83,11 @@ class Tab():
                                              browse_for = 'dir',  # 'dir' or 'file'
                                              file_type = None,    # '.jpg', '.mp4', ect...
                                              init_path = None, 
+                                             focus_tb_after_browse = False,
                                              tb_edit_func = None,
                                              browse_btn_txt = 'Browse...'):
         
-        return File_System_Browse_Widget_Group.File_System_Browse_Widget_Group(master, lbl_txt, tb_width, browse_for, file_type, init_path, tb_edit_func, browse_btn_txt)
+        return File_System_Browse_Widget_Group.File_System_Browse_Widget_Group(master, lbl_txt, tb_width, browse_for, file_type, init_path, focus_tb_after_browse, tb_edit_func, browse_btn_txt)
         
         
         

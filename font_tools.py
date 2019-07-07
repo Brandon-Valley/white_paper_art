@@ -192,6 +192,13 @@ def build_unknown_char_list(lines, font_path):
                 unknown_char_list.append(char)
     return unknown_char_list
                 
+# really good explain here:  https://stackoverflow.com/questions/43060479/how-to-get-the-font-pixel-height-using-pil-imagefont
+def text_dims(text, font):
+    ascent, descent = font.getmetrics()
+    (width, baseline), (offset_x, offset_y) = font.font.getsize(text)
+    
+    height = offset_y + ascent + descent
+    return (width, height)
 
 
 
