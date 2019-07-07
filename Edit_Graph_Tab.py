@@ -14,6 +14,7 @@ import Tab
 
 BROWSE_TB_WIDTH = 80
 DEFAULT_OUT_PATH = 'DEFAULT AOUTPUT_PTAH'
+DEFAULT_IN_PATH = 'DEFAULT in_PTAH'
 
 class Edit_Graph_Tab(Tab.Tab):
     def __init__(self, master, tab_control):
@@ -28,6 +29,8 @@ class Edit_Graph_Tab(Tab.Tab):
     def paths_____widget_setup(self):
         self.paths_lf = LabelFrame(self.master, text = " Input / Output Paths: ")
         
+        self.in_path_browse_wg  = self.File_System_Browse_Widget_Group(self.paths_lf, 'Input Path', BROWSE_TB_WIDTH, 'file', 
+                                                                       None, DEFAULT_IN_PATH, focus_tb_after_browse=False)
         self.out_path_browse_wg = self.File_System_Browse_Widget_Group(self.paths_lf, 'Output Path', BROWSE_TB_WIDTH, 'dir', 
                                                                        None, DEFAULT_OUT_PATH, focus_tb_after_browse=True)
         
@@ -36,9 +39,12 @@ class Edit_Graph_Tab(Tab.Tab):
   
         # input Information
         self.paths_lf              .grid(column=1, row=1, sticky='NSWE', padx=5, pady=5, ipadx=5, ipady=5)
-        self.out_path_browse_wg.lbl.grid(column=1, row=1)
-        self.out_path_browse_wg.tb .grid(column=2, row=1)
-        self.out_path_browse_wg.btn.grid(column=3, row=1)
+        self.in_path_browse_wg.lbl .grid(column=1, row=1)
+        self.in_path_browse_wg.tb  .grid(column=2, row=1)
+        self.in_path_browse_wg.btn .grid(column=3, row=1, pady=5)
+        self.out_path_browse_wg.lbl.grid(column=1, row=2)
+        self.out_path_browse_wg.tb .grid(column=2, row=2)
+        self.out_path_browse_wg.btn.grid(column=3, row=2)
 
         
 

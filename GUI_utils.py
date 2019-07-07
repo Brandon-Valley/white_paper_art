@@ -315,7 +315,8 @@ def find_final_img_char_width(kwargs):
     
     
 GRAPH_TITLE_VERT_SPACE = 5
-def edit_graph(in_img_path, out_img_path, title, font_name, font_size, invert_colors):
+FINAL_BORDER_DIMS = (5, 0, 0, 0)
+def edit_graph(in_img_path, out_img_path, title, title_color, font_name, font_size, invert_colors):
     img = pil_utils.open_img(in_img_path)
 
     if invert_colors == True:
@@ -334,24 +335,11 @@ def edit_graph(in_img_path, out_img_path, title, font_name, font_size, invert_co
     border_dims = (0, GRAPH_TITLE_VERT_SPACE + title_h, 0, 0)
     img = pil_utils.add_border(img, border_dims, border_color)
     
-    print(font.size)
-#     print(font_path)#```````````````````````````````````````````````````````````````````````````````````````````````````````````
-    
-    
-    
-    
-    
-    img.show()
-    
-    
+    img = pil_utils.simple_monospace_write_txt_on_img(img, [title], font, title_color)
 
+    img = pil_utils.add_border(img, FINAL_BORDER_DIMS, border_color)
     
-    
-    
-    
-    
-    
-    
+    img.save(out_img_path)
     
     
     
@@ -362,11 +350,12 @@ if __name__ == '__main__':
     in_img_path = "C:\\Users\\Brandon\\Documents\\Personal_Projects\\white_paper_art_big_data\\white_paper_graphs\\btc_g.JPG"
     out_img_path = "C:\\Users\\Brandon\\Documents\\Personal_Projects\\white_paper_art_big_data\\white_paper_graphs\\btc_graph_edit.JPG"
     title = 'Transactions:'
+    title_color = 'white'
     font_name = "LiberationMono-Bold"
     font_size = 40
     invert_colors = True
     
-    edit_graph(in_img_path, out_img_path, title, font_name, font_size, invert_colors)
+    edit_graph(in_img_path, out_img_path, title, title_color, font_name, font_size, invert_colors)
 #     print(str_to_tup("(222,4e,599)"))
 #     change_color(3,5)
 #     GUI.main()
