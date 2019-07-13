@@ -67,14 +67,14 @@ class Edit_Graph_Tab(Tab.Tab):
         # title 
         self.title_lf              .grid(column=1, row=2, sticky='NSW', padx=5, pady=5, ipadx=5, ipady=5)
         self.title_tb_lbl          .grid(column=1, row=1)
-        self.title_tb              .grid(column=2, row=1, sticky='W')
+        self.title_tb              .grid(column=2, row=1, sticky='W', columnspan = 2)
         self.font_wg.sbox_lbl      .grid(column=1, row=2)
         self.font_wg.sbox          .grid(column=2, row=2, sticky='W')
         self.font_wg.cbox_lbl      .grid(column=1, row=3)
-        self.font_wg.cbox          .grid(column=2, row=3, sticky='W')
-        self.title_color_wg.lbl    .grid(column=1, row=4)
-        self.title_color_wg.rgbd_tb.grid(column=2, row=4)
-        self.title_color_wg.btn    .grid(column=3, row=4)
+        self.font_wg.cbox          .grid(column=2, row=3, sticky='W', columnspan = 2)
+        self.title_color_wg.lbl    .grid(column=1, row=4            , pady=5)
+        self.title_color_wg.rgbd_tb.grid(column=2, row=4, sticky='W', pady=5)
+        self.title_color_wg.btn    .grid(column=3, row=4, sticky='W', pady=5)
         
 #         self.title_color_rgbd      .grid(column=2, row=4, sticky='W')
         

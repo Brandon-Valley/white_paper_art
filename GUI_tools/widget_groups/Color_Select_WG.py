@@ -28,11 +28,8 @@ class Color_Select_WG():
             
             if float_rgb_tup != None:
                 self.rgbd_tb.set_rgb(float_rgb_tup)
-        
-        
-        
-        
-        self.btn = Button(master, text=btn_txt, command = change_color)#, command = lambda: GUI_utils.change_color(self.bgnd_text_clr_tup_tb, self.bgnd_text_clr_display_tb))
+
+        self.btn = Button(master, text=btn_txt, command = change_color)
 
                  
  
