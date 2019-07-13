@@ -9,6 +9,7 @@ import os
 sys.path.insert(1, os.path.dirname(__file__)) # so you can import relative to this file even when it is called from elsewhere
 
 from widget_groups import File_System_Browse_WG
+from widget_groups import Font_Config_WG
 
 
 
@@ -85,18 +86,44 @@ class Tab():
     def File_System_Browse_WG(   self,
                                  master,
                                  lbl_txt, 
-                                 tb_width = None, 
-                                 browse_for = 'dir',  # 'dir' or 'file'
-                                 file_type = None,    # '.jpg', '.mp4', ect...
-                                 init_path = None, 
+                                 tb_width              = None, 
+                                 browse_for            = 'dir',  # 'dir' or 'file'
+                                 file_type             = None,   # '.jpg', '.mp4', ect...
+                                 init_path             = None, 
                                  focus_tb_after_browse = False,
-                                 tb_edit_func = None,
-                                 browse_btn_txt = 'Browse...'):
+                                 tb_edit_func          = None,
+                                 browse_btn_txt        = 'Browse...'):
         
         return File_System_Browse_WG.File_System_Browse_WG(master, lbl_txt, tb_width, browse_for, file_type, init_path, focus_tb_after_browse, tb_edit_func, browse_btn_txt)
         
         
         
+    def Font_Config_WG(  self,
+                         master,
+                         fonts_dir_path         = None, 
+                         default_font_size      = 20,
+                         default_font           = None,
+                         font_size_sbox_command = None,
+                         font_size_sbox_width   = 5,
+                         max_font_size          = 9999,
+                         min_font_size          = 0,
+                         font_size_sbox_lbl_txt = 'Font Size:',
+                         font_cbox_lbl_txt      = 'Font:'):
+
+        return Font_Config_WG.Font_Config_WG(
+                         master,
+                         fonts_dir_path, 
+                         default_font_size,
+                         default_font,
+                         font_size_sbox_command,
+                         font_size_sbox_width,
+                         max_font_size,
+                         min_font_size,
+                         font_size_sbox_lbl_txt,
+                         font_cbox_lbl_txt,
+                         self.digits_only)
+
+         
         
         
         

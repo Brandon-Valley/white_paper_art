@@ -6,6 +6,7 @@ from tkinter import *
 import GUI
 from GUI_tools import Tab
 
+
 BROWSE_TB_WIDTH = 80
 DEFAULT_OUT_PATH = 'DEFAULT AOUTPUT_PTAH'
 DEFAULT_IN_PATH = 'DEFAULT in_PTAH'
@@ -35,8 +36,10 @@ class Edit_Graph_Tab(Tab.Tab):
         # title text box and label
         self.title_tb_lbl = Label(self.title_lf, text="Title: ")
         self.title_tb = Entry(self.title_lf)
-
         
+        
+        self.font_wg = self.Font_Config_WG(self.title_lf)
+#         
     def grid_widgets(self):
 #         self.master.grid_columnconfigure(3, weight=1)
   
@@ -52,7 +55,11 @@ class Edit_Graph_Tab(Tab.Tab):
         # title 
         self.title_lf              .grid(column=1, row=2, sticky='NSW', padx=5, pady=5, ipadx=5, ipady=5)
         self.title_tb_lbl          .grid(column=1, row=1)
-        self.title_tb              .grid(column=2, row=1)
+        self.title_tb              .grid(column=2, row=1, sticky='W')
+        self.font_wg.sbox_lbl      .grid(column=1, row=2)
+        self.font_wg.sbox          .grid(column=2, row=2, sticky='W')
+        self.font_wg.cbox_lbl      .grid(column=1, row=3)
+        self.font_wg.cbox          .grid(column=2, row=3, sticky='W')
 
 
 

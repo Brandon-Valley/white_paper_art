@@ -1,10 +1,7 @@
 from tkinter import *
 from tkinter.ttk import *
 from tkinter import filedialog
-# import tkinter as tk
-# from tkinter import ttk
 
-# import tkinter as tk
 
 import build_image
 import GUI_utils
@@ -12,6 +9,7 @@ import GUI
 from GUI_tools import Tab
 import global_constants
 import font_tools
+
 from gui_vars import gui_vars_handler
 
 
