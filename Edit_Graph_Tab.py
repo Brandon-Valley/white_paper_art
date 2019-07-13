@@ -22,6 +22,7 @@ class Edit_Graph_Tab(Tab.Tab):
 
         self.paths_____widget_setup()
         self.title_____widget_setup()
+        self.graph_colors_____widget_setup()
 
         self.grid_widgets()
         
@@ -34,6 +35,7 @@ class Edit_Graph_Tab(Tab.Tab):
         self.out_path_browse_wg = self.File_System_Browse_WG(self.paths_lf, 'Output Path', BROWSE_TB_WIDTH, 'dir', 
                                                              None, DEFAULT_OUT_PATH, focus_tb_after_browse=True)
         
+    
     def title_____widget_setup(self):
         self.title_lf = LabelFrame(self.master, text = " Graph Title: ")
         
@@ -52,11 +54,19 @@ class Edit_Graph_Tab(Tab.Tab):
         self.title_color_wg = self.Color_Select_WG(self.title_lf, lbl_txt = 'Title Color:', default_rgb_tup = DEFAULT_TITLE_RGB_TUP)
 
 #         
+
+    def graph_colors_____widget_setup(self):
+        self.graph_colors_lf = LabelFrame(self.master, text = " Graph Colors: ")
+
+        self.invert_clrs_cbtn_sel = IntVar(value = 1) #default to value
+        self.invert_clrs_cbtn = Checkbutton(self.graph_colors_lf, text="Invert Colors:", variable=self.invert_clrs_cbtn_sel)
+    
     def grid_widgets(self):
-#         self.master.grid_columnconfigure(3, weight=1)
+        self.master.grid_columnconfigure(2, weight=1)
   
         # input Information
-        self.paths_lf              .grid(column=1, row=1, sticky='NSWE', padx=5, pady=5, ipadx=5, ipady=5)
+        self.paths_lf              .grid(column=1, row=1, sticky='NSW', padx=5, pady=5, ipadx=5, ipady=5, columnspan=2)
+#         self.paths_lf.grid_columnconfigure(1, weight=1)
         self.in_path_browse_wg.lbl .grid(column=1, row=1)
         self.in_path_browse_wg.tb  .grid(column=2, row=1)
         self.in_path_browse_wg.btn .grid(column=3, row=1, pady=5)
@@ -65,7 +75,7 @@ class Edit_Graph_Tab(Tab.Tab):
         self.out_path_browse_wg.btn.grid(column=3, row=2)
         
         # title 
-        self.title_lf              .grid(column=1, row=2, sticky='NSW', padx=5, pady=5, ipadx=5, ipady=5)
+        self.title_lf              .grid(column=1, row=2, sticky='NSWE', padx=5, pady=5, ipadx=5, ipady=5)
         self.title_tb_lbl          .grid(column=1, row=1)
         self.title_tb              .grid(column=2, row=1, sticky='W', columnspan = 2)
         self.font_wg.sbox_lbl      .grid(column=1, row=2)
@@ -76,8 +86,9 @@ class Edit_Graph_Tab(Tab.Tab):
         self.title_color_wg.rgbd_tb.grid(column=2, row=4, sticky='W', pady=5)
         self.title_color_wg.btn    .grid(column=3, row=4, sticky='W', pady=5)
         
-#         self.title_color_rgbd      .grid(column=2, row=4, sticky='W')
-        
+        # graph colors
+        self.graph_colors_lf       .grid(column=2, row=2, sticky='NW', padx=5, pady=5, ipadx=5, ipady=5)
+        self.invert_clrs_cbtn      .grid(column=1, row=1)
 
         
 if __name__ == '__main__':
