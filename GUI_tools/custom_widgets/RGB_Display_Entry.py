@@ -17,20 +17,45 @@ class RGB_Display_Entry(Entry):
         
         
     def set_rgb(self, rgb_tup):
+        def _tk_color(clr_tuple):
+            def __round_color(color_tup):
+                r, g, b = color_tup
+                return (int(r), int(g), int(b))
+            
+            return "#%02x%02x%02x" % __round_color(clr_tuple)
+
+        
+        def _highest_contrast_label_color(background_color):
+            r, g, b = background_color
+            
+            for c in r,g,b:
+                c = c / 255.0
+                if c <= 0.03928:
+                    c = c/12.92 
+                else:
+                    c = ((c+0.055)/1.055) ** 2.4
+            L = 0.2126 * r + 0.7152 * g + 0.0722 * b
+            
+            if (255 - L) > L:
+                return (255, 255, 255) #white
+            else:
+                return (0, 0, 0) #black
+
+
         self.configure(state = 'normal')
-     
-        rgb_tup_str = "#%02x%02x%02x" % rgb_tup
      
         self.delete(0, "end")
         self.insert(END, str(rgb_tup))
      
-#     #     tk_rgb = "#%02x%02x%02x" % round_color(color_tuple)#(0, 0, 0)
-#         tk_rgb = tk_color(color_tuple)
-#      
-#         color_tb.configure(readonlybackground = tk_rgb)
-        tk_rgb = "#%02x%02x%02x" % rgb_tup
-
+        # background color
+        tk_rgb = _tk_color(rgb_tup)
         self.configure(readonlybackground = tk_rgb)
+        
+        # font color
+        font_rgb_tup = _highest_contrast_label_color(rgb_tup)
+        font_tk_rgb = _tk_color(font_rgb_tup)
+        self.configure(fg = font_tk_rgb)
+        
         self.configure(state = 'readonly')
         
     

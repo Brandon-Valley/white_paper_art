@@ -46,7 +46,7 @@ class Edit_Graph_Tab(Tab.Tab):
                                            default_font=DEFAULT_FONT_NAME)
         
         self.title_color_rgbd = RGB_Display_Entry(self.title_lf)
-        self.title_color_rgbd.set_rgb((255,33,6))
+        self.title_color_rgbd.set_rgb((255,255,255))
 
 #         
     def grid_widgets(self):
