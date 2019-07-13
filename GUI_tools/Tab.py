@@ -121,7 +121,8 @@ class Tab():
                          min_font_size,
                          font_size_sbox_lbl_txt,
                          font_cbox_lbl_txt,
-                         self.digits_only)
+                         self.digits_only,
+                         self.max_str_len_in_l)
 
          
         

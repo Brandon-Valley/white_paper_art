@@ -5,7 +5,6 @@ from tkinter import filedialog
 
 import build_image
 import GUI_utils
-import GUI
 from GUI_tools import Tab
 import global_constants
 import font_tools
@@ -569,4 +568,5 @@ def xview_event_handler(e):
  
  
 if __name__ == '__main__':
+    import GUI
     GUI.main()    

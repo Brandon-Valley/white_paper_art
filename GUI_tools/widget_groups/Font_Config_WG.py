@@ -20,7 +20,8 @@ class Font_Config_WG():
                  min_font_size,
                  font_size_sbox_lbl_txt,
                  font_cbox_lbl_txt,
-                 digits_only):
+                 digits_only,
+                 max_str_len_in_l):
         
         self.sbox_lbl = Label(master, text = font_size_sbox_lbl_txt)
         self.cbox_lbl = Label(master, text = font_cbox_lbl_txt)
@@ -42,7 +43,7 @@ class Font_Config_WG():
                 self.font_list.append(font_name)
             
         # font select combo box
-        self.cbox = Combobox(master, state = 'readonly', values = self.font_list)
+        self.cbox = Combobox(master, state = 'readonly', values = self.font_list, width = max_str_len_in_l(self.font_list))
         
         if fonts_dir_path != None:
             default_font_index = self.cbox['values'].index(default_font) #default

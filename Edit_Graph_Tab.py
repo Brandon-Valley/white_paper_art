@@ -2,14 +2,16 @@
 from tkinter.ttk import *
 from tkinter import *
 
-
-import GUI
+import font_tools
 from GUI_tools import Tab
 
 
 BROWSE_TB_WIDTH = 80
 DEFAULT_OUT_PATH = 'DEFAULT AOUTPUT_PTAH'
 DEFAULT_IN_PATH = 'DEFAULT in_PTAH'
+DEFAULT_TITLE_FONT_SIZE = 25
+DEFAULT_FONT_NAME = "LiberationMono-Bold"
+
 
 class Edit_Graph_Tab(Tab.Tab):
     def __init__(self, master, tab_control):
@@ -39,6 +41,8 @@ class Edit_Graph_Tab(Tab.Tab):
         
         
         self.font_wg = self.Font_Config_WG(self.title_lf)
+        self.font_wg = self.Font_Config_WG(self.title_lf, fonts_dir_path=font_tools.FONTS_PATH, default_font_size=DEFAULT_TITLE_FONT_SIZE,
+                                           default_font=DEFAULT_FONT_NAME)
 #         
     def grid_widgets(self):
 #         self.master.grid_columnconfigure(3, weight=1)
@@ -67,4 +71,5 @@ class Edit_Graph_Tab(Tab.Tab):
 
         
 if __name__ == '__main__':
+    import GUI
     GUI.main()
