@@ -10,7 +10,7 @@ from tkinter import *
 
 
 import GUI
-import Tab
+from GUI_tools import Tab
 
 BROWSE_TB_WIDTH = 80
 DEFAULT_OUT_PATH = 'DEFAULT AOUTPUT_PTAH'

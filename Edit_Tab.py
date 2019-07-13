@@ -9,7 +9,7 @@ from tkinter import ttk
 import build_image
 import GUI_utils
 import GUI
-import Tab
+from GUI_tools import Tab
 import global_constants
 import font_tools
 from gui_vars import gui_vars_handler

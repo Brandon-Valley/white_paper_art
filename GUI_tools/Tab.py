@@ -1,9 +1,14 @@
 from tkinter import END
 from tkinter import filedialog
 
-from widget_groups import File_System_Browse_WG
 
 import GUI #only need for testing
+
+import sys
+import os
+sys.path.insert(1, os.path.dirname(__file__)) # so you can import relative to this file even when it is called from elsewhere
+
+from widget_groups import File_System_Browse_WG
 
 
 

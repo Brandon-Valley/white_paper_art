@@ -10,7 +10,7 @@ from tkinter import *
 import build_image
 import GUI_utils
 import GUI
-import Tab
+from GUI_tools import Tab
 
 
 COLOR_TUP_TB_WIDTH = 13

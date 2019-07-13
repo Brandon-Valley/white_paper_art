@@ -1,6 +1,6 @@
 from tkinter import *
 from tkinter.ttk import *
-from tkinter import filedialog
+# from tkinter import filedialog
 import tkinter as tk
 from tkinter import ttk
 from tkinter.colorchooser import *
@@ -75,3 +75,14 @@ def xview_event_handler(e):
     e.widget.update_idletasks()
     e.widget.xview_moveto(1)
     e.widget.unbind('<Expose>')
+    
+    
+if __name__ == '__main__':
+    import os
+    sys.path.insert(1, os.path.join(sys.path[0], '..')) # to import from parent dir
+    #from parent dir
+    import GUI
+    GUI.main()
+    
+    
+    
