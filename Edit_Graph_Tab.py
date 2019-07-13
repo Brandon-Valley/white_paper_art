@@ -4,6 +4,7 @@ from tkinter import *
 
 import font_tools
 from GUI_tools import Tab
+from GUI_tools.custom_widgets.RGB_Display_Entry import *
 
 
 BROWSE_TB_WIDTH = 80
@@ -43,6 +44,10 @@ class Edit_Graph_Tab(Tab.Tab):
         self.font_wg = self.Font_Config_WG(self.title_lf)
         self.font_wg = self.Font_Config_WG(self.title_lf, fonts_dir_path=font_tools.FONTS_PATH, default_font_size=DEFAULT_TITLE_FONT_SIZE,
                                            default_font=DEFAULT_FONT_NAME)
+        
+        self.title_color_rgbd = RGB_Display_Entry(self.title_lf)
+        self.title_color_rgbd.set_rgb((255,33,6))
+
 #         
     def grid_widgets(self):
 #         self.master.grid_columnconfigure(3, weight=1)
@@ -64,9 +69,8 @@ class Edit_Graph_Tab(Tab.Tab):
         self.font_wg.sbox          .grid(column=2, row=2, sticky='W')
         self.font_wg.cbox_lbl      .grid(column=1, row=3)
         self.font_wg.cbox          .grid(column=2, row=3, sticky='W')
-
-
-
+        
+        self.title_color_rgbd      .grid(column=2, row=4, sticky='W')
         
 
         

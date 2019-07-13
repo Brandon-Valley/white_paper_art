@@ -54,6 +54,7 @@ class Advanced_Tab(Tab.Tab):
         self.bgnd_text_clr_lbl = Label(self.master, text="Background Text Color: ")
         self.bgnd_text_clr_tup_tb = Entry(self.master,width=COLOR_TUP_TB_WIDTH, justify = 'center')
         self.bgnd_text_clr_display_tb = Entry(self.master,width=COLOR_DISPLAY_TB_WIDTH, state = 'readonly')
+        
         GUI_utils.apply_color_change(self.bgnd_text_clr_tup_tb, self.bgnd_text_clr_display_tb, DEFAULT_BACKGROUND_TEXT_COLOR)#default, sets to read only
             
         self.bgnd_text_clr_change_clr_btn = Button(self.master, text="Change Color", 
