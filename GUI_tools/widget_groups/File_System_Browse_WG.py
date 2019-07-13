@@ -58,8 +58,11 @@ class File_System_Browse_WG():
             file_system_item = filedialog.askdirectory()
         else:
             raise Exception('ERROR:  In Tab.py, in path_tb_browse_btn_clk, invalid value for browse_for: ', browse_for)
-        path_txt_box_widget.delete(0, "end")
-        path_txt_box_widget.insert(END, file_system_item)
+        
+        print('in file system wg. file_system_item: ', file_system_item, len(file_system_item))#````````````````````````````````````````````````````````
+        if len(file_system_item) != 0:
+            path_txt_box_widget.delete(0, "end")
+            path_txt_box_widget.insert(END, file_system_item)
         
         
         

@@ -3,6 +3,7 @@ from tkinter.ttk import *
 from tkinter import *
 
 import font_tools
+import GUI_utils
 from GUI_tools import Tab
 from GUI_tools.custom_widgets.RGB_Display_Entry import *
 
@@ -64,7 +65,14 @@ class Edit_Graph_Tab(Tab.Tab):
     
     def generate_____widget_setup(self):
         def generate_btn_clk(event=None):
-            pass
+            GUI_utils.edit_graph(self.in_path_browse_wg.tb.get(), 
+                                 self.out_path_browse_wg.tb.get(), 
+                                 self.title_tb.get(),
+                                 self.title_color_wg.rgbd_tb.get(),
+                                 self.font_wg.cbox.get(),
+                                 self.font_wg.sbox.get(),
+                                 self.invert_clrs_cbtn_sel.get())
+
         self.generate_btn = Button(self.master, text = 'Generate Edited Graph', command = generate_btn_clk)
 
     
@@ -86,7 +94,7 @@ class Edit_Graph_Tab(Tab.Tab):
         # title 
         self.title_lf              .grid(column=1, row=2, sticky='NSWE', padx=5, pady=5, ipadx=5, ipady=5)
         self.title_tb_lbl          .grid(column=1, row=1)
-        self.title_tb              .grid(column=2, row=1, sticky='W', columnspan = 2)
+        self.title_tb              .grid(column=2, row=1, sticky='EW', columnspan = 2)
         self.font_wg.sbox_lbl      .grid(column=1, row=2)
         self.font_wg.sbox          .grid(column=2, row=2, sticky='W')
         self.font_wg.cbox_lbl      .grid(column=1, row=3)
