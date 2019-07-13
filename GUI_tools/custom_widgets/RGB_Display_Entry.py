@@ -14,7 +14,13 @@ class RGB_Display_Entry(Entry):
         self.configure(width = WIDTH)
         self.configure(justify = 'center')
         
+    def get_rgb(self):
+        def _str_to_int_tup(tup_str):
+            split_tup_str = re.split(r'[(,)]', tup_str)
+            r, g, b = split_tup_str[1:4]
+            return(int(r), int(g), int(b))
         
+        return _str_to_int_tup(self.get())
         
     def set_rgb(self, rgb_tup):
         def _round_color(color_tup):
@@ -57,6 +63,8 @@ class RGB_Display_Entry(Entry):
         self.configure(fg = font_tk_rgb)
         
         self.configure(state = 'readonly')
+        
+        
         
     
     

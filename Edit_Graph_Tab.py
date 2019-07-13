@@ -9,8 +9,8 @@ from GUI_tools.custom_widgets.RGB_Display_Entry import *
 
 
 BROWSE_TB_WIDTH = 80
-DEFAULT_OUT_PATH = 'DEFAULT AOUTPUT_PTAH'
-DEFAULT_IN_PATH = 'DEFAULT in_PTAH'
+DEFAULT_IN_PATH = "C:\\Users\\Brandon\\Documents\\Personal_Projects\\white_paper_art_big_data\\working\\btc_g.JPG"
+DEFAULT_OUT_PATH = "C:\\Users\\Brandon\\Documents\\Personal_Projects\\white_paper_art_big_data\\working\\btc_graphs\\out.jpg"
 DEFAULT_TITLE_FONT_SIZE = 25
 DEFAULT_FONT_NAME = "LiberationMono-Bold"
 DEFAULT_TITLE_RGB_TUP = (255,255,255)
@@ -68,9 +68,9 @@ class Edit_Graph_Tab(Tab.Tab):
             GUI_utils.edit_graph(self.in_path_browse_wg.tb.get(), 
                                  self.out_path_browse_wg.tb.get(), 
                                  self.title_tb.get(),
-                                 self.title_color_wg.rgbd_tb.get(),
+                                 self.title_color_wg.get_rgb(),
                                  self.font_wg.cbox.get(),
-                                 self.font_wg.sbox.get(),
+                                 int(self.font_wg.sbox.get()),
                                  self.invert_clrs_cbtn_sel.get())
 
         self.generate_btn = Button(self.master, text = 'Generate Edited Graph', command = generate_btn_clk)

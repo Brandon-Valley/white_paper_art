@@ -59,8 +59,7 @@ class File_System_Browse_WG():
         else:
             raise Exception('ERROR:  In Tab.py, in path_tb_browse_btn_clk, invalid value for browse_for: ', browse_for)
         
-        print('in file system wg. file_system_item: ', file_system_item, len(file_system_item))#````````````````````````````````````````````````````````
-        if len(file_system_item) != 0:
+        if len(file_system_item) != 0: # so if you X out of browse, you dont lose the path you started with
             path_txt_box_widget.delete(0, "end")
             path_txt_box_widget.insert(END, file_system_item)
         

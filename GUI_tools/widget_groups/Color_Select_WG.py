@@ -23,6 +23,7 @@ class Color_Select_WG():
         self.rgbd_tb = RGB_Display_Entry(master)
         self.rgbd_tb.set_rgb(default_rgb_tup)
         
+        
         def change_color():
             float_rgb_tup = colorchooser.askcolor()[0]
             
@@ -30,6 +31,9 @@ class Color_Select_WG():
                 self.rgbd_tb.set_rgb(float_rgb_tup)
 
         self.btn = Button(master, text=btn_txt, command = change_color)
+        
+    def get_rgb(self):
+        return self.rgbd_tb.get_rgb()
 
                  
  
