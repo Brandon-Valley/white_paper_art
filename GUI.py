@@ -1,14 +1,7 @@
 # https://dzone.com/articles/python-gui-examples-tkinter-tutorial-like-geeks
 
-from tkinter import *
 from tkinter.ttk import *
-from tkinter import filedialog
-import tkinter as tk
-from tkinter import ttk
-
-import build_image
-import GUI_utils
-
+from tkinter import *
 #Tabs
 import Edit_Tab
 import Advanced_Tab
@@ -21,7 +14,7 @@ def main(msg = None):
     
     root.title("Text Image Maker")
 
-    tab_control = ttk.Notebook(root)
+    tab_control = Notebook(root)
     tab_control.grid(row=1, column=0, sticky='NESW')
     
     

@@ -1,8 +1,8 @@
 from tkinter import *
 from tkinter.ttk import *
 from tkinter import filedialog
-import tkinter as tk
-from tkinter import ttk
+# import tkinter as tk
+# from tkinter import ttk
 
 # import tkinter as tk
 

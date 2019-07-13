@@ -1,10 +1,4 @@
-from tkinter import *
 from tkinter.ttk import *
-# from tkinter import filedialog
-import tkinter as tk
-from tkinter import ttk
-from tkinter.colorchooser import *
-
 from tkinter import *
 
 
