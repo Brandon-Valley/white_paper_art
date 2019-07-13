@@ -5,7 +5,8 @@ from tkinter import *
 
 
 class File_System_Browse_WG():
-    def __init__(self, master, 
+    def __init__(self, 
+                 master, 
                  lbl_txt, 
                  tb_width = None, 
                  browse_for = 'dir',  # 'dir' or 'file'

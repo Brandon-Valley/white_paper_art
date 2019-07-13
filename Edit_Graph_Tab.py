@@ -12,6 +12,7 @@ DEFAULT_OUT_PATH = 'DEFAULT AOUTPUT_PTAH'
 DEFAULT_IN_PATH = 'DEFAULT in_PTAH'
 DEFAULT_TITLE_FONT_SIZE = 25
 DEFAULT_FONT_NAME = "LiberationMono-Bold"
+DEFAULT_TITLE_RGB_TUP = (255,255,255)
 
 
 class Edit_Graph_Tab(Tab.Tab):
@@ -45,8 +46,10 @@ class Edit_Graph_Tab(Tab.Tab):
         self.font_wg = self.Font_Config_WG(self.title_lf, fonts_dir_path=font_tools.FONTS_PATH, default_font_size=DEFAULT_TITLE_FONT_SIZE,
                                            default_font=DEFAULT_FONT_NAME)
         
-        self.title_color_rgbd = RGB_Display_Entry(self.title_lf)
-        self.title_color_rgbd.set_rgb((255,255,255))
+#         self.title_color_rgbd = RGB_Display_Entry(self.title_lf)
+#         self.title_color_rgbd.set_rgb((255,255,255))
+        
+        self.title_color_wg = self.Color_Select_WG(self.title_lf, lbl_txt = 'Title Color:', default_rgb_tup = DEFAULT_TITLE_RGB_TUP)
 
 #         
     def grid_widgets(self):
@@ -69,8 +72,11 @@ class Edit_Graph_Tab(Tab.Tab):
         self.font_wg.sbox          .grid(column=2, row=2, sticky='W')
         self.font_wg.cbox_lbl      .grid(column=1, row=3)
         self.font_wg.cbox          .grid(column=2, row=3, sticky='W')
+        self.title_color_wg.lbl    .grid(column=1, row=4)
+        self.title_color_wg.rgbd_tb.grid(column=2, row=4)
+        self.title_color_wg.btn    .grid(column=3, row=4)
         
-        self.title_color_rgbd      .grid(column=2, row=4, sticky='W')
+#         self.title_color_rgbd      .grid(column=2, row=4, sticky='W')
         
 
         
