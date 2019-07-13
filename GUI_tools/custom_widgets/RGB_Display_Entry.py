@@ -17,12 +17,12 @@ class RGB_Display_Entry(Entry):
         
         
     def set_rgb(self, rgb_tup):
-        def _tk_color(clr_tuple):
-            def __round_color(color_tup):
-                r, g, b = color_tup
-                return (int(r), int(g), int(b))
+        def _round_color(color_tup):
+            r, g, b = color_tup
+            return (int(r), int(g), int(b))
             
-            return "#%02x%02x%02x" % __round_color(clr_tuple)
+        def _tk_color(clr_tuple):
+            return "#%02x%02x%02x" % _round_color(clr_tuple)
 
         
         def _highest_contrast_label_color(background_color):
@@ -45,7 +45,7 @@ class RGB_Display_Entry(Entry):
         self.configure(state = 'normal')
      
         self.delete(0, "end")
-        self.insert(END, str(rgb_tup))
+        self.insert(END, str(_round_color(rgb_tup)))
      
         # background color
         tk_rgb = _tk_color(rgb_tup)
