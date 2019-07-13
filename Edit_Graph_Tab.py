@@ -23,6 +23,7 @@ class Edit_Graph_Tab(Tab.Tab):
         self.paths_____widget_setup()
         self.title_____widget_setup()
         self.graph_colors_____widget_setup()
+        self.generate_____widget_setup()
 
         self.grid_widgets()
         
@@ -61,6 +62,14 @@ class Edit_Graph_Tab(Tab.Tab):
         self.invert_clrs_cbtn_sel = IntVar(value = 1) #default to value
         self.invert_clrs_cbtn = Checkbutton(self.graph_colors_lf, text="Invert Colors:", variable=self.invert_clrs_cbtn_sel)
     
+    def generate_____widget_setup(self):
+        def generate_btn_clk(event=None):
+            pass
+        self.generate_btn = Button(self.master, text = 'Generate Edited Graph', command = generate_btn_clk)
+
+    
+    
+    
     def grid_widgets(self):
         self.master.grid_columnconfigure(2, weight=1)
   
@@ -89,6 +98,9 @@ class Edit_Graph_Tab(Tab.Tab):
         # graph colors
         self.graph_colors_lf       .grid(column=2, row=2, sticky='NW', padx=5, pady=5, ipadx=5, ipady=5)
         self.invert_clrs_cbtn      .grid(column=1, row=1)
+        
+        # generate
+        self.generate_btn          .grid(column=1, row=3, sticky='W', padx=5)
 
         
 if __name__ == '__main__':
