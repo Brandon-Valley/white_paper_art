@@ -12,7 +12,7 @@ from file_system_utils import is_file_path_valid
 
 
 BROWSE_TB_WIDTH = 80
-DEFAULT_IN_PATH = "C:\\Users\\Brandon\\Documents\\Personal_Projects\\white_paper_art_big_data\\working\\btc_g.JPG"
+DEFAULT_IN_PATH = "C:\\Users\\Brandon\\Documents\\Personal_Projects\\white_paper_art_big_data\\working\\btc_g.jpg"
 DEFAULT_OUT_PATH = "C:\\Users\\Brandon\\Documents\\Personal_Projects\\white_paper_art_big_data\\working\\btc_graphs\\out.jpg"
 DEFAULT_TITLE_FONT_SIZE = 40
 DEFAULT_FONT_NAME = "LiberationMono-Bold"

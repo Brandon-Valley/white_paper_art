@@ -6,7 +6,7 @@ from tkinter import *
 
 class File_System_Browse_WG():
     def __init__(self, 
-                 master, 
+                 master,
                  lbl_txt, 
                  tb_width = None, 
                  browse_for = 'dir',  # 'dir' or 'file'
@@ -23,6 +23,8 @@ class File_System_Browse_WG():
         
         if init_path != None:
             self.tb.insert(END, init_path) #default
+            
+#         Tab.bind_to_update(self.tb, xview_event_handler)
             
         self.tb.bind('<Expose>', xview_event_handler)#scrolls text to end if needed
         self.tb.bind('<Enter>' , xview_event_handler)#scrolls text to end if needed

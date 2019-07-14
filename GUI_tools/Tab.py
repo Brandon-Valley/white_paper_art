@@ -44,6 +44,7 @@ class Tab():
     # only tested with entry
     def bind_to_update(self, widget, func):
         sv = StringVar()
+        sv.set(widget.get())
         sv.trace("w", lambda name, index, mode, sv=sv: func(sv))
         widget.configure(textvariable=sv)
     
