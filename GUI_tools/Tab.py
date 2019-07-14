@@ -1,5 +1,7 @@
-from tkinter import END
-from tkinter import filedialog
+# from tkinter import END
+# from tkinter import filedialog
+from tkinter import *
+
 
 
 import GUI #only need for testing
@@ -38,6 +40,14 @@ class Tab():
         return True
     
     #bind keys to widget such that func gets called any time the contents of the widget change
+    
+    # only tested with entry
+    def bind_to_update(self, widget, func):
+        sv = StringVar()
+        sv.trace("w", lambda name, index, mode, sv=sv: func(sv))
+        widget.configure(textvariable=sv)
+    
+    
     def bind_to_edit(self, widget, func):
         widget.bind("<KeyRelease>", func)
         widget.bind("<KeyRelease-BackSpace>", func)

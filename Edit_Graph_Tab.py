@@ -4,14 +4,17 @@ from tkinter import *
 
 import font_tools
 import GUI_utils
+import file_system_utils
 from GUI_tools import Tab
 from GUI_tools.custom_widgets.RGB_Display_Entry import *
+from file_system_utils import is_file_path_valid
+
 
 
 BROWSE_TB_WIDTH = 80
 DEFAULT_IN_PATH = "C:\\Users\\Brandon\\Documents\\Personal_Projects\\white_paper_art_big_data\\working\\btc_g.JPG"
 DEFAULT_OUT_PATH = "C:\\Users\\Brandon\\Documents\\Personal_Projects\\white_paper_art_big_data\\working\\btc_graphs\\out.jpg"
-DEFAULT_TITLE_FONT_SIZE = 25
+DEFAULT_TITLE_FONT_SIZE = 40
 DEFAULT_FONT_NAME = "LiberationMono-Bold"
 DEFAULT_TITLE_RGB_TUP = (255,255,255)
 
@@ -34,16 +37,24 @@ class Edit_Graph_Tab(Tab.Tab):
         
         self.in_path_browse_wg  = self.File_System_Browse_WG(self.paths_lf, 'Input Path', BROWSE_TB_WIDTH, 'file', 
                                                              None, DEFAULT_IN_PATH, focus_tb_after_browse=False)
+        self.bind_to_update(self.in_path_browse_wg.tb, self.update_title)
+        
         self.out_path_browse_wg = self.File_System_Browse_WG(self.paths_lf, 'Output Path', BROWSE_TB_WIDTH, 'dir', 
                                                              None, DEFAULT_OUT_PATH, focus_tb_after_browse=True)
         
-    
+        
+    def update_title(self, event=None):
+        if is_file_path_valid(self.in_path_browse_wg.tb.get(), '.jpg'):
+            self.title_tb.delete(0, "end")
+            self.title_tb.insert(END, GUI_utils.file_name_from_path(self.in_path_browse_wg.tb.get()))
+        
     def title_____widget_setup(self):
         self.title_lf = LabelFrame(self.master, text = " Graph Title: ")
         
         # title text box and label
         self.title_tb_lbl = Label(self.title_lf, text="Title: ")
         self.title_tb = Entry(self.title_lf)
+        self.update_title()
         
         
         self.font_wg = self.Font_Config_WG(self.title_lf)
@@ -109,6 +120,7 @@ class Edit_Graph_Tab(Tab.Tab):
         
         # generate
         self.generate_btn          .grid(column=1, row=3, sticky='W', padx=5)
+        
 
         
 if __name__ == '__main__':

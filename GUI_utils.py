@@ -17,6 +17,8 @@ from PIL import Image
 
 from os import listdir
 from os.path import isfile, join
+
+import ntpath
  
 # import fonts
 import font_tools
@@ -344,7 +346,8 @@ def edit_graph(in_img_path, out_img_path, title, title_color, font_name, font_si
     img.show()
     
     
-    
+def file_name_from_path(file_path):
+    return ntpath.basename(file_path)
     
     
 import GUI
