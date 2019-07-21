@@ -4,16 +4,17 @@ from tkinter import *
 
 
 
-import GUI #only need for testing
+# import GUI #only need for testing
 
 import sys
 import os
-from GUI_tools.widget_groups import Color_Select_WG
 sys.path.insert(1, os.path.dirname(__file__)) # so you can import relative to this file even when it is called from elsewhere
 
 from widget_groups import File_System_Browse_WG
 from widget_groups import Font_Config_WG
 from widget_groups import Color_Select_WG
+from widget_groups import Trim_WG
+
 
 
 
@@ -26,6 +27,9 @@ class Tab():
     def __init__(self, master):
         self.master = master
         self.tabs = None
+        self.widget_str_var_d = {}
+        
+        self.widget_var_d = {}
         
         self.digits_only = (self.master.register(self.validate), DIGITS, '%P')
          
@@ -39,14 +43,66 @@ class Tab():
                 return False
         return True
     
-    #bind keys to widget such that func gets called any time the contents of the widget change
     
-    # only tested with entry
+    
+    # sets var to widget and puts it in self.widget_var_d so bind_to_update will work
+    def set_var(self, widget, var):
+        # returns a string saying which variable type is needed for the given widget
+        def _var_type(widget):
+            if   isinstance(widget, Label) or \
+                 isinstance(widget, Entry) or \
+                 isinstance(widget, Spinbox):
+                return 'textvariable'
+            elif isinstance(widget, Listbox):
+                return 'listvariable'
+            elif isinstance(widget, Radiobutton) or \
+                 isinstance(widget, Checkbutton) or \
+                 isinstance(widget, Scale):
+                return 'variable'
+            else:
+                raise Exception('FUNC INCOMPLETE:  In Tab.py in set_var() in _var_type(), the given widget type does not have a variable type assigned yet, please update, type(widget): ', type(widget))
+
+        widget[_var_type(widget)] = var
+        self.widget_var_d[widget] = var
+            
+        
+    # MIGHT GET WEIRD WITH STUFF LIKE LISTBOX AND SPINBOX
+    #bind keys to widget such that func gets called any time the contents of the widget change
     def bind_to_update(self, widget, func):
-        sv = StringVar()
-        sv.set(widget.get())
-        sv.trace("w", lambda name, index, mode, sv=sv: func(sv))
-        widget.configure(textvariable=sv)
+        # get contents of widget in such a way that they can be assigned to a Variable
+        def _get_widget_contents(widget):
+            if isinstance(widget, Label):
+                return widget['text']
+            else:
+                try:
+                    return widget.get()
+                except AttributeError:
+                    raise Exception('ERROR:  Tried to use self.bind_to_update() on a widget without .get() (without having a var), to use this func, you must first use self.set_var() to set a Variable to the widget, type(widget): ', type(widget))
+                
+                
+        
+        
+        
+#         try:
+#             print('in tab, at top of bind_to_update, widget["textvariable"] ' , widget['textvariable'], type(widget['textvariable']))#`````````````````````````````````````````````````````````````````````````````````````            
+#         except:
+#             pass
+        
+#         # add new trace to StringVar if you have already used this func on this widget before
+#         if widget in self.widget_str_var_d.keys():
+        if widget in self.widget_var_d.keys():
+             
+             
+#             sv = self.widget_str_var_d[widget]
+            var = self.widget_var_d[widget]
+#             var.trace("w", lambda name, index, mode, var=var: func())
+        else:
+            widget_contents = _get_widget_contents(widget)
+            var = Variable(value = widget_contents)
+            self.set_var(widget, var)
+            
+        var.trace("w", lambda name, index, mode, var=var: func())
+
     
     
     def bind_to_edit(self, widget, func):
@@ -105,9 +161,18 @@ class Tab():
                                  init_path             = None, 
                                  focus_tb_after_browse = False,
                                  tb_edit_func          = None,
-                                 browse_btn_txt        = 'Browse...'):
+                                 browse_btn_txt        = 'Browse...',):
         
-        return File_System_Browse_WG.File_System_Browse_WG(master, lbl_txt, tb_width, browse_for, file_type, init_path, focus_tb_after_browse, tb_edit_func, browse_btn_txt)
+        return File_System_Browse_WG.File_System_Browse_WG(master,
+                                                           lbl_txt,
+                                                           tb_width, 
+                                                           browse_for,
+                                                           file_type, 
+                                                           init_path,
+                                                           focus_tb_after_browse,
+                                                           tb_edit_func, 
+                                                           browse_btn_txt,
+                                                           self.bind_to_update)
         
         
         
@@ -136,28 +201,54 @@ class Tab():
                                              font_cbox_lbl_txt,
                                              self.digits_only,
                                              self.max_str_len_in_l)
-
-
-    def Color_Select_WG(self,
-                        master,
-                        lbl_txt,
-                        default_rgb_tup = (255, 255, 255),
-                        btn_txt = 'Change Color'):
+         
         
+    def Color_Select_WG(self,
+                    master,
+                    lbl_txt,
+                    default_rgb_tup = (255, 255, 255),
+                    btn_txt = 'Change Color'):
+    
         wg = Color_Select_WG.Color_Select_WG(
                         master,
                         lbl_txt,
                         default_rgb_tup,
                         btn_txt)
         return wg
-         
+    
+
+    def Trim_WG( self,
+                 master, 
+                 max,
+                 min = 0,
+                 min_diff = 0,
+                 start_set = None,
+                 end_set = None,
+                 update_func = None,
+                 diff_leading_txt = '',
+                 display_type = 'time'):
         
-        
-        
+        wg = Trim_WG.Trim_WG(
+                             master, 
+                             max,
+                             min,
+                             min_diff,
+                             start_set,
+                             end_set,
+                             update_func,
+                             diff_leading_txt,
+                             display_type,
+                             self.set_var,
+                             self.bind_to_update)
+        return wg        
         
         
         
 if __name__ == '__main__':
+    import os
+    sys.path.insert(1, os.path.join(sys.path[0], '..')) # to import from parent dir
+    #from parent dir
+    import GUI
     GUI.main()
 
 

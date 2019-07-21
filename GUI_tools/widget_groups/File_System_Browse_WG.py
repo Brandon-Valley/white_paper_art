@@ -8,13 +8,16 @@ class File_System_Browse_WG():
     def __init__(self, 
                  master,
                  lbl_txt, 
-                 tb_width = None, 
-                 browse_for = 'dir',  # 'dir' or 'file'
-                 file_type = None,    # '.jpg', '.mp4', ect...
-                 init_path = None, 
-                 focus_tb_after_browse = False,
-                 tb_edit_func = None,
-                 browse_btn_txt = 'Browse...'):
+                 tb_width, 
+                 browse_for,   # 'dir' or 'file'
+                 file_type,    # '.jpg', '.mp4', ect...
+                 init_path, 
+                 focus_tb_after_browse,
+                 tb_edit_func,
+                 browse_btn_txt,
+                 bind_to_update):
+        
+        
         self.lbl = Label(master, text = lbl_txt)
         
         # text box
@@ -25,14 +28,20 @@ class File_System_Browse_WG():
             self.tb.insert(END, init_path) #default
             
 #         Tab.bind_to_update(self.tb, xview_event_handler)
+
+#         def _scroll_to_end():
+
+
+        bind_to_update(self.tb, lambda: self.tb.xview_moveto(1))
+        self.tb.xview_moveto(1)
             
-        self.tb.bind('<Expose>', xview_event_handler)#scrolls text to end if needed
-        self.tb.bind('<Enter>' , xview_event_handler)#scrolls text to end if needed
-        self.tb.bind('<Leave>' , xview_event_handler)#scrolls text to end if needed
-        self.tb.bind('<FocusIn>' , xview_event_handler)#scrolls text to end if needed
-        
-        if tb_edit_func != None:
-            self.bind_to_edit(self.tb, tb_edit_func)
+#         self.tb.bind('<Expose>', xview_event_handler)#scrolls text to end if needed
+#         self.tb.bind('<Enter>' , xview_event_handler)#scrolls text to end if needed
+#         self.tb.bind('<Leave>' , xview_event_handler)#scrolls text to end if needed
+#         self.tb.bind('<FocusIn>' , xview_event_handler)#scrolls text to end if needed
+#         
+#         if tb_edit_func != None:
+#             self.bind_to_edit(self.tb, tb_edit_func)
 
         # browse btn
         def browse_btn_clk():
@@ -78,7 +87,7 @@ def xview_event_handler(e):
     
 if __name__ == '__main__':
     import os
-    sys.path.insert(1, os.path.join(sys.path[0], '..')) # to import from parent dir
+    sys.path.insert(1, os.path.join(sys.path[0], '..\\..')) # to import from parent dir
     #from parent dir
     import GUI
     GUI.main()

@@ -42,6 +42,9 @@ class Edit_Graph_Tab(Tab.Tab):
         self.out_path_browse_wg = self.File_System_Browse_WG(self.paths_lf, 'Output Path', BROWSE_TB_WIDTH, 'dir', 
                                                              None, DEFAULT_OUT_PATH, focus_tb_after_browse=True)
         
+        self.bind_to_update(self.in_path_browse_wg.tb, self.update_title)
+
+
         
     def update_title(self, event=None):
         if is_file_path_valid(self.in_path_browse_wg.tb.get(), '.jpg'):
@@ -60,6 +63,7 @@ class Edit_Graph_Tab(Tab.Tab):
         self.font_wg = self.Font_Config_WG(self.title_lf)
         self.font_wg = self.Font_Config_WG(self.title_lf, fonts_dir_path=font_tools.FONTS_PATH, default_font_size=DEFAULT_TITLE_FONT_SIZE,
                                            default_font=DEFAULT_FONT_NAME)
+        
         
 #         self.title_color_rgbd = RGB_Display_Entry(self.title_lf)
 #         self.title_color_rgbd.set_rgb((255,255,255))
