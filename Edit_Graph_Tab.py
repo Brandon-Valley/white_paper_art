@@ -48,8 +48,17 @@ class Edit_Graph_Tab(Tab.Tab):
         
     def update_title(self, event=None):
         if is_file_path_valid(self.in_path_browse_wg.tb.get()):
+            in_file_name = file_system_utils.get_filename_from_path(self.in_path_browse_wg.tb.get())
+            
             self.title_tb.delete(0, "end")
-            self.title_tb.insert(END, GUI_utils.file_name_from_path(self.in_path_browse_wg.tb.get()))
+            self.title_tb.insert(END, in_file_name)
+            
+#         out_path = self.out_path_browse_wg.tb.get()
+#         out_file_name = file_system_utils.get_filename_from_path(out_path)
+        out_dir_path = file_system_utils.get_parent_dir_from_path(self.out_path_browse_wg.tb.get())
+        print(out_dir_path)
+        self.out_path_browse_wg.tb.delete(0, "end")
+        self.out_path_browse_wg.tb.insert(END, out_dir_path + '/' + in_file_name)
         
     def title_____widget_setup(self):
         self.title_lf = LabelFrame(self.master, text = " Graph Title: ")

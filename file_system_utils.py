@@ -136,7 +136,9 @@ def is_file_path_valid(path, extention = None):
     
 def get_filename_from_path(path):
     return ntpath.basename(path)
-    
+
+def get_parent_dir_from_path(path):
+    return os.path.dirname(path)
     
 def rename_file_overwrite(src_file_path, dest_file_path):
     delete_if_exists(dest_file_path)
