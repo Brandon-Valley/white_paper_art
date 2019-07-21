@@ -47,7 +47,7 @@ class Edit_Graph_Tab(Tab.Tab):
 
         
     def update_title(self, event=None):
-        if is_file_path_valid(self.in_path_browse_wg.tb.get(), '.jpg'):
+        if is_file_path_valid(self.in_path_browse_wg.tb.get()):
             self.title_tb.delete(0, "end")
             self.title_tb.insert(END, GUI_utils.file_name_from_path(self.in_path_browse_wg.tb.get()))
         
