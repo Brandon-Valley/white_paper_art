@@ -37,21 +37,21 @@ class Edit_Graph_Tab(Tab.Tab):
         
         self.in_path_browse_wg  = self.File_System_Browse_WG(self.paths_lf, 'Input Path', BROWSE_TB_WIDTH, 'file', 
                                                              None, DEFAULT_IN_PATH, focus_tb_after_browse=False)
-        self.bind_to_update(self.in_path_browse_wg.tb, self.update_title)
+        self.bind_to_update(self.in_path_browse_wg.tb, self.update_title_and_out_path)
         
         self.out_path_browse_wg = self.File_System_Browse_WG(self.paths_lf, 'Output Path', BROWSE_TB_WIDTH, 'dir', 
                                                              None, DEFAULT_OUT_PATH, focus_tb_after_browse=True)
         
-        self.bind_to_update(self.in_path_browse_wg.tb, self.update_title)
+        self.bind_to_update(self.in_path_browse_wg.tb, self.update_title_and_out_path)
 
 
         
-    def update_title(self, event=None):
+    def update_title_and_out_path(self, event=None):
         if is_file_path_valid(self.in_path_browse_wg.tb.get()):
             in_file_name = file_system_utils.get_filename_from_path(self.in_path_browse_wg.tb.get())
             
             self.title_tb.delete(0, "end")
-            self.title_tb.insert(END, in_file_name)
+            self.title_tb.insert(END, in_file_name[0:-4] + ':')
             
 #         out_path = self.out_path_browse_wg.tb.get()
 #         out_file_name = file_system_utils.get_filename_from_path(out_path)
@@ -66,7 +66,7 @@ class Edit_Graph_Tab(Tab.Tab):
         # title text box and label
         self.title_tb_lbl = Label(self.title_lf, text="Title: ")
         self.title_tb = Entry(self.title_lf)
-        self.update_title()
+        self.update_title_and_out_path()
         
         
         self.font_wg = self.Font_Config_WG(self.title_lf)
