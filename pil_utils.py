@@ -127,7 +127,7 @@ def pixel_color(img, x, y):
     pcg = get_pixel_color_grid(img)
     return pcg[y][x]
 
-# border can be an int (for adding same border to all sides) or tuple
+# border can be an int (for adding same border to all sides) or tuple (left, top, right, bottom)
 def add_border(img, border, color=0):
     if isinstance(border, int) or isinstance(border, tuple):
         return PIL.ImageOps.expand(img, border=border, fill=color)

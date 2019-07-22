@@ -132,6 +132,11 @@ class Tab():
         if str_list != None:
             for str in str_list:
                 list_box_widget.insert(END, str)
+                
+                
+    def fresh_insert(self, widget, val):
+        widget.delete(0, "end") #gets rid of 0 so the next line makes the default value 40 instead of 400
+        widget.insert(0, val)
 
 # DONT DELETE UNTIL YOU KNOW IT WONT BE NEEDED EVER AGAIN !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 #     def path_tb_browse_btn_clk(self, path_txt_box_widget, browse_for, file_type = None):
@@ -248,7 +253,7 @@ class Tab():
                   init_border_tup = (10,10,10,10),
                   max = 9999,
                   min = 0,
-                  sbox_width = 5):
+                  sbox_width = 3):
         
         wg = Border_Width_WG.Border_Width_WG(
                                              master, 
@@ -256,7 +261,8 @@ class Tab():
                                              max,
                                              min,
                                              sbox_width,
-                                             self.digits_only)
+                                             self.digits_only,
+                                             self.fresh_insert)
         return wg   
         
         

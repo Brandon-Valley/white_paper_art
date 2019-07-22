@@ -56,10 +56,7 @@ class Edit_Graph_Tab(Tab.Tab):
             self.title_tb.delete(0, "end")
             self.title_tb.insert(END, in_file_name[0:-4] + ':')
             
-#         out_path = self.out_path_browse_wg.tb.get()
-#         out_file_name = file_system_utils.get_filename_from_path(out_path)
         out_dir_path = file_system_utils.get_parent_dir_from_path(self.out_path_browse_wg.tb.get())
-        print(out_dir_path)
         self.out_path_browse_wg.tb.delete(0, "end")
         self.out_path_browse_wg.tb.insert(END, out_dir_path + '/' + in_file_name)
         
@@ -75,10 +72,6 @@ class Edit_Graph_Tab(Tab.Tab):
         self.font_wg = self.Font_Config_WG(self.title_lf)
         self.font_wg = self.Font_Config_WG(self.title_lf, fonts_dir_path=font_tools.FONTS_PATH, default_font_size=DEFAULT_TITLE_FONT_SIZE,
                                            default_font=DEFAULT_FONT_NAME)
-        
-        
-#         self.title_color_rgbd = RGB_Display_Entry(self.title_lf)
-#         self.title_color_rgbd.set_rgb((255,255,255))
         
         self.title_color_wg = self.Color_Select_WG(self.title_lf, lbl_txt = 'Title Color:', default_rgb_tup = DEFAULT_TITLE_RGB_TUP)
 
@@ -108,6 +101,7 @@ class Edit_Graph_Tab(Tab.Tab):
         
         # border widget group
         self.border_width_wg = self.Border_Width_WG(self.border_lf, init_border_tup = DEFAULT_BORDER_TUP)
+        
 
     
     
@@ -138,15 +132,18 @@ class Edit_Graph_Tab(Tab.Tab):
         self.title_color_wg.btn    .grid(column=3, row=4, sticky='W', pady=5)
         
         # graph colors
-        self.graph_colors_lf       .grid(column=2, row=2, sticky='NW', padx=5, pady=5, ipadx=5, ipady=5)
+        self.graph_colors_lf       .grid(column=1, row=3, sticky='NW', padx=5, pady=5, ipadx=5, ipady=5)
         self.invert_clrs_cbtn      .grid(column=1, row=1)
         
         # generate
-        self.generate_btn          .grid(column=1, row=3, sticky='W', padx=5)
+        self.generate_btn          .grid(column=1, row=4, sticky='W', padx=5)
         
         # border
-        self.border_lf             .grid(column=3, row=2, sticky='NWES', padx=5, pady=5, ipadx=5, ipady=5)
-        self.border_width_wg.t_sbox.grid(column=1, row=1)
+        self.border_lf             .grid(column=2, row=2, sticky='NW', padx=5, pady=5, ipadx=5, ipady=5)
+        self.border_width_wg.l_sbox.grid(column=1, row=2, padx=5, pady=5)
+        self.border_width_wg.t_sbox.grid(column=2, row=1, padx=5, pady=5)
+        self.border_width_wg.r_sbox.grid(column=3, row=2, padx=5, pady=5)
+        self.border_width_wg.b_sbox.grid(column=2, row=3, padx=5, pady=5)
 
         
 if __name__ == '__main__':
