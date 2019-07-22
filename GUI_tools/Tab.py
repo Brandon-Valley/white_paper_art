@@ -14,6 +14,7 @@ from widget_groups import File_System_Browse_WG
 from widget_groups import Font_Config_WG
 from widget_groups import Color_Select_WG
 from widget_groups import Trim_WG
+from widget_groups import Border_WG
 
 
 
@@ -240,7 +241,16 @@ class Tab():
                              display_type,
                              self.set_var,
                              self.bind_to_update)
-        return wg        
+        return wg      
+    
+    def Border_WG(self,
+                  master, 
+                  init_border_tup = (10,10,10,10)):
+        
+        wg = Border_WG.Border_WG(
+                                 master, 
+                                 init_border_tup)
+        return wg   
         
         
         

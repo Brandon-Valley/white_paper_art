@@ -14,9 +14,10 @@ from file_system_utils import is_file_path_valid
 BROWSE_TB_WIDTH = 80
 DEFAULT_IN_PATH = "C:\\Users\\Brandon\\Documents\\Personal_Projects\\white_paper_art_big_data\\working\\btc_g.jpg"
 DEFAULT_OUT_PATH = "C:\\Users\\Brandon\\Documents\\Personal_Projects\\white_paper_art_big_data\\working\\btc_graphs\\out.jpg"
-DEFAULT_TITLE_FONT_SIZE = 40
+DEFAULT_TITLE_FONT_SIZE = 25 
 DEFAULT_FONT_NAME = "LiberationMono-Bold"
 DEFAULT_TITLE_RGB_TUP = (255,255,255)
+DEFAULT_BORDER_TUP = (10,10,10,0)
 
 
 class Edit_Graph_Tab(Tab.Tab):
@@ -28,6 +29,8 @@ class Edit_Graph_Tab(Tab.Tab):
         self.title_____widget_setup()
         self.graph_colors_____widget_setup()
         self.generate_____widget_setup()
+        self.border_____widget_setup()
+        
 
         self.grid_widgets()
         
@@ -100,6 +103,13 @@ class Edit_Graph_Tab(Tab.Tab):
         self.generate_btn = Button(self.master, text = 'Generate Edited Graph', command = generate_btn_clk)
 
     
+    def border_____widget_setup(self):
+        self.border_lf = LabelFrame(self.master, text = " Add Border: ")
+        
+        # border widget group
+#         self.Border_WG(self.border_lf, init_border_tup = DEFAULT_BORDER_TUP)
+
+    
     
     
     def grid_widgets(self):
@@ -134,6 +144,8 @@ class Edit_Graph_Tab(Tab.Tab):
         # generate
         self.generate_btn          .grid(column=1, row=3, sticky='W', padx=5)
         
+        # border
+        self.border_lf             .grid(column=3, row=2, sticky='NWES', padx=5, pady=5, ipadx=5, ipady=5)
 
         
 if __name__ == '__main__':

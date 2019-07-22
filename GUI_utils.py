@@ -316,7 +316,7 @@ def find_final_img_char_width(kwargs):
 
     
     
-GRAPH_TITLE_VERT_SPACE = 5
+GRAPH_TITLE_VERT_SPACE = 0
 FINAL_BORDER_DIMS = (5, 0, 0, 0)
 def edit_graph(in_img_path, out_img_path, title, title_color, font_name, font_size, invert_colors):
     img = pil_utils.open_img(in_img_path)
