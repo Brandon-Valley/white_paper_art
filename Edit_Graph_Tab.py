@@ -107,7 +107,7 @@ class Edit_Graph_Tab(Tab.Tab):
         self.border_lf = LabelFrame(self.master, text = " Add Border: ")
         
         # border widget group
-#         self.Border_WG(self.border_lf, init_border_tup = DEFAULT_BORDER_TUP)
+        self.border_width_wg = self.Border_Width_WG(self.border_lf, init_border_tup = DEFAULT_BORDER_TUP)
 
     
     
@@ -146,6 +146,7 @@ class Edit_Graph_Tab(Tab.Tab):
         
         # border
         self.border_lf             .grid(column=3, row=2, sticky='NWES', padx=5, pady=5, ipadx=5, ipady=5)
+        self.border_width_wg.t_sbox.grid(column=1, row=1)
 
         
 if __name__ == '__main__':
